@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 2.1 - Navegadores Web e E-mail</title>
+    <link rel="stylesheet" href="slide-mode.css">
+    <link rel="stylesheet" href="exercise.css">
+    <style>
+        :root {
+            --primary: #00838f;
+            --secondary: #006064;
+            --bg-light: #f0f4f8;
+            --text-dark: #1a202c;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        .top-bar {
+            background: white;
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .back-btn {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+
+        .back-btn:hover { background: rgba(0,131,143,0.08); }
+
+        .page-badge {
+            font-size: 0.8em;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: rgba(0, 131, 143, 0.12);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .content-wrapper {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 30px;
+        }
+
+        .lesson-hero {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            border-top: 4px solid var(--primary);
+        }
+
+        .lesson-hero h1 { font-size: 2em; margin-bottom: 10px; color: var(--primary); }
+        .lesson-hero .subtitle { font-size: 1.05em; color: #718096; }
+
+        .content-card {
+            background: white;
+            border-radius: 16px;
+            padding: 35px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+
+        .content-card h2 {
+            font-size: 1.4em;
+            color: var(--primary);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .content-card h3 { font-size: 1.05em; color: var(--secondary); margin: 20px 0 10px; }
+        .content-card p { margin-bottom: 15px; text-align: justify; }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(0,131,143,0.05), rgba(0,96,100,0.06));
+            border-left: 4px solid var(--primary);
+            padding: 20px 25px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+        }
+        .highlight-box p { margin-bottom: 0; font-style: italic; }
+
+        .alert-box {
+            background: #fff8e1;
+            border-left: 4px solid #f59e0b;
+            padding: 18px 22px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+        }
+        .alert-box p { margin: 0; color: #78350f; font-size: 0.93em; }
+
+        ul, ol { margin: 10px 0 15px 25px; }
+        li { margin-bottom: 8px; }
+
+        /* ── Grid de navegadores ── */
+        .browser-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 14px;
+            margin: 20px 0;
+        }
+
+        .browser-card {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px 14px;
+            text-align: center;
+            border-top: 3px solid var(--primary);
+            transition: transform 0.2s;
+        }
+        .browser-card:hover { transform: translateY(-3px); }
+        .browser-icon { font-size: 2em; margin-bottom: 8px; }
+        .browser-card strong { display: block; font-size: 0.88em; color: var(--primary); margin-bottom: 4px; }
+        .browser-card em { font-size: 0.78em; color: #718096; font-style: normal; }
+
+        /* ── Grid de recursos do navegador ── */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+
+        .feature-item {
+            background: #f0fdfa;
+            border-radius: 10px;
+            padding: 16px;
+            border-left: 4px solid var(--primary);
+        }
+        .feature-item .fi-title { font-weight: 700; font-size: 0.9em; color: var(--primary); margin-bottom: 4px; }
+        .feature-item .fi-desc  { font-size: 0.82em; color: #475569; line-height: 1.5; }
+        .feature-item .fi-kbd   { margin-top: 6px; }
+        .fi-kbd kbd {
+            display: inline-block;
+            background: white;
+            border: 1px solid #94a3b8;
+            border-bottom-width: 2px;
+            border-radius: 4px;
+            padding: 1px 6px;
+            font-size: 0.78em;
+            font-family: 'Consolas', monospace;
+            color: #334155;
+        }
+
+        /* ── Anatomia de URL ── */
+        .url-box {
+            background: #0f172a;
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin: 18px 0;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 1.05em;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0;
+            align-items: center;
+        }
+
+        .url-part { padding: 4px 2px; border-radius: 4px; white-space: nowrap; }
+        .url-proto  { color: #34d399; font-weight: 700; }
+        .url-domain { color: #60a5fa; font-weight: 700; }
+        .url-path   { color: #fbbf24; }
+        .url-query  { color: #f472b6; }
+
+        .url-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 14px;
+        }
+        .url-leg-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.84em;
+        }
+        .leg-dot {
+            width: 12px; height: 12px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        /* ── HTTP vs HTTPS ── */
+        .security-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 18px 0;
+        }
+        .security-card {
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+        .security-card.insecure { background: #fef2f2; border: 2px solid #fca5a5; }
+        .security-card.secure   { background: #f0fdf4; border: 2px solid #86efac; }
+        .security-card .sc-icon  { font-size: 2.5em; margin-bottom: 8px; }
+        .security-card .sc-title { font-size: 1.1em; font-weight: 700; margin-bottom: 6px; }
+        .security-card.insecure .sc-title { color: #dc2626; }
+        .security-card.secure   .sc-title { color: #16a34a; }
+        .security-card .sc-desc { font-size: 0.83em; color: #475569; }
+
+        /* ── Anatomia do e-mail ── */
+        .email-anatomy {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 22px 26px;
+            margin: 16px 0;
+            font-family: 'Consolas', monospace;
+            font-size: 1.15em;
+            text-align: center;
+        }
+        .em-user   { color: #0891b2; font-weight: 700; }
+        .em-at     { color: #64748b; font-weight: 700; }
+        .em-domain { color: #7c3aed; font-weight: 700; }
+
+        .email-labels {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 10px;
+            font-size: 0.8em;
+            color: #64748b;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        .email-labels span { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+        .email-labels strong { color: #1a202c; }
+
+        /* ── Tipos de e-mail ── */
+        .email-type-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin: 16px 0;
+        }
+        .etype-card {
+            border-radius: 10px;
+            padding: 18px;
+        }
+        .etype-card.webmail { background: #eff6ff; border-top: 3px solid #3b82f6; }
+        .etype-card.client  { background: #f5f3ff; border-top: 3px solid #7c3aed; }
+        .etype-card .et-title { font-weight: 700; margin-bottom: 6px; font-size: 0.92em; }
+        .etype-card.webmail .et-title { color: #1d4ed8; }
+        .etype-card.client  .et-title { color: #6d28d9; }
+        .etype-card .et-desc  { font-size: 0.82em; color: #475569; }
+        .etype-card .et-exemplos { margin-top: 8px; font-size: 0.8em; color: #64748b; }
+
+        /* ── Boas práticas ── */
+        .boas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .boa-item {
+            background: #f0fdfa;
+            border-radius: 10px;
+            padding: 16px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+        .boa-icon { font-size: 1.6em; flex-shrink: 0; }
+        .boa-text strong { display: block; font-size: 0.88em; color: var(--primary); margin-bottom: 3px; }
+        .boa-text span   { font-size: 0.8em; color: #475569; }
+
+        /* ── nav ── */
+        .nav-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-bottom: 40px;
+        }
+        .nav-link {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+        .nav-link:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+
+        .compare-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 0.88em;
+        }
+        .compare-table th {
+            background: var(--primary);
+            color: white;
+            padding: 11px 14px;
+            text-align: left;
+        }
+        .compare-table th:first-child { border-radius: 8px 0 0 0; }
+        .compare-table th:last-child  { border-radius: 0 8px 0 0; }
+        .compare-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: middle;
+        }
+        .compare-table tr:nth-child(even) td { background: #f8fafc; }
+        .compare-table tr:last-child td { border-bottom: none; }
+
+        @media (max-width: 768px) {
+            .content-wrapper { padding: 0 15px; }
+            .lesson-hero, .content-card { padding: 25px; }
+            .lesson-hero h1 { font-size: 1.5em; }
+            .security-row  { grid-template-columns: 1fr; }
+            .email-type-grid { grid-template-columns: 1fr; }
+            .email-labels  { gap: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <a href="index.html" class="back-btn">&#x2B05; Voltar ao Dashboard</a>
+        <span class="page-badge">Unidade 2 &mdash; Internet e Seguran&ccedil;a</span>
+        <button class="slide-toggle" id="slideToggleBtn">&#x1F4FA; Modo Slide</button>
+    </div>
+
+    <div class="content-wrapper">
+
+        <div class="lesson-hero">
+            <h1>&#x1F310; Navegadores Web e E-mail</h1>
+            <p class="subtitle">Aula 2.1 &mdash; Como funciona o acesso &agrave; internet, os principais navegadores e o uso profissional do e-mail</p>
+        </div>
+
+        <!-- CARD 1 -->
+        <div class="content-card">
+            <h2>&#x1F4AC; O que &eacute; um navegador web?</h2>
+            <p>Um <strong>navegador web</strong> (ou <em>browser</em>) &eacute; o programa que permite acessar e visualizar p&aacute;ginas da internet. Ele funciona como um <strong>interpretador</strong>: recebe arquivos em HTML, CSS e JavaScript dos servidores e os transforma na p&aacute;gina que voc&ecirc; v&ecirc; na tela.</p>
+            <p>O processo acontece assim: voc&ecirc; digita um endere&ccedil;o (URL) &rarr; o navegador envia uma solicita&ccedil;&atilde;o ao servidor &rarr; o servidor responde com os arquivos da p&aacute;gina &rarr; o navegador monta e exibe o conte&uacute;do.</p>
+
+            <div class="highlight-box">
+                <p>&#x1F4A1; O navegador &eacute; a <strong>porta de entrada para a internet</strong>. Conhecer bem seus recursos &eacute; essencial para navegar com efici&ecirc;ncia, seguran&ccedil;a e privacidade.</p>
+            </div>
+
+            <h3>&#x1F4CA; Participa&ccedil;&atilde;o no mercado (2024)</h3>
+            <table class="compare-table">
+                <tr>
+                    <th>Navegador</th><th>Desenvolvedor</th><th>Market Share</th><th>Engine</th>
+                </tr>
+                <tr><td>&#x1F7E2; Chrome</td><td>Google</td><td>~65%</td><td>Blink</td></tr>
+                <tr><td>&#x1F535; Safari</td><td>Apple</td><td>~19%</td><td>WebKit</td></tr>
+                <tr><td>&#x1F7E6; Edge</td><td>Microsoft</td><td>~13%</td><td>Blink</td></tr>
+                <tr><td>&#x1F7E0; Firefox</td><td>Mozilla</td><td>~3%</td><td>Gecko</td></tr>
+                <tr><td>&#x26AB; Brave</td><td>Brave Software</td><td>~1%</td><td>Blink</td></tr>
+            </table>
+        </div>
+
+        <!-- CARD 2 -->
+        <div class="content-card">
+            <h2>&#x1F9E9; Principais Navegadores</h2>
+
+            <div class="browser-grid">
+                <div class="browser-card">
+                    <div class="browser-icon">&#x1F7E2;</div>
+                    <strong>Google Chrome</strong>
+                    <em>R&aacute;pido, sincroniza com conta Google, maior ecossistema de extens&otilde;es</em>
+                </div>
+                <div class="browser-card">
+                    <div class="browser-icon">&#x1F7E6;</div>
+                    <strong>Microsoft Edge</strong>
+                    <em>Integrado ao Windows 11, leitor de PDF nativo, modo IE compat&iacute;vel</em>
+                </div>
+                <div class="browser-card">
+                    <div class="browser-icon">&#x1F7E0;</div>
+                    <strong>Firefox</strong>
+                    <em>Open source, focado em privacidade, altamente configur&aacute;vel</em>
+                </div>
+                <div class="browser-card">
+                    <div class="browser-icon">&#x1F535;</div>
+                    <strong>Safari</strong>
+                    <em>Exclusivo Apple, muito eficiente em bateria no Mac e iPhone</em>
+                </div>
+                <div class="browser-card">
+                    <div class="browser-icon">&#x26AB;</div>
+                    <strong>Brave</strong>
+                    <em>Bloqueia an&uacute;ncios e rastreadores por padr&atilde;o, foco em privacidade</em>
+                </div>
+            </div>
+
+            <div class="alert-box">
+                <p>&#x1F4CC; Chrome, Edge e Brave usam o mesmo motor (Blink), por isso p&aacute;ginas se comportam de forma semelhante neles. Firefox e Safari t&ecirc;m motores pr&oacute;prios &mdash; o que pode causar pequenas diferen&ccedil;as visuais em alguns sites.</p>
+            </div>
+        </div>
+
+        <!-- CARD 3 -->
+        <div class="content-card">
+            <h2>&#x2699;&#xFE0F; Recursos Essenciais do Navegador</h2>
+
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <div class="fi-title">&#x1F4C2; Abas (Tabs)</div>
+                    <div class="fi-desc">Permite ter v&aacute;rios sites abertos ao mesmo tempo na mesma janela.</div>
+                    <div class="fi-kbd"><kbd>Ctrl</kbd>+<kbd>T</kbd> nova aba &nbsp; <kbd>Ctrl</kbd>+<kbd>W</kbd> fechar</div>
+                </div>
+                <div class="feature-item">
+                    <div class="fi-title">&#x2B50; Favoritos</div>
+                    <div class="fi-desc">Salva endere&ccedil;os de p&aacute;ginas para acess&aacute;-las rapidamente depois.</div>
+                    <div class="fi-kbd"><kbd>Ctrl</kbd>+<kbd>D</kbd> favoritar</div>
+                </div>
+                <div class="feature-item">
+                    <div class="fi-title">&#x1F4DC; Hist&oacute;rico</div>
+                    <div class="fi-desc">Registra todos os sites visitados, com data e hora de acesso.</div>
+                    <div class="fi-kbd"><kbd>Ctrl</kbd>+<kbd>H</kbd> abrir hist&oacute;rico</div>
+                </div>
+                <div class="feature-item">
+                    <div class="fi-title">&#x1F575;&#xFE0F; Modo An&ocirc;nimo</div>
+                    <div class="fi-desc">Navega sem salvar hist&oacute;rico, cookies ou dados de formul&aacute;rio no dispositivo.</div>
+                    <div class="fi-kbd"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>N</kbd></div>
+                </div>
+                <div class="feature-item">
+                    <div class="fi-title">&#x1F9E9; Extens&otilde;es</div>
+                    <div class="fi-desc">Pequenos programas que adicionam funcionalidades ao navegador (bloqueador de an&uacute;ncios, tradutores&hellip;).</div>
+                    <div class="fi-kbd">Menu &rarr; Extens&otilde;es</div>
+                </div>
+                <div class="feature-item">
+                    <div class="fi-title">&#x1F504; Atualizar p&aacute;gina</div>
+                    <div class="fi-desc">Recarrega o conte&uacute;do do site, buscando a vers&atilde;o mais recente do servidor.</div>
+                    <div class="fi-kbd"><kbd>F5</kbd> ou <kbd>Ctrl</kbd>+<kbd>R</kbd></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 4 -->
+        <div class="content-card">
+            <h2>&#x1F517; Anatomia de uma URL e HTTP vs HTTPS</h2>
+            <p>A <strong>URL</strong> (<em>Uniform Resource Locator</em>) &eacute; o endere&ccedil;o completo de um recurso na internet. Cada parte tem uma fun&ccedil;&atilde;o espec&iacute;fica:</p>
+
+            <div class="url-box">
+                <span class="url-part url-proto">https://</span><span class="url-part url-domain">www.ifrn.edu.br</span><span class="url-part url-path">/cursos/informatica</span><span class="url-part url-query">?turma=2025</span>
+            </div>
+
+            <div class="url-legend">
+                <div class="url-leg-item">
+                    <div class="leg-dot" style="background:#34d399"></div>
+                    <span><strong>Protocolo</strong> &mdash; como os dados s&atilde;o transmitidos</span>
+                </div>
+                <div class="url-leg-item">
+                    <div class="leg-dot" style="background:#60a5fa"></div>
+                    <span><strong>Dom&iacute;nio</strong> &mdash; endere&ccedil;o do servidor</span>
+                </div>
+                <div class="url-leg-item">
+                    <div class="leg-dot" style="background:#fbbf24"></div>
+                    <span><strong>Caminho</strong> &mdash; localiza&ccedil;&atilde;o do recurso</span>
+                </div>
+                <div class="url-leg-item">
+                    <div class="leg-dot" style="background:#f472b6"></div>
+                    <span><strong>Par&acirc;metros</strong> &mdash; dados extras na requisi&ccedil;&atilde;o</span>
+                </div>
+            </div>
+
+            <h3>&#x1F512; HTTP vs HTTPS</h3>
+            <div class="security-row">
+                <div class="security-card insecure">
+                    <div class="sc-icon">&#x26A0;&#xFE0F;</div>
+                    <div class="sc-title">HTTP</div>
+                    <div class="sc-desc">Dados trafegam <strong>sem criptografia</strong>. Qualquer pessoa na mesma rede pode interceptar as informa&ccedil;&otilde;es enviadas.</div>
+                </div>
+                <div class="security-card secure">
+                    <div class="sc-icon">&#x1F512;</div>
+                    <div class="sc-title">HTTPS</div>
+                    <div class="sc-desc">Dados s&atilde;o <strong>criptografados</strong> com TLS. O cadeado verde na barra confirma que a conex&atilde;o &eacute; segura.</div>
+                </div>
+            </div>
+
+            <div class="alert-box">
+                <p>&#x26A0;&#xFE0F; <strong>Regra pr&aacute;tica:</strong> Nunca insira senhas, n&uacute;meros de cart&atilde;o ou dados pessoais em sites sem o cadeado (HTTPS). Verifique sempre a barra de endere&ccedil;os antes de preencher qualquer formul&aacute;rio.</p>
+            </div>
+        </div>
+
+        <!-- CARD 5 -->
+        <div class="content-card">
+            <h2>&#x1F4E7; E-mail &mdash; Conceitos B&aacute;sicos</h2>
+            <p>O <strong>e-mail</strong> (<em>eletronic mail</em>) &eacute; um dos servi&ccedil;os mais antigos e ainda mais utilizados da internet. Permite enviar e receber mensagens, arquivos e documentos entre pessoas ao redor do mundo.</p>
+
+            <h3>Anatomia de um endere&ccedil;o de e-mail</h3>
+            <div class="email-anatomy">
+                <span class="em-user">joao.silva</span><span class="em-at">@</span><span class="em-domain">ifrn.edu.br</span>
+            </div>
+            <div class="email-labels">
+                <span>&#x2191;<strong style="color:#0891b2">Usu&aacute;rio</strong><br>identifica a pessoa</span>
+                <span>&#x2191;<strong style="color:#64748b">@</strong><br>"arroba" &mdash; separa<br>usu&aacute;rio do dom&iacute;nio</span>
+                <span>&#x2191;<strong style="color:#7c3aed">Dom&iacute;nio</strong><br>servidor de e-mail</span>
+            </div>
+
+            <h3>Formas de acessar o e-mail</h3>
+            <div class="email-type-grid">
+                <div class="etype-card webmail">
+                    <div class="et-title">&#x1F310; Webmail</div>
+                    <div class="et-desc">Acesso pelo navegador, sem instalar nada. E-mails ficam armazenados no servidor.</div>
+                    <div class="et-exemplos">Exemplos: <strong>Gmail, Outlook.com, Yahoo Mail</strong></div>
+                </div>
+                <div class="etype-card client">
+                    <div class="et-title">&#x1F4BB; Cliente de E-mail</div>
+                    <div class="et-desc">Programa instalado no computador. Baixa os e-mails e permite uso offline.</div>
+                    <div class="et-exemplos">Exemplos: <strong>Outlook, Thunderbird, Apple Mail</strong></div>
+                </div>
+            </div>
+
+            <h3>Protocolos de e-mail</h3>
+            <table class="compare-table">
+                <tr><th>Protocolo</th><th>Fun&ccedil;&atilde;o</th><th>Obs.</th></tr>
+                <tr><td><strong>SMTP</strong></td><td>Envio de e-mails</td><td>Simple Mail Transfer Protocol</td></tr>
+                <tr><td><strong>IMAP</strong></td><td>Recebimento &mdash; sincroniza com servidor</td><td>E-mails permanecem no servidor</td></tr>
+                <tr><td><strong>POP3</strong></td><td>Recebimento &mdash; baixa para o dispositivo</td><td>E-mails removidos do servidor</td></tr>
+            </table>
+        </div>
+
+        <!-- CARD 6 -->
+        <div class="content-card">
+            <h2>&#x2705; Boas Pr&aacute;ticas no Uso de E-mail</h2>
+
+            <div class="boas-grid">
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F4CC;</div>
+                    <div class="boa-text">
+                        <strong>Assunto claro e objetivo</strong>
+                        <span>O campo "Assunto" deve resumir o conte&uacute;do em uma linha. Evite deixar em branco ou usar "Ol&aacute;".</span>
+                    </div>
+                </div>
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F44B;</div>
+                    <div class="boa-text">
+                        <strong>Sauda&ccedil;&atilde;o e despedida</strong>
+                        <span>Inicie com "Bom dia" ou "Prezado(a)" e finalize com "Atenciosamente" + nome. Transmite profissionalismo.</span>
+                    </div>
+                </div>
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F4CE;</div>
+                    <div class="boa-text">
+                        <strong>Cuidado com anexos</strong>
+                        <span>Prefira links do Google Drive para arquivos grandes. Jamais abra anexos de remetentes desconhecidos.</span>
+                    </div>
+                </div>
+                <div class="boa-item">
+                    <div class="boa-icon">&#x21A9;&#xFE0F;</div>
+                    <div class="boa-text">
+                        <strong>Responder vs Responder a Todos</strong>
+                        <span>Use "Responder a Todos" apenas quando todos os destinat&aacute;rios precisam ver sua resposta.</span>
+                    </div>
+                </div>
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F6AB;</div>
+                    <div class="boa-text">
+                        <strong>Identifique spam e phishing</strong>
+                        <span>Desconfie de e-mails com erros de portugu&ecirc;s, links suspeitos ou pedidos urgentes de dados pessoais.</span>
+                    </div>
+                </div>
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F4BC;</div>
+                    <div class="boa-text">
+                        <strong>E-mail institucional x pessoal</strong>
+                        <span>Use o e-mail do IFRN para assuntos escolares. N&atilde;o misture com e-mails pessoais ou de redes sociais.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 7 — RECAPITULANDO -->
+        <div class="content-card">
+            <h2>&#x1F4CB; Recapitulando</h2>
+            <ul>
+                <li>O <strong>navegador web</strong> interpreta HTML, CSS e JS e exibe p&aacute;ginas da internet</li>
+                <li>Os principais navegadores s&atilde;o <strong>Chrome, Edge, Firefox, Safari e Brave</strong> &mdash; com diferen&ccedil;as em privacidade, velocidade e recursos</li>
+                <li>Recursos essenciais: <strong>abas, favoritos, hist&oacute;rico, modo an&ocirc;nimo e extens&otilde;es</strong></li>
+                <li>A <strong>URL</strong> &eacute; composta por protocolo, dom&iacute;nio, caminho e par&acirc;metros</li>
+                <li><strong>HTTPS</strong> garante conex&atilde;o criptografada &mdash; verifique o cadeado antes de inserir dados pessoais</li>
+                <li>O endere&ccedil;o de e-mail tem formato <em>usu&aacute;rio@dom&iacute;nio</em>; pode ser acessado via webmail ou cliente de e-mail</li>
+                <li>Boas pr&aacute;ticas de e-mail incluem assunto claro, sauda&ccedil;&atilde;o adequada e cuidado com anexos e phishing</li>
+            </ul>
+
+            <div class="highlight-box">
+                <p>&#x1F4DA; <strong>Na pr&oacute;xima aula</strong> vamos explorar o <strong>armazenamento em nuvem</strong> &mdash; Google Drive, OneDrive e Dropbox &mdash; aprendendo a guardar, organizar e compartilhar arquivos de forma segura e acess&iacute;vel de qualquer lugar.</p>
+            </div>
+        </div>
+
+        <!-- EXERCÍCIO: Arrastar e Soltar -->
+        <div class="content-card exercise-card">
+            <h2>&#x1F3AF; Exerc&iacute;cio &mdash; Arraste e Conecte</h2>
+            <p style="color:#475569;font-size:0.9em;margin-bottom:4px;">Arraste cada descri&ccedil;&atilde;o para o recurso do navegador correspondente. Em dispositivos m&oacute;veis, toque na descri&ccedil;&atilde;o e depois na zona de destino.</p>
+
+            <div class="ex-drag-root" data-ex="ex21">
+                <div class="ex-drag">
+                    <div>
+                        <div class="ex-col-title">Descri&ccedil;&atilde;o</div>
+                        <div class="ex-pool" data-pool="ex21">
+                            <div class="drag-chip" data-id="abas">Permite ter v&aacute;rios sites abertos ao mesmo tempo na mesma janela</div>
+                            <div class="drag-chip" data-id="favs">Salva endere&ccedil;os de p&aacute;ginas para acess&aacute;-las rapidamente</div>
+                            <div class="drag-chip" data-id="anonimo">Navega sem registrar hist&oacute;rico, cookies ou dados no dispositivo</div>
+                            <div class="drag-chip" data-id="hist">Lista de todos os sites visitados com data e hora</div>
+                            <div class="drag-chip" data-id="ext">Pequenos programas que adicionam funcionalidades ao navegador</div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="ex-col-title">Recurso</div>
+                        <div class="ex-zones" data-zones="ex21">
+                            <div class="drop-zone" data-zone="ex21-z1" data-accept="abas">
+                                <span class="zone-name">Abas (Tabs)</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex21-z2" data-accept="favs">
+                                <span class="zone-name">Favoritos</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex21-z3" data-accept="anonimo">
+                                <span class="zone-name">Modo An&ocirc;nimo</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex21-z4" data-accept="hist">
+                                <span class="zone-name">Hist&oacute;rico</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex21-z5" data-accept="ext">
+                                <span class="zone-name">Extens&otilde;es</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ex-actions">
+                <button class="btn-verificar" onclick="dragVerify('ex21')">Verificar</button>
+                <button class="btn-refazer"  onclick="dragReset('ex21')">Refazer</button>
+            </div>
+            <div class="ex-result" id="ex21-result"></div>
+        </div>
+
+        <!-- ATIVIDADE PRÁTICA 2.1 -->
+        <div class="content-card practical-card" id="prat-21">
+            <h2>&#x1F6E0;&#xFE0F; Atividade Pr&aacute;tica &mdash; Explorando o Navegador e o E-mail</h2>
+            <div class="prat-meta">
+                <span class="prat-tag">&#x23F1; ~25 min</span>
+                <span class="prat-tag">&#x1F310; Requer internet</span>
+                <span class="prat-tag">&#x1F4CD; Sem instala&ccedil;&atilde;o</span>
+            </div>
+
+            <div class="prat-steps">
+                <div class="prat-step">
+                    <div class="step-num">1</div>
+                    <div class="step-body">
+                        <div class="step-label">Verifique o HTTPS nos sites</div>
+                        <div class="step-desc">Acesse 3 sites diferentes pela barra de endere&ccedil;os. Em cada um, observe se h&aacute; o cadeado antes do endere&ccedil;o. Anote: qual site usa HTTP (sem cadeado) e qual usa HTTPS (com cadeado). Tente acessar um site de not&iacute;cias e um banco online e compare.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">2</div>
+                    <div class="step-body">
+                        <div class="step-label">Abra o modo an&ocirc;nimo e compare</div>
+                        <div class="step-desc">Pressione <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>N</kbd> para abrir uma aba an&ocirc;nima. Acesse o mesmo site que voc&ecirc; abriu na aba normal. Observe as diferen&ccedil;as: o navegador j&aacute; tem seus dados salvos na aba normal (sugest&otilde;es, login)? No modo an&ocirc;nimo esses dados n&atilde;o aparecem.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">3</div>
+                    <div class="step-body">
+                        <div class="step-label">Explore o hist&oacute;rico</div>
+                        <div class="step-desc">Pressione <kbd>Ctrl</kbd>+<kbd>H</kbd> para abrir o hist&oacute;rico de navega&ccedil;&atilde;o. Anote: quantos sites aparecem de hoje? Voc&ecirc; consegue identificar a que hora cada um foi acessado? Observe que o hist&oacute;rico da aba an&ocirc;nima <strong>n&atilde;o aparece</strong> aqui.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">4</div>
+                    <div class="step-body">
+                        <div class="step-label">Salve um favorito</div>
+                        <div class="step-desc">Acesse o site do IFRN (<strong>ifrn.edu.br</strong>) ou o dashboard da disciplina. Pressione <kbd>Ctrl</kbd>+<kbd>D</kbd> para adicionar aos favoritos. Nomeie-o de forma descritiva. Depois, feche a aba e abra o site usando apenas os favoritos. Confirm que funcionou.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">5</div>
+                    <div class="step-body">
+                        <div class="step-label">Compose um e-mail profissional</div>
+                        <div class="step-desc">Acesse seu webmail institucional ou o Gmail. Crie um novo e-mail para o professor com: <strong>Assunto</strong> claro (ex.: "D&uacute;vida sobre Aula 2.1"), <strong>Sauda&ccedil;&atilde;o</strong> ("Bom dia, Prof. C&eacute;sar"), <strong>Mensagem</strong> com pelo menos uma pergunta sobre o conte&uacute;do e <strong>Despedida</strong> com seu nome. N&atilde;o precisa enviar &mdash; apenas salvar como rascunho.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="prat-observe">
+                <strong>&#x1F4CC; Para saber:</strong> O modo an&ocirc;nimo <strong>n&atilde;o torna voc&ecirc; invis&iacute;vel na internet</strong>. Ele apenas n&atilde;o salva dados <em>localmente</em> no seu dispositivo. O provedor de internet, o administrador da rede escolar e os sites acessados ainda podem registrar sua atividade.
+            </div>
+
+            <div class="ex-actions">
+                <button class="btn-print" onclick="printPractical('prat-21', 'Aula 2.1 \u2014 Navegadores Web e E-mail')">&#x1F5A8;&#xFE0F; Imprimir roteiro</button>
+            </div>
+        </div>
+
+        <div class="nav-footer">
+            <a href="uni1-04-softwares-utilitarios.html" class="nav-link">&#x2B05; Anterior: Softwares Utilit&aacute;rios</a>
+            <a href="uni2-02-armazenamento-nuvem.html" class="nav-link">Pr&oacute;xima: Armazenamento em Nuvem &#x27A1;</a>
+        </div>
+
+    </div><!-- fim .content-wrapper -->
+
+    <script src="slide-mode.js"></script>
+    <script src="exercise-drag.js"></script>
+    <script src="exercise-print.js"></script>
+</body>
+</html>
