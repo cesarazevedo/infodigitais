@@ -32,12 +32,38 @@
 (function () {
     'use strict';
 
+    const LETTERS = ['A', 'B', 'C', 'D', 'E'];
+
+    /* ── embaralha array in-place (Fisher-Yates) ── */
+    function shuffle(arr) {
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }
+
     /* ── inicialização automática ── */
     document.addEventListener('DOMContentLoaded', initAll);
 
     function initAll() {
         document.querySelectorAll('.mc-root').forEach(root => {
+            shuffleOptions(root);
             initMC(root.dataset.ex);
+        });
+    }
+
+    /* ── embaralha opções dentro de cada questão e atualiza letras ── */
+    function shuffleOptions(root) {
+        root.querySelectorAll('.mc-question').forEach(qEl => {
+            const container = qEl.querySelector('.mc-options');
+            if (!container) return;
+            const opts = shuffle([...container.querySelectorAll('.mc-option')]);
+            opts.forEach((opt, i) => {
+                container.appendChild(opt);
+                const letter = opt.querySelector('.mc-letter');
+                if (letter) letter.textContent = LETTERS[i];
+            });
         });
     }
 

@@ -38,11 +38,29 @@
     /* ── inicialização automática ── */
     document.addEventListener('DOMContentLoaded', initAll);
 
+    /* ── embaralha array in-place (Fisher-Yates) ── */
+    function shuffle(arr) {
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }
+
     function initAll() {
         document.querySelectorAll('.ex-drag-root').forEach(root => {
             const exId = root.dataset.ex;
+            shufflePool(exId);
             initDrag(exId);
         });
+    }
+
+    /* ── embaralha os chips no pool ── */
+    function shufflePool(exId) {
+        const pool = document.querySelector(`.ex-pool[data-pool="${exId}"]`);
+        if (!pool) return;
+        const chips = shuffle([...pool.querySelectorAll('.drag-chip')]);
+        chips.forEach(c => pool.appendChild(c));
     }
 
     function initDrag(exId) {
