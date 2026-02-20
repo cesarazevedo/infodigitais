@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 1.3 - Gerenciamento de Pastas e Arquivos</title>
+    <link rel="stylesheet" href="slide-mode.css">
+    <style>
+        :root {
+            --primary: #1565c0;
+            --secondary: #00897b;
+            --bg-light: #f0f4f8;
+            --text-dark: #1a202c;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        .top-bar {
+            background: white;
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .back-btn {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+
+        .back-btn:hover { background: rgba(21,101,192,0.08); }
+
+        .page-badge {
+            font-size: 0.8em;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: rgba(21, 101, 192, 0.12);
+            color: #1565c0;
+            font-weight: 600;
+        }
+
+        .content-wrapper {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 30px;
+        }
+
+        .lesson-hero {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            border-top: 4px solid var(--primary);
+        }
+
+        .lesson-hero h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .lesson-hero .subtitle {
+            font-size: 1.05em;
+            color: #718096;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 16px;
+            padding: 35px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+
+        .content-card h2 {
+            font-size: 1.4em;
+            color: var(--primary);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .content-card h3 {
+            font-size: 1.05em;
+            color: #2d5a9e;
+            margin: 20px 0 10px;
+        }
+
+        .content-card p { margin-bottom: 15px; text-align: justify; }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(21,101,192,0.05), rgba(0,137,123,0.06));
+            border-left: 4px solid var(--primary);
+            padding: 20px 25px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+        }
+
+        .highlight-box p { margin-bottom: 0; font-style: italic; }
+
+        /* Árvore de diretórios */
+        .dir-tree {
+            background: #1e293b;
+            color: #e2e8f0;
+            border-radius: 12px;
+            padding: 24px 28px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.95em;
+            line-height: 2;
+            margin: 20px 0;
+        }
+
+        .dir-tree .folder { color: #60a5fa; font-weight: 700; }
+        .dir-tree .file   { color: #94a3b8; }
+        .dir-tree .root   { color: #34d399; font-weight: 700; }
+        .dir-tree .indent1 { padding-left: 20px; }
+        .dir-tree .indent2 { padding-left: 40px; }
+        .dir-tree .indent3 { padding-left: 60px; }
+
+        /* Grid de operações */
+        .ops-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 14px;
+            margin: 20px 0;
+        }
+
+        .op-item {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 18px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .op-item .op-icon { font-size: 1.8em; margin-bottom: 8px; }
+        .op-item strong { display: block; color: var(--primary); margin-bottom: 4px; font-size: 0.95em; }
+        .op-item p { font-size: 0.85em; color: #718096; margin: 0; text-align: left; }
+
+        .op-item .shortcut {
+            display: inline-block;
+            margin-top: 8px;
+            font-size: 0.78em;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-weight: 700;
+        }
+
+        /* Tabela de extensões */
+        .ext-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+
+        .ext-table th {
+            background: var(--primary);
+            color: white;
+            padding: 11px 14px;
+            text-align: left;
+        }
+
+        .ext-table th:first-child { border-radius: 8px 0 0 0; }
+        .ext-table th:last-child  { border-radius: 0 8px 0 0; }
+
+        .ext-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: middle;
+        }
+
+        .ext-table tr:nth-child(even) td { background: #f8fafc; }
+        .ext-table tr:last-child td { border-bottom: none; }
+
+        .ext-badge {
+            display: inline-block;
+            font-family: 'Courier New', monospace;
+            font-weight: 700;
+            font-size: 0.85em;
+            padding: 2px 8px;
+            border-radius: 5px;
+            margin: 2px 3px 2px 0;
+        }
+
+        .ext-doc  { background: #dbeafe; color: #1e40af; }
+        .ext-img  { background: #d1fae5; color: #065f46; }
+        .ext-vid  { background: #ede9fe; color: #5b21b6; }
+        .ext-audio{ background: #fce7f3; color: #9d174d; }
+        .ext-zip  { background: #fef3c7; color: #92400e; }
+        .ext-sys  { background: #fee2e2; color: #991b1b; }
+        .ext-code { background: #f0fdf4; color: #14532d; }
+
+        /* Dicas de organização */
+        .dicas-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 16px 0;
+        }
+
+        .dica-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 14px 16px;
+        }
+
+        .dica-icon { font-size: 1.5em; flex-shrink: 0; margin-top: 2px; }
+        .dica-item strong { display: block; color: var(--primary); margin-bottom: 3px; font-size: 0.95em; }
+        .dica-item span { font-size: 0.88em; color: #4a5568; }
+
+        /* Alerta lixeira */
+        .alert-box {
+            background: #fff8e1;
+            border-left: 4px solid #f59e0b;
+            padding: 18px 22px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+        }
+
+        .alert-box p { margin: 0; color: #78350f; font-size: 0.93em; }
+
+        ul, ol { margin: 10px 0 15px 25px; }
+        li { margin-bottom: 8px; }
+
+        .nav-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-bottom: 40px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+
+        .nav-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        @media (max-width: 768px) {
+            .content-wrapper { padding: 0 15px; }
+            .lesson-hero, .content-card { padding: 25px; }
+            .lesson-hero h1 { font-size: 1.5em; }
+            .ops-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <a href="index.html" class="back-btn">&#x2B05; Voltar ao Dashboard</a>
+        <span class="page-badge">Unidade 1 &mdash; S.O. e Utilit&aacute;rios</span>
+        <button class="slide-toggle" id="slideToggleBtn">&#x1F4FA; Modo Slide</button>
+    </div>
+
+    <div class="content-wrapper">
+
+        <div class="lesson-hero">
+            <h1>&#x1F4C1; Gerenciamento de Pastas e Arquivos</h1>
+            <p class="subtitle">Aula 1.3 &mdash; Organize, crie, mova e gerencie seus arquivos como um profissional</p>
+        </div>
+
+        <!-- CARD 1 -->
+        <div class="content-card">
+            <h2>&#x1F4AC; Arquivos e Pastas: conceitos b&aacute;sicos</h2>
+            <p>Tudo que armazenamos no computador &mdash; documentos, fotos, v&iacute;deos, programas &mdash; existe na forma de <strong>arquivos</strong>. Um arquivo &eacute; uma unidade de informa&ccedil;&atilde;o com nome, conte&uacute;do e um tipo (definido pela extens&atilde;o).</p>
+            <p>Para organizar esses arquivos, o sistema operacional utiliza <strong>pastas</strong> (tamb&eacute;m chamadas de <em>diret&oacute;rios</em>). Pastas funcionam como gavetas: voc&ecirc; pode colocar arquivos dentro delas e at&eacute; criar pastas dentro de pastas, formando uma <strong>hierarquia</strong>.</p>
+
+            <div class="highlight-box">
+                <p>&#x1F4A1; <strong>Analogia:</strong> Pense no disco r&iacute;gido como um grande armário. As <strong>pastas</strong> s&atilde;o as gavetas e divis&otilde;rias. Os <strong>arquivos</strong> s&atilde;o os documentos dentro de cada gaveta. Sem organiza&ccedil;&atilde;o, encontrar algo vira um caos.</p>
+            </div>
+
+            <p>Todo arquivo possui tr&ecirc;s informa&ccedil;&otilde;es essenciais:</p>
+            <ul>
+                <li><strong>Nome</strong> &mdash; identifica o arquivo (ex.: <em>relatorio-final</em>)</li>
+                <li><strong>Extens&atilde;o</strong> &mdash; define o tipo e o programa associado (ex.: <em>.docx</em>, <em>.pdf</em>)</li>
+                <li><strong>Local</strong> &mdash; o caminho de pastas onde ele est&aacute; guardado</li>
+            </ul>
+        </div>
+
+        <!-- CARD 2 -->
+        <div class="content-card">
+            <h2>&#x1F333; A &Aacute;rvore de Diret&oacute;rios</h2>
+            <p>O sistema de arquivos &eacute; organizado em forma de <strong>&aacute;rvore</strong>: existe uma <strong>pasta raiz</strong> principal e, a partir dela, todas as demais pastas e arquivos se ramificam. No Windows, a raiz &eacute; o disco <code>C:\</code>; no Linux e macOS, &eacute; a barra <code>/</code>.</p>
+
+            <div class="dir-tree">
+                <div class="root">&#x1F4BB; C:\ (raiz)</div>
+                <div class="indent1"><span class="folder">&#x1F4C2; Usu&aacute;rios\</span></div>
+                <div class="indent2"><span class="folder">&#x1F4C2; César\</span></div>
+                <div class="indent3"><span class="folder">&#x1F4C2; Documentos\</span></div>
+                <div class="indent3"><span class="file">&#x1F4C4; relatorio.docx</span></div>
+                <div class="indent3"><span class="folder">&#x1F4C2; Imagens\</span></div>
+                <div class="indent3"><span class="file">&#x1F5BC;&#xFE0F; foto-turma.jpg</span></div>
+                <div class="indent3"><span class="folder">&#x1F4C2; Downloads\</span></div>
+                <div class="indent1"><span class="folder">&#x1F4C2; Windows\</span></div>
+                <div class="indent1"><span class="folder">&#x1F4C2; Arquivos de Programas\</span></div>
+            </div>
+
+            <p>O <strong>caminho</strong> (path) de um arquivo indica exatamente onde ele est&aacute; nessa &aacute;rvore. Por exemplo:</p>
+            <ul>
+                <li>Windows: <code>C:\Usu&aacute;rios\C&eacute;sar\Documentos\relatorio.docx</code></li>
+                <li>Linux/macOS: <code>/home/cesar/documentos/relatorio.pdf</code></li>
+            </ul>
+
+            <div class="highlight-box">
+                <p>&#x1F4A1; Quanto mais organizada for sua &aacute;rvore de pastas, mais f&aacute;cil ser&aacute; encontrar arquivos e fazer backups. Uma estrutura bagunçada gera retrabalho e perda de tempo.</p>
+            </div>
+        </div>
+
+        <!-- CARD 3 -->
+        <div class="content-card">
+            <h2>&#x2699;&#xFE0F; Opera&ccedil;&otilde;es com Arquivos e Pastas</h2>
+            <p>O sistema operacional oferece um conjunto de opera&ccedil;&otilde;es para gerenciar arquivos e pastas. Todas podem ser feitas pela interface gr&aacute;fica (cliques) ou por atalhos de teclado:</p>
+
+            <div class="ops-grid">
+                <div class="op-item">
+                    <div class="op-icon">&#x2795;</div>
+                    <strong>Criar</strong>
+                    <p>Cria um novo arquivo ou pasta vazia no local escolhido.</p>
+                    <span class="shortcut">Ctrl + Shift + N</span>
+                </div>
+                <div class="op-item">
+                    <div class="op-icon">&#x270F;&#xFE0F;</div>
+                    <strong>Renomear</strong>
+                    <p>Altera o nome de um arquivo ou pasta sem mover seu conte&uacute;do.</p>
+                    <span class="shortcut">F2</span>
+                </div>
+                <div class="op-item">
+                    <div class="op-icon">&#x1F4CB;</div>
+                    <strong>Copiar</strong>
+                    <p>Duplica o arquivo. O original permanece no lugar.</p>
+                    <span class="shortcut">Ctrl + C / Ctrl + V</span>
+                </div>
+                <div class="op-item">
+                    <div class="op-icon">&#x2702;&#xFE0F;</div>
+                    <strong>Mover (Recortar)</strong>
+                    <p>Transfere o arquivo para outro local. O original &eacute; removido.</p>
+                    <span class="shortcut">Ctrl + X / Ctrl + V</span>
+                </div>
+                <div class="op-item">
+                    <div class="op-icon">&#x1F5D1;&#xFE0F;</div>
+                    <strong>Excluir</strong>
+                    <p>Remove o arquivo, enviando-o primeiro para a Lixeira.</p>
+                    <span class="shortcut">Delete</span>
+                </div>
+                <div class="op-item">
+                    <div class="op-icon">&#x1F50D;</div>
+                    <strong>Pesquisar</strong>
+                    <p>Localiza arquivos pelo nome, tipo ou conte&uacute;do.</p>
+                    <span class="shortcut">Ctrl + F / Win + S</span>
+                </div>
+            </div>
+
+            <div class="alert-box">
+                <p>&#x26A0;&#xFE0F; <strong>Aten&ccedil;&atilde;o com a Lixeira!</strong> Ao excluir um arquivo, ele vai para a Lixeira &mdash; ainda &eacute; poss&iacute;vel recuper&aacute;-lo. Por&eacute;m, ao esvaziar a Lixeira ou usar <strong>Shift + Delete</strong>, o arquivo &eacute; removido permanentemente e n&atilde;o pode ser recuperado facilmente.</p>
+            </div>
+        </div>
+
+        <!-- CARD 4 -->
+        <div class="content-card">
+            <h2>&#x1F3F7;&#xFE0F; Extens&otilde;es e Tipos de Arquivo</h2>
+            <p>A <strong>extens&atilde;o</strong> &eacute; a parte do nome do arquivo que vem ap&oacute;s o ponto final. Ela indica o <strong>formato</strong> do arquivo e qual programa deve abri-lo. Conhecer as principais extens&otilde;es &eacute; essencial para trabalhar com arquivos no dia a dia.</p>
+
+            <table class="ext-table">
+                <tr>
+                    <th>Categoria</th>
+                    <th>Extens&otilde;es comuns</th>
+                    <th>Abre com</th>
+                </tr>
+                <tr>
+                    <td>&#x1F4DD; Documentos</td>
+                    <td>
+                        <span class="ext-badge ext-doc">.docx</span>
+                        <span class="ext-badge ext-doc">.pdf</span>
+                        <span class="ext-badge ext-doc">.odt</span>
+                        <span class="ext-badge ext-doc">.txt</span>
+                    </td>
+                    <td>Word, LibreOffice, Acrobat</td>
+                </tr>
+                <tr>
+                    <td>&#x1F4CA; Planilhas</td>
+                    <td>
+                        <span class="ext-badge ext-doc">.xlsx</span>
+                        <span class="ext-badge ext-doc">.csv</span>
+                        <span class="ext-badge ext-doc">.ods</span>
+                    </td>
+                    <td>Excel, LibreOffice Calc</td>
+                </tr>
+                <tr>
+                    <td>&#x1F5BC;&#xFE0F; Imagens</td>
+                    <td>
+                        <span class="ext-badge ext-img">.jpg</span>
+                        <span class="ext-badge ext-img">.png</span>
+                        <span class="ext-badge ext-img">.gif</span>
+                        <span class="ext-badge ext-img">.svg</span>
+                        <span class="ext-badge ext-img">.webp</span>
+                    </td>
+                    <td>Visualizador de fotos, Photoshop</td>
+                </tr>
+                <tr>
+                    <td>&#x1F3AC; V&iacute;deos</td>
+                    <td>
+                        <span class="ext-badge ext-vid">.mp4</span>
+                        <span class="ext-badge ext-vid">.mkv</span>
+                        <span class="ext-badge ext-vid">.avi</span>
+                        <span class="ext-badge ext-vid">.mov</span>
+                    </td>
+                    <td>VLC, Windows Media Player</td>
+                </tr>
+                <tr>
+                    <td>&#x1F3B5; &Aacute;udios</td>
+                    <td>
+                        <span class="ext-badge ext-audio">.mp3</span>
+                        <span class="ext-badge ext-audio">.wav</span>
+                        <span class="ext-badge ext-audio">.flac</span>
+                        <span class="ext-badge ext-audio">.ogg</span>
+                    </td>
+                    <td>VLC, Spotify, Windows Media</td>
+                </tr>
+                <tr>
+                    <td>&#x1F4E6; Compactados</td>
+                    <td>
+                        <span class="ext-badge ext-zip">.zip</span>
+                        <span class="ext-badge ext-zip">.rar</span>
+                        <span class="ext-badge ext-zip">.7z</span>
+                        <span class="ext-badge ext-zip">.tar.gz</span>
+                    </td>
+                    <td>WinRAR, 7-Zip, WinZip</td>
+                </tr>
+                <tr>
+                    <td>&#x1F5A5;&#xFE0F; Sistema/Execut&aacute;vel</td>
+                    <td>
+                        <span class="ext-badge ext-sys">.exe</span>
+                        <span class="ext-badge ext-sys">.msi</span>
+                        <span class="ext-badge ext-sys">.bat</span>
+                        <span class="ext-badge ext-sys">.dll</span>
+                    </td>
+                    <td>Sistema operacional (cuidado!)</td>
+                </tr>
+                <tr>
+                    <td>&#x1F4BB; C&oacute;digo-fonte</td>
+                    <td>
+                        <span class="ext-badge ext-code">.py</span>
+                        <span class="ext-badge ext-code">.html</span>
+                        <span class="ext-badge ext-code">.js</span>
+                        <span class="ext-badge ext-code">.java</span>
+                    </td>
+                    <td>VS Code, Bloco de Notas, IDEs</td>
+                </tr>
+            </table>
+
+            <div class="alert-box">
+                <p>&#x26A0;&#xFE0F; <strong>Cuidado com arquivos .exe e .bat</strong> recebidos por e-mail ou baixados de sites desconhecidos. Arquivos execut&aacute;veis podem conter v&iacute;rus ou malware.</p>
+            </div>
+        </div>
+
+        <!-- CARD 5 -->
+        <div class="content-card">
+            <h2>&#x1F4A1; Boas Pr&aacute;ticas de Organiza&ccedil;&atilde;o</h2>
+            <p>Manter os arquivos bem organizados economiza tempo, evita perda de dados e facilita o compartilhamento. Veja as principais boas pr&aacute;ticas:</p>
+
+            <div class="dicas-list">
+                <div class="dica-item">
+                    <div class="dica-icon">&#x1F4C2;</div>
+                    <div>
+                        <strong>Crie uma estrutura de pastas l&oacute;gica</strong>
+                        <span>Organize por projeto, disciplina ou data. Exemplo: <em>Escola &gt; 2025 &gt; Inform&aacute;tica &gt; Trabalhos</em></span>
+                    </div>
+                </div>
+                <div class="dica-item">
+                    <div class="dica-icon">&#x270F;&#xFE0F;</div>
+                    <div>
+                        <strong>Use nomes descritivos e sem espa&ccedil;os</strong>
+                        <span>Prefira <em>relatorio-final-2025.docx</em> a <em>doc1.docx</em>. Evite acentos e espa&ccedil;os nos nomes de arquivo.</span>
+                    </div>
+                </div>
+                <div class="dica-item">
+                    <div class="dica-icon">&#x1F4C5;</div>
+                    <div>
+                        <strong>Inclua datas no nome quando relevante</strong>
+                        <span>Use o formato <em>AAAA-MM-DD</em> no in&iacute;cio para facilitar a ordena&ccedil;&atilde;o. Ex.: <em>2025-06-10-ata-reuniao.pdf</em></span>
+                    </div>
+                </div>
+                <div class="dica-item">
+                    <div class="dica-icon">&#x1F5D1;&#xFE0F;</div>
+                    <div>
+                        <strong>Esvazie a Lixeira regularmente</strong>
+                        <span>Arquivos na Lixeira ainda ocupam espa&ccedil;o no disco. Esvazie periodicamente para liberar armazenamento.</span>
+                    </div>
+                </div>
+                <div class="dica-item">
+                    <div class="dica-icon">&#x2601;&#xFE0F;</div>
+                    <div>
+                        <strong>Fa&ccedil;a backup na nuvem</strong>
+                        <span>Guarde c&oacute;pias importantes no Google Drive, OneDrive ou Dropbox. Um arquivo s&oacute; no computador &eacute; um arquivo em risco.</span>
+                    </div>
+                </div>
+                <div class="dica-item">
+                    <div class="dica-icon">&#x1F50D;</div>
+                    <div>
+                        <strong>Use a pesquisa do S.O.</strong>
+                        <span>Se n&atilde;o encontrar um arquivo, use a busca (<strong>Win + S</strong> no Windows) antes de procurar manualmente.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 6 -->
+        <div class="content-card">
+            <h2>&#x1F4CB; Recapitulando</h2>
+            <ul>
+                <li><strong>Arquivos</strong> armazenam informa&ccedil;&otilde;es e possuem nome, extens&atilde;o e localiza&ccedil;&atilde;o</li>
+                <li><strong>Pastas</strong> organizam os arquivos em uma estrutura hier&aacute;rquica chamada &aacute;rvore de diret&oacute;rios</li>
+                <li>O <strong>caminho</strong> indica onde o arquivo est&aacute; na &aacute;rvore (ex.: <code>C:\Usu&aacute;rios\César\Documentos</code>)</li>
+                <li>Opera&ccedil;&otilde;es essenciais: <strong>criar, renomear, copiar, mover e excluir</strong></li>
+                <li>A <strong>extens&atilde;o</strong> (.pdf, .jpg, .mp4&hellip;) define o tipo do arquivo e qual programa o abre</li>
+                <li>Cuidado com arquivos <strong>.exe de fontes desconhecidas</strong> &mdash; podem ser malware</li>
+                <li>Boas pr&aacute;ticas: pastas l&oacute;gicas, nomes descritivos, backup na nuvem e Lixeira limpa</li>
+            </ul>
+
+            <div class="highlight-box">
+                <p>&#x1F4DA; <strong>Na pr&oacute;xima aula</strong> vamos conhecer os principais <strong>softwares utilit&aacute;rios</strong> &mdash; ferramentas que complementam o sistema operacional para tarefas como compress&atilde;o de arquivos, prote&ccedil;&atilde;o contra v&iacute;rus e manuten&ccedil;&atilde;o do computador.</p>
+            </div>
+        </div>
+
+        <div class="nav-footer">
+            <a href="uni1-02-sistemas-operacionais.html" class="nav-link">&#x2B05; Anterior: Principais S.O.</a>
+            <a href="uni1-04-softwares-utilitarios.html" class="nav-link">Pr&oacute;xima: Softwares Utilit&aacute;rios &#x27A1;</a>
+        </div>
+
+    </div>
+
+    <script src="slide-mode.js"></script>
+</body>
+</html>
