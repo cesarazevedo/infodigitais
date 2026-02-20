@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Educação em Tecnologias Digitais</title>
+    <style>
+        :root {
+            --primary: #1565c0;
+            --secondary: #00897b;
+            --bg-light: #f0f4f8;
+            --text-dark: #1a202c;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- HEADER --- */
+        .top-header {
+            background: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            z-index: 10;
+        }
+
+        .brand {
+            font-size: 1.5em;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-text {
+            background: linear-gradient(to right, var(--primary), #1976d2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .search-box { position: relative; width: 400px; }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 20px 10px 40px;
+            border-radius: 50px;
+            border: 1px solid #e2e8f0;
+            background: #f8fafc;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .search-input:focus {
+            background: white;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(21, 101, 192, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #a0aec0;
+        }
+
+        .user-profile { display: flex; align-items: center; gap: 10px; }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), #1976d2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* --- SIDEBAR --- */
+        .main-container {
+            flex: 1;
+            display: flex;
+            flex-direction: row;
+            overflow: hidden;
+        }
+
+        .tabs-nav {
+            display: flex;
+            flex-direction: column;
+            width: 230px;
+            flex-shrink: 0;
+            background: white;
+            border-right: 1px solid #e2e8f0;
+            overflow-y: auto;
+            padding: 20px 0;
+            gap: 2px;
+        }
+
+        .sidebar-label {
+            font-size: 0.7em;
+            font-weight: 700;
+            color: #a0aec0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0 18px 8px;
+        }
+
+        .sidebar-sep { height: 1px; background: #e2e8f0; margin: 10px 18px; }
+
+        .tab-btn {
+            padding: 9px 16px 9px 22px;
+            background: transparent;
+            border: none;
+            border-left: 3px solid transparent;
+            font-size: 0.87em;
+            font-weight: 600;
+            color: #718096;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-radius: 0 8px 8px 0;
+            text-align: left;
+            width: 100%;
+        }
+
+        .tab-btn:hover { color: var(--primary); background: rgba(21, 101, 192, 0.06); }
+
+        .tab-btn.active {
+            color: var(--primary);
+            background: rgba(21, 101, 192, 0.08);
+            border-left-color: var(--primary);
+        }
+
+        /* Cores por unidade */
+        .tab-btn[data-target="uni1"].active {
+            border-left-color: #1565c0;
+            color: #1565c0;
+            background: rgba(21, 101, 192, 0.08);
+        }
+        .tab-btn[data-target="uni2"].active {
+            border-left-color: #00838f;
+            color: #00838f;
+            background: rgba(0, 131, 143, 0.08);
+        }
+        .tab-btn[data-target="uni3"].active {
+            border-left-color: #6a1b9a;
+            color: #6a1b9a;
+            background: rgba(106, 27, 154, 0.08);
+        }
+        .tab-btn[data-target="uni4"].active {
+            border-left-color: #bf360c;
+            color: #bf360c;
+            background: rgba(191, 54, 12, 0.08);
+        }
+
+        /* Badges das unidades */
+        .badge-uni1 { background: rgba(21, 101, 192, 0.15);  color: #1565c0; }
+        .badge-uni2 { background: rgba(0, 131, 143, 0.15);   color: #00838f; }
+        .badge-uni3 { background: rgba(106, 27, 154, 0.15);  color: #6a1b9a; }
+        .badge-uni4 { background: rgba(191, 54, 12, 0.15);   color: #bf360c; }
+
+        /* --- CONTEÚDO DAS ABAS --- */
+        .tab-content {
+            flex: 1;
+            overflow-y: auto;
+            display: none;
+            animation: fadeIn 0.4s ease;
+            padding: 25px 30px 50px;
+        }
+
+        .tab-content.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- DASHBOARD --- */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .dash-card {
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .dash-card h3 {
+            margin-bottom: 15px;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .progress-circular {
+            --prog: 0%;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: conic-gradient(var(--primary) var(--prog), #e2e8f0 0);
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .prog-text {
+            position: absolute;
+            background: white;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .chapter-check-list { list-style: none; }
+        .chapter-check-list li { margin-bottom: 6px; }
+        .chapter-check-list label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: default;
+            padding: 4px 6px;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+        .chapter-check-list label:hover { background: #f0f4f8; }
+        .chapter-check-list input[type="checkbox"] {
+            width: 16px; height: 16px;
+            accent-color: var(--primary);
+            cursor: default;
+            flex-shrink: 0;
+        }
+        .chapter-check-list .ch-name { font-size: 0.92em; }
+
+        /* --- CARDS DE AULA --- */
+        .unidade-title {
+            font-size: 1.8em;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .unidade-subtitle {
+            font-size: 0.95em;
+            color: #718096;
+            margin-bottom: 24px;
+        }
+
+        .unidade-badge {
+            font-size: 0.6em;
+            padding: 5px 12px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .section-label {
+            font-size: 0.75em;
+            font-weight: 700;
+            color: #a0aec0;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin: 28px 0 12px;
+        }
+
+        .lessons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .lesson-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            border: 1px solid #f0f0f0;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+        }
+
+        a.lesson-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border-color: var(--primary);
+        }
+
+        .lesson-card.coming-soon {
+            opacity: 0.58;
+            cursor: not-allowed;
+            border-style: dashed;
+            border-color: #cbd5e0;
+        }
+
+        .lesson-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .lesson-id { font-weight: 700; color: #a0aec0; }
+        .lesson-status { font-size: 1.2em; }
+
+        .lesson-title {
+            font-size: 1.05em;
+            font-weight: 600;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .lesson-desc {
+            font-size: 0.88em;
+            color: #718096;
+            margin-bottom: 15px;
+            flex-grow: 1;
+            line-height: 1.6;
+        }
+
+        .lesson-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: auto;
+        }
+
+        .mini-tag {
+            font-size: 0.75em;
+            padding: 3px 8px;
+            background: #edf2f7;
+            color: #718096;
+            border-radius: 6px;
+        }
+
+        a.lesson-card.done .lesson-status { color: #38b000; }
+
+        /* --- DARK MODE TOGGLE --- */
+        .dark-toggle-index {
+            padding: 7px 11px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            font-size: 1.15em;
+            line-height: 1;
+            transition: all 0.2s;
+        }
+        .dark-toggle-index:hover { background: #eef4fb; border-color: var(--primary); }
+
+        /* --- DARK MODE --- */
+        body.dark-mode { background-color: #0f172a; color: #e2e8f0; }
+        body.dark-mode .top-header { background: #1e293b; box-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+        body.dark-mode .dark-toggle-index { background: #334155; border-color: #475569; }
+        body.dark-mode .dark-toggle-index:hover { background: #475569; border-color: #60a5fa; }
+        body.dark-mode .tabs-nav { background: #1e293b; border-right-color: #334155; }
+        body.dark-mode .sidebar-sep { background: #334155; }
+        body.dark-mode .tab-btn { color: #94a3b8; }
+        body.dark-mode .tab-btn:hover { color: #e2e8f0; background: rgba(255,255,255,0.05); }
+        body.dark-mode .tab-btn.active { background: rgba(21,101,192,0.18); }
+        body.dark-mode .dash-card { background: #1e293b; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        body.dark-mode .dash-card h3 { color: #e2e8f0; }
+        body.dark-mode #motivationText { color: #94a3b8 !important; }
+        body.dark-mode .progress-circular { background: conic-gradient(var(--primary) var(--prog), #334155 0); }
+        body.dark-mode .prog-text { background: #1e293b; color: #93c5fd; }
+        body.dark-mode .chapter-check-list label:hover { background: #334155; }
+        body.dark-mode .lesson-card { background: #1e293b; border-color: #334155; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+        body.dark-mode a.lesson-card:hover { border-color: #60a5fa; box-shadow: 0 8px 25px rgba(0,0,0,0.3); }
+        body.dark-mode .lesson-card.coming-soon { border-color: #334155; }
+        body.dark-mode .lesson-title { color: #e2e8f0; }
+        body.dark-mode .lesson-desc { color: #94a3b8; }
+        body.dark-mode .mini-tag { background: #334155; color: #94a3b8; }
+        body.dark-mode .unidade-title { color: #e2e8f0; }
+        body.dark-mode .unidade-subtitle { color: #64748b; }
+        body.dark-mode .section-label { color: #475569; }
+        body.dark-mode .search-input { background: #334155; border-color: #475569; color: #e2e8f0; }
+        body.dark-mode .search-input::placeholder { color: #64748b; }
+        body.dark-mode .search-input:focus { background: #3d4f66; border-color: #60a5fa; box-shadow: 0 0 0 3px rgba(96,165,250,0.1); }
+        body.dark-mode .search-icon { color: #64748b; }
+
+        @media (max-width: 768px) {
+            .top-header { flex-direction: column; gap: 15px; padding: 15px; }
+            .search-box { width: 100%; }
+            .main-container { flex-direction: column; }
+            .tabs-nav {
+                flex-direction: row;
+                width: 100%;
+                overflow-x: auto;
+                overflow-y: hidden;
+                padding: 8px 10px;
+                gap: 4px;
+                border-right: none;
+                border-bottom: 1px solid #e2e8f0;
+            }
+            .sidebar-label, .sidebar-sep { display: none; }
+            .tab-btn {
+                border-left: none;
+                border-bottom: 3px solid transparent;
+                border-radius: 8px 8px 0 0;
+                white-space: nowrap;
+                width: auto;
+                padding: 8px 14px;
+            }
+            .tab-btn.active,
+            .tab-btn[data-target="uni1"].active,
+            .tab-btn[data-target="uni2"].active,
+            .tab-btn[data-target="uni3"].active,
+            .tab-btn[data-target="uni4"].active {
+                border-left-color: transparent;
+                border-bottom-color: currentColor;
+                background: rgba(21, 101, 192, 0.06);
+            }
+            .tab-content { padding: 20px 15px 40px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <div class="top-header">
+        <div class="brand">
+            <span class="brand-icons">&#x1F4BB;</span>
+            <span class="brand-text">TecDigitais Dashboard</span>
+        </div>
+        <div class="search-box">
+            <span class="search-icon">&#x1F50D;</span>
+            <input
+                type="text"
+                id="globalSearch"
+                class="search-input"
+                placeholder="Buscar aula..."
+                onkeyup="performGlobalSearch()"
+            >
+        </div>
+        <div class="user-profile">
+            <button class="dark-toggle-index" id="darkToggleIndexBtn" title="Alternar modo escuro">&#x1F319;</button>
+            <div>
+                <div style="font-weight: 600;">Prof. C&eacute;sar Azevedo</div>
+                <div style="font-size: 0.85em; color: #718096;">Administrador</div>
+            </div>
+            <div class="user-avatar">CA</div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTAINER -->
+    <div class="main-container">
+
+        <!-- SIDEBAR DE NAVEGAÇÃO -->
+        <div class="tabs-nav">
+            <div class="sidebar-label">Dashboard</div>
+            <button class="tab-btn active" data-target="visao-geral">&#x1F4CA; Vis&atilde;o Geral</button>
+            <div class="sidebar-sep"></div>
+            <div class="sidebar-label">Unidades</div>
+            <button class="tab-btn" data-target="uni1">&#x1F5A5;&#xFE0F; Uni 1 &mdash; S.O. e Utilitários</button>
+            <button class="tab-btn" data-target="uni2">&#x1F310; Uni 2 &mdash; Internet</button>
+            <button class="tab-btn" data-target="uni3">&#x1F916; Uni 3 &mdash; IA na Educação</button>
+            <button class="tab-btn" data-target="uni4">&#x1F4C4; Uni 4 &mdash; Suíte de Escritório</button>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════ -->
+        <!-- VISÃO GERAL                                         -->
+        <!-- ═══════════════════════════════════════════════════ -->
+        <div id="visao-geral" class="tab-content active">
+            <div class="dashboard-grid">
+
+                <!-- Progresso -->
+                <div class="dash-card">
+                    <h3>&#x1F4C8; Progresso do Curso</h3>
+                    <div class="progress-circular" id="progressCircle">
+                        <span class="prog-text" id="progText">0%</span>
+                    </div>
+                    <p style="text-align:center; margin-top:12px; color:#718096; font-size:0.9em;" id="progLabel">0 de 4 unidades</p>
+                </div>
+
+                <!-- Contato + Dica -->
+                <div class="dash-card">
+                    <h3>&#x1F468;&#x200D;&#x1F3EB; Contato do Professor</h3>
+                    <p><strong>C&eacute;sar Azevedo</strong></p>
+                    <p style="margin-top:8px;">&#x1F4E7; cesar.augusto@escolar.ifrn.edu.br</p>
+                    <p style="margin-top:4px; font-size:0.9em; color:#718096;">IFRN &mdash; Curso T&eacute;cnico Integrado em Inform&aacute;tica</p>
+                    <hr style="border:none; border-top:1px solid #e2e8f0; margin:16px 0;">
+                    <p style="font-size:0.8em; font-weight:700; color:#a0aec0; text-transform:uppercase; letter-spacing:1px; margin-bottom:8px;">&#x1F4A1; Dica do dia</p>
+                    <p id="motivationText" style="font-style: italic; color: #4a5568; line-height: 1.7; font-size:0.92em;"></p>
+                </div>
+
+                <!-- Status das Unidades -->
+                <div class="dash-card">
+                    <h3>&#x1F4C5; Status das Unidades</h3>
+                    <ul class="chapter-check-list" id="chapterList">
+                        <li><label><input type="checkbox" class="chapter-check" id="ch1"><span class="ch-name">Unidade 1 &mdash; S.O. e Utilitários</span></label></li>
+                        <li><label><input type="checkbox" class="chapter-check" id="ch2"><span class="ch-name">Unidade 2 &mdash; Internet e Seguran&ccedil;a</span></label></li>
+                        <li><label><input type="checkbox" class="chapter-check" id="ch3"><span class="ch-name">Unidade 3 &mdash; IA na Educa&ccedil;&atilde;o</span></label></li>
+                        <li><label><input type="checkbox" class="chapter-check" id="ch4"><span class="ch-name">Unidade 4 &mdash; Su&iacute;te de Escrit&oacute;rio</span></label></li>
+                    </ul>
+                    <hr style="border:none; border-top:1px solid #e2e8f0; margin:16px 0;">
+                    <p style="font-size:0.8em; color:#a0aec0;">
+                        &#x1F4D8; <strong>25 aulas planejadas</strong> &middot; 4 unidades tem&aacute;ticas
+                    </p>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════ -->
+        <!-- UNIDADE 1 — S.O. E UTILITÁRIOS                     -->
+        <!-- ═══════════════════════════════════════════════════ -->
+        <div id="uni1" class="tab-content">
+            <div class="unidade-title">
+                No&ccedil;&otilde;es de S.O. e Utilit&aacute;rios
+                <span class="unidade-badge badge-uni1">Unidade 1</span>
+            </div>
+            <p class="unidade-subtitle">Fundamentos do sistema operacional, principais plataformas e ferramentas de produtividade.</p>
+
+            <div class="lessons-grid">
+
+                <div class="lesson-card coming-soon">
+                    <div class="lesson-header">
+                        <span class="lesson-id">#01 &#x1F5A5;&#xFE0F;</span>
+                        <span class="lesson-status">&#x1F512;</span>
+                    </div>
+                    <h4 class="lesson-title">Fundamentos e Fun&ccedil;&otilde;es do S.O.</h4>
+                    <p class="lesson-desc">O que &eacute; um sistema operacional, para que serve e como ele gerencia os recursos do computador: mem&oacute;ria, processador e dispositivos.</p>
+                    <div class="lesson-tags">
+                        <span class="mini-tag">S.O.</span>
+                        <span class="mini-tag">Kernel</span>
+                        <span class="mini-tag">Recursos</span>
+                    </div>
+                </div>
+
+                <div class="lesson-card coming-soon">
+                    <div class="lesson-header">
+                        <span class="lesson-id">#02 &#x1F4BB;</span>
+                        <span class="lesson-status">&#x1F512;</span>
+                    </div>
+                    <h4 class="lesson-title">Principais Sistemas Operacionais</h4>
+                    <p class="lesson-desc">Comparativo entre Windows, Linux e macOS: caracter&iacute;sticas, diferen&ccedil;as, vantagens e aplica&ccedil;&otilde;es no cotidiano.</p>
+                    <div class="lesson-tags">
+                        <span class="mini-tag">Windows</span>
+                        <span class="mini-tag">Linux</span>
+                        <span class="mini-tag">macOS</span>
+                    </div>
+                </div>
+
+                <div class="lesson-card coming-soon">
+                    <div class="lesson-header">
+                        <span class="lesson-id">#03 &#x1F4C1;</span>
+                        <span class="lesson-status">&#x1F512;</span>
+                    </div>
+                    <h4 class="lesson-title">Gerenciamento de Pastas e Arquivos</h4>
+                    <p class="lesson-desc">Organiza&ccedil;&atilde;o, cria&ccedil;&atilde;o, c&oacute;pia, movimenta&ccedil;&atilde;o e exclus&atilde;o de arquivos e pastas. Extens&otilde;es e tipos de arquivo.</p>
+                    <div class="lesson-tags">
+                        <span class="mini-tag">Arquivos</span>
+                        <span class="mini-tag">Pastas</span>
+                        <span class="mini-tag">Organiza&ccedil;&atilde;o</span>
+                    </div>
+                </div>
+
+                <div class="lesson-card coming-soon">
+                    <div class="lesson-header">
+                        <span class="lesson-id">#04 &#x1F6E0;&#xFE0F;</span>
+                        <span class="lesson-status">&#x1F512;</span>
+                    </div>
+                    <h4 class="lesson-title">Softwares Utilit&aacute;rios</h4>
+                    <p class="lesson-desc">Ferramentas auxiliares: antiv&iacute;rus, compactadores (ZIP/RAR), gerenciadores de download e utilit&aacute;rios de manuten&ccedil;&atilde;o do sistema.</p>
+                    <div class="lesson-tags">
+                        <span class="mini-tag">Antiv&iacute;rus</span>
+                        <span class="mini-tag">Compactadores</span>
+                        <span class="mini-tag">Manuten&ccedil;&atilde;o</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════ -->
+        <!-- UNIDADE 2 — INTERNET E SEGURANÇA                   -->
+        <!-- ═══════════════════════════════════════════════════ -->
+        <div id="uni2" class="tab-content">
+            <div class="unidade-title">
+                Internet e Seguran&ccedil;a da Informa&ccedil;&atilde;o
+                <span class="unidade-badge badge-uni2">Unidade 2</span>
+            </div>
+            <p class="unidade-subtitle">Navega&ccedil;&atilde;o, servi&ccedil;os digitais, seguran&ccedil;a, privacidade e legisla&ccedil;&atilde;o.</p>
+
+            <p class="section-label">&#x1F310; Internet e Servi&ccedil;os</p>
+            <div class="lessons-grid">
+
+                <div class="lesson-card coming-soon">
+                    <div class="lesson-header">
+                        <span class="lesson-id">#01 &#x1F310;</span>
+                        <span class="lesson-status">&#x1F512;</span>
+                    </div>
+                    <h4 class="lesson-title">Navegadores Web e E-mail</h4>
+                    <p class="lesson-desc">Funcionamento e uso de navegadores modernos (Chrome, Firefox, Edge) e configura&ccedil;&atilde;o de clientes de e-mail profissional.</p>
+                    <div class="lesson-tags">
+                        <span class="mini-tag">Navegadores</span>
+                        <span class="mini-tag">E-mail</span>
+                        <span class="mini-tag">Internet</span>
+                    </div>
+                </div>
+
+                <div class="lesson-card coming-soon">
+                    <div class="lesson-header">
+                        <span class="lesson-id">#02 &#x2601;&#xFE0F;</span>
+                        <span class="lesson-status">&#x1F512;</span>
+                    </div>
+                    <h4 class="lesson-title">Armazenamento em Nuvem</h4>
+                    <p class="lesson-desc">Servi&ccedil;os como Google Drive, OneDrive e Dropbox: como usar, sincronizar e compartilhar arquivos na nuvem com seguran&ccedil;a.</p>
+                    <div class="lesson-tags">
+                        <span class="mini-tag">Nuvem</span>
+                        <span class="mini-tag">Google Drive</span>
+                        <span class="mini-tag">OneDrive</span>
+                    </div>
+                </div>
+
+                <div class="lesson-card coming-soon">
+                    <div class="lesson-header">
+                        <span class="lesson-id">#03 &#x1F393;</span>
+                        <span class="lesson-status">&#x1F512;</span>
+                    </div>
+                    <h4 class="lesson-title">Ambientes Virtuais de Aprendizagem (AVA)</h4>
+                    <p class="lesson-desc">Uso do SUAP, Google Classroom e outras plataformas: entrega de atividades, f&oacute;runs, not&iacute;cias e conte&uacute;dos did&aacute;ticos.</p>
+                    <div class="lesson-tags">
+                        <span class="mini-tag">AVA</span>
+                        <span class="mini-tag">SUAP</span>
+                        <span class="mini-tag">Classroom</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <p class="section-label">&#x1F512; Seguran&ccedil;a da Informa&ccedil;&atilde;o</p>
+            <div class="lessons-grid">
+
+                <div class="lesson-card coming-soon">
+                    <div class="lesson-header">
+                        <span class="lesson-id">#04 &#x1F6E1;&#xFE0F;</span>
+                        <span class="lesson-status">&#x1F512;</span>
+                    </div>
+                    <h4 class="lesson-title">Conceitos Fundamentais de Seguran&ccedil;a</h4>
+                    <p class="lesson-desc">Pilares da seguran&ccedil;a da informa&ccedil;&atilde;o: confidencialidade, integridade e disponibilidade (CID). Tipos de amea&ccedil;as e ataques.</p>
+                    <div class="lesson-tags">
+                        <span class="mini-tag">CID</span>
+                        <span class="mini-tag">Amea&ccedil;as</span>
+                        <span class="mini-tag">Seguran&ccedil;a</span>
+                    </div>
+                </div>
+
+                <div class="lesson-card coming-soon">
+                    <div class="lesson-header">
+                        <span class="lesson-id">#05 &#x1F511;</span>
+                        <span class="lesson-status">&#x1F512;</span>
+                    </div>
+                    <h4 class="lesson-title">Medidas de Prote&ccedil;&atilde;o de Dados Pessoais</h4>
+                    <p class="lesson-desc">Como proteger seus dados online: cria&ccedil;&atilde;o de senhas fortes, autentica&ccedil;&atilde;o em dois fatores (2FA) e boas pr&aacute;ticas de privacidade.</p>
+                    <div class="lesson-tags">
+                        <span class="mini-tag">Senhas</span>
+                        <span class="mini-tag">2FA</span>
+                        <span class="mini-tag">Privacidade</span>
+                    </div>
+                </div>
+
+                <div class="lesson-card coming-soon">
+                    <div class="lesson-header">
+                        <span class="lesson-id">#06 &#x1F9F9;</span>
+                        <span class="lesson-status">&#x1F512;</span>
+                    </div>
+                    <h4 class="lesson-title">Preven&ccedil;&atilde;o de Amea&ccedil;as Digitais</h4>
+                    <p class="lesson-desc">Identifica&ccedil;&atilde;o e preven&ccedil;&atilde;o de malware, phishing, ransomware, engenharia social e outras amea&ccedil;as digitais comuns.</p>
+                    <div class="lesson-tags">
+                        <span class="mini-tag">Malware</span>
+                        <span class="mini-tag">Phishing</span>
+                        <span class="mini-tag">Ransomware</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <p class="section-label">&#x2696;&#xFE0F; &Eacute;tica e Legisla&ccedil;&atilde;o</p>
+            <div class="lessons-grid">
+
+                <div class="lesson-card coming-soon">
+                    <div class="lesson-header">
+                        <span class="lesson-id">#07 &#x2696;&#xFE0F;</span>
+                        <span class="lesson-status">&#x1F512;</span>
+                    </div>
+                    <h4 class="lesson-title">Quest&otilde;es &Eacute;ticas e Legais em TI</h4>
+                    <p class="lesson-desc">Direitos autorais digitais, cyberbullying, fake news, propriedade intelectual e responsabilidade no uso da tecnologia da informa&ccedil;&atilde;o.</p>
+                    <div class="lesson-tags">
+                        <span class="mini-tag">&Eacute;tica</span>
+                        <span class="mini-tag">Direitos Autorais</span>
+                        <span class="mini-tag">Fake News</span>
+                    </div>
+                </div>
+
+                <div class="lesson-card coming-soon">
+                    <div class="lesson-header">
+                        <span class="lesson-id">#08 &#x1F4DC;</span>
+                        <span class="lesson-status">&#x1F512;</span>
+                    </div>
+                    <h4 class="lesson-title">LGPD &mdash; Lei Geral de Prote&ccedil;&atilde;o de Dados</h4>
+                    <p class="lesson-desc">Fundamentos da Lei 13.709/2018: princ&iacute;pios, direitos do titular, obriga&ccedil;&otilde;es das empresas e impactos pr&aacute;ticos no cotidiano.</p>
+                    <div class="lesson-tags">
+                        <span class="mini-tag">LGPD</span>
+                        <span class="mini-tag">Dados Pessoais</span>
+                        <span class="mini-tag">Lei</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════ -->
+        <!-- UNIDADE 3 — IA NA EDUCAÇÃO                         -->
+        <!-- ═══════════════════════════════════════════════════ -->
+        <div id="uni3" class="tab-content">
+            <div class="unidade-title">
+                Intelig&ecirc;ncia Artificial na Educa&ccedil;&atilde;o
+                <span class="unidade-badge badge-uni3">Unidade 3</span>
+            </div>
+            <p class="unidade-subtitle">Fundamentos, ferramentas e uso ético da IA no contexto educacional.</p>
+
+            <div class="lessons-grid">
+
+                <div class="lesson-card coming-soon">
+                    <div class="lesson-header">
+                        <span class="lesson-id">#01 &#x1F9E0;</span>
+                        <span class="lesson-status">&#x1F512;</span>
+                    </div>
+                    <h4 class="lesson-title">Fundamentos da Intelig&ecirc;ncia Artificial</h4>
+                    <p class="lesson-desc">O que &eacute; IA, aprendizado de m&aacute;quina e aprendizado profundo. Hist&oacute;rico, aplica&ccedil;&otilde;es no dia a dia e como os algoritmos aprendem.</p>
+                    <div class="lesson-tags">
+                        <span class="mini-tag">IA</span>
+                        <span class="mini-tag">Machine Learning</span>
+                        <span class="mini-tag">Algoritmos</span>
+                    </div>
+                </div>
+
+                <div class="lesson-card coming-soon">
+                    <div class="lesson-header">
+                        <span class="lesson-id">#02 &#x1F916;</span>
+                        <span class="lesson-status">&#x1F512;</span>
+                    </div>
+                    <h4 class="lesson-title">Principais Servi&ccedil;os de IA para Educa&ccedil;&atilde;o</h4>
+                    <p class="lesson-desc">Ferramentas como ChatGPT, Gemini, Copilot e outras: possibilidades de uso pr&aacute;tico no ambiente escolar, pesquisa e cria&ccedil;&atilde;o de conte&uacute;do.</p>
+                    <div class="lesson-tags">
+                        <span class="mini-tag">ChatGPT</span>
+                        <span class="mini-tag">Gemini</span>
+                        <span class="mini-tag">Educa&ccedil;&atilde;o</span>
+                    </div>
+                </div>
+
+                <div class="lesson-card coming-soon">
+                    <div class="lesson-header">
+                        <span class="lesson-id">#03 &#x2696;&#xFE0F;</span>
+                        <span class="lesson-status">&#x1F512;</span>
+                    </div>
+                    <h4 class="lesson-title">Limita&ccedil;&otilde;es e &Eacute;tica no Uso de IA</h4>
+                    <p class="lesson-desc">Riscos de alucina&ccedil;&otilde;es, vieses algor&iacute;tmicos, pl&aacute;gio e quest&otilde;es &eacute;ticas no uso respons&aacute;vel da intelig&ecirc;ncia artificial.</p>
+                    <div class="lesson-tags">
+                        <span class="mini-tag">&Eacute;tica</span>
+                        <span class="mini-tag">Alucina&ccedil;&otilde;es</span>
+                        <span class="mini-tag">Vieses</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════ -->
+        <!-- UNIDADE 4 — SUÍTE DE ESCRITÓRIO                    -->
+        <!-- ═══════════════════════════════════════════════════ -->
+        <div id="uni4" class="tab-content">
+            <div class="unidade-title">
+                Su&iacute;te de Escrit&oacute;rio
+                <span class="unidade-badge badge-uni4">Unidade 4</span>
+            </div>
+            <p class="unidade-subtitle">Editores de apresenta&ccedil;&atilde;o, texto e planilhas: do b&aacute;sico &agrave; colabora&ccedil;&atilde;o.</p>
+
+            <p class="section-label">&#x1F4E6; Conceitos Gerais</p>
+            <div class="lessons-grid">
+
+                <div class="lesson-card coming-soon">
+                    <div class="lesson-header">
+                        <span class="lesson-id">#01 &#x1F4E6;</span>
+                        <span class="lesson-status">&#x1F512;</span>
+                    </div>
+                    <h4 class="lesson-title">Introdu&ccedil;&atilde;o &agrave; Su&iacute;te de Escrit&oacute;rio</h4>
+                    <p class="lesson-desc">Vis&atilde;o geral das su&iacute;tes LibreOffice, Microsoft Office e Google Workspace: componentes, caracter&iacute;sticas e diferen&ccedil;as entre as plataformas.</p>
+                    <div class="lesson-tags">
+                        <span class="mini-tag">LibreOffice</span>
+                        <span class="mini-tag">MS Office</span>
+                        <span class="mini-tag">Google Workspace</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <p class="section-label">&#x1F4CA; Editores de Apresenta&ccedil;&atilde;o</p>
+            <div class="lessons-grid">
+
+                <div class="lesson-card coming-soon">
+                    <div class="lesson-header">
+                        <span class="lesson-id">#02 &#x1F4CA;</span>
+                        <span class="lesson-status">&#x1F512;</span>
+                    </div>
+                    <h4 class="lesson-title">Apresenta&ccedil;&otilde;es: Vis&atilde;o Geral e Design</h4>
+                    <p class="lesson-desc">Interface do editor de apresenta&ccedil;&otilde;es, princ&iacute;pios de design de slides, cria&ccedil;&atilde;o de layouts e estrutura&ccedil;&atilde;o eficiente do conte&uacute;do.</p>
+                    <div class="lesson-tags">
+                        <span class="mini-tag">Slides</span>
+                        <span class="mini-tag">Design</span>
+                        <span class="mini-tag">Layout</span>
+                    </div>
+                </div>
+
+                <div class="lesson-card coming-soon">
+                    <div class="lesson-header">
+                        <span class="lesson-id">#03 &#x1F5BC;&#xFE0F;</span>
+                        <span class="lesson-status">&#x1F512;</span>
+                    </div>
+                    <h4 class="lesson-title">Apresenta&ccedil;&otilde;es: Conte&uacute;do e Elementos</h4>
+                    <p class="lesson-desc">Inser&ccedil;&atilde;o e formata&ccedil;&atilde;o de texto, imagens, v&iacute;deos, gr&aacute;ficos e formas geom&eacute;tricas em apresenta&ccedil;&otilde;es profissionais.</p>
+                    <div class="lesson-tags">
+                        <span class="mini-tag">Imagens</span>
+                        <span class="mini-tag">V&iacute;deos</span>
+                        <span class="mini-tag">Gr&aacute;ficos</span>
+                    </div>
+                </div>
+
+                <div class="lesson-card coming-soon">
+                    <div class="lesson-header">
+                        <span class="lesson-id">#04 &#x2728;</span>
+                        <span class="lesson-status">&#x1F512;</span>
+                    </div>
+                    <h4 class="lesson-title">Apresenta&ccedil;&otilde;es: Recursos Avan&ccedil;ados</h4>
+                    <p class="lesson-desc">Transi&ccedil;&otilde;es entre slides, anima&ccedil;&otilde;es de elementos, efeitos especiais e ferramentas de colabora&ccedil;&atilde;o e compartilhamento.</p>
+                    <div class="lesson-tags">
+                        <span class="mini-tag">Anima&ccedil;&otilde;es</span>
+                        <span class="mini-tag">Transi&ccedil;&otilde;es</span>
+                        <span class="mini-tag">Colabora&ccedil;&atilde;o</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <p class="section-label">&#x1F4DD; Editores de Texto</p>
+            <div class="lessons-grid">
+
+                <div class="lesson-card coming-soon">
+                    <div class="lesson-header">
+                        <span class="lesson-id">#05 &#x1F4DD;</span>
+                        <span class="lesson-status">&#x1F512;</span>
+                    </div>
+                    <h4 class="lesson-title">Texto: Vis&atilde;o Geral e Formata&ccedil;&atilde;o</h4>
+                    <p class="lesson-desc">Vis&atilde;o geral do editor de textos. Uso de estilos, fontes, tamanhos, espa&ccedil;amento e formata&ccedil;&atilde;o profissional de documentos.</p>
+                    <div class="lesson-tags">
+                        <span class="mini-tag">Estilos</span>
+                        <span class="mini-tag">Formata&ccedil;&atilde;o</span>
+                        <span class="mini-tag">Fontes</span>
+                    </div>
+                </div>
+
+                <div class="lesson-card coming-soon">
+                    <div class="lesson-header">
+                        <span class="lesson-id">#06 &#x1F5CF;&#xFE0F;</span>
+                        <span class="lesson-status">&#x1F512;</span>
+                    </div>
+                    <h4 class="lesson-title">Texto: Estrutura e Elementos Visuais</h4>
+                    <p class="lesson-desc">Cabe&ccedil;alhos, rodap&eacute;s, numera&ccedil;&atilde;o de p&aacute;ginas, estilos de par&aacute;grafo, inser&ccedil;&atilde;o e manipula&ccedil;&atilde;o de imagens, tabelas e gr&aacute;ficos.</p>
+                    <div class="lesson-tags">
+                        <span class="mini-tag">Cabe&ccedil;alho</span>
+                        <span class="mini-tag">Rodap&eacute;</span>
+                        <span class="mini-tag">Tabelas</span>
+                    </div>
+                </div>
+
+                <div class="lesson-card coming-soon">
+                    <div class="lesson-header">
+                        <span class="lesson-id">#07 &#x1F504;</span>
+                        <span class="lesson-status">&#x1F512;</span>
+                    </div>
+                    <h4 class="lesson-title">Texto: Automatiza&ccedil;&atilde;o e Colabora&ccedil;&atilde;o</h4>
+                    <p class="lesson-desc">Sum&aacute;rio autom&aacute;tico, legendas, refer&ecirc;ncias cruzadas, controle de altera&ccedil;&otilde;es, coment&aacute;rios e revis&atilde;o colaborativa de documentos.</p>
+                    <div class="lesson-tags">
+                        <span class="mini-tag">Sum&aacute;rio</span>
+                        <span class="mini-tag">Refer&ecirc;ncias</span>
+                        <span class="mini-tag">Revis&atilde;o</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <p class="section-label">&#x1F4C8; Editores de Planilhas</p>
+            <div class="lessons-grid">
+
+                <div class="lesson-card coming-soon">
+                    <div class="lesson-header">
+                        <span class="lesson-id">#08 &#x1F4C8;</span>
+                        <span class="lesson-status">&#x1F512;</span>
+                    </div>
+                    <h4 class="lesson-title">Planilhas: Interface e Dados</h4>
+                    <p class="lesson-desc">Explora&ccedil;&atilde;o da interface, cria&ccedil;&atilde;o de tabelas, formata&ccedil;&atilde;o de c&eacute;lulas, linhas e colunas para apresenta&ccedil;&atilde;o visual dos dados.</p>
+                    <div class="lesson-tags">
+                        <span class="mini-tag">C&eacute;lulas</span>
+                        <span class="mini-tag">Tabelas</span>
+                        <span class="mini-tag">Formata&ccedil;&atilde;o</span>
+                    </div>
+                </div>
+
+                <div class="lesson-card coming-soon">
+                    <div class="lesson-header">
+                        <span class="lesson-id">#09 &#x2211;</span>
+                        <span class="lesson-status">&#x1F512;</span>
+                    </div>
+                    <h4 class="lesson-title">Planilhas: F&oacute;rmulas e Fun&ccedil;&otilde;es</h4>
+                    <p class="lesson-desc">F&oacute;rmulas b&aacute;sicas, fun&ccedil;&otilde;es matem&aacute;ticas e estat&iacute;sticas, aplica&ccedil;&atilde;o de filtros, classifica&ccedil;&otilde;es e formata&ccedil;&atilde;o condicional.</p>
+                    <div class="lesson-tags">
+                        <span class="mini-tag">F&oacute;rmulas</span>
+                        <span class="mini-tag">Fun&ccedil;&otilde;es</span>
+                        <span class="mini-tag">Filtros</span>
+                    </div>
+                </div>
+
+                <div class="lesson-card coming-soon">
+                    <div class="lesson-header">
+                        <span class="lesson-id">#10 &#x1F4CA;</span>
+                        <span class="lesson-status">&#x1F512;</span>
+                    </div>
+                    <h4 class="lesson-title">Planilhas: Gr&aacute;ficos e Colabora&ccedil;&atilde;o</h4>
+                    <p class="lesson-desc">Cria&ccedil;&atilde;o e personaliza&ccedil;&atilde;o de gr&aacute;ficos para visualiza&ccedil;&atilde;o de dados, compartilhamento e colabora&ccedil;&atilde;o em planilhas.</p>
+                    <div class="lesson-tags">
+                        <span class="mini-tag">Gr&aacute;ficos</span>
+                        <span class="mini-tag">Visualiza&ccedil;&atilde;o</span>
+                        <span class="mini-tag">Colabora&ccedil;&atilde;o</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div><!-- fim .main-container -->
+
+    <script>
+        // ─── CONFIGURAÇÃO (Google Sheets) ────────────────────────────────
+        // Crie uma planilha Google com:
+        //   Aba 1 (padrão): 4 linhas, coluna B = TRUE/FALSE para cada unidade
+        //   Aba "aulas":    coluna A = nome do arquivo da aula, coluna B = TRUE/FALSE
+        const SHEET_ID = '1uqwXdBgTZwuS1WJFSpFZr9d6qmoiuxvdDWZys8BZoRM';
+        const SHEET_URL  = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID
+                         + '/gviz/tq?tqx=out:csv&t=' + Date.now();
+        const AULAS_URL  = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID
+                         + '/gviz/tq?tqx=out:csv&sheet=aulas&t=' + Date.now();
+        // ─────────────────────────────────────────────────────────────────
+
+        function updateProgress() {
+            const boxes   = document.querySelectorAll('.chapter-check');
+            const total   = boxes.length;
+            const checked = Array.from(boxes).filter(cb => cb.checked).length;
+            const pct     = Math.round(checked / total * 100);
+
+            document.getElementById('progressCircle').style.setProperty('--prog', pct + '%');
+            document.getElementById('progText').textContent  = pct + '%';
+            document.getElementById('progLabel').textContent = checked + ' de ' + total + ' unidades';
+        }
+
+        function updateLessonCards(csv) {
+            const linhas = csv.trim().split('\n').slice(1);
+            linhas.forEach(linha => {
+                const partes = linha.split(',');
+                if (partes.length < 2) return;
+                const aula   = partes[0].trim().replace(/"/g, '');
+                const status = partes[1].trim().replace(/"/g, '').toUpperCase();
+                if (status !== 'TRUE') return;
+
+                const card = document.querySelector('a.lesson-card[href*="' + aula + '"]');
+                if (card) {
+                    card.classList.add('done');
+                    card.classList.remove('coming-soon');
+                    const statusEl = card.querySelector('.lesson-status');
+                    if (statusEl) statusEl.textContent = '\u2705';
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Checkboxes somente leitura
+            document.querySelectorAll('.chapter-check').forEach(cb => cb.disabled = true);
+
+            // Busca status das unidades
+            fetch(SHEET_URL)
+                .then(r => r.text())
+                .then(csv => {
+                    const linhas = csv.trim().split('\n').slice(1);
+                    const boxes  = document.querySelectorAll('.chapter-check');
+                    linhas.forEach((linha, i) => {
+                        if (i >= boxes.length) return;
+                        boxes[i].checked = linha.toUpperCase().includes('TRUE');
+                    });
+                    updateProgress();
+                })
+                .catch(() => {
+                    console.warn('Planilha não configurada. Progresso zerado.');
+                    updateProgress();
+                });
+
+            // Busca status das aulas
+            fetch(AULAS_URL)
+                .then(r => r.text())
+                .then(csv => updateLessonCards(csv))
+                .catch(() => {});
+        });
+
+        // ─── NAVEGAÇÃO POR ABAS + URL HASH ──────────────────────────────
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabButtons  = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            function activateTab(targetId) {
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(c   => c.classList.remove('active'));
+                const btn     = document.querySelector('[data-target="' + targetId + '"]');
+                const content = document.getElementById(targetId);
+                if (btn)     btn.classList.add('active');
+                if (content) content.classList.add('active');
+            }
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const targetId = button.getAttribute('data-target');
+                    activateTab(targetId);
+                    history.replaceState(null, '', '#' + targetId);
+                });
+            });
+
+            const hash = location.hash.slice(1);
+            if (hash && document.getElementById(hash)) activateTab(hash);
+        });
+
+        // ─── DICAS MOTIVACIONAIS ─────────────────────────────────────────
+        (function() {
+            const dicas = [
+                "A tecnologia não substitui o professor — ela amplifica o impacto do que um bom professor pode fazer.",
+                "Saber usar ferramentas digitais não é apenas uma vantagem no mercado de trabalho — é uma habilidade essencial para o século XXI.",
+                "Proteger sua privacidade online começa com pequenos hábitos: senhas fortes, dois fatores e atenção ao que você compartilha.",
+                "O sistema operacional é o maestro do computador — entendê-lo é entender como a máquina pensa.",
+                "A nuvem não é magia — é o computador de outra pessoa. Saiba o que você está confiando a quem.",
+                "Inteligência artificial não é infalível. Questione, verifique e pense criticamente sobre tudo que ela produz.",
+                "Um e-mail bem escrito abre portas que um currículo não consegue. Comunicação digital é uma competência profissional.",
+                "Phishing não engana quem presta atenção: verifique remetentes, links e urgência antes de clicar em qualquer coisa suspeita.",
+                "Aprender a usar um editor de texto profissionalmente é como aprender a escrever de forma organizada — multiplica sua clareza.",
+                "A LGPD não é burocracia — é o reconhecimento de que seus dados pessoais têm valor e merecem proteção.",
+                "Uma apresentação boa não é aquela cheia de efeitos — é aquela que comunica uma ideia com clareza e impacto.",
+                "Backup não é paranoia — é prudência. Você não espera adoecer para ter plano de saúde.",
+                "Filtros e fórmulas em planilhas podem transformar horas de trabalho manual em segundos de automação.",
+                "Ambientes Virtuais de Aprendizagem são extensões da sala de aula — use-os como se fossem o próprio ambiente de estudo.",
+                "Sua senha é a chave da sua vida digital. Trate-a com o mesmo cuidado que trata a chave da sua casa.",
+                "A IA generativa é uma ferramenta poderosa — mas a criatividade, o julgamento e a responsabilidade ainda são humanos.",
+                "Dominar um sistema operacional é como dominar o próprio ambiente de trabalho: quando você o entende, tudo flui melhor.",
+                "Na internet, se o produto é gratuito, o produto é você. Entender esse modelo é o primeiro passo para proteger sua privacidade.",
+                "Colaborar em documentos na nuvem em tempo real é uma habilidade que o mercado de trabalho moderno exige.",
+                "Não existe tecnologia 100% segura — existe tecnologia usada com consciência e boas práticas.",
+                "Estilos de formatação em editores de texto parecem detalhes, mas criam estrutura, profissionalismo e acessibilidade.",
+                "O gráfico certo pode revelar em segundos o que horas de análise de tabela não conseguiriam mostrar.",
+                "Ética digital não é apenas uma questão legal — é sobre respeito, responsabilidade e convivência no mundo online.",
+                "Tecnologia avança rapidamente, mas princípios como clareza, organização e senso crítico nunca ficam obsoletos.",
+                "Cada nova ferramenta digital que você domina é uma habilidade que carregará pelo resto da vida."
+            ];
+            document.addEventListener('DOMContentLoaded', function() {
+                const el = document.getElementById('motivationText');
+                if (el) el.textContent = dicas[Math.floor(Math.random() * dicas.length)];
+            });
+        })();
+
+        // ─── MODO ESCURO ─────────────────────────────────────────────────
+        (function() {
+            if (localStorage.getItem('darkMode') === '1') {
+                document.body.classList.add('dark-mode');
+            }
+            document.addEventListener('DOMContentLoaded', function() {
+                const btn = document.getElementById('darkToggleIndexBtn');
+                if (!btn) return;
+                btn.textContent = document.body.classList.contains('dark-mode') ? '\u2600\uFE0F' : '\uD83C\uDF19';
+                btn.addEventListener('click', function() {
+                    const isDark = document.body.classList.toggle('dark-mode');
+                    btn.textContent = isDark ? '\u2600\uFE0F' : '\uD83C\uDF19';
+                    localStorage.setItem('darkMode', isDark ? '1' : '0');
+                });
+            });
+        })();
+
+        // ─── BUSCA GLOBAL ────────────────────────────────────────────────
+        function performGlobalSearch() {
+            const filter = document.getElementById('globalSearch').value.toUpperCase().trim();
+            let firstMatch = null;
+
+            document.querySelectorAll('.lesson-card').forEach(card => {
+                const title = (card.querySelector('.lesson-title') || {}).innerText || '';
+                const desc  = (card.querySelector('.lesson-desc')  || {}).innerText || '';
+                const tags  = (card.querySelector('.lesson-tags')  || {}).innerText || '';
+                const match = !filter
+                    || title.toUpperCase().includes(filter)
+                    || desc.toUpperCase().includes(filter)
+                    || tags.toUpperCase().includes(filter);
+
+                card.style.display = match ? '' : 'none';
+                if (match && filter && !firstMatch) firstMatch = card.closest('.tab-content');
+            });
+
+            // Ocultar/mostrar section-labels sem cards visíveis
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.querySelectorAll('.section-label').forEach(label => {
+                    const grid = label.nextElementSibling;
+                    if (!grid) return;
+                    const anyVisible = Array.from(grid.querySelectorAll('.lesson-card'))
+                                           .some(c => c.style.display !== 'none');
+                    label.style.display = anyVisible ? '' : 'none';
+                });
+            });
+
+            if (firstMatch && filter) {
+                const btn = document.querySelector('[data-target="' + firstMatch.id + '"]');
+                if (btn) btn.click();
+            }
+        }
+    </script>
+
+</body>
+</html>
