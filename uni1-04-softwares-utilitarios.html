@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 1.4 - Softwares Utilitários</title>
+    <link rel="stylesheet" href="slide-mode.css">
+    <style>
+        :root {
+            --primary: #1565c0;
+            --secondary: #00897b;
+            --bg-light: #f0f4f8;
+            --text-dark: #1a202c;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        .top-bar {
+            background: white;
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .back-btn {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+
+        .back-btn:hover { background: rgba(21,101,192,0.08); }
+
+        .page-badge {
+            font-size: 0.8em;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: rgba(21, 101, 192, 0.12);
+            color: #1565c0;
+            font-weight: 600;
+        }
+
+        .content-wrapper {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 30px;
+        }
+
+        .lesson-hero {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            border-top: 4px solid var(--primary);
+        }
+
+        .lesson-hero h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .lesson-hero .subtitle {
+            font-size: 1.05em;
+            color: #718096;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 16px;
+            padding: 35px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+
+        .content-card h2 {
+            font-size: 1.4em;
+            color: var(--primary);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .content-card h3 {
+            font-size: 1.05em;
+            color: #2d5a9e;
+            margin: 20px 0 10px;
+        }
+
+        .content-card p { margin-bottom: 15px; text-align: justify; }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(21,101,192,0.05), rgba(0,137,123,0.06));
+            border-left: 4px solid var(--primary);
+            padding: 20px 25px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+        }
+
+        .highlight-box p { margin-bottom: 0; font-style: italic; }
+
+        .alert-box {
+            background: #fff8e1;
+            border-left: 4px solid #f59e0b;
+            padding: 18px 22px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+        }
+
+        .alert-box p { margin: 0; color: #78350f; font-size: 0.93em; }
+
+        /* Grid de categorias de utilitários */
+        .cat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 14px;
+            margin: 20px 0;
+        }
+
+        .cat-item {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px 16px;
+            text-align: center;
+            border-top: 3px solid var(--primary);
+            transition: transform 0.2s;
+        }
+
+        .cat-item:hover { transform: translateY(-3px); }
+        .cat-icon { font-size: 2em; margin-bottom: 8px; }
+        .cat-item strong { display: block; color: var(--primary); font-size: 0.9em; margin-bottom: 4px; }
+        .cat-item span { font-size: 0.8em; color: #718096; }
+
+        /* Bloco de utilitário detalhado */
+        .util-block {
+            border-radius: 14px;
+            padding: 26px;
+            margin: 18px 0;
+        }
+
+        .util-block.antivirus  { background: #fce4ec; border-left: 5px solid #c62828; }
+        .util-block.compactor  { background: #e8f5e9; border-left: 5px solid #2e7d32; }
+        .util-block.download   { background: #e3f2fd; border-left: 5px solid #1565c0; }
+        .util-block.manutencao { background: #fff3e0; border-left: 5px solid #e65100; }
+        .util-block.outros     { background: #f3e5f5; border-left: 5px solid #6a1b9a; }
+
+        .util-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .util-icon { font-size: 2em; }
+
+        .util-title { font-size: 1.15em; font-weight: 700; }
+        .util-block.antivirus  .util-title { color: #b71c1c; }
+        .util-block.compactor  .util-title { color: #1b5e20; }
+        .util-block.download   .util-title { color: #0d47a1; }
+        .util-block.manutencao .util-title { color: #bf360c; }
+        .util-block.outros     .util-title { color: #4a148c; }
+
+        .util-block p { color: #4a5568; font-size: 0.93em; margin-bottom: 10px; text-align: justify; }
+        .util-block p:last-child { margin-bottom: 0; }
+
+        /* Grid de softwares exemplo */
+        .soft-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .soft-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.82em;
+            font-weight: 600;
+            background: white;
+            border: 1px solid #e2e8f0;
+            color: #475569;
+        }
+
+        /* Tabela comparativa de compactadores */
+        .compare-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 0.88em;
+        }
+
+        .compare-table th {
+            background: var(--primary);
+            color: white;
+            padding: 11px 14px;
+            text-align: left;
+        }
+
+        .compare-table th:first-child { border-radius: 8px 0 0 0; }
+        .compare-table th:last-child  { border-radius: 0 8px 0 0; }
+
+        .compare-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: middle;
+        }
+
+        .compare-table tr:nth-child(even) td { background: #f8fafc; }
+        .compare-table tr:last-child td { border-bottom: none; }
+
+        .check  { color: #38b000; font-weight: 700; }
+        .cross  { color: #e53935; font-weight: 700; }
+        .middle { color: #f59e0b; font-weight: 700; }
+
+        /* Barra de compressão */
+        .compress-demo {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 16px 20px;
+            margin: 14px 0;
+        }
+
+        .compress-label {
+            font-size: 0.85em;
+            color: #718096;
+            margin-bottom: 6px;
+        }
+
+        .compress-bar-wrap {
+            background: #e2e8f0;
+            border-radius: 20px;
+            height: 22px;
+            overflow: hidden;
+            margin-bottom: 4px;
+        }
+
+        .compress-bar {
+            height: 100%;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            padding-left: 10px;
+            font-size: 0.78em;
+            font-weight: 700;
+            color: white;
+            transition: width 1s ease;
+        }
+
+        .bar-original  { width: 100%; background: #94a3b8; }
+        .bar-zip       { width: 60%;  background: #2e7d32; }
+        .bar-7z        { width: 50%;  background: #1565c0; }
+
+        ul, ol { margin: 10px 0 15px 25px; }
+        li { margin-bottom: 8px; }
+
+        .nav-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-bottom: 40px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+
+        .nav-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        @media (max-width: 768px) {
+            .content-wrapper { padding: 0 15px; }
+            .lesson-hero, .content-card { padding: 25px; }
+            .lesson-hero h1 { font-size: 1.5em; }
+            .cat-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <a href="index.html" class="back-btn">&#x2B05; Voltar ao Dashboard</a>
+        <span class="page-badge">Unidade 1 &mdash; S.O. e Utilit&aacute;rios</span>
+        <button class="slide-toggle" id="slideToggleBtn">&#x1F4FA; Modo Slide</button>
+    </div>
+
+    <div class="content-wrapper">
+
+        <div class="lesson-hero">
+            <h1>&#x1F6E0;&#xFE0F; Softwares Utilit&aacute;rios</h1>
+            <p class="subtitle">Aula 1.4 &mdash; Ferramentas que complementam o S.O. e facilitam o dia a dia no computador</p>
+        </div>
+
+        <!-- CARD 1 -->
+        <div class="content-card">
+            <h2>&#x1F4AC; O que s&atilde;o softwares utilit&aacute;rios?</h2>
+            <p>Al&eacute;m dos programas que usamos para criar e consumir conte&uacute;do (editores de texto, navegadores, jogos), existe uma categoria especial de software chamada <strong>utilit&aacute;rio</strong>. Esses programas n&atilde;o s&atilde;o o foco principal do trabalho &mdash; mas funcionam nos bastidores, <strong>mantendo o computador seguro, r&aacute;pido e organizado</strong>.</p>
+            <p>Pense neles como as ferramentas de uma caixa de ferramentas: voc&ecirc; n&atilde;o usa o alicate o dia todo, mas quando precisa, ele &eacute; indispens&aacute;vel.</p>
+
+            <div class="cat-grid">
+                <div class="cat-item">
+                    <div class="cat-icon">&#x1F6E1;&#xFE0F;</div>
+                    <strong>Antiv&iacute;rus</strong>
+                    <span>Prote&ccedil;&atilde;o contra amea&ccedil;as</span>
+                </div>
+                <div class="cat-item">
+                    <div class="cat-icon">&#x1F4E6;</div>
+                    <strong>Compactadores</strong>
+                    <span>Redu&ccedil;&atilde;o e empacotamento</span>
+                </div>
+                <div class="cat-item">
+                    <div class="cat-icon">&#x2B07;&#xFE0F;</div>
+                    <strong>Gerenc. de Download</strong>
+                    <span>Downloads r&aacute;pidos e seguros</span>
+                </div>
+                <div class="cat-item">
+                    <div class="cat-icon">&#x1FA9A;</div>
+                    <strong>Manuten&ccedil;&atilde;o</strong>
+                    <span>Limpeza e otimiza&ccedil;&atilde;o</span>
+                </div>
+                <div class="cat-item">
+                    <div class="cat-icon">&#x1F4AC;</div>
+                    <strong>Outros Utilit&aacute;rios</strong>
+                    <span>PDF, backup, captura de tela</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 2 — ANTIVÍRUS -->
+        <div class="content-card">
+            <h2>&#x1F6E1;&#xFE0F; Antiv&iacute;rus e Prote&ccedil;&atilde;o</h2>
+
+            <div class="util-block antivirus">
+                <div class="util-header">
+                    <span class="util-icon">&#x1F6E1;&#xFE0F;</span>
+                    <span class="util-title">Antiv&iacute;rus</span>
+                </div>
+                <p>Um <strong>antiv&iacute;rus</strong> &eacute; um programa que detecta, bloqueia e remove softwares maliciosos (malware) do computador. Ele monitora continuamente os arquivos, downloads e conex&otilde;es de rede em busca de amea&ccedil;as.</p>
+                <p>O antiv&iacute;rus usa uma <strong>base de dados de assinaturas</strong> de v&iacute;rus conhecidos e tamb&eacute;m an&aacute;lise de comportamento para identificar amea&ccedil;as novas. Por isso &eacute; fundamental mant&ecirc;-lo <strong>sempre atualizado</strong>.</p>
+            </div>
+
+            <h3>Tipos de amea&ccedil;as que o antiv&iacute;rus combate</h3>
+            <ul>
+                <li><strong>V&iacute;rus</strong> &mdash; se replicam e infectam outros arquivos</li>
+                <li><strong>Trojan (Cavalo de Troia)</strong> &mdash; se disfarça de programa leg&iacute;timo para abrir acesso ao sistema</li>
+                <li><strong>Ransomware</strong> &mdash; sequestra os arquivos e exige resgate em dinheiro</li>
+                <li><strong>Spyware</strong> &mdash; monitora e rouba informa&ccedil;&otilde;es do usu&aacute;rio</li>
+                <li><strong>Adware</strong> &mdash; exibe propagandas indesejadas</li>
+            </ul>
+
+            <h3>Principais antiv&iacute;rus do mercado</h3>
+            <div class="soft-grid">
+                <span class="soft-tag">&#x1F6E1;&#xFE0F; Windows Defender (gratuito)</span>
+                <span class="soft-tag">&#x1F7E2; Avast Free</span>
+                <span class="soft-tag">&#x1F534; Kaspersky</span>
+                <span class="soft-tag">&#x1F535; ESET NOD32</span>
+                <span class="soft-tag">&#x26AB; Bitdefender</span>
+                <span class="soft-tag">&#x1F7E1; Malwarebytes</span>
+            </div>
+
+            <div class="highlight-box">
+                <p>&#x1F4A1; O <strong>Windows Defender</strong>, j&aacute; inclu&iacute;do no Windows 10 e 11, oferece prote&ccedil;&atilde;o suficiente para a maioria dos usu&aacute;rios sem custo adicional. O mais importante &eacute; mant&ecirc;-lo ativo e atualizado.</p>
+            </div>
+        </div>
+
+        <!-- CARD 3 — COMPACTADORES -->
+        <div class="content-card">
+            <h2>&#x1F4E6; Compactadores de Arquivos</h2>
+
+            <div class="util-block compactor">
+                <div class="util-header">
+                    <span class="util-icon">&#x1F4E6;</span>
+                    <span class="util-title">Compactadores</span>
+                </div>
+                <p>Compactadores s&atilde;o programas que <strong>reduzem o tamanho dos arquivos</strong> usando algoritmos de compress&atilde;o. Al&eacute;m de economizar espa&ccedil;o, permitem agrupar v&aacute;rios arquivos em um &uacute;nico pacote, facilitando o envio por e-mail ou armazenamento.</p>
+            </div>
+
+            <h3>Como funciona a compress&atilde;o?</h3>
+            <p>Arquivos cont&ecirc;m muita informa&ccedil;&atilde;o redundante (dados que se repetem). O compactador identifica essas repeti&ccedil;&otilde;es e as substitui por c&oacute;digos menores, reduzindo o tamanho sem perder informa&ccedil;&atilde;o.</p>
+
+            <div class="compress-demo">
+                <div class="compress-label">Exemplo: arquivo de texto de 10 MB</div>
+                <div class="compress-bar-wrap">
+                    <div class="compress-bar bar-original">Original &mdash; 10 MB</div>
+                </div>
+                <div class="compress-bar-wrap">
+                    <div class="compress-bar bar-zip">ZIP &mdash; ~6 MB (40% menor)</div>
+                </div>
+                <div class="compress-bar-wrap">
+                    <div class="compress-bar bar-7z">7z &mdash; ~5 MB (50% menor)</div>
+                </div>
+            </div>
+
+            <h3>Principais formatos e programas</h3>
+            <table class="compare-table">
+                <tr>
+                    <th>Formato</th>
+                    <th>Programa</th>
+                    <th>Gratuito</th>
+                    <th>Compress&atilde;o</th>
+                    <th>Obs.</th>
+                </tr>
+                <tr>
+                    <td><strong>.zip</strong></td>
+                    <td>WinZip, 7-Zip, nativo do S.O.</td>
+                    <td><span class="check">Sim*</span></td>
+                    <td><span class="middle">M&eacute;dia</span></td>
+                    <td>Mais compat&iacute;vel</td>
+                </tr>
+                <tr>
+                    <td><strong>.rar</strong></td>
+                    <td>WinRAR</td>
+                    <td><span class="cross">N&atilde;o</span></td>
+                    <td><span class="check">Alta</span></td>
+                    <td>Muito popular no Brasil</td>
+                </tr>
+                <tr>
+                    <td><strong>.7z</strong></td>
+                    <td>7-Zip</td>
+                    <td><span class="check">Sim</span></td>
+                    <td><span class="check">Alta</span></td>
+                    <td>Open source, recomendado</td>
+                </tr>
+                <tr>
+                    <td><strong>.tar.gz</strong></td>
+                    <td>Nativo Linux/macOS</td>
+                    <td><span class="check">Sim</span></td>
+                    <td><span class="middle">M&eacute;dia</span></td>
+                    <td>Padr&atilde;o no Linux</td>
+                </tr>
+            </table>
+
+            <div class="alert-box">
+                <p>&#x26A0;&#xFE0F; <strong>Cuidado com arquivos compactados de origem desconhecida.</strong> V&iacute;rus e malwares s&atilde;o frequentemente distribuídos dentro de arquivos .zip ou .rar para enganar o antiv&iacute;rus. Nunca descompacte arquivos recebidos de fontes n&atilde;o confi&aacute;veis.</p>
+            </div>
+        </div>
+
+        <!-- CARD 4 — GERENCIADORES DE DOWNLOAD -->
+        <div class="content-card">
+            <h2>&#x2B07;&#xFE0F; Gerenciadores de Download</h2>
+
+            <div class="util-block download">
+                <div class="util-header">
+                    <span class="util-icon">&#x2B07;&#xFE0F;</span>
+                    <span class="util-title">Gerenciadores de Download</span>
+                </div>
+                <p>Os navegadores j&aacute; fazem downloads, mas um <strong>gerenciador de download dedicado</strong> vai al&eacute;m: ele divide o arquivo em partes e as baixa em paralelo, aumentando significativamente a velocidade. Al&eacute;m disso, permite <strong>pausar e retomar</strong> downloads interrompidos, o que &eacute; essencial para arquivos grandes.</p>
+            </div>
+
+            <h3>Vantagens de usar um gerenciador de download</h3>
+            <ul>
+                <li><strong>Velocidade maior</strong> &mdash; divide o arquivo em m&uacute;ltiplas conex&otilde;es simult&acirc;neas</li>
+                <li><strong>Retomada autom&aacute;tica</strong> &mdash; se a conex&atilde;o cair, o download continua de onde parou</li>
+                <li><strong>Agendamento</strong> &mdash; programa downloads para hor&aacute;rios de menor uso da internet</li>
+                <li><strong>Organiza&ccedil;&atilde;o</strong> &mdash; categoriza downloads por tipo (v&iacute;deo, m&uacute;sica, documento)</li>
+                <li><strong>Verifica&ccedil;&atilde;o de integridade</strong> &mdash; confirma que o arquivo n&atilde;o foi corrompido</li>
+            </ul>
+
+            <h3>Principais gerenciadores</h3>
+            <div class="soft-grid">
+                <span class="soft-tag">&#x2B07;&#xFE0F; IDM &mdash; Internet Download Manager</span>
+                <span class="soft-tag">&#x1F7E2; JDownloader (gratuito)</span>
+                <span class="soft-tag">&#x1F535; Free Download Manager (gratuito)</span>
+                <span class="soft-tag">&#x26AB; uTorrent (torrents)</span>
+                <span class="soft-tag">&#x1F7E1; qBittorrent (gratuito)</span>
+            </div>
+
+            <div class="alert-box">
+                <p>&#x26A0;&#xFE0F; <strong>Torrents e direitos autorais:</strong> programas como uTorrent e qBittorrent s&atilde;o usados para baixar arquivos via protocolo torrent. Baixar conte&uacute;do protegido por direitos autorais (filmes, jogos, m&uacute;sicas) sem autoriza&ccedil;&atilde;o &eacute; <strong>ilegal</strong> e pode acarretar san&ccedil;&otilde;es legais.</p>
+            </div>
+        </div>
+
+        <!-- CARD 5 — MANUTENÇÃO -->
+        <div class="content-card">
+            <h2>&#x1FA9A; Utilit&aacute;rios de Manuten&ccedil;&atilde;o</h2>
+
+            <div class="util-block manutencao">
+                <div class="util-header">
+                    <span class="util-icon">&#x1FA9A;</span>
+                    <span class="util-title">Ferramentas de Manuten&ccedil;&atilde;o</span>
+                </div>
+                <p>Com o tempo, o computador acumula arquivos tempor&aacute;rios, entradas de registro desnecess&aacute;rias e fragmenta&ccedil;&atilde;o de dados no disco. Utilit&aacute;rios de manuten&ccedil;&atilde;o fazem a <strong>limpeza e otimiza&ccedil;&atilde;o</strong> do sistema, mantendo-o r&aacute;pido e est&aacute;vel.</p>
+            </div>
+
+            <h3>Principais fun&ccedil;&otilde;es de manuten&ccedil;&atilde;o</h3>
+            <ul>
+                <li>
+                    <strong>Limpeza de disco</strong> &mdash; remove arquivos tempor&aacute;rios, cache do navegador e lixo do sistema. O Windows j&aacute; inclui a ferramenta <em>Limpeza de Disco</em> e o <em>Storage Sense</em>.
+                </li>
+                <li>
+                    <strong>Desfragmentador de disco</strong> &mdash; reorganiza os dados em discos HD para acesso mais r&aacute;pido. <em>Discos SSD n&atilde;o precisam ser desfragmentados.</em>
+                </li>
+                <li>
+                    <strong>Gerenciador de inicializa&ccedil;&atilde;o</strong> &mdash; controla quais programas abrem junto com o Windows, reduzindo o tempo de boot.
+                </li>
+                <li>
+                    <strong>Monitor de sistema</strong> &mdash; exibe uso de CPU, mem&oacute;ria RAM, disco e rede em tempo real (Gerenciador de Tarefas no Windows, Monitor de Atividade no macOS).
+                </li>
+                <li>
+                    <strong>Atualiza&ccedil;&atilde;o de drivers</strong> &mdash; mant&eacute;m os drivers de hardware atualizados para melhor desempenho e compatibilidade.
+                </li>
+            </ul>
+
+            <h3>Ferramentas populares</h3>
+            <div class="soft-grid">
+                <span class="soft-tag">&#x1FA9F; CCleaner</span>
+                <span class="soft-tag">&#x1F7E2; BleachBit (gratuito)</span>
+                <span class="soft-tag">&#x1F535; Gerenciador de Tarefas (nativo)</span>
+                <span class="soft-tag">&#x26AB; Driver Booster</span>
+                <span class="soft-tag">&#x1F7E1; Autoruns (Sysinternals)</span>
+                <span class="soft-tag">&#x1F534; CrystalDiskInfo</span>
+            </div>
+
+            <div class="highlight-box">
+                <p>&#x1F4A1; A maioria das fun&ccedil;&otilde;es de manuten&ccedil;&atilde;o j&aacute; est&aacute; dispon&iacute;vel <strong>nativamente no Windows</strong>. Antes de instalar um software de terceiros, explore as ferramentas embutidas do pr&oacute;prio sistema operacional.</p>
+            </div>
+        </div>
+
+        <!-- CARD 6 — OUTROS UTILITÁRIOS -->
+        <div class="content-card">
+            <h2>&#x1F4AC; Outros Utilit&aacute;rios Essenciais</h2>
+            <p>H&aacute; diversos outros programas utilit&aacute;rios que facilitam o dia a dia. Conhe&ccedil;a os mais usados:</p>
+
+            <div class="util-block outros">
+                <div class="util-header">
+                    <span class="util-icon">&#x1F4D1;</span>
+                    <span class="util-title">Leitores e Editores de PDF</span>
+                </div>
+                <p>O formato PDF &eacute; o padr&atilde;o para documentos digitais. Leitores como o <strong>Adobe Acrobat Reader</strong> (gratuito) e o <strong>Foxit Reader</strong> permitem visualizar, anotar e preencher formul&aacute;rios. Editores completos (como o Acrobat Pro) permitem criar e modificar PDFs.</p>
+                <div class="soft-grid">
+                    <span class="soft-tag">Adobe Acrobat Reader (gratuito)</span>
+                    <span class="soft-tag">Foxit Reader (gratuito)</span>
+                    <span class="soft-tag">PDF24 (gratuito)</span>
+                    <span class="soft-tag">Smallpdf (online)</span>
+                </div>
+            </div>
+
+            <div class="util-block outros">
+                <div class="util-header">
+                    <span class="util-icon">&#x1F4F8;</span>
+                    <span class="util-title">Captura de Tela (Screenshot)</span>
+                </div>
+                <p>Ferramentas de captura de tela registram o que est&aacute; sendo exibido no monitor. O Windows j&aacute; possui a <strong>Ferramenta de Recorte</strong> e o atalho <strong>Win + Shift + S</strong>. Para usos mais avan&ccedil;ados, existem programas dedicados.</p>
+                <div class="soft-grid">
+                    <span class="soft-tag">Ferramenta de Recorte (nativa)</span>
+                    <span class="soft-tag">Lightshot (gratuito)</span>
+                    <span class="soft-tag">ShareX (gratuito)</span>
+                    <span class="soft-tag">Snagit (pago)</span>
+                </div>
+            </div>
+
+            <div class="util-block outros">
+                <div class="util-header">
+                    <span class="util-icon">&#x1F4BE;</span>
+                    <span class="util-title">Backup e Recupera&ccedil;&atilde;o</span>
+                </div>
+                <p>Programas de backup criam c&oacute;pias de seguran&ccedil;a dos seus dados, protegendo-os contra perda por falha de hardware, exclus&atilde;o acidental ou ransomware. O Windows possui o <strong>Hist&oacute;rico de Arquivos</strong> e o <strong>Backup do Windows</strong> como ferramentas nativas.</p>
+                <div class="soft-grid">
+                    <span class="soft-tag">Hist&oacute;rico de Arquivos (nativo)</span>
+                    <span class="soft-tag">Macrium Reflect (gratuito)</span>
+                    <span class="soft-tag">AOMEI Backupper</span>
+                    <span class="soft-tag">Veeam Agent (gratuito)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 7 — RECAPITULANDO -->
+        <div class="content-card">
+            <h2>&#x1F4CB; Recapitulando</h2>
+            <ul>
+                <li><strong>Softwares utilit&aacute;rios</strong> complementam o S.O., mantendo o computador seguro, r&aacute;pido e organizado</li>
+                <li>O <strong>antiv&iacute;rus</strong> detecta e remove malware &mdash; deve ser mantido sempre atualizado</li>
+                <li><strong>Compactadores</strong> (.zip, .rar, .7z) reduzem o tamanho dos arquivos e agrupam v&aacute;rios em um s&oacute;</li>
+                <li><strong>Gerenciadores de download</strong> aceleram e organizam os downloads, permitindo pausar e retomar</li>
+                <li>Ferramentas de <strong>manuten&ccedil;&atilde;o</strong> limpam arquivos tempor&aacute;rios, otimizam o disco e controlam a inicializa&ccedil;&atilde;o</li>
+                <li>Outros utilit&aacute;rios essenciais: <strong>leitores de PDF</strong>, <strong>captura de tela</strong> e <strong>backup</strong></li>
+                <li>Muitas dessas ferramentas j&aacute; est&atilde;o <strong>inclu&iacute;das nativamente</strong> no Windows &mdash; explore-as antes de instalar programas de terceiros</li>
+            </ul>
+
+            <div class="highlight-box">
+                <p>&#x1F4DA; <strong>Pr&oacute;xima unidade:</strong> Agora que conhecemos os fundamentos do sistema operacional, vamos explorar o mundo da <strong>Internet</strong> &mdash; navegadores, e-mail, armazenamento em nuvem e seguran&ccedil;a digital.</p>
+            </div>
+        </div>
+
+        <div class="nav-footer">
+            <a href="uni1-03-gerenciamento-arquivos.html" class="nav-link">&#x2B05; Anterior: Gerenciamento de Arquivos</a>
+            <a href="uni2-01-navegadores-email.html" class="nav-link">Pr&oacute;xima: Navegadores e E-mail &#x27A1;</a>
+        </div>
+
+    </div>
+
+    <script src="slide-mode.js"></script>
+</body>
+</html>
