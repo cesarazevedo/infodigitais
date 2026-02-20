@@ -513,6 +513,62 @@
             <div class="ex-result" id="ex11-result"></div>
         </div>
 
+        <!-- ATIVIDADE PRÁTICA 1.1 -->
+        <div class="content-card practical-card" id="prat-11">
+            <h2>&#x1F6E0;&#xFE0F; Atividade Pr&aacute;tica &mdash; Explorando o S.O.</h2>
+            <div class="prat-meta">
+                <span class="prat-tag">&#x23F1; ~20 min</span>
+                <span class="prat-tag">&#x1F4BB; Sem instala&ccedil;&atilde;o</span>
+                <span class="prat-tag">&#x1F4CD; Windows nativo</span>
+            </div>
+
+            <div class="prat-steps">
+                <div class="prat-step">
+                    <div class="step-num">1</div>
+                    <div class="step-body">
+                        <div class="step-label">Abra o Gerenciador de Tarefas</div>
+                        <div class="step-desc">Pressione <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Esc</kbd>. Na aba <strong>Processos</strong>, observe a lista. Anote: quantos processos est&atilde;o rodando? Qual programa est&aacute; usando mais CPU neste momento?</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">2</div>
+                    <div class="step-body">
+                        <div class="step-label">Aba Desempenho &mdash; mem&oacute;ria RAM</div>
+                        <div class="step-desc">Clique na aba <strong>Desempenho</strong> e selecione <strong>Mem&oacute;ria</strong>. Anote: quantidade total de RAM instalada e quanto est&aacute; sendo usado agora. Isso &eacute; o gerenciamento de mem&oacute;ria em tempo real.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">3</div>
+                    <div class="step-body">
+                        <div class="step-label">Aba Inicializa&ccedil;&atilde;o</div>
+                        <div class="step-desc">Clique na aba <strong>Inicializa&ccedil;&atilde;o</strong>. Liste 3 programas que iniciam junto ao Windows e o impacto de cada um (Baixo, M&eacute;dio ou Alto). Quem controla isso? O gerenciador de processos do S.O.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">4</div>
+                    <div class="step-body">
+                        <div class="step-label">Informa&ccedil;&otilde;es do sistema via cmd</div>
+                        <div class="step-desc">Pressione <kbd>Windows</kbd>+<kbd>R</kbd>, digite <kbd>cmd</kbd> e pressione <kbd>Enter</kbd>. No terminal, digite <kbd>systeminfo</kbd> e pressione <kbd>Enter</kbd>. Anote: nome e vers&atilde;o do S.O., quantidade de RAM e tempo de execu&ccedil;&atilde;o do sistema.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">5</div>
+                    <div class="step-body">
+                        <div class="step-label">Listando processos pelo terminal</div>
+                        <div class="step-desc">No mesmo cmd, digite <kbd>tasklist | more</kbd> e pressione <kbd>Enter</kbd>. Veja a lista de processos ativos. Pressione <kbd>Espa&ccedil;o</kbd> para avan&ccedil;ar p&aacute;ginas e <kbd>Ctrl</kbd>+<kbd>C</kbd> para sair. Identifique pelo menos um processo do pr&oacute;prio S.O. (ex.: <em>svchost.exe</em>, <em>csrss.exe</em>).</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="prat-observe">
+                <strong>&#x1F4CC; Para saber:</strong> Os processos do sistema (<em>System</em>, <em>csrss.exe</em>, <em>winlogon.exe</em>) s&atilde;o parte do kernel e dos subsistemas do S.O. rodando continuamente. Os seus programas abertos (Chrome, Word&hellip;) s&atilde;o processos de aplicativo, gerenciados pelo S.O. por cima desses.
+            </div>
+
+            <div class="ex-actions">
+                <button class="btn-print" onclick="printPractical('prat-11', 'Aula 1.1 \u2014 Fundamentos e Fun\u00e7\u00f5es do S.O.')">&#x1F5A8;&#xFE0F; Imprimir roteiro</button>
+            </div>
+        </div>
+
         <div class="nav-footer">
             <a href="index.html" class="nav-link">&#x2B05; Dashboard</a>
             <a href="uni1-02-sistemas-operacionais.html" class="nav-link">Pr&oacute;xima: Principais S.O. &#x27A1;</a>
@@ -522,5 +578,6 @@
 
     <script src="slide-mode.js"></script>
     <script src="exercise-drag.js"></script>
+    <script src="exercise-print.js"></script>
 </body>
 </html>
