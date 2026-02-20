@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aula 1.1 - Fundamentos e Funções do S.O.</title>
     <link rel="stylesheet" href="slide-mode.css">
+    <link rel="stylesheet" href="exercise.css">
     <style>
         :root {
             --primary: #1565c0;
@@ -455,6 +456,63 @@
             </div>
         </div>
 
+        <!-- EXERCÍCIO: Arrastar e Soltar -->
+        <div class="content-card exercise-card">
+            <h2>&#x1F3AF; Exerc&iacute;cio &mdash; Arraste e Conecte</h2>
+            <p style="color:#475569;font-size:0.9em;margin-bottom:4px;">Arraste cada descri&ccedil;&atilde;o para o componente correspondente do Sistema Operacional. Em dispositivos m&oacute;veis, toque na descri&ccedil;&atilde;o e depois na zona de destino.</p>
+
+            <div class="ex-drag-root" data-ex="ex11">
+                <div class="ex-drag">
+                    <div>
+                        <div class="ex-col-title">Descri&ccedil;&otilde;es</div>
+                        <div class="ex-pool" data-pool="ex11">
+                            <div class="drag-chip" data-id="kernel">N&uacute;cleo central com acesso direto ao hardware</div>
+                            <div class="drag-chip" data-id="proc">Controla a execu&ccedil;&atilde;o de todos os programas</div>
+                            <div class="drag-chip" data-id="mem">Aloca e libera espa&ccedil;o na RAM</div>
+                            <div class="drag-chip" data-id="gui">Interface gr&aacute;fica com janelas e &iacute;cones</div>
+                            <div class="drag-chip" data-id="drv">Faz o hardware funcionar com o S.O.</div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="ex-col-title">Componente do S.O.</div>
+                        <div class="ex-zones" data-zones="ex11">
+                            <div class="drop-zone" data-zone="ex11-z1" data-accept="kernel">
+                                <span class="zone-name">Kernel</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex11-z2" data-accept="proc">
+                                <span class="zone-name">Gerenciador de Processos</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex11-z3" data-accept="mem">
+                                <span class="zone-name">Gerenciador de Mem&oacute;ria</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex11-z4" data-accept="gui">
+                                <span class="zone-name">GUI / Shell Gr&aacute;fico</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex11-z5" data-accept="drv">
+                                <span class="zone-name">Drivers de Dispositivos</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ex-actions">
+                <button class="btn-verificar" onclick="dragVerify('ex11')">Verificar</button>
+                <button class="btn-refazer"  onclick="dragReset('ex11')">Refazer</button>
+            </div>
+            <div class="ex-result" id="ex11-result"></div>
+        </div>
+
         <div class="nav-footer">
             <a href="index.html" class="nav-link">&#x2B05; Dashboard</a>
             <a href="uni1-02-sistemas-operacionais.html" class="nav-link">Pr&oacute;xima: Principais S.O. &#x27A1;</a>
@@ -463,5 +521,6 @@
     </div>
 
     <script src="slide-mode.js"></script>
+    <script src="exercise-drag.js"></script>
 </body>
 </html>

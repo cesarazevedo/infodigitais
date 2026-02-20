@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aula 1.3 - Gerenciamento de Pastas e Arquivos</title>
     <link rel="stylesheet" href="slide-mode.css">
+    <link rel="stylesheet" href="exercise.css">
     <style>
         :root {
             --primary: #1565c0;
@@ -557,6 +558,63 @@
             </div>
         </div>
 
+        <!-- EXERCÍCIO: Arrastar e Soltar -->
+        <div class="content-card exercise-card">
+            <h2>&#x1F3AF; Exerc&iacute;cio &mdash; Arraste e Conecte</h2>
+            <p style="color:#475569;font-size:0.9em;margin-bottom:4px;">Arraste cada descri&ccedil;&atilde;o para a extens&atilde;o de arquivo correspondente. Em dispositivos m&oacute;veis, toque na descri&ccedil;&atilde;o e depois na zona de destino.</p>
+
+            <div class="ex-drag-root" data-ex="ex13">
+                <div class="ex-drag">
+                    <div>
+                        <div class="ex-col-title">Descri&ccedil;&atilde;o do arquivo</div>
+                        <div class="ex-pool" data-pool="ex13">
+                            <div class="drag-chip" data-id="jpg">Foto tirada com c&acirc;mera digital ou celular</div>
+                            <div class="drag-chip" data-id="pdf">Documento formatado para envio e impress&atilde;o</div>
+                            <div class="drag-chip" data-id="zip">Pasta compactada para economizar espa&ccedil;o</div>
+                            <div class="drag-chip" data-id="mp4">V&iacute;deo gravado em alta defini&ccedil;&atilde;o</div>
+                            <div class="drag-chip" data-id="xlsx">Planilha com dados, f&oacute;rmulas e gr&aacute;ficos</div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="ex-col-title">Extens&atilde;o</div>
+                        <div class="ex-zones" data-zones="ex13">
+                            <div class="drop-zone" data-zone="ex13-z1" data-accept="jpg">
+                                <span class="zone-name">.jpg</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex13-z2" data-accept="pdf">
+                                <span class="zone-name">.pdf</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex13-z3" data-accept="zip">
+                                <span class="zone-name">.zip</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex13-z4" data-accept="mp4">
+                                <span class="zone-name">.mp4</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex13-z5" data-accept="xlsx">
+                                <span class="zone-name">.xlsx</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ex-actions">
+                <button class="btn-verificar" onclick="dragVerify('ex13')">Verificar</button>
+                <button class="btn-refazer"  onclick="dragReset('ex13')">Refazer</button>
+            </div>
+            <div class="ex-result" id="ex13-result"></div>
+        </div>
+
         <div class="nav-footer">
             <a href="uni1-02-sistemas-operacionais.html" class="nav-link">&#x2B05; Anterior: Principais S.O.</a>
             <a href="uni1-04-softwares-utilitarios.html" class="nav-link">Pr&oacute;xima: Softwares Utilit&aacute;rios &#x27A1;</a>
@@ -565,5 +623,6 @@
     </div>
 
     <script src="slide-mode.js"></script>
+    <script src="exercise-drag.js"></script>
 </body>
 </html>
