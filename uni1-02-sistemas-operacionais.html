@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 1.2 - Principais Sistemas Operacionais</title>
+    <link rel="stylesheet" href="slide-mode.css">
+    <style>
+        :root {
+            --primary: #1565c0;
+            --secondary: #00897b;
+            --bg-light: #f0f4f8;
+            --text-dark: #1a202c;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        .top-bar {
+            background: white;
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .back-btn {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+
+        .back-btn:hover { background: rgba(21,101,192,0.08); }
+
+        .page-badge {
+            font-size: 0.8em;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: rgba(21, 101, 192, 0.12);
+            color: #1565c0;
+            font-weight: 600;
+        }
+
+        .content-wrapper {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 30px;
+        }
+
+        .lesson-hero {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            border-top: 4px solid var(--primary);
+        }
+
+        .lesson-hero h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .lesson-hero .subtitle {
+            font-size: 1.05em;
+            color: #718096;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 16px;
+            padding: 35px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+
+        .content-card h2 {
+            font-size: 1.4em;
+            color: var(--primary);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .content-card h3 {
+            font-size: 1.05em;
+            color: #2d5a9e;
+            margin: 20px 0 8px;
+        }
+
+        .content-card p { margin-bottom: 15px; text-align: justify; }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(21,101,192,0.05), rgba(0,137,123,0.06));
+            border-left: 4px solid var(--primary);
+            padding: 20px 25px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+        }
+
+        .highlight-box p { margin-bottom: 0; font-style: italic; }
+
+        /* Card de S.O. individual */
+        .so-card {
+            border-radius: 14px;
+            padding: 28px;
+            margin: 20px 0;
+        }
+
+        .so-card.windows { background: #e3f2fd; border-left: 5px solid #1565c0; }
+        .so-card.linux   { background: #e8f5e9; border-left: 5px solid #2e7d32; }
+        .so-card.macos   { background: #fce4ec; border-left: 5px solid #ad1457; }
+        .so-card.mobile  { background: #f3e5f5; border-left: 5px solid #6a1b9a; }
+
+        .so-card-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+
+        .so-card-icon { font-size: 2.4em; }
+
+        .so-card-title { font-size: 1.3em; font-weight: 700; }
+        .so-card.windows .so-card-title { color: #0d47a1; }
+        .so-card.linux   .so-card-title { color: #1b5e20; }
+        .so-card.macos   .so-card-title { color: #880e4f; }
+        .so-card.mobile  .so-card-title { color: #4a148c; }
+
+        .so-card-sub { font-size: 0.85em; color: #718096; margin-top: 2px; }
+
+        .so-card p { color: #4a5568; margin-bottom: 12px; text-align: justify; }
+        .so-card p:last-child { margin-bottom: 0; }
+
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-top: 14px;
+        }
+
+        .pros, .cons {
+            border-radius: 10px;
+            padding: 14px 16px;
+        }
+
+        .pros { background: rgba(56,176,0,0.08); }
+        .cons { background: rgba(229,57,53,0.07); }
+
+        .pros strong { color: #2e7d32; display: block; margin-bottom: 6px; font-size: 0.9em; }
+        .cons strong { color: #c62828; display: block; margin-bottom: 6px; font-size: 0.9em; }
+
+        .pros ul, .cons ul { margin: 0 0 0 18px; }
+        .pros li, .cons li { font-size: 0.88em; color: #4a5568; margin-bottom: 4px; }
+
+        /* Versões do Windows */
+        .versoes-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 12px 0;
+        }
+
+        .versao-tag {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.82em;
+            font-weight: 600;
+            background: #e3f2fd;
+            color: #1565c0;
+            border: 1px solid #90caf9;
+        }
+
+        .versao-tag.atual {
+            background: #1565c0;
+            color: white;
+            border-color: #1565c0;
+        }
+
+        /* Distros Linux */
+        .distros-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px;
+            margin: 12px 0;
+        }
+
+        .distro-item {
+            background: white;
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #c8e6c9;
+        }
+
+        .distro-item .di-icon { font-size: 1.6em; margin-bottom: 4px; }
+        .distro-item strong { display: block; font-size: 0.85em; color: #2e7d32; }
+        .distro-item span { font-size: 0.78em; color: #718096; }
+
+        /* Tabela comparativa */
+        .compare-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.88em;
+        }
+
+        .compare-table th {
+            background: var(--primary);
+            color: white;
+            padding: 12px 14px;
+            text-align: left;
+        }
+
+        .compare-table th:first-child { border-radius: 8px 0 0 0; }
+        .compare-table th:last-child  { border-radius: 0 8px 0 0; }
+
+        .compare-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: top;
+        }
+
+        .compare-table tr:nth-child(even) td { background: #f8fafc; }
+        .compare-table tr:last-child td { border-bottom: none; }
+
+        .check  { color: #38b000; font-weight: 700; }
+        .cross  { color: #e53935; font-weight: 700; }
+        .middle { color: #f59e0b; font-weight: 700; }
+
+        ul, ol { margin: 10px 0 15px 25px; }
+        li { margin-bottom: 8px; }
+
+        .nav-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-bottom: 40px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+
+        .nav-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        @media (max-width: 768px) {
+            .content-wrapper { padding: 0 15px; }
+            .lesson-hero, .content-card { padding: 25px; }
+            .lesson-hero h1 { font-size: 1.5em; }
+            .pros-cons { grid-template-columns: 1fr; }
+            .distros-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <a href="index.html" class="back-btn">&#x2B05; Voltar ao Dashboard</a>
+        <span class="page-badge">Unidade 1 &mdash; S.O. e Utilit&aacute;rios</span>
+        <button class="slide-toggle" id="slideToggleBtn">&#x1F4FA; Modo Slide</button>
+    </div>
+
+    <div class="content-wrapper">
+
+        <div class="lesson-hero">
+            <h1>&#x1F4BB; Principais Sistemas Operacionais</h1>
+            <p class="subtitle">Aula 1.2 &mdash; Conhe&ccedil;a Windows, Linux, macOS e os S.O. m&oacute;veis</p>
+        </div>
+
+        <!-- CARD 1 -->
+        <div class="content-card">
+            <h2>&#x1F30D; Um mundo de sistemas operacionais</h2>
+            <p>Existem diversos sistemas operacionais no mercado, cada um com suas caracter&iacute;sticas, p&uacute;blico-alvo e prop&oacute;sito. Conhecer as op&ccedil;&otilde;es dispon&iacute;veis &eacute; fundamental para entender qual ferramenta se encaixa melhor em cada situa&ccedil;&atilde;o.</p>
+            <p>No segmento de <strong>computadores pessoais</strong>, tr&ecirc;s sistemas dominam o mercado: <strong>Windows</strong>, <strong>Linux</strong> e <strong>macOS</strong>. Nos dispositivos m&oacute;veis, os protagonistas s&atilde;o <strong>Android</strong> e <strong>iOS</strong>. Nesta aula vamos conhecer cada um deles.</p>
+
+            <div class="highlight-box">
+                <p>&#x1F4CA; Segundo dados de 2024, o <strong>Windows</strong> lidera com cerca de 72% do mercado de desktops, seguido do <strong>macOS</strong> (~15%) e do <strong>Linux</strong> (~4%). Nos celulares, o <strong>Android</strong> domina com aproximadamente 72% e o <strong>iOS</strong> com 27%.</p>
+            </div>
+        </div>
+
+        <!-- CARD 2 — WINDOWS -->
+        <div class="content-card">
+            <h2>&#x1FA9F; Windows</h2>
+
+            <div class="so-card windows">
+                <div class="so-card-header">
+                    <span class="so-card-icon">&#x1FA9F;</span>
+                    <div>
+                        <div class="so-card-title">Microsoft Windows</div>
+                        <div class="so-card-sub">Desenvolvido pela Microsoft &middot; Lan&ccedil;amento original: 1985</div>
+                    </div>
+                </div>
+                <p>O Windows &eacute; o sistema operacional mais utilizado em computadores pessoais no mundo. Criado pela <strong>Microsoft</strong>, ele se tornou padr&atilde;o em empresas, escolas e resid&ecirc;ncias ao longo das &uacute;ltimas d&eacute;cadas, especialmente por sua compatibilidade com uma enorme variedade de hardware e software.</p>
+            </div>
+
+            <h3>Principais vers&otilde;es ao longo da hist&oacute;ria</h3>
+            <div class="versoes-grid">
+                <span class="versao-tag">Windows 95</span>
+                <span class="versao-tag">Windows XP</span>
+                <span class="versao-tag">Windows Vista</span>
+                <span class="versao-tag">Windows 7</span>
+                <span class="versao-tag">Windows 8</span>
+                <span class="versao-tag">Windows 10</span>
+                <span class="versao-tag atual">Windows 11 &#x2605;</span>
+            </div>
+
+            <h3>Caracter&iacute;sticas principais</h3>
+            <ul>
+                <li><strong>Interface gr&aacute;fica intuitiva</strong> com Menu Iniciar, barra de tarefas e &Aacute;rea de Trabalho</li>
+                <li><strong>Ampla compatibilidade</strong> com programas, jogos e perif&eacute;ricos</li>
+                <li>Integrado com os servi&ccedil;os Microsoft: OneDrive, Office, Teams e Xbox</li>
+                <li>Suporte a <strong>Active Directory</strong> &mdash; muito usado em ambientes corporativos</li>
+                <li>Windows Defender embutido para prote&ccedil;&atilde;o contra malware</li>
+            </ul>
+
+            <div class="pros-cons">
+                <div class="pros">
+                    <strong>&#x2714; Pontos positivos</strong>
+                    <ul>
+                        <li>F&aacute;cil de usar</li>
+                        <li>Suporte a mais softwares</li>
+                        <li>Grande comunidade e suporte</li>
+                        <li>Compatibilidade de hardware</li>
+                    </ul>
+                </div>
+                <div class="cons">
+                    <strong>&#x2716; Pontos negativos</strong>
+                    <ul>
+                        <li>Licen&ccedil;a paga</li>
+                        <li>Mais suscet&iacute;vel a v&iacute;rus</li>
+                        <li>Consome mais recursos</li>
+                        <li>Atualizações forçadas</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 3 — LINUX -->
+        <div class="content-card">
+            <h2>&#x1F427; Linux</h2>
+
+            <div class="so-card linux">
+                <div class="so-card-header">
+                    <span class="so-card-icon">&#x1F427;</span>
+                    <div>
+                        <div class="so-card-title">Linux</div>
+                        <div class="so-card-sub">Criado por Linus Torvalds &middot; Lan&ccedil;amento: 1991 &middot; C&oacute;digo aberto (open source)</div>
+                    </div>
+                </div>
+                <p>O Linux &eacute; um sistema operacional <strong>gratuito e de c&oacute;digo aberto</strong>, o que significa que qualquer pessoa pode ver, modificar e distribuir seu c&oacute;digo-fonte. Por isso, existem diversas vers&otilde;es do Linux chamadas <strong>distribui&ccedil;&otilde;es (distros)</strong>, cada uma adaptada para um p&uacute;blico ou finalidade espec&iacute;fica.</p>
+                <p>O Linux est&aacute; por toda parte: em <strong>servidores web</strong> (mais de 90% da internet roda Linux), em <strong>supercomputadores</strong>, em dispositivos Android e at&eacute; no sistema da NASA e da SpaceX.</p>
+            </div>
+
+            <h3>Principais distribui&ccedil;&otilde;es (distros)</h3>
+            <div class="distros-grid">
+                <div class="distro-item">
+                    <div class="di-icon">&#x1F7E0;</div>
+                    <strong>Ubuntu</strong>
+                    <span>Ideal para iniciantes</span>
+                </div>
+                <div class="distro-item">
+                    <div class="di-icon">&#x1F534;</div>
+                    <strong>Fedora</strong>
+                    <span>Tecnologias recentes</span>
+                </div>
+                <div class="distro-item">
+                    <div class="di-icon">&#x1F535;</div>
+                    <strong>Debian</strong>
+                    <span>Estabilidade e servidores</span>
+                </div>
+                <div class="distro-item">
+                    <div class="di-icon">&#x1F7E2;</div>
+                    <strong>Mint</strong>
+                    <span>Interface familiar</span>
+                </div>
+                <div class="distro-item">
+                    <div class="di-icon">&#x26AB;</span>
+                    <strong>Arch</strong>
+                    <span>Avan&ccedil;ado e personalizável</span>
+                </div>
+                <div class="distro-item">
+                    <div class="di-icon">&#x1F1E7;&#x1F1F7;</div>
+                    <strong>Big Linux</strong>
+                    <span>Criado no Brasil</span>
+                </div>
+            </div>
+
+            <div class="pros-cons">
+                <div class="pros">
+                    <strong>&#x2714; Pontos positivos</strong>
+                    <ul>
+                        <li>Gratuito e open source</li>
+                        <li>Muito seguro e est&aacute;vel</li>
+                        <li>Leve em hardware antigo</li>
+                        <li>Alta personaliza&ccedil;&atilde;o</li>
+                    </ul>
+                </div>
+                <div class="cons">
+                    <strong>&#x2716; Pontos negativos</strong>
+                    <ul>
+                        <li>Curva de aprendizado</li>
+                        <li>Menos suporte a softwares</li>
+                        <li>Jogos com limita&ccedil;&otilde;es</li>
+                        <li>Drivers podem falhar</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 4 — macOS -->
+        <div class="content-card">
+            <h2>&#x1F34E; macOS</h2>
+
+            <div class="so-card macos">
+                <div class="so-card-header">
+                    <span class="so-card-icon">&#x1F34E;</span>
+                    <div>
+                        <div class="so-card-title">macOS (Apple)</div>
+                        <div class="so-card-sub">Desenvolvido pela Apple &middot; Exclusivo para hardware Apple &middot; Baseado em Unix</div>
+                    </div>
+                </div>
+                <p>O <strong>macOS</strong> &eacute; o sistema operacional dos computadores Apple (MacBook, iMac, Mac Mini e Mac Pro). Diferente do Windows e Linux, o macOS <strong>s&oacute; funciona em hardware Apple</strong> &mdash; essa integra&ccedil;&atilde;o entre hardware e software resulta em um sistema muito estável e otimizado.</p>
+                <p>Baseado em <strong>Unix</strong> (assim como o Linux), o macOS &eacute; muito popular entre profissionais criativos: designers, editores de v&iacute;deo, m&uacute;sicos e desenvolvedores de software.</p>
+            </div>
+
+            <h3>Caracter&iacute;sticas principais</h3>
+            <ul>
+                <li><strong>Ecossistema Apple</strong>: integra&ccedil;&atilde;o perfeita com iPhone, iPad, Apple Watch e iCloud</li>
+                <li>Interface elegante, consistente e f&aacute;cil de usar</li>
+                <li>Excelente desempenho nos chips <strong>Apple Silicon (M1, M2, M3&hellip;)</strong></li>
+                <li>Muito usado em produ&ccedil;&atilde;o de m&uacute;sica (Logic Pro), v&iacute;deo (Final Cut Pro) e design</li>
+                <li>Terminal Unix completo para usu&aacute;rios avan&ccedil;ados</li>
+            </ul>
+
+            <div class="pros-cons">
+                <div class="pros">
+                    <strong>&#x2714; Pontos positivos</strong>
+                    <ul>
+                        <li>Alta estabilidade</li>
+                        <li>Design refinado</li>
+                        <li>Seguran&ccedil;a robusta</li>
+                        <li>Integra&ccedil;&atilde;o com iPhone</li>
+                    </ul>
+                </div>
+                <div class="cons">
+                    <strong>&#x2716; Pontos negativos</strong>
+                    <ul>
+                        <li>Hardware caro</li>
+                        <li>Menos softwares</li>
+                        <li>N&atilde;o &eacute; customizável</li>
+                        <li>Jogos limitados</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 5 — MOBILE -->
+        <div class="content-card">
+            <h2>&#x1F4F1; S.O. M&oacute;veis: Android e iOS</h2>
+
+            <div class="so-card mobile">
+                <div class="so-card-header">
+                    <span class="so-card-icon">&#x1F4F1;</span>
+                    <div>
+                        <div class="so-card-title">Sistemas Operacionais M&oacute;veis</div>
+                        <div class="so-card-sub">Projetados para smartphones e tablets</div>
+                    </div>
+                </div>
+                <p>Os dispositivos m&oacute;veis tamb&eacute;m possuem seus pr&oacute;prios sistemas operacionais, otimizados para telas t&aacute;teis, bateria e conectividade. Os dois grandes s&atilde;o <strong>Android</strong> (Google) e <strong>iOS</strong> (Apple).</p>
+            </div>
+
+            <table class="compare-table">
+                <tr>
+                    <th>Caracter&iacute;stica</th>
+                    <th>&#x1F7E2; Android (Google)</th>
+                    <th>&#x1F34F; iOS (Apple)</th>
+                </tr>
+                <tr>
+                    <td><strong>C&oacute;digo</strong></td>
+                    <td>Open source (AOSP)</td>
+                    <td>Fechado (propriet&aacute;rio)</td>
+                </tr>
+                <tr>
+                    <td><strong>Dispositivos</strong></td>
+                    <td>Samsung, Motorola, Xiaomi&hellip;</td>
+                    <td>Apenas iPhone e iPad</td>
+                </tr>
+                <tr>
+                    <td><strong>Loja de apps</strong></td>
+                    <td>Google Play Store</td>
+                    <td>Apple App Store</td>
+                </tr>
+                <tr>
+                    <td><strong>Personaliza&ccedil;&atilde;o</strong></td>
+                    <td><span class="check">Alta</span></td>
+                    <td><span class="middle">M&eacute;dia</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Seguran&ccedil;a</strong></td>
+                    <td><span class="middle">Boa</span></td>
+                    <td><span class="check">Muito alta</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Atualiza&ccedil;&otilde;es</strong></td>
+                    <td>Varia por fabricante</td>
+                    <td>5+ anos garantidos</td>
+                </tr>
+                <tr>
+                    <td><strong>Pre&ccedil;o</strong></td>
+                    <td>Diversas faixas de pre&ccedil;o</td>
+                    <td>Premium (mais caro)</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- CARD 6 — COMPARATIVO GERAL -->
+        <div class="content-card">
+            <h2>&#x1F50D; Comparativo: Windows vs Linux vs macOS</h2>
+
+            <table class="compare-table">
+                <tr>
+                    <th>Crit&eacute;rio</th>
+                    <th>&#x1FA9F; Windows</th>
+                    <th>&#x1F427; Linux</th>
+                    <th>&#x1F34E; macOS</th>
+                </tr>
+                <tr>
+                    <td><strong>Custo</strong></td>
+                    <td>Pago (licen&ccedil;a)</td>
+                    <td><span class="check">Gratuito</span></td>
+                    <td>Gratuito*</td>
+                </tr>
+                <tr>
+                    <td><strong>Facilidade</strong></td>
+                    <td><span class="check">Alta</span></td>
+                    <td><span class="middle">M&eacute;dia</span></td>
+                    <td><span class="check">Alta</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Seguran&ccedil;a</strong></td>
+                    <td><span class="middle">M&eacute;dia</span></td>
+                    <td><span class="check">Alta</span></td>
+                    <td><span class="check">Alta</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Jogos</strong></td>
+                    <td><span class="check">Excelente</span></td>
+                    <td><span class="middle">Limitado</span></td>
+                    <td><span class="middle">Limitado</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Servidores</strong></td>
+                    <td><span class="middle">Usado</span></td>
+                    <td><span class="check">Dominante</span></td>
+                    <td><span class="cross">Raro</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Design/Cria&ccedil;&atilde;o</strong></td>
+                    <td><span class="middle">Bom</span></td>
+                    <td><span class="middle">Bom</span></td>
+                    <td><span class="check">Excelente</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Hardware necess&aacute;rio</strong></td>
+                    <td>Qualquer PC</td>
+                    <td>Qualquer PC</td>
+                    <td>Apenas Apple</td>
+                </tr>
+            </table>
+
+            <p style="font-size:0.85em; color:#718096;">* O macOS &eacute; gratuito, mas o hardware Apple &eacute; caro.</p>
+
+            <div class="highlight-box">
+                <p>&#x1F4A1; <strong>Qual escolher?</strong> N&atilde;o existe resposta &uacute;nica. O <strong>Windows</strong> &eacute; ideal para o uso geral e jogos. O <strong>Linux</strong> &eacute; a melhor escolha para servidores, programadores e quem quer privacidade. O <strong>macOS</strong> brilha para profissionais criativos dentro do ecossistema Apple.</p>
+            </div>
+        </div>
+
+        <!-- CARD 7 — RECAPITULANDO -->
+        <div class="content-card">
+            <h2>&#x1F4CB; Recapitulando</h2>
+            <ul>
+                <li>Os principais S.O. de desktop s&atilde;o <strong>Windows</strong>, <strong>Linux</strong> e <strong>macOS</strong></li>
+                <li>O <strong>Windows</strong> &eacute; o mais popular, f&aacute;cil de usar e compat&iacute;vel com a maioria dos softwares e jogos</li>
+                <li>O <strong>Linux</strong> &eacute; gratuito, open source, seguro e dominante em servidores &mdash; com v&aacute;rias distribui&ccedil;&otilde;es dispon&iacute;veis</li>
+                <li>O <strong>macOS</strong> &eacute; exclusivo da Apple, muito est&aacute;vel e preferido por profissionais criativos</li>
+                <li>Nos dispositivos m&oacute;veis, <strong>Android</strong> (Google) e <strong>iOS</strong> (Apple) dominam o mercado</li>
+                <li>A escolha do S.O. depende da <strong>finalidade de uso</strong>, do orçamento e do perfil do usu&aacute;rio</li>
+            </ul>
+
+            <div class="highlight-box">
+                <p>&#x1F4DA; <strong>Na pr&oacute;xima aula</strong> vamos aprender a organizar pastas e arquivos dentro do sistema operacional &mdash; uma habilidade essencial para o dia a dia no computador.</p>
+            </div>
+        </div>
+
+        <div class="nav-footer">
+            <a href="uni1-01-fundamentos-so.html" class="nav-link">&#x2B05; Anterior: Fundamentos do S.O.</a>
+            <a href="uni1-03-gerenciamento-arquivos.html" class="nav-link">Pr&oacute;xima: Gerenciamento de Arquivos &#x27A1;</a>
+        </div>
+
+    </div>
+
+    <script src="slide-mode.js"></script>
+</body>
+</html>
