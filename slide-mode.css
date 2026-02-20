@@ -1,0 +1,437 @@
+/* === MODO SLIDE === */
+
+.slide-toggle {
+    margin-left: auto;
+    padding: 8px 18px;
+    border: 2px solid var(--primary);
+    background: transparent;
+    color: var(--primary);
+    font-weight: 600;
+    font-size: 0.9em;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.slide-toggle:hover {
+    background: var(--primary);
+    color: white;
+}
+
+/* --- FULLSCREEN SLIDE MODE --- */
+body.slide-active {
+    overflow: hidden;
+}
+
+body.slide-active .top-bar,
+body.slide-active .nav-footer,
+body.slide-active .lesson-hero {
+    display: none;
+}
+
+body.slide-active .content-wrapper {
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1000;
+    background: var(--bg-light);
+}
+
+body.slide-active .content-card {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 85vw;
+    max-width: 1100px;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 50px 60px;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    animation: slideIn 0.35s ease;
+}
+
+body.slide-active .content-card.slide-visible {
+    display: block;
+}
+
+body.slide-active .content-card h2 {
+    font-size: 2.2em;
+    margin-bottom: 25px;
+}
+
+body.slide-active .content-card p {
+    font-size: 1.35em;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+body.slide-active .content-card ul,
+body.slide-active .content-card ol {
+    font-size: 1.3em;
+    line-height: 1.9;
+    margin-left: 35px;
+}
+
+body.slide-active .content-card li {
+    margin-bottom: 12px;
+}
+
+body.slide-active .content-card .highlight-box {
+    padding: 25px 30px;
+    margin: 25px 0;
+}
+
+body.slide-active .content-card .highlight-box p {
+    font-size: 1.4em;
+}
+
+body.slide-active .content-card .code-block {
+    font-size: 1.3em;
+    padding: 30px;
+}
+
+body.slide-active .content-card .compare-grid {
+    gap: 20px;
+}
+
+body.slide-active .content-card .compare-item code {
+    font-size: 1.1em;
+}
+
+body.slide-active .content-card .example-grid,
+body.slide-active .content-card .feature-list,
+body.slide-active .content-card .tip-grid {
+    gap: 20px;
+}
+
+body.slide-active .content-card .example-item,
+body.slide-active .content-card .feature-item,
+body.slide-active .content-card .tip-item {
+    padding: 25px;
+}
+
+body.slide-active .content-card .example-item strong,
+body.slide-active .content-card .feature-item strong,
+body.slide-active .content-card .tip-item strong {
+    font-size: 1.15em;
+}
+
+body.slide-active .content-card .example-item span,
+body.slide-active .content-card .feature-item span,
+body.slide-active .content-card .tip-item span {
+    font-size: 1.05em;
+}
+
+body.slide-active .content-card .example-item .ex-icon,
+body.slide-active .content-card .feature-item .feat-icon,
+body.slide-active .content-card .tip-item .tip-icon {
+    font-size: 2.5em;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translate(-50%, -50%) scale(0.96); }
+    to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+/* --- SLIDE HUD (controles overlay) --- */
+.slide-hud {
+    display: none;
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1001;
+    background: white;
+    padding: 12px 28px;
+    border-radius: 50px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    align-items: center;
+    gap: 20px;
+    user-select: none;
+}
+
+body.slide-active .slide-hud {
+    display: flex;
+}
+
+.slide-hud-btn {
+    background: transparent;
+    border: 2px solid #e2e8f0;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    font-size: 1.2em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    color: var(--text-dark);
+}
+
+.slide-hud-btn:hover {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+}
+
+.slide-counter {
+    font-weight: 700;
+    font-size: 1.05em;
+    color: var(--primary);
+    min-width: 60px;
+    text-align: center;
+}
+
+.slide-hud-close {
+    background: transparent;
+    border: 2px solid #fed7d7;
+    color: #e53e3e;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    font-size: 1.1em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    margin-left: 8px;
+}
+
+.slide-hud-close:hover {
+    background: #e53e3e;
+    border-color: #e53e3e;
+    color: white;
+}
+
+/* --- SLIDE TITLE OVERLAY --- */
+.slide-title-bar {
+    display: none;
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1001;
+    background: white;
+    padding: 10px 30px;
+    border-radius: 50px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    font-weight: 600;
+    color: var(--primary);
+    font-size: 1em;
+}
+
+body.slide-active .slide-title-bar {
+    display: block;
+}
+
+/* === BARRA DE FERRAMENTAS DOS BLOCOS DE CÓDIGO === */
+.code-toolbar {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 12px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 12px 12px 0 0;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.code-toolbar-label {
+    font-size: 0.73em;
+    color: #64748b;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 55%;
+}
+
+.code-toolbar-actions {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+.code-action-btn {
+    padding: 3px 10px;
+    border-radius: 5px;
+    font-size: 0.72em;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.08);
+    color: #94a3b8;
+    cursor: pointer;
+    font-family: 'Segoe UI', sans-serif;
+    text-decoration: none;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.code-action-btn:hover {
+    background: rgba(255,255,255,0.18);
+    color: #e2e8f0;
+    border-color: rgba(255,255,255,0.3);
+}
+
+.code-action-btn.copied {
+    background: rgba(56,176,0,0.25);
+    color: #86efac;
+    border-color: rgba(134,239,172,0.4);
+}
+
+/* === CONTROLES DE TAMANHO DE FONTE === */
+.font-controls {
+    display: flex;
+    gap: 4px;
+}
+
+.font-btn {
+    padding: 5px 9px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    background: white;
+    cursor: pointer;
+    font-weight: 700;
+    color: #306998;
+    font-size: 0.82em;
+    line-height: 1;
+    transition: all 0.2s;
+}
+
+.font-btn:hover {
+    background: #eef4fb;
+    border-color: #306998;
+}
+
+/* === MODO ESCURO (AULAS) === */
+
+.dark-toggle {
+    padding: 5px 9px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    background: white;
+    cursor: pointer;
+    font-size: 1.1em;
+    line-height: 1;
+    transition: all 0.2s;
+}
+
+.dark-toggle:hover {
+    background: #eef4fb;
+    border-color: #306998;
+}
+
+body.dark-mode {
+    background-color: #0f172a;
+    color: #e2e8f0;
+}
+
+body.dark-mode .top-bar {
+    background: #1e293b;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+body.dark-mode .lesson-hero,
+body.dark-mode .content-card {
+    background: #1e293b;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+body.dark-mode .content-card h2 { color: #93c5fd; }
+body.dark-mode .content-card h3 { color: #c4b5fd; }
+body.dark-mode .content-card p,
+body.dark-mode .content-card li { color: #cbd5e1; }
+
+body.dark-mode .highlight-box {
+    background: linear-gradient(135deg, rgba(30,41,59,0.9), rgba(51,65,85,0.6));
+    border-left-color: var(--secondary);
+}
+body.dark-mode .highlight-box p { color: #cbd5e1; }
+
+body.dark-mode .code-block { background: #090e17; }
+
+body.dark-mode .exercise-box {
+    background: #0f2318;
+    border-color: #166534;
+}
+body.dark-mode .exercise-box h3 { color: #86efac; }
+body.dark-mode .exercise-box p,
+body.dark-mode .exercise-box li { color: #cbd5e1; }
+body.dark-mode .exercise-box code { background: #14261e; color: #86efac; }
+
+body.dark-mode .nav-link {
+    background: #1e293b;
+    color: #93c5fd;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+body.dark-mode .nav-link:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+
+body.dark-mode .back-btn { color: #93c5fd; }
+body.dark-mode .back-btn:hover { background: rgba(147,197,253,0.08); }
+
+body.dark-mode .slide-toggle { border-color: #60a5fa; color: #60a5fa; }
+body.dark-mode .slide-toggle:hover { background: #60a5fa; color: #0f172a; }
+
+body.dark-mode .font-btn { background: #334155; border-color: #475569; color: #93c5fd; }
+body.dark-mode .font-btn:hover { background: #475569; border-color: #60a5fa; }
+
+body.dark-mode .dark-toggle { background: #334155; border-color: #475569; }
+body.dark-mode .dark-toggle:hover { background: #475569; border-color: #60a5fa; }
+
+/* Tabelas (cap7-02) */
+body.dark-mode .method-table th,
+body.dark-mode .format-table th { background: #5b21b6; }
+body.dark-mode .method-table td,
+body.dark-mode .format-table td { border-bottom-color: #334155; color: #cbd5e1; }
+body.dark-mode .method-table tr:nth-child(even) td,
+body.dark-mode .format-table tr:nth-child(even) td { background: #252f40; }
+body.dark-mode .method-table code { background: #3b1f7a; color: #c4b5fd; }
+
+/* Slide mode + dark mode */
+body.dark-mode.slide-active .content-wrapper { background: #0f172a; }
+body.dark-mode .slide-hud,
+body.dark-mode .slide-title-bar {
+    background: #1e293b;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+body.dark-mode .slide-title-bar { color: #93c5fd; }
+body.dark-mode .slide-hud-btn { border-color: #334155; color: #93c5fd; }
+body.dark-mode .slide-hud-btn:hover { background: #306998; border-color: #306998; color: white; }
+body.dark-mode .slide-counter { color: #93c5fd; }
+
+/* --- RESPONSIVE SLIDE MODE --- */
+@media (max-width: 768px) {
+    body.slide-active .content-card {
+        width: 95vw;
+        padding: 30px 25px;
+        max-height: 80vh;
+    }
+
+    body.slide-active .content-card h2 {
+        font-size: 1.6em;
+    }
+
+    body.slide-active .content-card p {
+        font-size: 1.15em;
+    }
+
+    body.slide-active .content-card ul,
+    body.slide-active .content-card ol {
+        font-size: 1.1em;
+    }
+}

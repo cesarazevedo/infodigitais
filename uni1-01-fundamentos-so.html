@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 1.1 - Fundamentos e Funções do S.O.</title>
+    <link rel="stylesheet" href="slide-mode.css">
+    <style>
+        :root {
+            --primary: #1565c0;
+            --secondary: #00897b;
+            --bg-light: #f0f4f8;
+            --text-dark: #1a202c;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        .top-bar {
+            background: white;
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .back-btn {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+
+        .back-btn:hover { background: rgba(21,101,192,0.08); }
+
+        .page-badge {
+            font-size: 0.8em;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: rgba(21, 101, 192, 0.12);
+            color: #1565c0;
+            font-weight: 600;
+        }
+
+        .content-wrapper {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 30px;
+        }
+
+        .lesson-hero {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            border-top: 4px solid var(--primary);
+        }
+
+        .lesson-hero h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .lesson-hero .subtitle {
+            font-size: 1.05em;
+            color: #718096;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 16px;
+            padding: 35px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+
+        .content-card h2 {
+            font-size: 1.4em;
+            color: var(--primary);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .content-card h3 {
+            font-size: 1.1em;
+            color: #2d5a9e;
+            margin: 20px 0 10px;
+        }
+
+        .content-card p { margin-bottom: 15px; text-align: justify; }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(21,101,192,0.05), rgba(0,137,123,0.06));
+            border-left: 4px solid var(--primary);
+            padding: 20px 25px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+        }
+
+        .highlight-box p { margin-bottom: 0; font-style: italic; }
+
+        /* Grid de funções */
+        .funcoes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin: 20px 0;
+        }
+
+        .funcao-item {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px;
+            border-top: 3px solid var(--primary);
+            text-align: center;
+        }
+
+        .funcao-icon { font-size: 2em; margin-bottom: 10px; }
+
+        .funcao-item strong {
+            display: block;
+            font-size: 0.95em;
+            color: var(--primary);
+            margin-bottom: 6px;
+        }
+
+        .funcao-item span {
+            font-size: 0.85em;
+            color: #718096;
+        }
+
+        /* Tabela comparativa */
+        .compare-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.95em;
+        }
+
+        .compare-table th {
+            background: var(--primary);
+            color: white;
+            padding: 12px 16px;
+            text-align: left;
+        }
+
+        .compare-table th:first-child { border-radius: 8px 0 0 0; }
+        .compare-table th:last-child  { border-radius: 0 8px 0 0; }
+
+        .compare-table td {
+            padding: 11px 16px;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: top;
+        }
+
+        .compare-table tr:nth-child(even) td { background: #f8fafc; }
+        .compare-table tr:last-child td { border-bottom: none; }
+
+        /* Diagrama camadas */
+        .camadas {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin: 20px 0;
+        }
+
+        .camada {
+            padding: 14px 22px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+
+        .camada-hardware  { background: #e3f2fd; color: #0d47a1; border: 2px solid #90caf9; }
+        .camada-kernel    { background: #1565c0; color: white; }
+        .camada-so        { background: #1976d2; color: white; }
+        .camada-apps      { background: #e8f5e9; color: #1b5e20; border: 2px solid #a5d6a7; }
+        .camada-usuario   { background: #f3e5f5; color: #4a148c; border: 2px solid #ce93d8; }
+
+        .camada small {
+            display: block;
+            font-weight: 400;
+            font-size: 0.82em;
+            margin-top: 3px;
+            opacity: 0.85;
+        }
+
+        /* Exemplos de S.O. */
+        .so-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 14px;
+            margin: 20px 0;
+        }
+
+        .so-item {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px 16px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s;
+        }
+
+        .so-item:hover { border-color: var(--primary); transform: translateY(-3px); }
+        .so-icon { font-size: 2.2em; margin-bottom: 8px; }
+        .so-item strong { display: block; color: var(--primary); margin-bottom: 4px; }
+        .so-item span { font-size: 0.82em; color: #718096; }
+
+        ul, ol { margin: 10px 0 15px 25px; }
+        li { margin-bottom: 8px; }
+
+        .nav-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-bottom: 40px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+
+        .nav-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        @media (max-width: 768px) {
+            .content-wrapper { padding: 0 15px; }
+            .lesson-hero, .content-card { padding: 25px; }
+            .lesson-hero h1 { font-size: 1.5em; }
+            .funcoes-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <a href="index.html" class="back-btn">&#x2B05; Voltar ao Dashboard</a>
+        <span class="page-badge">Unidade 1 &mdash; S.O. e Utilit&aacute;rios</span>
+        <button class="slide-toggle" id="slideToggleBtn">&#x1F4FA; Modo Slide</button>
+    </div>
+
+    <div class="content-wrapper">
+
+        <div class="lesson-hero">
+            <h1>&#x1F5A5;&#xFE0F; Fundamentos e Fun&ccedil;&otilde;es do S.O.</h1>
+            <p class="subtitle">Aula 1.1 &mdash; O que &eacute; um sistema operacional e como ele gerencia os recursos do computador</p>
+        </div>
+
+        <!-- CARD 1 -->
+        <div class="content-card">
+            <h2>&#x1F4AC; O que &eacute; um Sistema Operacional?</h2>
+            <p>Quando voc&ecirc; liga o computador, a primeira coisa que aparece na tela n&atilde;o &eacute; um programa que voc&ecirc; instalou &mdash; &eacute; o <strong>Sistema Operacional (S.O.)</strong>. Ele &eacute; o software mais fundamental de qualquer computador, tablet ou smartphone.</p>
+            <p>O S.O. funciona como um <strong>intermedi&aacute;rio</strong> entre o hardware (a parte f&iacute;sica da m&aacute;quina) e o usu&aacute;rio (ou os programas que ele usa). Sem ele, seria imposs&iacute;vel usar o computador de forma pr&aacute;tica.</p>
+
+            <div class="highlight-box">
+                <p>&#x1F4A1; <strong>Analogia:</strong> Pense no S.O. como o <em>gerente de um hotel</em>. Ele organiza os quartos (mem&oacute;ria), coordena a equipe (processador), recebe os h&oacute;spedes (usu&aacute;rios e programas) e cuida da infraestrutura (hardware) &mdash; tudo ao mesmo tempo.</p>
+            </div>
+
+            <p>Tecnicamente, o Sistema Operacional &eacute; um conjunto de programas que <strong>controla e gerencia todos os recursos do computador</strong>, permitindo que outros softwares sejam executados de forma eficiente e segura.</p>
+        </div>
+
+        <!-- CARD 2 -->
+        <div class="content-card">
+            <h2>&#x2699;&#xFE0F; As Camadas do Computador</h2>
+            <p>Para entender o papel do S.O., &eacute; importante visualizar como um computador &eacute; organizado em camadas. Cada camada depende da anterior e serve &agrave; seguinte:</p>
+
+            <div class="camadas">
+                <div class="camada camada-usuario">
+                    &#x1F464; Usu&aacute;rio
+                    <small>Pessoa que usa o computador</small>
+                </div>
+                <div class="camada camada-apps">
+                    &#x1F4E6; Aplicativos
+                    <small>Navegador, editor de texto, jogos&hellip;</small>
+                </div>
+                <div class="camada camada-so">
+                    &#x1F6E1;&#xFE0F; Sistema Operacional
+                    <small>Gerencia recursos e media o acesso ao hardware</small>
+                </div>
+                <div class="camada camada-kernel">
+                    &#x1F9E0; Kernel (N&uacute;cleo)
+                    <small>Parte central do S.O. &mdash; acesso direto ao hardware</small>
+                </div>
+                <div class="camada camada-hardware">
+                    &#x1F4BB; Hardware
+                    <small>Processador, mem&oacute;ria RAM, disco r&iacute;gido, placa de v&iacute;deo&hellip;</small>
+                </div>
+            </div>
+
+            <p>O <strong>Kernel</strong> &eacute; o n&uacute;cleo do sistema operacional &mdash; a parte que conversa diretamente com o hardware. Ele &eacute; carregado primeiro quando o computador liga e permanece em mem&oacute;ria o tempo todo.</p>
+        </div>
+
+        <!-- CARD 3 -->
+        <div class="content-card">
+            <h2>&#x1F3AF; Fun&ccedil;&otilde;es Principais do S.O.</h2>
+            <p>O sistema operacional realiza diversas fun&ccedil;&otilde;es essenciais simultaneamente. As principais s&atilde;o:</p>
+
+            <div class="funcoes-grid">
+                <div class="funcao-item">
+                    <div class="funcao-icon">&#x1F9E0;</div>
+                    <strong>Gerenciamento de Processos</strong>
+                    <span>Controla quais programas usam o processador e por quanto tempo</span>
+                </div>
+                <div class="funcao-item">
+                    <div class="funcao-icon">&#x1F4BE;</div>
+                    <strong>Gerenciamento de Mem&oacute;ria</strong>
+                    <span>Distribui a RAM entre os programas em execu&ccedil;&atilde;o</span>
+                </div>
+                <div class="funcao-item">
+                    <div class="funcao-icon">&#x1F4C1;</div>
+                    <strong>Gerenciamento de Arquivos</strong>
+                    <span>Organiza, cria, move e exclui arquivos e pastas</span>
+                </div>
+                <div class="funcao-item">
+                    <div class="funcao-icon">&#x1F5A8;&#xFE0F;</div>
+                    <strong>Gerenciamento de Dispositivos</strong>
+                    <span>Controla impressoras, pen drives, teclado, mouse&hellip;</span>
+                </div>
+                <div class="funcao-item">
+                    <div class="funcao-icon">&#x1F512;</div>
+                    <strong>Seguran&ccedil;a e Acesso</strong>
+                    <span>Controla usu&aacute;rios, senhas e permiss&otilde;es de acesso</span>
+                </div>
+                <div class="funcao-item">
+                    <div class="funcao-icon">&#x1F5A5;&#xFE0F;</div>
+                    <strong>Interface com o Usu&aacute;rio</strong>
+                    <span>Oferece a tela, janelas e menus para interagir com o sistema</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 4 -->
+        <div class="content-card">
+            <h2>&#x1F4BB; Interfaces: CLI e GUI</h2>
+            <p>Um sistema operacional pode oferecer dois tipos principais de interface para o usu&aacute;rio interagir com o computador:</p>
+
+            <table class="compare-table">
+                <tr>
+                    <th>Caracter&iacute;stica</th>
+                    <th>&#x2328;&#xFE0F; CLI &mdash; Linha de Comando</th>
+                    <th>&#x1F5A5;&#xFE0F; GUI &mdash; Interface Gr&aacute;fica</th>
+                </tr>
+                <tr>
+                    <td><strong>Como funciona</strong></td>
+                    <td>Usu&aacute;rio digita comandos de texto</td>
+                    <td>Usu&aacute;rio clica em &iacute;cones e janelas</td>
+                </tr>
+                <tr>
+                    <td><strong>Exemplo</strong></td>
+                    <td>Prompt de Comando (Windows), Terminal (Linux)</td>
+                    <td>Windows 11, macOS, Ubuntu com GNOME</td>
+                </tr>
+                <tr>
+                    <td><strong>Vantagens</strong></td>
+                    <td>R&aacute;pido, poderoso, consome poucos recursos</td>
+                    <td>F&aacute;cil de aprender, intuitivo, visual</td>
+                </tr>
+                <tr>
+                    <td><strong>Uso comum</strong></td>
+                    <td>Servidores, programadores, administradores</td>
+                    <td>Usu&aacute;rios em geral, educa&ccedil;&atilde;o, escrit&oacute;rio</td>
+                </tr>
+            </table>
+
+            <div class="highlight-box">
+                <p>&#x1F4A1; Atualmente, a maioria dos sistemas operacionais oferece <strong>as duas interfaces</strong>. O Windows 11, por exemplo, tem a interface gr&aacute;fica que conhecemos e tamb&eacute;m o PowerShell/CMD para quem prefere digitar comandos.</p>
+            </div>
+        </div>
+
+        <!-- CARD 5 -->
+        <div class="content-card">
+            <h2>&#x1F30D; Exemplos de Sistemas Operacionais</h2>
+            <p>Os sistemas operacionais est&atilde;o presentes em todos os dispositivos que usamos. Cada tipo de equipamento tem seus S.O. mais comuns:</p>
+
+            <div class="so-grid">
+                <div class="so-item">
+                    <div class="so-icon">&#x1F5A5;&#xFE0F;</div>
+                    <strong>Windows</strong>
+                    <span>O mais usado em desktops e notebooks no mundo</span>
+                </div>
+                <div class="so-item">
+                    <div class="so-icon">&#x1F427;</div>
+                    <strong>Linux</strong>
+                    <span>Open source, usado em servidores e por profissionais de TI</span>
+                </div>
+                <div class="so-item">
+                    <div class="so-icon">&#x1F34E;</div>
+                    <strong>macOS</strong>
+                    <span>Exclusivo dos computadores Apple (MacBook, iMac)</span>
+                </div>
+                <div class="so-item">
+                    <div class="so-icon">&#x1F4F1;</div>
+                    <strong>Android</strong>
+                    <span>O S.O. m&oacute;vel mais popular do mundo (Google)</span>
+                </div>
+                <div class="so-item">
+                    <div class="so-icon">&#x1F34F;</div>
+                    <strong>iOS</strong>
+                    <span>Sistema exclusivo dos iPhones e iPads (Apple)</span>
+                </div>
+                <div class="so-item">
+                    <div class="so-icon">&#x2601;&#xFE0F;</div>
+                    <strong>Chrome OS</strong>
+                    <span>S.O. leve do Google, focado em servi&ccedil;os na nuvem</span>
+                </div>
+            </div>
+
+            <p>Al&eacute;m desses, sistemas operacionais est&atilde;o presentes em smart TVs, ve&iacute;culos, rel&oacute;gios inteligentes, roteadores e at&eacute; em eletrodom&eacute;sticos modernos. O S.O. &eacute; a base de qualquer dispositivo computacional.</p>
+        </div>
+
+        <!-- CARD 6 -->
+        <div class="content-card">
+            <h2>&#x1F4CB; Recapitulando</h2>
+            <ul>
+                <li>O <strong>Sistema Operacional</strong> &eacute; o software fundamental que gerencia todos os recursos do computador</li>
+                <li>Ele atua como <strong>intermedi&aacute;rio</strong> entre o hardware e os programas/usu&aacute;rios</li>
+                <li>O <strong>Kernel</strong> &eacute; o n&uacute;cleo do S.O. &mdash; a parte que tem acesso direto ao hardware</li>
+                <li>As principais fun&ccedil;&otilde;es s&atilde;o: gerenciar processos, mem&oacute;ria, arquivos, dispositivos, seguran&ccedil;a e interface</li>
+                <li>Existem dois tipos de interface: <strong>CLI</strong> (linha de comando) e <strong>GUI</strong> (gr&aacute;fica)</li>
+                <li>Exemplos de S.O.: Windows, Linux, macOS (computadores), Android e iOS (celulares)</li>
+            </ul>
+
+            <div class="highlight-box">
+                <p>&#x1F4DA; <strong>Na pr&oacute;xima aula</strong> vamos conhecer em detalhes os principais sistemas operacionais do mercado &mdash; Windows, Linux e macOS &mdash; comparando suas caracter&iacute;sticas, vantagens e contextos de uso.</p>
+            </div>
+        </div>
+
+        <div class="nav-footer">
+            <a href="index.html" class="nav-link">&#x2B05; Dashboard</a>
+            <a href="uni1-02-sistemas-operacionais.html" class="nav-link">Pr&oacute;xima: Principais S.O. &#x27A1;</a>
+        </div>
+
+    </div>
+
+    <script src="slide-mode.js"></script>
+</body>
+</html>
