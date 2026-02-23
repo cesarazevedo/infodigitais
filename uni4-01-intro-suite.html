@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 4.1 - Introdu&ccedil;&atilde;o &agrave; Su&iacute;te de Escrit&oacute;rio</title>
+    <link rel="stylesheet" href="slide-mode.css">
+    <link rel="stylesheet" href="exercise.css">
+    <style>
+        :root {
+            --primary: #bf360c;
+            --secondary: #870000;
+            --bg-light: #f0f4f8;
+            --text-dark: #1a202c;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        .top-bar {
+            background: white;
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .back-btn {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+        .back-btn:hover { background: rgba(191,54,12,0.08); }
+
+        .page-badge {
+            font-size: 0.8em;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: rgba(191,54,12,0.12);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .content-wrapper {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 30px;
+        }
+
+        .lesson-hero {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            border-top: 4px solid var(--primary);
+        }
+        .lesson-hero h1 { font-size: 2em; margin-bottom: 10px; color: var(--primary); }
+        .lesson-hero .subtitle { font-size: 1.05em; color: #718096; }
+
+        .content-card {
+            background: white;
+            border-radius: 16px;
+            padding: 35px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+        .content-card h2 {
+            font-size: 1.4em;
+            color: var(--primary);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .content-card h3 { font-size: 1.05em; color: var(--secondary); margin: 20px 0 10px; }
+        .content-card p  { margin-bottom: 15px; text-align: justify; }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(191,54,12,0.05), rgba(135,0,0,0.06));
+            border-left: 4px solid var(--primary);
+            padding: 20px 25px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+        }
+        .highlight-box p { margin-bottom: 0; font-style: italic; }
+
+        .alert-box {
+            background: #fff8e1;
+            border-left: 4px solid #f59e0b;
+            padding: 18px 22px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+        }
+        .alert-box p { margin: 0; color: #78350f; font-size: 0.93em; }
+
+        ul, ol { margin: 10px 0 15px 25px; }
+        li { margin-bottom: 8px; }
+
+        /* ── Timeline histórico ── */
+        .timeline {
+            position: relative;
+            margin: 20px 0;
+            padding-left: 28px;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 10px; top: 0; bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+        }
+        .tl-item { position: relative; margin-bottom: 16px; }
+        .tl-item::before {
+            content: '';
+            position: absolute;
+            left: -22px; top: 6px;
+            width: 10px; height: 10px;
+            border-radius: 50%;
+            background: var(--primary);
+        }
+        .tl-year { font-weight: 700; color: var(--primary); font-size: 0.88em; }
+        .tl-desc { font-size: 0.86em; color: #475569; }
+
+        /* ── Grid das três suítes ── */
+        .suite-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 16px;
+            margin: 20px 0;
+        }
+        .suite-card {
+            border-radius: 14px;
+            padding: 22px 18px;
+            text-align: center;
+        }
+        .suite-card.msft   { background: #eff6ff; border-top: 4px solid #2563eb; }
+        .suite-card.google { background: #fff7ed; border-top: 4px solid #ea580c; }
+        .suite-card.libre  { background: #f0fdf4; border-top: 4px solid #16a34a; }
+        .suite-logo { font-size: 2.4em; margin-bottom: 8px; }
+        .suite-name { font-size: 1.05em; font-weight: 700; margin-bottom: 4px; }
+        .suite-card.msft   .suite-name { color: #1d4ed8; }
+        .suite-card.google .suite-name { color: #c2410c; }
+        .suite-card.libre  .suite-name { color: #15803d; }
+        .suite-model { font-size: 0.78em; font-weight: 600; border-radius: 20px; padding: 3px 10px; display: inline-block; margin: 4px 0; }
+        .suite-card.msft   .suite-model { background: #dbeafe; color: #1e40af; }
+        .suite-card.google .suite-model { background: #ffedd5; color: #9a3412; }
+        .suite-card.libre  .suite-model { background: #dcfce7; color: #166534; }
+        .suite-apps { font-size: 0.8em; color: #475569; margin-top: 8px; line-height: 1.6; }
+
+        /* ── Tabela comparativa ── */
+        .compare-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 0.88em;
+        }
+        .compare-table th {
+            background: var(--primary);
+            color: white;
+            padding: 11px 14px;
+            text-align: left;
+        }
+        .compare-table th:first-child { border-radius: 8px 0 0 0; }
+        .compare-table th:last-child  { border-radius: 0 8px 0 0; }
+        .compare-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: middle;
+        }
+        .compare-table tr:nth-child(even) td { background: #f8fafc; }
+        .compare-table tr:last-child td { border-bottom: none; }
+        .compare-table .func-col { font-weight: 600; color: #475569; }
+
+        /* ── Detalhe de cada suíte ── */
+        .detail-card {
+            border-radius: 12px;
+            padding: 20px;
+            margin: 14px 0;
+        }
+        .detail-card.msft   { background: #eff6ff; border-left: 4px solid #2563eb; }
+        .detail-card.google { background: #fff7ed; border-left: 4px solid #ea580c; }
+        .detail-card.libre  { background: #f0fdf4; border-left: 4px solid #16a34a; }
+        .detail-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        .detail-icon { font-size: 1.8em; }
+        .detail-name { font-weight: 700; font-size: 1em; }
+        .detail-card.msft   .detail-name { color: #1d4ed8; }
+        .detail-card.google .detail-name { color: #c2410c; }
+        .detail-card.libre  .detail-name { color: #15803d; }
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .pros, .cons {
+            border-radius: 8px;
+            padding: 10px 12px;
+        }
+        .pros { background: rgba(22,163,74,0.08); }
+        .cons { background: rgba(220,38,38,0.08); }
+        .pc-title { font-size: 0.74em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+        .pros .pc-title { color: #15803d; }
+        .cons .pc-title { color: #dc2626; }
+        .pc-list { list-style: none; margin: 0; padding: 0; }
+        .pc-list li { font-size: 0.82em; color: #334155; margin-bottom: 4px; }
+        .pros .pc-list li::before { content: "✓ "; color: #16a34a; }
+        .cons .pc-list li::before { content: "✗ "; color: #dc2626; }
+
+        /* ── Formatos de arquivo ── */
+        .format-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .format-item {
+            border-radius: 10px;
+            padding: 16px;
+            text-align: center;
+        }
+        .format-item.ms   { background: #eff6ff; border-top: 3px solid #2563eb; }
+        .format-item.odf  { background: #f0fdf4; border-top: 3px solid #16a34a; }
+        .format-item.pdf  { background: #fef2f2; border-top: 3px solid #ef4444; }
+        .format-ext { font-size: 1.3em; font-weight: 800; margin-bottom: 4px; font-family: 'Consolas', monospace; }
+        .format-item.ms  .format-ext { color: #1d4ed8; }
+        .format-item.odf .format-ext { color: #15803d; }
+        .format-item.pdf .format-ext { color: #dc2626; }
+        .format-name { font-size: 0.8em; font-weight: 600; color: #475569; margin-bottom: 4px; }
+        .format-apps { font-size: 0.74em; color: #718096; }
+
+        /* ── Boas práticas ── */
+        .boas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .boa-item {
+            background: #fff7ed;
+            border-radius: 10px;
+            padding: 16px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+        .boa-icon { font-size: 1.6em; flex-shrink: 0; }
+        .boa-text strong { display: block; font-size: 0.88em; color: var(--primary); margin-bottom: 3px; }
+        .boa-text span   { font-size: 0.8em; color: #475569; }
+
+        /* ── nav ── */
+        .nav-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-bottom: 40px;
+        }
+        .nav-link {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+        .nav-link:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+
+        @media (max-width: 768px) {
+            .content-wrapper { padding: 0 15px; }
+            .lesson-hero, .content-card { padding: 25px; }
+            .lesson-hero h1 { font-size: 1.5em; }
+            .pros-cons { grid-template-columns: 1fr; }
+            .suite-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <a href="index.html" class="back-btn">&#x2B05; Voltar ao Dashboard</a>
+        <span class="page-badge">Unidade 4 &mdash; Su&iacute;te de Escrit&oacute;rio</span>
+        <button class="slide-toggle" id="slideToggleBtn">&#x1F4FA; Modo Slide</button>
+    </div>
+
+    <div class="content-wrapper">
+
+        <div class="lesson-hero">
+            <h1>&#x1F4E6; Introdu&ccedil;&atilde;o &agrave; Su&iacute;te de Escrit&oacute;rio</h1>
+            <p class="subtitle">Aula 4.1 &mdash; Vis&atilde;o geral das su&iacute;tes LibreOffice, Microsoft Office e Google Workspace: componentes, caracter&iacute;sticas e diferen&ccedil;as entre as plataformas</p>
+        </div>
+
+        <!-- CARD 1 -->
+        <div class="content-card">
+            <h2>&#x1F4BB; O que &eacute; uma Su&iacute;te de Escrit&oacute;rio?</h2>
+            <p>Uma <strong>su&iacute;te de escrit&oacute;rio</strong> &eacute; um conjunto integrado de aplicativos de produtividade projetados para trabalhar em conjunto. Em vez de programas isolados, a su&iacute;te oferece ferramentas complementares &mdash; editor de texto, planilha e editor de apresenta&ccedil;&otilde;es &mdash; com interface consistente e compatibilidade entre os arquivos.</p>
+            <p>No mercado de trabalho, no ambiente escolar e na vida cotidiana, dominar ao menos uma su&iacute;te de escrit&oacute;rio &eacute; considerado uma <strong>compet&ecirc;ncia fundamental</strong> de inform&aacute;tica. Os documentos criados por essas ferramentas est&atilde;o presentes em relat&oacute;rios, provas, curr&iacute;culos, planilhas de or&ccedil;amento e apresenta&ccedil;&otilde;es profissionais.</p>
+
+            <div class="highlight-box">
+                <p>&#x1F4A1; As tr&ecirc;s grandes su&iacute;tes atuais &mdash; <strong>Microsoft Office</strong>, <strong>Google Workspace</strong> e <strong>LibreOffice</strong> &mdash; cobrem as mesmas necessidades b&aacute;sicas, mas com modelos de neg&oacute;cio, armazenamento e recursos distintos.</p>
+            </div>
+
+            <h3>&#x1F4C5; Uma breve hist&oacute;ria</h3>
+            <div class="timeline">
+                <div class="tl-item">
+                    <div class="tl-year">1979 &mdash; WordStar</div>
+                    <div class="tl-desc">Primeiro processador de texto comercialmente bem-sucedido para computadores pessoais.</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-year">1983 &mdash; Lotus 1-2-3</div>
+                    <div class="tl-desc">A planilha que transformou o PC numa ferramenta de neg&oacute;cios indispens&aacute;vel.</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-year">1990 &mdash; Microsoft Office</div>
+                    <div class="tl-desc">Lan&ccedil;amento da primeira vers&atilde;o do Office (Word + Excel + PowerPoint), que domina o mercado at&eacute; hoje.</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-year">2002 &mdash; OpenOffice.org</div>
+                    <div class="tl-desc">Primeira su&iacute;te open source de grande ado&ccedil;&atilde;o, tornando a produtividade acess&iacute;vel gratuitamente.</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-year">2006 &mdash; Google Docs</div>
+                    <div class="tl-desc">Pioneiro na edi&ccedil;&atilde;o colaborativa em tempo real direto no navegador, sem instala&ccedil;&atilde;o.</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-year">2011 &mdash; LibreOffice</div>
+                    <div class="tl-desc">Fork do OpenOffice, mantido pela The Document Foundation. Tornou-se a principal alternativa gratuita ao MS Office.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 2 -->
+        <div class="content-card">
+            <h2>&#x1F3AF; As Tr&ecirc;s Grandes Su&iacute;tes</h2>
+            <div class="suite-grid">
+                <div class="suite-card msft">
+                    <div class="suite-logo">&#x1F4BB;</div>
+                    <div class="suite-name">Microsoft Office</div>
+                    <span class="suite-model">Pago / Assinatura</span>
+                    <div class="suite-apps">Word &bull; Excel &bull; PowerPoint<br>Outlook &bull; Teams &bull; OneNote</div>
+                </div>
+                <div class="suite-card google">
+                    <div class="suite-logo">&#x1F4F1;</div>
+                    <div class="suite-name">Google Workspace</div>
+                    <span class="suite-model">Gratuito / Na nuvem</span>
+                    <div class="suite-apps">Docs &bull; Sheets &bull; Slides<br>Gmail &bull; Drive &bull; Meet</div>
+                </div>
+                <div class="suite-card libre">
+                    <div class="suite-logo">&#x1F513;</div>
+                    <div class="suite-name">LibreOffice</div>
+                    <span class="suite-model">Gratuito / Open Source</span>
+                    <div class="suite-apps">Writer &bull; Calc &bull; Impress<br>Draw &bull; Base &bull; Math</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 3 -->
+        <div class="content-card">
+            <h2>&#x1F4CA; Componentes e Correspond&ecirc;ncias</h2>
+            <p>Cada su&iacute;te oferece aplicativos equivalentes para as mesmas fun&ccedil;&otilde;es. Conhecer essa correspond&ecirc;ncia &eacute; essencial para migrar entre plataformas:</p>
+            <table class="compare-table">
+                <tr>
+                    <th>Fun&ccedil;&atilde;o</th>
+                    <th>&#x1F4BB; Microsoft</th>
+                    <th>&#x1F4F1; Google</th>
+                    <th>&#x1F513; LibreOffice</th>
+                </tr>
+                <tr>
+                    <td class="func-col">&#x1F4DD; Editor de texto</td>
+                    <td>Word</td>
+                    <td>Docs</td>
+                    <td>Writer</td>
+                </tr>
+                <tr>
+                    <td class="func-col">&#x1F4C8; Planilha</td>
+                    <td>Excel</td>
+                    <td>Sheets</td>
+                    <td>Calc</td>
+                </tr>
+                <tr>
+                    <td class="func-col">&#x1F4CA; Apresenta&ccedil;&otilde;es</td>
+                    <td>PowerPoint</td>
+                    <td>Slides</td>
+                    <td>Impress</td>
+                </tr>
+                <tr>
+                    <td class="func-col">&#x1F4C2; Armazenamento</td>
+                    <td>OneDrive</td>
+                    <td>Drive</td>
+                    <td>Local / nuvem</td>
+                </tr>
+                <tr>
+                    <td class="func-col">&#x1F4E7; E-mail</td>
+                    <td>Outlook</td>
+                    <td>Gmail</td>
+                    <td;&mdash;</td>
+                </tr>
+                <tr>
+                    <td class="func-col">&#x1F4DE; Comunica&ccedil;&atilde;o</td>
+                    <td>Teams</td>
+                    <td>Meet / Chat</td>
+                    <td>&mdash;</td>
+                </tr>
+                <tr>
+                    <td class="func-col">&#x1F5C3;&#xFE0F; Banco de dados</td>
+                    <td>Access</td>
+                    <td>AppSheet</td>
+                    <td>Base</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- CARD 4 -->
+        <div class="content-card">
+            <h2>&#x1F4BB; Microsoft Office em Detalhes</h2>
+            <div class="detail-card msft">
+                <div class="detail-header">
+                    <div class="detail-icon">&#x1F4BB;</div>
+                    <div class="detail-name">Microsoft 365 (antes Office 365)</div>
+                </div>
+                <p style="font-size:0.9em;color:#334155;margin-bottom:12px;">O Microsoft Office &eacute; o padr&atilde;o da ind&uacute;stria no mundo corporativo. Disponibilizado em vers&atilde;o de assinatura mensal/anual (Microsoft 365) ou licen&ccedil;a perm&atilde;nente (Office 2021/2024). A vers&atilde;o <strong>Microsoft 365 Education</strong> &eacute; gratuita para alunos de institui&ccedil;&otilde;es cadastradas.</p>
+                <ul style="font-size:0.86em;color:#475569;margin-left:18px;margin-bottom:12px;">
+                    <li><strong>Plataformas:</strong> Windows, macOS, iOS, Android e navegador (office.com)</li>
+                    <li><strong>Formatos nativos:</strong> .docx, .xlsx, .pptx (padr&atilde;o universal)</li>
+                    <li><strong>Armazenamento:</strong> OneDrive (1 TB incluso no 365)</li>
+                </ul>
+                <div class="pros-cons">
+                    <div class="pros">
+                        <div class="pc-title">&#x2795; Vantagens</div>
+                        <ul class="pc-list">
+                            <li>Padr&atilde;o da ind&uacute;stria</li>
+                            <li>Recursos mais avan&ccedil;ados</li>
+                            <li>Compatibilidade universal</li>
+                            <li>Suporte oficial robusto</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <div class="pc-title">&#x2796; Desvantagens</div>
+                        <ul class="pc-list">
+                            <li>Custo (assinatura)</li>
+                            <li>Requer ativa&ccedil;&atilde;o/licen&ccedil;a</li>
+                            <li>Mais pesado no hardware</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 5 -->
+        <div class="content-card">
+            <h2>&#x1F4F1; Google Workspace em Detalhes</h2>
+            <div class="detail-card google">
+                <div class="detail-header">
+                    <div class="detail-icon">&#x1F4F1;</div>
+                    <div class="detail-name">Google Workspace (antes G Suite)</div>
+                </div>
+                <p style="font-size:0.9em;color:#334155;margin-bottom:12px;">O Google Workspace &eacute; gratuito com qualquer conta Google (@gmail.com). Funciona <strong>100% no navegador</strong>, salvando automaticamente no Google Drive. A vers&atilde;o <strong>Workspace for Education</strong> &eacute; gratuita para escolas e integra-se nativamente ao Google Classroom.</p>
+                <ul style="font-size:0.86em;color:#475569;margin-left:18px;margin-bottom:12px;">
+                    <li><strong>Acesso:</strong> docs.google.com, sheets.google.com, slides.google.com</li>
+                    <li><strong>Destaque:</strong> colabora&ccedil;&atilde;o em tempo real com m&uacute;ltiplos usu&aacute;rios simultaneamente</li>
+                    <li><strong>Armazenamento:</strong> 15 GB gratuitos no Drive (compartilhado entre Gmail e fotos)</li>
+                </ul>
+                <div class="pros-cons">
+                    <div class="pros">
+                        <div class="pc-title">&#x2795; Vantagens</div>
+                        <ul class="pc-list">
+                            <li>Completamente gratuito</li>
+                            <li>Colabora&ccedil;&atilde;o em tempo real</li>
+                            <li>Salva automaticamente</li>
+                            <li>Acess&iacute;vel de qualquer dispositivo</li>
+                            <li>Integrado ao Classroom</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <div class="pc-title">&#x2796; Desvantagens</div>
+                        <ul class="pc-list">
+                            <li>Requer internet</li>
+                            <li>Menos recursos offline</li>
+                            <li>Dados armazenados no Google</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 6 -->
+        <div class="content-card">
+            <h2>&#x1F513; LibreOffice em Detalhes</h2>
+            <div class="detail-card libre">
+                <div class="detail-header">
+                    <div class="detail-icon">&#x1F513;</div>
+                    <div class="detail-name">LibreOffice &mdash; The Document Foundation</div>
+                </div>
+                <p style="font-size:0.9em;color:#334155;margin-bottom:12px;">O LibreOffice &eacute; um software <strong>livre e de c&oacute;digo aberto</strong> (licen&ccedil;a MPL 2.0), mantido por uma comunidade global. Funciona <strong>completamente offline</strong>, sem necessidade de conta ou assinatura. &Eacute; muito usado em administra&ccedil;&otilde;es p&uacute;blicas e institui&ccedil;&otilde;es de ensino ao redor do mundo.</p>
+                <ul style="font-size:0.86em;color:#475569;margin-left:18px;margin-bottom:12px;">
+                    <li><strong>Plataformas:</strong> Windows, Linux, macOS &mdash; gratuito para sempre</li>
+                    <li><strong>Formato nativo:</strong> ODF (.odt, .ods, .odp) &mdash; padr&atilde;o ISO aberto</li>
+                    <li><strong>Compatibilidade:</strong> l&ecirc; e salva em .docx, .xlsx, .pptx sem problemas</li>
+                </ul>
+                <div class="pros-cons">
+                    <div class="pros">
+                        <div class="pc-title">&#x2795; Vantagens</div>
+                        <ul class="pc-list">
+                            <li>100% gratuito e sem assinatura</li>
+                            <li>Funciona offline</li>
+                            <li>Open source e transparente</li>
+                            <li>Preserva privacidade</li>
+                        </ul>
+                    </div>
+                    <div class="cons">
+                        <div class="pc-title">&#x2796; Desvantagens</div>
+                        <ul class="pc-list">
+                            <li>Interface menos moderna</li>
+                            <li>Compatibilidade imperfei&ccedil;&atilde;o eventual</li>
+                            <li>Sem colabora&ccedil;&atilde;o nativa</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 7 -->
+        <div class="content-card">
+            <h2>&#x1F4C4; Formatos de Arquivo</h2>
+            <p>Cada su&iacute;te tem seu formato nativo, mas todas conseguem ler e salvar nos formatos principais. Saber escolher o formato certo evita problemas de compatibilidade:</p>
+
+            <div class="format-grid">
+                <div class="format-item ms">
+                    <div class="format-ext">.docx</div>
+                    <div class="format-name">Word Document</div>
+                    <div class="format-apps">MS Word &bull; Google Docs &bull; LibreOffice Writer</div>
+                </div>
+                <div class="format-item ms">
+                    <div class="format-ext">.xlsx</div>
+                    <div class="format-name">Excel Spreadsheet</div>
+                    <div class="format-apps">MS Excel &bull; Google Sheets &bull; LibreOffice Calc</div>
+                </div>
+                <div class="format-item ms">
+                    <div class="format-ext">.pptx</div>
+                    <div class="format-name">PowerPoint Presentation</div>
+                    <div class="format-apps">MS PowerPoint &bull; Google Slides &bull; Impress</div>
+                </div>
+                <div class="format-item odf">
+                    <div class="format-ext">.odt</div>
+                    <div class="format-name">OpenDocument Text</div>
+                    <div class="format-apps">LibreOffice Writer &bull; Formato aberto ISO</div>
+                </div>
+                <div class="format-item odf">
+                    <div class="format-ext">.ods</div>
+                    <div class="format-name">OpenDocument Spreadsheet</div>
+                    <div class="format-apps">LibreOffice Calc &bull; Formato aberto ISO</div>
+                </div>
+                <div class="format-item pdf">
+                    <div class="format-ext">.pdf</div>
+                    <div class="format-name">Portable Document Format</div>
+                    <div class="format-apps">Universal &bull; Leitura em qualquer dispositivo</div>
+                </div>
+            </div>
+
+            <div class="alert-box">
+                <p>&#x26A0;&#xFE0F; <strong>Regra pr&aacute;tica:</strong> Use <strong>.docx / .xlsx / .pptx</strong> para enviar arquivos que precisam ser editados por outras pessoas. Use <strong>.pdf</strong> para documentos finais (curr&iacute;culo, relat&oacute;rio, prova) &mdash; ele garante que o layout ser&aacute; preservado em qualquer dispositivo.</p>
+            </div>
+        </div>
+
+        <!-- CARD 8 -->
+        <div class="content-card">
+            <h2>&#x2705; Boas Pr&aacute;ticas</h2>
+            <div class="boas-grid">
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F4BE;</div>
+                    <div class="boa-text">
+                        <strong>Salve com frequ&ecirc;ncia</strong>
+                        <span>Use Ctrl+S regularmente. No LibreOffice e Word, ative o salvamento autom&aacute;tico. No Google, j&aacute; &eacute; autom&aacute;tico.</span>
+                    </div>
+                </div>
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F4CB;</div>
+                    <div class="boa-text">
+                        <strong>Nomeie bem os arquivos</strong>
+                        <span>Use nomes descritivos: "Relatorio_Mensal_Jan2025.docx" &eacute; melhor do que "documento1.docx".</span>
+                    </div>
+                </div>
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F4C1;</div>
+                    <div class="boa-text">
+                        <strong>Organize em pastas</strong>
+                        <span>Crie uma estrutura de pastas por projeto, disciplina ou per&iacute;odo. Evite deixar tudo na &aacute;rea de trabalho.</span>
+                    </div>
+                </div>
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F4E4;</div>
+                    <div class="boa-text">
+                        <strong>Exporte como PDF para enviar</strong>
+                        <span>Ao enviar documentos finais por e-mail ou imprimir, sempre exporte para PDF para garantir o layout.</span>
+                    </div>
+                </div>
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F504;</div>
+                    <div class="boa-text">
+                        <strong>Mantenha backups</strong>
+                        <span>Use o Drive ou OneDrive para sincronizar automaticamente. Para arquivos locais, copie periodicamente para pen drive.</span>
+                    </div>
+                </div>
+                <div class="boa-item">
+                    <div class="boa-icon">&#x2696;&#xFE0F;</div>
+                    <div class="boa-text">
+                        <strong>Use a ferramenta certa</strong>
+                        <span>Texto longo → Writer/Word. Dados e c&aacute;lculos → Calc/Excel. Apresenta&ccedil;&otilde;es visuais → Impress/PowerPoint.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXERCÍCIO -->
+        <div class="content-card exercise-card">
+            <h2>&#x1F3AF; Exerc&iacute;cio &mdash; Arraste e Conecte</h2>
+            <p style="color:#475569;font-size:0.9em;margin-bottom:4px;">Arraste cada descri&ccedil;&atilde;o para o aplicativo ou su&iacute;te correspondente. Em dispositivos m&oacute;veis, toque na descri&ccedil;&atilde;o e depois na zona de destino.</p>
+
+            <div class="ex-drag-root" data-ex="ex41">
+                <div class="ex-drag">
+                    <div>
+                        <div class="ex-col-title">Descri&ccedil;&atilde;o</div>
+                        <div class="ex-pool" data-pool="ex41">
+                            <div class="drag-chip" data-id="c1">Editor de texto da Microsoft, padr&atilde;o no mercado corporativo mundial</div>
+                            <div class="drag-chip" data-id="c2">Planilha gratuita do Google que funciona diretamente no navegador</div>
+                            <div class="drag-chip" data-id="c3">Editor de apresenta&ccedil;&otilde;es open source do LibreOffice</div>
+                            <div class="drag-chip" data-id="c4">Su&iacute;te gratuita e de c&oacute;digo aberto para Windows, Linux e macOS</div>
+                            <div class="drag-chip" data-id="c5">Ferramenta de comunica&ccedil;&atilde;o e videoconfer&ecirc;ncia integrada ao Microsoft 365</div>
+                            <div class="drag-chip" data-id="c6">Armazena e sincroniza documentos do Google Workspace na nuvem</div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="ex-col-title">Aplicativo / Su&iacute;te</div>
+                        <div class="ex-zones" data-zones="ex41">
+                            <div class="drop-zone" data-zone="ex41-z1" data-accept="c1">
+                                <span class="zone-name">Microsoft Word</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex41-z2" data-accept="c2">
+                                <span class="zone-name">Google Sheets</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex41-z3" data-accept="c3">
+                                <span class="zone-name">LibreOffice Impress</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex41-z4" data-accept="c4">
+                                <span class="zone-name">LibreOffice</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex41-z5" data-accept="c5">
+                                <span class="zone-name">Microsoft Teams</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex41-z6" data-accept="c6">
+                                <span class="zone-name">Google Drive</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ex-actions">
+                <button class="btn-verificar" onclick="dragVerify('ex41')">Verificar</button>
+                <button class="btn-refazer"  onclick="dragReset('ex41')">Refazer</button>
+            </div>
+            <div class="ex-result" id="ex41-result"></div>
+        </div>
+
+        <!-- ATIVIDADE PRÁTICA 4.1 -->
+        <div class="content-card practical-card" id="prat-41">
+            <h2>&#x1F6E0;&#xFE0F; Atividade Pr&aacute;tica &mdash; Explorando as Tr&ecirc;s Su&iacute;tes</h2>
+            <div class="prat-meta">
+                <span class="prat-tag">&#x23F1; ~30 min</span>
+                <span class="prat-tag">&#x1F310; Requer internet</span>
+                <span class="prat-tag">&#x1F4BB; PC</span>
+            </div>
+
+            <div class="prat-steps">
+                <div class="prat-step">
+                    <div class="step-num">1</div>
+                    <div class="step-body">
+                        <div class="step-label">Acesse o Google Docs</div>
+                        <div class="step-desc">Abra o navegador e acesse <strong>docs.google.com</strong> com sua conta Google (ou conta institucional do IFRN). Crie um novo documento em branco. Digite um par&aacute;grafo curto apresentando-se: nome, curso e o que espera aprender nesta disciplina.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">2</div>
+                    <div class="step-body">
+                        <div class="step-label">Baixe e abra no LibreOffice</div>
+                        <div class="step-desc">No Google Docs, v&aacute; em <strong>Arquivo &rarr; Fazer download &rarr; Microsoft Word (.docx)</strong>. Abra o arquivo baixado no <strong>LibreOffice Writer</strong>. O texto foi preservado? A formata&ccedil;&atilde;o foi mantida? Anote as diferen&ccedil;as que perceber na interface.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">3</div>
+                    <div class="step-body">
+                        <div class="step-label">Compare as interfaces</div>
+                        <div class="step-desc">Com os dois programas abertos lado a lado (ou alternando entre eles), identifique: Onde fica o menu de formata&ccedil;&atilde;o de fonte? Como se salva o arquivo em cada um? Onde est&aacute; a op&ccedil;&atilde;o de inserir imagem? Anote 3 semelhan&ccedil;as e 3 diferen&ccedil;as.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">4</div>
+                    <div class="step-body">
+                        <div class="step-label">Explore o Office Online (b&ocirc;nus)</div>
+                        <div class="step-desc">Acesse <strong>office.com</strong> com uma conta Microsoft (pode criar gratuitamente). O Microsoft Word Online est&aacute; dispon&iacute;vel sem instala&ccedil;&atilde;o. Abra o mesmo documento .docx. Compare com o Google Docs e o LibreOffice. Qual interface parece mais familiar para voc&ecirc;?</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">5</div>
+                    <div class="step-body">
+                        <div class="step-label">Exporte como PDF</div>
+                        <div class="step-desc">No LibreOffice Writer, v&aacute; em <strong>Arquivo &rarr; Exportar como PDF</strong>. No Google Docs, use <strong>Arquivo &rarr; Fazer download &rarr; PDF</strong>. Abra o PDF gerado e verifique se o layout est&aacute; correto. Observe que o PDF n&atilde;o pode ser editado diretamente.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="prat-observe">
+                <strong>&#x1F4CC; Para refletir:</strong> As tr&ecirc;s su&iacute;tes fazem coisas muito parecidas. A escolha entre elas depende de contexto: Google Docs &eacute; ideal para colabora&ccedil;&atilde;o e acesso m&oacute;vel; LibreOffice para trabalho offline sem custo; Microsoft Office quando o ambiente j&aacute; usa o ecossistema Microsoft. <strong>Saber usar as tr&ecirc;s &eacute; um diferencial profissional.</strong>
+            </div>
+
+            <div class="ex-actions">
+                <button class="btn-print" onclick="printPractical('prat-41', 'Aula 4.1 \u2014 Introdu\u00e7\u00e3o \u00e0 Su\u00edte de Escrit\u00f3rio')">&#x1F5A8;&#xFE0F; Imprimir roteiro</button>
+            </div>
+        </div>
+
+        <div class="nav-footer">
+            <a href="uni3-03-etica-ia.html" class="nav-link">&#x2B05; Anterior: &Eacute;tica no Uso de IA</a>
+            <a href="uni4-02-apresentacoes-design.html" class="nav-link">Pr&oacute;xima: Apresenta&ccedil;&otilde;es &mdash; Design &#x27A1;</a>
+        </div>
+
+    </div>
+
+    <script src="slide-mode.js"></script>
+    <script src="exercise-drag.js"></script>
+    <script src="exercise-print.js"></script>
+</body>
+</html>
