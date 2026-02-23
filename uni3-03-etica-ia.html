@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 3.3 - Limita&ccedil;&otilde;es e &Eacute;tica no Uso de IA</title>
+    <link rel="stylesheet" href="slide-mode.css">
+    <link rel="stylesheet" href="exercise.css">
+    <style>
+        :root {
+            --primary: #6a1b9a;
+            --secondary: #4a148c;
+            --bg-light: #f0f4f8;
+            --text-dark: #1a202c;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        .top-bar {
+            background: white;
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .back-btn {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+        .back-btn:hover { background: rgba(106,27,154,0.08); }
+        .page-badge {
+            font-size: 0.8em;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: rgba(106,27,154,0.12);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .content-wrapper {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 30px;
+        }
+
+        .lesson-hero {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            border-top: 4px solid var(--primary);
+        }
+        .lesson-hero h1 { font-size: 2em; margin-bottom: 10px; color: var(--primary); }
+        .lesson-hero .subtitle { font-size: 1.05em; color: #718096; }
+
+        .content-card {
+            background: white;
+            border-radius: 16px;
+            padding: 35px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+        .content-card h2 {
+            font-size: 1.4em;
+            color: var(--primary);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .content-card h3 { font-size: 1.05em; color: var(--secondary); margin: 20px 0 10px; }
+        .content-card p  { margin-bottom: 15px; text-align: justify; }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(106,27,154,0.05), rgba(74,20,140,0.06));
+            border-left: 4px solid var(--primary);
+            padding: 20px 25px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+        }
+        .highlight-box p { margin-bottom: 0; font-style: italic; }
+
+        .alert-box {
+            background: #fff8e1;
+            border-left: 4px solid #f59e0b;
+            padding: 18px 22px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+        }
+        .alert-box p { margin: 0; color: #78350f; font-size: 0.93em; }
+
+        .danger-box {
+            background: #fef2f2;
+            border-left: 4px solid #ef4444;
+            padding: 18px 22px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+        }
+        .danger-box p { margin: 0; color: #7f1d1d; font-size: 0.93em; }
+
+        ul, ol { margin: 10px 0 15px 25px; }
+        li { margin-bottom: 8px; }
+
+        /* ── Alucinação demo ── */
+        .halluc-demo {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin: 16px 0;
+        }
+        .halluc-col {
+            border-radius: 12px;
+            padding: 18px;
+        }
+        .halluc-col.prompt   { background: #f0f9ff; border-top: 3px solid #0ea5e9; }
+        .halluc-col.response { background: #fef2f2; border-top: 3px solid #ef4444; }
+        .hc-label { font-size: 0.75em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+        .halluc-col.prompt   .hc-label { color: #0284c7; }
+        .halluc-col.response .hc-label { color: #dc2626; }
+        .hc-text { font-size: 0.84em; color: #334155; font-family: 'Consolas', monospace; line-height: 1.6; }
+
+        /* ── Grid de vieses ── */
+        .bias-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 14px;
+            margin: 16px 0;
+        }
+        .bias-card {
+            border-radius: 12px;
+            padding: 18px;
+            border-left: 4px solid #f59e0b;
+            background: #fffbeb;
+        }
+        .bias-title { font-weight: 700; font-size: 0.9em; color: #92400e; margin-bottom: 6px; }
+        .bias-desc  { font-size: 0.82em; color: #475569; }
+        .bias-case  { font-size: 0.78em; color: #64748b; margin-top: 6px; font-style: italic; }
+
+        /* ── Uso honesto vs desonesto ── */
+        .honesty-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin: 16px 0;
+        }
+        .honesty-col { border-radius: 12px; padding: 18px; }
+        .honesty-col.ok  { background: #f0fdf4; border-top: 3px solid #22c55e; }
+        .honesty-col.bad { background: #fef2f2; border-top: 3px solid #ef4444; }
+        .hh-label { font-size: 0.75em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px; }
+        .honesty-col.ok  .hh-label { color: #16a34a; }
+        .honesty-col.bad .hh-label { color: #dc2626; }
+        .hh-list { list-style: none; margin: 0; padding: 0; }
+        .hh-list li { font-size: 0.84em; color: #334155; margin-bottom: 6px; padding-left: 0; }
+        .hh-list li::before { margin-right: 6px; }
+        .honesty-col.ok  .hh-list li::before { content: "✅"; }
+        .honesty-col.bad .hh-list li::before { content: "❌"; }
+
+        /* ── Privacidade: o que não compartilhar ── */
+        .privacy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .priv-item {
+            background: #fef2f2;
+            border-radius: 10px;
+            padding: 14px;
+            text-align: center;
+            border-top: 3px solid #ef4444;
+        }
+        .priv-icon { font-size: 1.8em; margin-bottom: 6px; }
+        .priv-item strong { display: block; font-size: 0.82em; color: #dc2626; margin-bottom: 3px; }
+        .priv-item em { font-size: 0.75em; color: #64748b; font-style: normal; }
+
+        /* ── Regulamentação ── */
+        .reg-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 14px;
+            margin: 16px 0;
+        }
+        .reg-card {
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+        .reg-card.eu  { background: #eff6ff; border-top: 3px solid #2563eb; }
+        .reg-card.br  { background: #f0fdf4; border-top: 3px solid #16a34a; }
+        .reg-icon  { font-size: 2em; margin-bottom: 8px; }
+        .reg-name  { font-weight: 700; font-size: 0.95em; margin-bottom: 6px; }
+        .reg-card.eu .reg-name { color: #1d4ed8; }
+        .reg-card.br .reg-name { color: #15803d; }
+        .reg-desc  { font-size: 0.82em; color: #475569; }
+
+        /* ── Checklist ── */
+        .checklist {
+            display: grid;
+            gap: 10px;
+            margin: 16px 0;
+        }
+        .check-item {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+            background: #fdf4ff;
+            border-radius: 10px;
+            padding: 14px 16px;
+        }
+        .check-icon { font-size: 1.4em; flex-shrink: 0; margin-top: 2px; }
+        .check-text strong { display: block; font-size: 0.9em; color: var(--primary); margin-bottom: 2px; }
+        .check-text span   { font-size: 0.82em; color: #475569; }
+
+        /* ── Tabela comparativa ── */
+        .compare-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 0.88em;
+        }
+        .compare-table th {
+            background: var(--primary);
+            color: white;
+            padding: 11px 14px;
+            text-align: left;
+        }
+        .compare-table th:first-child { border-radius: 8px 0 0 0; }
+        .compare-table th:last-child  { border-radius: 0 8px 0 0; }
+        .compare-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: middle;
+        }
+        .compare-table tr:nth-child(even) td { background: #f8fafc; }
+        .compare-table tr:last-child td { border-bottom: none; }
+
+        /* ── nav ── */
+        .nav-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-bottom: 40px;
+        }
+        .nav-link {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+        .nav-link:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+
+        @media (max-width: 768px) {
+            .content-wrapper { padding: 0 15px; }
+            .lesson-hero, .content-card { padding: 25px; }
+            .lesson-hero h1 { font-size: 1.5em; }
+            .halluc-demo  { grid-template-columns: 1fr; }
+            .honesty-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <a href="index.html" class="back-btn">&#x2B05; Voltar ao Dashboard</a>
+        <span class="page-badge">Unidade 3 &mdash; IA na Educa&ccedil;&atilde;o</span>
+        <button class="slide-toggle" id="slideToggleBtn">&#x1F4FA; Modo Slide</button>
+    </div>
+
+    <div class="content-wrapper">
+
+        <div class="lesson-hero">
+            <h1>&#x2696;&#xFE0F; Limita&ccedil;&otilde;es e &Eacute;tica no Uso de IA</h1>
+            <p class="subtitle">Aula 3.3 &mdash; Alucina&ccedil;&otilde;es, vieses, pl&aacute;gio, privacidade e regulamenta&ccedil;&atilde;o: como usar IA de forma respons&aacute;vel e cr&iacute;tica</p>
+        </div>
+
+        <!-- CARD 1 -->
+        <div class="content-card">
+            <h2>&#x1F4AD; Alucina&ccedil;&otilde;es: Quando a IA Inventa</h2>
+            <p><strong>Alucina&ccedil;&atilde;o</strong> &eacute; o termo t&eacute;cnico para quando um modelo de linguagem gera informa&ccedil;&otilde;es falsas com confian&ccedil;a &mdash; datas inventadas, cita&ccedil;&otilde;es que n&atilde;o existem, leis incorretas, nomes errados. O problema &eacute; que a IA apresenta essas inven&ccedil;&otilde;es com o mesmo tom seguro das informa&ccedil;&otilde;es corretas.</p>
+            <p>As alucina&ccedil;&otilde;es ocorrem porque LLMs <strong>n&atilde;o consultam fatos</strong> como um buscador. Eles preveem a pr&oacute;xima palavra mais plaus&iacute;vel &mdash; e &ldquo;plaus&iacute;vel&rdquo; n&atilde;o significa &ldquo;verdadeiro&rdquo;.</p>
+
+            <h3>&#x1F4CB; Exemplo real de alucina&ccedil;&atilde;o</h3>
+            <div class="halluc-demo">
+                <div class="halluc-col prompt">
+                    <div class="hc-label">&#x1F9D1;&#x200D;&#x1F393; Pergunta do aluno</div>
+                    <div class="hc-text">"Cite 3 artigos cient&iacute;ficos sobre seguran&ccedil;a da informa&ccedil;&atilde;o publicados no Brasil em 2023."</div>
+                </div>
+                <div class="halluc-col response">
+                    <div class="hc-label">&#x274C; Resposta alucinada</div>
+                    <div class="hc-text">A IA cita t&iacute;tulos, autores, revistas e DOIs completamente inventados &mdash; que n&atilde;o existem em nenhuma base cient&iacute;fica. O aluno que n&atilde;o verificar entregar&aacute; refer&ecirc;ncias falsas.</div>
+                </div>
+            </div>
+
+            <div class="alert-box">
+                <p>&#x26A0;&#xFE0F; <strong>Como identificar e prevenir:</strong> Verifique cita&ccedil;&otilde;es no Google Acad&ecirc;mico, PubMed ou Scielo. Use o Perplexity (que cita fontes) para pesquisa acad&ecirc;mica. Nunca inclua refer&ecirc;ncias de IA sem confirmar que existem.</p>
+            </div>
+
+            <h3>&#x1F6A8; Sinais de poss&iacute;vel alucina&ccedil;&atilde;o</h3>
+            <ul>
+                <li>Cita&ccedil;&otilde;es com DOIs ou links que n&atilde;o abrem</li>
+                <li>Datas, n&uacute;meros e estat&iacute;sticas muito espec&iacute;ficos sem fonte</li>
+                <li>Nomes de pessoas reais com obras ou declara&ccedil;&otilde;es que n&atilde;o s&atilde;o suas</li>
+                <li>Leis, artigos ou par&aacute;grafos que n&atilde;o aparecem em fontes oficiais</li>
+                <li>A IA afirmar certeza absoluta sobre temas controversos</li>
+            </ul>
+        </div>
+
+        <!-- CARD 2 -->
+        <div class="content-card">
+            <h2>&#x2696;&#xFE0F; Vieses Algor&iacute;tmicos</h2>
+            <p>Um <strong>vi&eacute;s algor&iacute;tmico</strong> &eacute; quando um sistema de IA sistematicamente favorece ou prejudica determinados grupos de pessoas. Esses vieses surgem porque os modelos aprendem com dados hist&oacute;ricos criados por humanos &mdash; e esses dados refletem desigualdades e preconceitos j&aacute; existentes na sociedade.</p>
+
+            <div class="bias-grid">
+                <div class="bias-card">
+                    <div class="bias-title">&#x1F9D1; Vi&eacute;s Racial</div>
+                    <div class="bias-desc">Sistemas de reconhecimento facial apresentam taxa de erro significativamente maior para pessoas negras e asism&aacute;ticas do que para pessoas brancas.</div>
+                    <div class="bias-case">Caso: estudo MIT Media Lab (2018) mostrou error rate de 35% para mulheres negras vs 1% para homens brancos.</div>
+                </div>
+                <div class="bias-card">
+                    <div class="bias-title">&#x1F4BC; Vi&eacute;s de G&ecirc;nero</div>
+                    <div class="bias-desc">Ferramentas de triagem de curr&iacute;culos treinadas em hist&oacute;ricos de contrata&ccedil;&atilde;o aprenderam a penalizar candidatas mulheres em &aacute;reas dominadas por homens.</div>
+                    <div class="bias-case">Caso: Amazon desativou seu sistema de IA de RH em 2018 ap&oacute;s identificar discrimina&ccedil;&atilde;o.</div>
+                </div>
+                <div class="bias-card">
+                    <div class="bias-title">&#x1F4B0; Vi&eacute;s Socioecon&ocirc;mico</div>
+                    <div class="bias-desc">Algoritmos de concess&atilde;o de cr&eacute;dito podem negar empr&eacute;stimos para moradores de determinados bairros, reproduzindo discrimina&ccedil;&atilde;o geogr&aacute;fica hist&oacute;rica.</div>
+                    <div class="bias-case">Impacto: decis&otilde;es autom&aacute;ticas sobre cr&eacute;dito e moradia afetam milh&otilde;es sem recurso &agrave; revis&atilde;o humana.</div>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <p>&#x1F4A1; <strong>Por que isso importa para voc&ecirc;?</strong> Sistemas de IA j&aacute; tomam decis&otilde;es sobre aprova&ccedil;&atilde;o de cr&eacute;dito, triagem de empregos, senten&ccedil;as judiciais e diagn&oacute;sticos m&eacute;dicos. Entender vieses &eacute; essencial para questionar resultados autom&aacute;ticos que te afetam.</p>
+            </div>
+        </div>
+
+        <!-- CARD 3 -->
+        <div class="content-card">
+            <h2>&#x1F4DD; Pl&aacute;gio e Desonestidade Acad&ecirc;mica</h2>
+            <p>O uso irrespons&aacute;vel de IA na vida acad&ecirc;mica configura <strong>desonestidade intelectual</strong> &mdash; e pode ter consequ&ecirc;ncias sérias. &Eacute; importante entender a diferen&ccedil;a entre usar IA como ferramenta e deixar que ela fa&ccedil;a o trabalho por voc&ecirc;.</p>
+
+            <div class="honesty-grid">
+                <div class="honesty-col ok">
+                    <div class="hh-label">&#x2705; Uso Honesto e Leg&iacute;timo</div>
+                    <ul class="hh-list">
+                        <li>Pedir que a IA explique um conceito que voc&ecirc; n&atilde;o entendeu</li>
+                        <li>Usar IA para revisar gram&aacute;tica do seu texto</li>
+                        <li>Pedir sugest&otilde;es de estrutura para seu argumento</li>
+                        <li>Gerar exemplos para fixar um conte&uacute;do estudado</li>
+                        <li>Usar IA para pesquisa inicial e depois aprofundar</li>
+                        <li>Citar que usou IA como ferramenta no trabalho</li>
+                    </ul>
+                </div>
+                <div class="honesty-col bad">
+                    <div class="hh-label">&#x274C; Uso Desonesto</div>
+                    <ul class="hh-list">
+                        <li>Copiar e entregar texto gerado pela IA como se fosse seu</li>
+                        <li>Pedir que a IA fa&ccedil;a a reda&ccedil;&atilde;o completa para voc&ecirc;</li>
+                        <li>Usar respostas de IA em provas presenciais</li>
+                        <li>Omitir que usou IA quando a institui&ccedil;&atilde;o exige transpar&ecirc;ncia</li>
+                        <li>Usar IA para responder tarefa de outro colega</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>&#x1F50D; Detectores de IA</h3>
+            <p>Ferramentas como <strong>GPTZero</strong> e a integra&ccedil;&atilde;o do <strong>Turnitin com IA</strong> detectam padr&otilde;es estat&iacute;sticos caracter&iacute;sticos de textos gerados por m&aacute;quina. Embora n&atilde;o sejam 100% precisos, est&atilde;o sendo adotados por institui&ccedil;&otilde;es de ensino do Brasil e do mundo.</p>
+
+            <div class="alert-box">
+                <p>&#x26A0;&#xFE0F; A postura do IFRN &mdash; como da maioria das institui&ccedil;&otilde;es de ensino &mdash; permite o uso de IA como <strong>ferramenta de apoio</strong>, mas exige que a produ&ccedil;&atilde;o intelectual seja essencialmente do aluno. Sempre consulte o professor sobre as regras de cada avalia&ccedil;&atilde;o.</p>
+            </div>
+        </div>
+
+        <!-- CARD 4 -->
+        <div class="content-card">
+            <h2>&#x1F512; Privacidade e Dados Pessoais</h2>
+            <p>Ao usar ferramentas de IA, voc&ecirc; fornece dados &mdash; suas perguntas, documentos e informa&ccedil;&otilde;es podem ser usados para treinar modelos futuros, a menos que voc&ecirc; desative essa op&ccedil;&atilde;o nas configura&ccedil;&otilde;es. Por isso, &eacute; essencial saber o que <strong>nunca compartilhar</strong>:</p>
+
+            <div class="privacy-grid">
+                <div class="priv-item">
+                    <div class="priv-icon">&#x1F4C3;</div>
+                    <strong>Documentos Sigilosos</strong>
+                    <em>Contratos, laudos m&eacute;dicos, processos jur&iacute;dicos</em>
+                </div>
+                <div class="priv-item">
+                    <div class="priv-icon">&#x1F194;</div>
+                    <strong>CPF e RG</strong>
+                    <em>N&uacute;meros de documentos pessoais ou de terceiros</em>
+                </div>
+                <div class="priv-item">
+                    <div class="priv-icon">&#x1F511;</div>
+                    <strong>Senhas</strong>
+                    <em>Nunca informe senhas, mesmo pedindo para "criar uma criptografada"</em>
+                </div>
+                <div class="priv-item">
+                    <div class="priv-icon">&#x1F4B3;</div>
+                    <strong>Dados Banc&aacute;rios</strong>
+                    <em>N&uacute;meros de cart&atilde;o, ag&ecirc;ncia, conta</em>
+                </div>
+                <div class="priv-item">
+                    <div class="priv-icon">&#x1F4CD;</div>
+                    <strong>Localiza&ccedil;&atilde;o</strong>
+                    <em>Endere&ccedil;o residencial pr&oacute;prio ou de familiares</em>
+                </div>
+                <div class="priv-item">
+                    <div class="priv-icon">&#x1F91D;</div>
+                    <strong>Dados de Terceiros</strong>
+                    <em>Informa&ccedil;&otilde;es pessoais de colegas, familiares ou clientes</em>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <p>&#x1F4A1; A <strong>LGPD</strong> (Lei Geral de Prote&ccedil;&atilde;o de Dados) se aplica ao uso de IA: empresas que processam seus dados por meio de IA s&atilde;o respons&aacute;veis pelo tratamento adequado dessas informa&ccedil;&otilde;es. Voc&ecirc; tem direito de saber como seus dados s&atilde;o usados.</p>
+            </div>
+        </div>
+
+        <!-- CARD 5 -->
+        <div class="content-card">
+            <h2>&#x1F3A8; Direitos Autorais e Cria&ccedil;&otilde;es de IA</h2>
+            <p>Quando voc&ecirc; usa IA para criar uma imagem, um texto ou uma m&uacute;sica, surge uma quest&atilde;o jur&iacute;dica ainda em discuss&atilde;o: <strong>quem &eacute; o autor?</strong></p>
+
+            <h3>&#x2696;&#xFE0F; O que dizem os tribunais</h3>
+            <table class="compare-table">
+                <tr>
+                    <th>Quest&atilde;o</th>
+                    <th>Posi&ccedil;&atilde;o atual</th>
+                </tr>
+                <tr>
+                    <td>Obra criada 100% por IA pode ter direito autoral?</td>
+                    <td>&#x274C; N&atilde;o &mdash; direito autoral exige autoria humana (USCO, 2023)</td>
+                </tr>
+                <tr>
+                    <td>Obra criada por humano <em>com aux&iacute;lio</em> de IA?</td>
+                    <td>&#x2705; Sim &mdash; desde que haja sele&ccedil;&atilde;o e criatividade humana significativa</td>
+                </tr>
+                <tr>
+                    <td>IA treinar com obras protegidas sem autoriza&ccedil;&atilde;o?</td>
+                    <td>&#x2696;&#xFE0F; Em discuss&atilde;o &mdash; Getty vs Stability AI e outros processos em andamento</td>
+                </tr>
+                <tr>
+                    <td>Imagem gerada por IA pode ser usada comercialmente?</td>
+                    <td>&#x26A0;&#xFE0F; Depende dos <em>Terms of Service</em> de cada ferramenta &mdash; leia antes de usar</td>
+                </tr>
+            </table>
+
+            <div class="alert-box">
+                <p>&#x26A0;&#xFE0F; Para trabalhos acad&ecirc;micos e profissionais: sempre verifique os termos de uso da ferramenta de IA e declare quando o conte&uacute;do foi gerado ou assistido por IA.</p>
+            </div>
+        </div>
+
+        <!-- CARD 6 -->
+        <div class="content-card">
+            <h2>&#x1F30E; Regulamenta&ccedil;&atilde;o da IA no Mundo</h2>
+            <p>Governos ao redor do mundo est&atilde;o criando leis para regular o desenvolvimento e uso da intelig&ecirc;ncia artificial, especialmente em &aacute;reas de alto impacto.</p>
+
+            <div class="reg-grid">
+                <div class="reg-card eu">
+                    <div class="reg-icon">&#x1F1EA;&#x1F1FA;</div>
+                    <div class="reg-name">EU AI Act (2024)</div>
+                    <div class="reg-desc">Primeiro conjunto abrangente de leis sobre IA do mundo, da Uni&atilde;o Europeia. Classifica sistemas de IA por n&iacute;vel de risco: inaceit&aacute;vel (proibido), alto, limitado e m&iacute;nimo. Aplica-se a qualquer empresa que opere na UE.</div>
+                </div>
+                <div class="reg-card br">
+                    <div class="reg-icon">&#x1F1E7;&#x1F1F7;</div>
+                    <div class="reg-name">PL 2338/2023 &mdash; Brasil</div>
+                    <div class="reg-desc">Proposta de lei brasileira em tramita&ccedil;&atilde;o no Senado para regulamentar IA no Brasil. Inspirado no EU AI Act, prev&ecirc; classifica&ccedil;&atilde;o por risco, responsabilidade dos desenvolvedores e prote&ccedil;&atilde;o de direitos fundamentais.</div>
+                </div>
+            </div>
+
+            <h3>&#x1F6A8; Categorias de risco do EU AI Act</h3>
+            <ul>
+                <li><strong>Risco inaceit&aacute;vel (proibido):</strong> vigil&acirc;ncia biom&eacute;trica em massa, manipula&ccedil;&atilde;o subliminar, pontua&ccedil;&atilde;o social</li>
+                <li><strong>Risco alto:</strong> IA em sa&uacute;de, educa&ccedil;&atilde;o, empregos, justi&ccedil;a e infraestrutura cr&iacute;tica &mdash; exige auditoria e transpar&ecirc;ncia</li>
+                <li><strong>Risco limitado:</strong> chatbots e deepfakes &mdash; exige rotulagem clara de que &eacute; IA</li>
+                <li><strong>Risco m&iacute;nimo:</strong> filtros de spam, jogos com IA &mdash; sem obriga&ccedil;&otilde;es espec&iacute;ficas</li>
+            </ul>
+        </div>
+
+        <!-- CARD 7 -->
+        <div class="content-card">
+            <h2>&#x2705; Checklist do Uso &Eacute;tico de IA</h2>
+            <p>Antes de enviar um trabalho, post ou conte&uacute;do criado com aux&iacute;lio de IA, verifique:</p>
+
+            <div class="checklist">
+                <div class="check-item">
+                    <div class="check-icon">&#x1F50D;</div>
+                    <div class="check-text">
+                        <strong>Verifiquei as informa&ccedil;&otilde;es</strong>
+                        <span>Confirmei fatos, datas e cita&ccedil;&otilde;es em fontes prim&aacute;rias antes de usar.</span>
+                    </div>
+                </div>
+                <div class="check-item">
+                    <div class="check-icon">&#x1F512;</div>
+                    <div class="check-text">
+                        <strong>N&atilde;o compartilhei dados sens&iacute;veis</strong>
+                        <span>N&atilde;o enviei documentos sigilosos, dados pessoais ou senhas para a IA.</span>
+                    </div>
+                </div>
+                <div class="check-item">
+                    <div class="check-icon">&#x270F;&#xFE0F;</div>
+                    <div class="check-text">
+                        <strong>A produ&ccedil;&atilde;o &eacute; essencialmente minha</strong>
+                        <span>Usei IA como apoio, mas o racioc&iacute;nio, a sele&ccedil;&atilde;o e a revis&atilde;o foram feitos por mim.</span>
+                    </div>
+                </div>
+                <div class="check-item">
+                    <div class="check-icon">&#x1F4C4;</div>
+                    <div class="check-text">
+                        <strong>Declarei o uso de IA quando necess&aacute;rio</strong>
+                        <span>Informei ao professor ou destinat&aacute;rio que usei IA como ferramenta, se exigido.</span>
+                    </div>
+                </div>
+                <div class="check-item">
+                    <div class="check-icon">&#x2696;&#xFE0F;</div>
+                    <div class="check-text">
+                        <strong>Considerei o impacto</strong>
+                        <span>O conte&uacute;do n&atilde;o prejudica terceiros, n&atilde;o perpetua vieses e n&atilde;o viola privacidade de ningum.</span>
+                    </div>
+                </div>
+                <div class="check-item">
+                    <div class="check-icon">&#x1F3A8;</div>
+                    <div class="check-text">
+                        <strong>Verifiquei os direitos autorais</strong>
+                        <span>Se usei imagens, textos ou c&oacute;digo gerado por IA, conferi os termos de uso da ferramenta.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <p>&#x1F4A1; <strong>A IA amplifica quem a usa.</strong> Nas m&atilde;os de algu&eacute;m cr&iacute;tico e &eacute;tico, &eacute; uma ferramenta poderosa de aprendizado. Nas m&atilde;os de quem n&atilde;o reflete, pode gerar desinforma&ccedil;&atilde;o, pl&aacute;gio e decis&otilde;es prejudiciais. A responsabilidade &eacute; de quem usa.</p>
+            </div>
+        </div>
+
+        <!-- EXERCÍCIO -->
+        <div class="content-card exercise-card">
+            <h2>&#x1F3AF; Exerc&iacute;cio &mdash; Arraste e Conecte</h2>
+            <p style="color:#475569;font-size:0.9em;margin-bottom:4px;">Arraste cada descri&ccedil;&atilde;o para o conceito de &eacute;tica em IA correspondente. Em dispositivos m&oacute;veis, toque na descri&ccedil;&atilde;o e depois na zona de destino.</p>
+
+            <div class="ex-drag-root" data-ex="ex33">
+                <div class="ex-drag">
+                    <div>
+                        <div class="ex-col-title">Descri&ccedil;&atilde;o</div>
+                        <div class="ex-pool" data-pool="ex33">
+                            <div class="ex-chip" data-id="c1">IA inventa fatos, refer&ecirc;ncias e informa&ccedil;&otilde;es que n&atilde;o existem, com tom confiante</div>
+                            <div class="ex-chip" data-id="c2">Preconceitos dos dados de treinamento que distorcem resultados para grupos espec&iacute;ficos</div>
+                            <div class="ex-chip" data-id="c3">Entregar trabalho gerado por IA como se fosse produ&ccedil;&atilde;o intelectual pr&oacute;pria</div>
+                            <div class="ex-chip" data-id="c4">Enviar documentos sigilosos, CPF ou senhas para ferramentas de IA sem crit&eacute;rio</div>
+                            <div class="ex-chip" data-id="c5">D&uacute;vida jur&iacute;dica sobre quem &eacute; o autor de obra criada com aux&iacute;lio de IA</div>
+                            <div class="ex-chip" data-id="c6">Primeiro conjunto de leis da UE que classifica IA por n&iacute;vel de risco</div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="ex-col-title">Conceito</div>
+                        <div class="ex-zones" data-zones="ex33">
+                            <div class="ex-zone" data-accept="c1">Alucina&ccedil;&atilde;o</div>
+                            <div class="ex-zone" data-accept="c2">Vi&eacute;s Algor&iacute;tmico</div>
+                            <div class="ex-zone" data-accept="c3">Pl&aacute;gio com IA</div>
+                            <div class="ex-zone" data-accept="c4">Risco de Privacidade</div>
+                            <div class="ex-zone" data-accept="c5">Quest&atilde;o de Direitos Autorais</div>
+                            <div class="ex-zone" data-accept="c6">EU AI Act</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ex-actions">
+                <button class="btn-verificar" onclick="dragVerify('ex33')">Verificar</button>
+                <button class="btn-refazer"  onclick="dragReset('ex33')">Refazer</button>
+            </div>
+            <div class="ex-result" id="ex33-result"></div>
+        </div>
+
+        <!-- ATIVIDADE PRÁTICA 3.3 -->
+        <div class="content-card practical-card" id="prat-33">
+            <h2>&#x1F6E0;&#xFE0F; Atividade Pr&aacute;tica &mdash; Ca&ccedil;ando Alucina&ccedil;&otilde;es</h2>
+            <div class="prat-meta">
+                <span class="prat-tag">&#x23F1; ~25 min</span>
+                <span class="prat-tag">&#x1F310; Requer internet</span>
+                <span class="prat-tag">&#x1F50D; Espírito cr&iacute;tico</span>
+            </div>
+
+            <div class="prat-steps">
+                <div class="prat-step">
+                    <div class="step-num">1</div>
+                    <div class="step-body">
+                        <div class="step-label">Peça refer&ecirc;ncias para a IA</div>
+                        <div class="step-desc">Abra o ChatGPT ou Gemini e pergunte: <em>"Cite 3 artigos cient&iacute;ficos publicados em revistas brasileiras sobre [tema da sua escolha] entre 2021 e 2023, com autores e DOI."</em> Copie as respostas obtidas.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">2</div>
+                    <div class="step-body">
+                        <div class="step-label">Verifique cada refer&ecirc;ncia</div>
+                        <div class="step-desc">Para cada artigo citado, acesse o <strong>Google Acad&ecirc;mico</strong> (scholar.google.com) e o <strong>Scielo</strong> (scielo.br) e tente encontrar o artigo exato. Os autores existem? A revista existe? O DOI abre? Anote o que encontrou (real ou inventado).</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">3</div>
+                    <div class="step-body">
+                        <div class="step-label">Compare com o Perplexity</div>
+                        <div class="step-desc">Fa&ccedil;a a mesma pergunta no <strong>Perplexity</strong> (perplexity.ai). O resultado &eacute; diferente? As fontes citadas s&atilde;o reais e verific&aacute;veis? Qual ferramenta foi mais confi&aacute;vel para pesquisa acad&ecirc;mica?</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">4</div>
+                    <div class="step-body">
+                        <div class="step-label">Teste um vi&eacute;s de linguagem</div>
+                        <div class="step-desc">Pe&ccedil;a para a IA completar a frase: <em>"Um bom programador sempre..."</em> e depois <em>"Uma boa professora sempre..."</em>. Compare os adjetivos e caracter&iacute;sticas usados. H&aacute; diferen&ccedil;a de g&ecirc;nero nas respostas? O que isso revela sobre os dados de treinamento?</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">5</div>
+                    <div class="step-body">
+                        <div class="step-label">Documente e reflita</div>
+                        <div class="step-desc">Escreva um parágrafo respondendo: O que voc&ecirc; descobriu sobre os limites da IA nesta atividade? O que vai mudar na forma como voc&ecirc; usa essas ferramentas daqui para frente?</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="prat-observe">
+                <strong>&#x1F4CC; Para refletir:</strong> Encontrar limites e erros da IA n&atilde;o significa que ela &eacute; in&uacute;til &mdash; significa que voc&ecirc; a usa melhor do que quem confia cegamente. O usu&aacute;rio cr&iacute;tico transforma IA em vantagem; o usu&aacute;rio acr&iacute;tico &eacute; enganado por ela.
+            </div>
+
+            <div class="ex-actions">
+                <button class="btn-print" onclick="printPractical('prat-33', 'Aula 3.3 \u2014 Limita\u00e7\u00f5es e \u00c9tica no Uso de IA')">&#x1F5A8;&#xFE0F; Imprimir roteiro</button>
+            </div>
+        </div>
+
+        <div class="nav-footer">
+            <a href="uni3-02-servicos-ia.html" class="nav-link">&#x2B05; Anterior: Servi&ccedil;os de IA</a>
+            <a href="index.html" class="nav-link">&#x1F3E0; Voltar ao In&iacute;cio &#x27A1;</a>
+        </div>
+
+    </div>
+
+    <script src="slide-mode.js"></script>
+    <script src="exercise-drag.js"></script>
+    <script src="exercise-print.js"></script>
+</body>
+</html>

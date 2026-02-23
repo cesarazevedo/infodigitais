@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 3.1 - Fundamentos da Intelig&ecirc;ncia Artificial</title>
+    <link rel="stylesheet" href="slide-mode.css">
+    <link rel="stylesheet" href="exercise.css">
+    <style>
+        :root {
+            --primary: #6a1b9a;
+            --secondary: #4a148c;
+            --bg-light: #f0f4f8;
+            --text-dark: #1a202c;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        .top-bar {
+            background: white;
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .back-btn {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+        .back-btn:hover { background: rgba(106,27,154,0.08); }
+
+        .page-badge {
+            font-size: 0.8em;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: rgba(106,27,154,0.12);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .content-wrapper {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 30px;
+        }
+
+        .lesson-hero {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            border-top: 4px solid var(--primary);
+        }
+        .lesson-hero h1 { font-size: 2em; margin-bottom: 10px; color: var(--primary); }
+        .lesson-hero .subtitle { font-size: 1.05em; color: #718096; }
+
+        .content-card {
+            background: white;
+            border-radius: 16px;
+            padding: 35px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+        .content-card h2 {
+            font-size: 1.4em;
+            color: var(--primary);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .content-card h3 { font-size: 1.05em; color: var(--secondary); margin: 20px 0 10px; }
+        .content-card p  { margin-bottom: 15px; text-align: justify; }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(106,27,154,0.05), rgba(74,20,140,0.06));
+            border-left: 4px solid var(--primary);
+            padding: 20px 25px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+        }
+        .highlight-box p { margin-bottom: 0; font-style: italic; }
+
+        .alert-box {
+            background: #fff8e1;
+            border-left: 4px solid #f59e0b;
+            padding: 18px 22px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+        }
+        .alert-box p { margin: 0; color: #78350f; font-size: 0.93em; }
+
+        ul, ol { margin: 10px 0 15px 25px; }
+        li { margin-bottom: 8px; }
+
+        /* ── Timeline ── */
+        .timeline {
+            position: relative;
+            margin: 20px 0;
+            padding-left: 28px;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 10px; top: 0; bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+        }
+        .tl-item {
+            position: relative;
+            margin-bottom: 18px;
+        }
+        .tl-item::before {
+            content: '';
+            position: absolute;
+            left: -22px; top: 6px;
+            width: 10px; height: 10px;
+            border-radius: 50%;
+            background: var(--primary);
+        }
+        .tl-year { font-weight: 700; color: var(--primary); font-size: 0.88em; }
+        .tl-desc { font-size: 0.86em; color: #475569; }
+
+        /* ── Grid de subcampos ── */
+        .field-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 14px;
+            margin: 20px 0;
+        }
+        .field-card {
+            background: #fdf4ff;
+            border-radius: 12px;
+            padding: 20px 16px;
+            text-align: center;
+            border-top: 3px solid var(--primary);
+            transition: transform 0.2s;
+        }
+        .field-card:hover { transform: translateY(-3px); }
+        .field-icon { font-size: 2em; margin-bottom: 8px; }
+        .field-card strong { display: block; font-size: 0.88em; color: var(--primary); margin-bottom: 4px; }
+        .field-card em { font-size: 0.78em; color: #718096; font-style: normal; }
+
+        /* ── Fluxo de aprendizado ── */
+        .learn-flow {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin: 18px 0;
+        }
+        .learn-step {
+            background: var(--primary);
+            color: white;
+            padding: 12px 16px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 0.82em;
+            font-weight: 600;
+            min-width: 90px;
+        }
+        .learn-arrow { color: var(--primary); font-size: 1.4em; }
+
+        /* ── Tipos de aprendizado ── */
+        .learn-type-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 14px;
+            margin: 16px 0;
+        }
+        .ltype-card {
+            border-radius: 12px;
+            padding: 18px;
+        }
+        .ltype-card.supervised   { background: #eff6ff; border-top: 3px solid #3b82f6; }
+        .ltype-card.unsupervised { background: #fdf4ff; border-top: 3px solid #a855f7; }
+        .ltype-card.reinforced   { background: #f0fdf4; border-top: 3px solid #22c55e; }
+        .lt-icon  { font-size: 1.8em; margin-bottom: 6px; }
+        .lt-title { font-weight: 700; font-size: 0.92em; margin-bottom: 6px; }
+        .ltype-card.supervised   .lt-title { color: #1d4ed8; }
+        .ltype-card.unsupervised .lt-title { color: #7e22ce; }
+        .ltype-card.reinforced   .lt-title { color: #15803d; }
+        .lt-desc { font-size: 0.82em; color: #475569; }
+        .lt-ex   { font-size: 0.78em; color: #64748b; margin-top: 6px; }
+
+        /* ── Grid de aplicações ── */
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .app-item {
+            background: #fdf4ff;
+            border-radius: 10px;
+            padding: 14px;
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+        .app-icon { font-size: 1.5em; flex-shrink: 0; }
+        .app-text strong { display: block; font-size: 0.86em; color: var(--primary); margin-bottom: 3px; }
+        .app-text span   { font-size: 0.78em; color: #475569; }
+
+        /* ── Mitos e Realidades ── */
+        .myth-grid { display: grid; gap: 12px; margin: 16px 0; }
+        .myth-row  { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .myth-col  { border-radius: 10px; padding: 14px; }
+        .myth-col.myth { background: #fef2f2; border-left: 3px solid #ef4444; }
+        .myth-col.fact { background: #f0fdf4; border-left: 3px solid #22c55e; }
+        .mc-label { font-size: 0.75em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+        .myth-col.myth .mc-label { color: #dc2626; }
+        .myth-col.fact .mc-label { color: #16a34a; }
+        .mc-text { font-size: 0.84em; color: #334155; }
+
+        /* ── Boas práticas ── */
+        .boas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .boa-item {
+            background: #fdf4ff;
+            border-radius: 10px;
+            padding: 16px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+        .boa-icon { font-size: 1.6em; flex-shrink: 0; }
+        .boa-text strong { display: block; font-size: 0.88em; color: var(--primary); margin-bottom: 3px; }
+        .boa-text span   { font-size: 0.8em; color: #475569; }
+
+        /* ── nav ── */
+        .nav-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-bottom: 40px;
+        }
+        .nav-link {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+        .nav-link:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+
+        @media (max-width: 768px) {
+            .content-wrapper { padding: 0 15px; }
+            .lesson-hero, .content-card { padding: 25px; }
+            .lesson-hero h1 { font-size: 1.5em; }
+            .myth-row { grid-template-columns: 1fr; }
+            .learn-type-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <a href="index.html" class="back-btn">&#x2B05; Voltar ao Dashboard</a>
+        <span class="page-badge">Unidade 3 &mdash; IA na Educa&ccedil;&atilde;o</span>
+        <button class="slide-toggle" id="slideToggleBtn">&#x1F4FA; Modo Slide</button>
+    </div>
+
+    <div class="content-wrapper">
+
+        <div class="lesson-hero">
+            <h1>&#x1F9E0; Fundamentos da Intelig&ecirc;ncia Artificial</h1>
+            <p class="subtitle">Aula 3.1 &mdash; O que &eacute; IA, como as m&aacute;quinas aprendem e onde a intelig&ecirc;ncia artificial est&aacute; presente no cotidiano</p>
+        </div>
+
+        <!-- CARD 1 -->
+        <div class="content-card">
+            <h2>&#x1F4AC; O que &eacute; Intelig&ecirc;ncia Artificial?</h2>
+            <p>A <strong>Intelig&ecirc;ncia Artificial (IA)</strong> &eacute; um campo da ci&ecirc;ncia da computa&ccedil;&atilde;o que busca criar sistemas capazes de realizar tarefas que, at&eacute; ent&atilde;o, exigiam intelig&ecirc;ncia humana: raciocinar, aprender, perceber o ambiente e tomar decis&otilde;es.</p>
+            <p>Diferente de programas tradicionais, que seguem regras fixas escritas por programadores, sistemas de IA <strong>aprendem a partir de dados</strong> e melhoram com o tempo, identificando padr&otilde;es que os humanos n&atilde;o conseguiriam encontrar manualmente em grandes volumes de informa&ccedil;&atilde;o.</p>
+
+            <div class="highlight-box">
+                <p>&#x1F4A1; IA n&atilde;o &ldquo;pensa&rdquo; como humanos. Ela processa <strong>padr&otilde;es estat&iacute;sticos</strong> em dados para gerar respostas. N&atilde;o h&aacute; consci&ecirc;ncia, inten&ccedil;&atilde;o nem compreens&atilde;o real &mdash; apenas c&aacute;lculo muito sofisticado.</p>
+            </div>
+
+            <h3>&#x1F4C5; Uma breve hist&oacute;ria</h3>
+            <div class="timeline">
+                <div class="tl-item">
+                    <div class="tl-year">1950 &mdash; Teste de Turing</div>
+                    <div class="tl-desc">Alan Turing prop&otilde;e um crit&eacute;rio para avaliar se uma m&aacute;quina pode exibir comportamento inteligente indiferenci&aacute;vel de um humano.</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-year">1956 &mdash; Confer&ecirc;ncia de Dartmouth</div>
+                    <div class="tl-desc">O termo &ldquo;Intelig&ecirc;ncia Artificial&rdquo; &eacute; cunhado. Nasce oficialmente como campo cient&iacute;fico.</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-year">1997 &mdash; Deep Blue</div>
+                    <div class="tl-desc">O computador da IBM vence o campe&atilde;o mundial de xadrez Garry Kasparov, marco hist&oacute;rico da IA em jogos estrat&eacute;gicos.</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-year">2012 &mdash; Revolu&ccedil;&atilde;o do Deep Learning</div>
+                    <div class="tl-desc">Uma rede neural profunda (AlexNet) vence o desafio ImageNet com grande margem. Come&ccedil;a a era moderna de reconhecimento de imagens.</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-year">2016 &mdash; AlphaGo</div>
+                    <div class="tl-desc">Programa da DeepMind vence o campe&atilde;o mundial de Go, jogo considerado mais complexo que xadrez, usando aprendizado por refor&ccedil;o.</div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-year">2022&ndash;2024 &mdash; Era dos LLMs</div>
+                    <div class="tl-desc">ChatGPT, Gemini, Copilot e Claude popularizam a IA conversacional. Qualquer pessoa passa a interagir com IA atrav&eacute;s da linguagem natural.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 2 -->
+        <div class="content-card">
+            <h2>&#x1F9E9; Subcampos da Intelig&ecirc;ncia Artificial</h2>
+            <p>A IA &eacute; uma &aacute;rea ampla que engloba v&aacute;rias especialidades. Conhecer cada uma ajuda a entender o que cada ferramenta faz e quais s&atilde;o seus limites:</p>
+
+            <div class="field-grid">
+                <div class="field-card">
+                    <div class="field-icon">&#x1F4CA;</div>
+                    <strong>Machine Learning</strong>
+                    <em>Aprende a partir de dados sem regras expl&iacute;citas. Base de quase toda IA moderna.</em>
+                </div>
+                <div class="field-card">
+                    <div class="field-icon">&#x1F9E0;</div>
+                    <strong>Deep Learning</strong>
+                    <em>Redes neurais com muitas camadas. Reconhece rostos, voz e objetos em imagens.</em>
+                </div>
+                <div class="field-card">
+                    <div class="field-icon">&#x1F4AC;</div>
+                    <strong>NLP</strong>
+                    <em>Processamento de Linguagem Natural. Permite compreender e gerar texto humano.</em>
+                </div>
+                <div class="field-card">
+                    <div class="field-icon">&#x1F441;&#xFE0F;</div>
+                    <strong>Vis&atilde;o Computacional</strong>
+                    <em>Interpreta imagens e v&iacute;deos. Usado em diagn&oacute;stico m&eacute;dico e carros aut&ocirc;nomos.</em>
+                </div>
+                <div class="field-card">
+                    <div class="field-icon">&#x2728;</div>
+                    <strong>IA Generativa</strong>
+                    <em>Cria conte&uacute;do novo: textos, imagens, c&oacute;digo e m&uacute;sica a partir de padr&otilde;es aprendidos.</em>
+                </div>
+                <div class="field-card">
+                    <div class="field-icon">&#x1F916;</div>
+                    <strong>Rob&oacute;tica com IA</strong>
+                    <em>Combina IA com sistemas f&iacute;sicos para a&ccedil;&atilde;o e percep&ccedil;&atilde;o no mundo real.</em>
+                </div>
+            </div>
+
+            <div class="alert-box">
+                <p>&#x26A0;&#xFE0F; <strong>IA fraca vs. IA forte:</strong> Toda IA atual &eacute; <strong>fraca</strong> (narrow AI) &mdash; excelente em tarefas espec&iacute;ficas, incapaz de generalizar. A <strong>IA forte</strong> (AGI), capaz de raciocinar como humanos em qualquer dom&iacute;nio, ainda n&atilde;o existe.</p>
+            </div>
+        </div>
+
+        <!-- CARD 3 -->
+        <div class="content-card">
+            <h2>&#x1F504; Como as M&aacute;quinas Aprendem?</h2>
+            <p>O aprendizado de m&aacute;quina segue um ciclo: o modelo &eacute; alimentado com grandes volumes de dados, ajusta seus par&acirc;metros internos e passa a fazer predi&ccedil;&otilde;es. O processo se repete at&eacute; o erro ser minimizado.</p>
+
+            <div class="learn-flow">
+                <div class="learn-step">&#x1F4BE;<br>Dados</div>
+                <div class="learn-arrow">&#x27A1;</div>
+                <div class="learn-step">&#x2699;&#xFE0F;<br>Algoritmo</div>
+                <div class="learn-arrow">&#x27A1;</div>
+                <div class="learn-step">&#x1F3CB;&#xFE0F;<br>Treino</div>
+                <div class="learn-arrow">&#x27A1;</div>
+                <div class="learn-step">&#x1F9E0;<br>Modelo</div>
+                <div class="learn-arrow">&#x27A1;</div>
+                <div class="learn-step">&#x1F52E;<br>Predi&ccedil;&atilde;o</div>
+            </div>
+
+            <h3>&#x1F4DA; Tipos de Aprendizado</h3>
+            <div class="learn-type-grid">
+                <div class="ltype-card supervised">
+                    <div class="lt-icon">&#x1F3AF;</div>
+                    <div class="lt-title">Supervisionado</div>
+                    <div class="lt-desc">Aprende com exemplos rotulados. O modelo sabe a resposta correta durante o treino e aprende a reproduzi-la.</div>
+                    <div class="lt-ex">&#x1F4CC; Ex.: filtro de spam, diagn&oacute;stico m&eacute;dico por imagem, reconhecimento de escrita</div>
+                </div>
+                <div class="ltype-card unsupervised">
+                    <div class="lt-icon">&#x1F50D;</div>
+                    <div class="lt-title">N&atilde;o Supervisionado</div>
+                    <div class="lt-desc">Encontra padr&otilde;es em dados sem r&oacute;tulos. O modelo descobre estruturas ocultas por conta pr&oacute;pria.</div>
+                    <div class="lt-ex">&#x1F4CC; Ex.: segmenta&ccedil;&atilde;o de clientes, recomenda&ccedil;&otilde;es de m&uacute;sica</div>
+                </div>
+                <div class="ltype-card reinforced">
+                    <div class="lt-icon">&#x1F3AE;</div>
+                    <div class="lt-title">Por Refor&ccedil;o</div>
+                    <div class="lt-desc">Aprende por tentativa e erro. Recebe recompensas por boas a&ccedil;&otilde;es e penalidades por erros.</div>
+                    <div class="lt-ex">&#x1F4CC; Ex.: AlphaGo, carros aut&ocirc;nomos, rob&ocirc;s industriais</div>
+                </div>
+            </div>
+
+            <h3>&#x1F9E0; Redes Neurais Artificiais</h3>
+            <p>As <strong>redes neurais</strong> s&atilde;o inspiradas no c&eacute;rebro humano. Assim como neur&ocirc;nios biol&oacute;gicos se conectam em redes, neur&ocirc;nios artificiais se organizam em <strong>camadas</strong>: entrada, camadas ocultas (<em>hidden layers</em>) e sa&iacute;da. O <strong>Deep Learning</strong> usa redes com dezenas de camadas ocultas, capazes de identificar padr&otilde;es extremamente complexos &mdash; como reconhecer rostos em qualquer &acirc;ngulo ou transcrever fala com alta precis&atilde;o.</p>
+        </div>
+
+        <!-- CARD 4 -->
+        <div class="content-card">
+            <h2>&#x1F4F1; IA no Dia a Dia</h2>
+            <p>A IA j&aacute; est&aacute; integrada a ferramentas que usamos diariamente, muitas vezes de forma invis&iacute;vel. Reconhec&ecirc;-la &eacute; o primeiro passo para us&aacute;-la conscientemente:</p>
+
+            <div class="app-grid">
+                <div class="app-item">
+                    <div class="app-icon">&#x1F3A5;</div>
+                    <div class="app-text">
+                        <strong>Recomenda&ccedil;&otilde;es</strong>
+                        <span>Netflix, Spotify e YouTube sugerem conte&uacute;do com base no seu hist&oacute;rico e prefer&ecirc;ncias</span>
+                    </div>
+                </div>
+                <div class="app-item">
+                    <div class="app-icon">&#x1F5E3;&#xFE0F;</div>
+                    <div class="app-text">
+                        <strong>Assistentes Virtuais</strong>
+                        <span>Siri, Alexa e Google Assistant entendem e respondem a comandos de voz naturais</span>
+                    </div>
+                </div>
+                <div class="app-item">
+                    <div class="app-icon">&#x1F9D1;</div>
+                    <div class="app-text">
+                        <strong>Reconhecimento Facial</strong>
+                        <span>Face ID do iPhone e categoriza&ccedil;&atilde;o de fotos do Google usam vis&atilde;o computacional</span>
+                    </div>
+                </div>
+                <div class="app-item">
+                    <div class="app-icon">&#x1F5FA;&#xFE0F;</div>
+                    <div class="app-text">
+                        <strong>GPS e Rotas</strong>
+                        <span>Google Maps e Waze preveem tr&acirc;nsito e calculam rotas &oacute;timas em tempo real</span>
+                    </div>
+                </div>
+                <div class="app-item">
+                    <div class="app-icon">&#x1F4E7;</div>
+                    <div class="app-text">
+                        <strong>Filtro de Spam</strong>
+                        <span>O Gmail identifica automaticamente e-mails indesejados com precis&atilde;o de ~99,9%</span>
+                    </div>
+                </div>
+                <div class="app-item">
+                    <div class="app-icon">&#x1F3E5;</div>
+                    <div class="app-text">
+                        <strong>Sa&uacute;de</strong>
+                        <span>IA analisa exames de imagem, auxilia diagn&oacute;sticos e detecta c&acirc;ncer em fases precoces</span>
+                    </div>
+                </div>
+                <div class="app-item">
+                    <div class="app-icon">&#x1F30D;</div>
+                    <div class="app-text">
+                        <strong>Tradu&ccedil;&atilde;o Autom&aacute;tica</strong>
+                        <span>Google Translate e DeepL traduzem texto e fala entre mais de 100 idiomas em segundos</span>
+                    </div>
+                </div>
+                <div class="app-item">
+                    <div class="app-icon">&#x1F4B3;</div>
+                    <div class="app-text">
+                        <strong>Detec&ccedil;&atilde;o de Fraude</strong>
+                        <span>Bancos usam IA para identificar transa&ccedil;&otilde;es suspeitas e bloquear fraudes em milissegundos</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 5 -->
+        <div class="content-card">
+            <h2>&#x1F4AD; Mitos e Realidades sobre IA</h2>
+            <p>H&aacute; muita desinforma&ccedil;&atilde;o sobre o que a IA pode ou n&atilde;o fazer. Distinguir mitos de realidades &eacute; essencial para us&aacute;-la com senso cr&iacute;tico:</p>
+
+            <div class="myth-grid">
+                <div class="myth-row">
+                    <div class="myth-col myth">
+                        <div class="mc-label">&#x274C; Mito</div>
+                        <div class="mc-text">IA &eacute; superinteligente e sabe tudo. Suas respostas s&atilde;o sempre corretas.</div>
+                    </div>
+                    <div class="myth-col fact">
+                        <div class="mc-label">&#x2705; Realidade</div>
+                        <div class="mc-text">IA alucina, inventa fatos e comete erros graves. Sempre verifique informa&ccedil;&otilde;es cr&iacute;ticas em fontes confi&aacute;veis.</div>
+                    </div>
+                </div>
+                <div class="myth-row">
+                    <div class="myth-col myth">
+                        <div class="mc-label">&#x274C; Mito</div>
+                        <div class="mc-text">IA vai substituir completamente os humanos no mercado de trabalho em breve.</div>
+                    </div>
+                    <div class="myth-col fact">
+                        <div class="mc-label">&#x2705; Realidade</div>
+                        <div class="mc-text">IA automatiza tarefas repetitivas e cria novas profiss&otilde;es. Criatividade, empatia e julgamento &eacute;tico continuam essencialmente humanos.</div>
+                    </div>
+                </div>
+                <div class="myth-row">
+                    <div class="myth-col myth">
+                        <div class="mc-label">&#x274C; Mito</div>
+                        <div class="mc-text">IA funciona exatamente como o c&eacute;rebro humano, com consci&ecirc;ncia e emo&ccedil;&otilde;es.</div>
+                    </div>
+                    <div class="myth-col fact">
+                        <div class="mc-label">&#x2705; Realidade</div>
+                        <div class="mc-text">Redes neurais s&atilde;o <em>inspiradas</em> no c&eacute;rebro, mas funcionam de modo diferente. N&atilde;o h&aacute; consci&ecirc;ncia, inten&ccedil;&atilde;o ou emo&ccedil;&atilde;o real.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 6 -->
+        <div class="content-card">
+            <h2>&#x2705; Boas Pr&aacute;ticas ao Usar IA</h2>
+            <div class="boas-grid">
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F50D;</div>
+                    <div class="boa-text">
+                        <strong>Verifique as respostas</strong>
+                        <span>Nunca aceite informa&ccedil;&otilde;es de IA sem checar em fontes confi&aacute;veis, especialmente sa&uacute;de, direito e ci&ecirc;ncia.</span>
+                    </div>
+                </div>
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F4AC;</div>
+                    <div class="boa-text">
+                        <strong>Fa&ccedil;a boas perguntas</strong>
+                        <span>Contextualize o prompt: quem voc&ecirc; &eacute;, o que quer e em qual formato. Resultados dependem da qualidade do pedido.</span>
+                    </div>
+                </div>
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F512;</div>
+                    <div class="boa-text">
+                        <strong>Proteja seus dados</strong>
+                        <span>N&atilde;o compartilhe informa&ccedil;&otilde;es pessoais, senhas ou documentos sigilosos com ferramentas de IA.</span>
+                    </div>
+                </div>
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F393;</div>
+                    <div class="boa-text">
+                        <strong>Use como aux&iacute;lio, n&atilde;o substituto</strong>
+                        <span>IA deve complementar seu aprendizado, n&atilde;o substitu&iacute;-lo. O racioc&iacute;nio pr&oacute;prio &eacute; insubstitu&iacute;vel.</span>
+                    </div>
+                </div>
+                <div class="boa-item">
+                    <div class="boa-icon">&#x2696;&#xFE0F;</div>
+                    <div class="boa-text">
+                        <strong>Pense &eacute;ticamente</strong>
+                        <span>Questione o impacto do uso de IA: privacidade, vieses e autoria s&atilde;o responsabilidades de quem usa a ferramenta.</span>
+                    </div>
+                </div>
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F4DA;</div>
+                    <div class="boa-text">
+                        <strong>Mantenha-se atualizado</strong>
+                        <span>O campo evolui muito r&aacute;pido. Acompanhe not&iacute;cias e atualiza&ccedil;&otilde;es das ferramentas que voc&ecirc; usa.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXERCÍCIO -->
+        <div class="content-card exercise-card">
+            <h2>&#x1F3AF; Exerc&iacute;cio &mdash; Arraste e Conecte</h2>
+            <p style="color:#475569;font-size:0.9em;margin-bottom:4px;">Arraste cada descri&ccedil;&atilde;o para o conceito de IA correspondente. Em dispositivos m&oacute;veis, toque na descri&ccedil;&atilde;o e depois na zona de destino.</p>
+
+            <div class="ex-drag-root" data-ex="ex31">
+                <div class="ex-drag">
+                    <div>
+                        <div class="ex-col-title">Descri&ccedil;&atilde;o</div>
+                        <div class="ex-pool" data-pool="ex31">
+                            <div class="ex-chip" data-id="c1">Aprende com dados rotulados, como exemplos de spam e n&atilde;o-spam</div>
+                            <div class="ex-chip" data-id="c2">Descobre padr&otilde;es sem r&oacute;tulos, agrupando dados por similaridade</div>
+                            <div class="ex-chip" data-id="c3">Aprende por tentativa e erro buscando recompensas, como no AlphaGo</div>
+                            <div class="ex-chip" data-id="c4">Redes com muitas camadas ocultas que identificam padr&otilde;es complexos</div>
+                            <div class="ex-chip" data-id="c5">Permite que m&aacute;quinas compreendam e gerem linguagem humana</div>
+                            <div class="ex-chip" data-id="c6">Cria textos, imagens e c&oacute;digos novos a partir de padr&otilde;es aprendidos</div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="ex-col-title">Conceito</div>
+                        <div class="ex-zones" data-zones="ex31">
+                            <div class="ex-zone" data-accept="c1">Aprendizado Supervisionado</div>
+                            <div class="ex-zone" data-accept="c2">Aprendizado N&atilde;o Supervisionado</div>
+                            <div class="ex-zone" data-accept="c3">Aprendizado por Refor&ccedil;o</div>
+                            <div class="ex-zone" data-accept="c4">Deep Learning</div>
+                            <div class="ex-zone" data-accept="c5">Processamento de Linguagem Natural</div>
+                            <div class="ex-zone" data-accept="c6">IA Generativa</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ex-actions">
+                <button class="btn-verificar" onclick="dragVerify('ex31')">Verificar</button>
+                <button class="btn-refazer"  onclick="dragReset('ex31')">Refazer</button>
+            </div>
+            <div class="ex-result" id="ex31-result"></div>
+        </div>
+
+        <!-- ATIVIDADE PRÁTICA 3.1 -->
+        <div class="content-card practical-card" id="prat-31">
+            <h2>&#x1F6E0;&#xFE0F; Atividade Pr&aacute;tica &mdash; Descobrindo IA ao Redor</h2>
+            <div class="prat-meta">
+                <span class="prat-tag">&#x23F1; ~20 min</span>
+                <span class="prat-tag">&#x1F4F1; Celular ou PC</span>
+                <span class="prat-tag">&#x1F310; Requer internet</span>
+            </div>
+
+            <div class="prat-steps">
+                <div class="prat-step">
+                    <div class="step-num">1</div>
+                    <div class="step-body">
+                        <div class="step-label">Mapeie IA no seu dia</div>
+                        <div class="step-desc">Liste pelo menos 5 aplicativos ou servi&ccedil;os que voc&ecirc; usa regularmente. Para cada um, identifique se e como a IA est&aacute; presente (recomenda&ccedil;&otilde;es, reconhecimento, assistente, filtro etc.). Anote em uma tabela: <strong>App | Tipo de IA | O que ela faz</strong>.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">2</div>
+                    <div class="step-body">
+                        <div class="step-label">Experimente o Google Translate com IA</div>
+                        <div class="step-desc">Abra o Google Translate e use a fun&ccedil;&atilde;o de <strong>C&acirc;mera</strong> para traduzir texto de uma embalagem ou cartaz em tempo real. Depois use o <strong>modo Conversa</strong> para falar em portugu&ecirc;s e ouvir a tradu&ccedil;&atilde;o imediata. Observe como o PNL atua em tempo real.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">3</div>
+                    <div class="step-body">
+                        <div class="step-label">Teste o Google Lens</div>
+                        <div class="step-desc">Abra o Google Lens no celular (ou o &iacute;cone de c&acirc;mera na busca do Google). Aponte para um objeto da sala de aula &mdash; cadeira, quadro, livro &mdash; e observe o que a IA identifica. Tente reconhecer uma planta ou animal. Qual foi o resultado mais surpreendente?</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">4</div>
+                    <div class="step-body">
+                        <div class="step-label">Reflita e compartilhe</div>
+                        <div class="step-desc">Escreva 3&ndash;5 frases respondendo: Qual aplica&ccedil;&atilde;o de IA voc&ecirc; n&atilde;o sabia que era IA? Qual achou mais &uacute;til? Alguma te preocupa? Esteja preparado para compartilhar com a turma.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="prat-observe">
+                <strong>&#x1F4CC; Para refletir:</strong> A IA que encontramos no dia a dia &eacute; toda <strong>IA fraca (narrow AI)</strong> &mdash; cada sistema faz apenas uma coisa muito bem. A quest&atilde;o &eacute;: mesmo sendo &ldquo;limitada&rdquo;, ela j&aacute; transforma profundamente como trabalhamos, estudamos e nos comunicamos.
+            </div>
+
+            <div class="ex-actions">
+                <button class="btn-print" onclick="printPractical('prat-31', 'Aula 3.1 \u2014 Fundamentos da Intelig\u00eancia Artificial')">&#x1F5A8;&#xFE0F; Imprimir roteiro</button>
+            </div>
+        </div>
+
+        <div class="nav-footer">
+            <a href="uni2-08-lgpd.html" class="nav-link">&#x2B05; Anterior: LGPD</a>
+            <a href="uni3-02-servicos-ia.html" class="nav-link">Pr&oacute;xima: Servi&ccedil;os de IA &#x27A1;</a>
+        </div>
+
+    </div>
+
+    <script src="slide-mode.js"></script>
+    <script src="exercise-drag.js"></script>
+    <script src="exercise-print.js"></script>
+</body>
+</html>
