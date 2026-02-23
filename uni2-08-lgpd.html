@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 2.8 - LGPD — Lei Geral de Proteção de Dados</title>
+    <link rel="stylesheet" href="slide-mode.css">
+    <link rel="stylesheet" href="exercise.css">
+    <style>
+        :root {
+            --primary: #00838f;
+            --secondary: #006064;
+            --bg-light: #f0f4f8;
+            --text-dark: #1a202c;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        .top-bar {
+            background: white;
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .back-btn {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+        .back-btn:hover { background: rgba(0,131,143,0.08); }
+
+        .page-badge {
+            font-size: 0.8em;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: rgba(0, 131, 143, 0.12);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .content-wrapper {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 30px;
+        }
+
+        .lesson-hero {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            border-top: 4px solid var(--primary);
+        }
+        .lesson-hero h1 { font-size: 2em; margin-bottom: 10px; color: var(--primary); }
+        .lesson-hero .subtitle { font-size: 1.05em; color: #718096; }
+
+        .content-card {
+            background: white;
+            border-radius: 16px;
+            padding: 35px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+        .content-card h2 {
+            font-size: 1.4em;
+            color: var(--primary);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .content-card h3 { font-size: 1.05em; color: var(--secondary); margin: 20px 0 10px; }
+        .content-card p  { margin-bottom: 15px; text-align: justify; }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(0,131,143,0.05), rgba(0,96,100,0.06));
+            border-left: 4px solid var(--primary);
+            padding: 20px 25px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+        }
+        .highlight-box p { margin-bottom: 0; font-style: italic; }
+
+        .alert-box {
+            background: #fff8e1;
+            border-left: 4px solid #f59e0b;
+            padding: 18px 22px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+        }
+        .alert-box p { margin: 0; color: #78350f; font-size: 0.93em; }
+
+        ul, ol { margin: 10px 0 15px 25px; }
+        li { margin-bottom: 8px; }
+
+        /* ── Atores da LGPD ── */
+        .ator-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+            margin: 18px 0;
+        }
+        .ator-card {
+            border-radius: 12px;
+            padding: 20px 14px;
+            text-align: center;
+        }
+        .ator-card.titular    { background: #eff6ff; border-top: 3px solid #3b82f6; }
+        .ator-card.controlador{ background: #f5f3ff; border-top: 3px solid #8b5cf6; }
+        .ator-card.operador   { background: #fff7ed; border-top: 3px solid #f59e0b; }
+        .ator-card.encarregado{ background: #f0fdf4; border-top: 3px solid #22c55e; }
+        .ator-card.anpd       { background: #fef2f2; border-top: 3px solid #ef4444; }
+        .ator-icon  { font-size: 2em; margin-bottom: 8px; }
+        .ator-nome  { font-weight: 700; font-size: 0.88em; margin-bottom: 4px; }
+        .ator-card.titular     .ator-nome { color: #1d4ed8; }
+        .ator-card.controlador .ator-nome { color: #6d28d9; }
+        .ator-card.operador    .ator-nome { color: #b45309; }
+        .ator-card.encarregado .ator-nome { color: #15803d; }
+        .ator-card.anpd        .ator-nome { color: #dc2626; }
+        .ator-desc  { font-size: 0.76em; color: #475569; line-height: 1.5; }
+
+        /* ── Dado comum vs sensível ── */
+        .dado-compare {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin: 16px 0;
+        }
+        .dado-box { border-radius: 12px; padding: 18px; }
+        .dado-box.comum    { background: #f0fdf4; border-top: 3px solid #22c55e; }
+        .dado-box.sensivel { background: #fef2f2; border-top: 3px solid #ef4444; }
+        .dado-box .db-title { font-weight: 700; font-size: 0.88em; margin-bottom: 8px; }
+        .dado-box.comum    .db-title { color: #15803d; }
+        .dado-box.sensivel .db-title { color: #dc2626; }
+        .dado-box ul { margin: 0 0 0 16px; }
+        .dado-box li { font-size: 0.82em; color: #475569; margin-bottom: 4px; }
+
+        /* ── Princípios: grid compacto ── */
+        .principio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin: 16px 0;
+        }
+        .principio-item {
+            background: #f0fdfa;
+            border-left: 4px solid var(--primary);
+            border-radius: 0 10px 10px 0;
+            padding: 12px 14px;
+        }
+        .principio-item .pi-nome { font-weight: 700; font-size: 0.85em; color: var(--primary); margin-bottom: 3px; }
+        .principio-item .pi-desc { font-size: 0.78em; color: #475569; line-height: 1.5; }
+
+        /* ── Direitos do titular ── */
+        .direito-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+            gap: 10px;
+            margin: 16px 0;
+        }
+        .direito-item {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 14px;
+            border-top: 3px solid var(--primary);
+            text-align: center;
+        }
+        .dir-icon  { font-size: 1.7em; margin-bottom: 6px; }
+        .dir-nome  { font-weight: 700; font-size: 0.83em; color: var(--primary); margin-bottom: 4px; }
+        .dir-desc  { font-size: 0.76em; color: #475569; line-height: 1.5; }
+
+        /* ── Bases legais ── */
+        .base-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin: 14px 0;
+        }
+        .base-item {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            padding: 12px 14px;
+            border-radius: 10px;
+            background: #f8fafc;
+        }
+        .base-num {
+            width: 24px; height: 24px; min-width: 24px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            font-weight: 700;
+            font-size: 0.78em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .base-item p { margin: 0; font-size: 0.85em; color: #334155; }
+        .base-item strong { color: var(--secondary); }
+
+        /* ── Obrigações das empresas ── */
+        .obrig-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 12px;
+            margin: 14px 0;
+        }
+        .obrig-item {
+            background: #f0fdfa;
+            border-radius: 10px;
+            padding: 16px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+        .ob-icon { font-size: 1.5em; flex-shrink: 0; }
+        .ob-text strong { display: block; font-size: 0.87em; color: var(--primary); margin-bottom: 3px; }
+        .ob-text span   { font-size: 0.79em; color: #475569; line-height: 1.5; }
+
+        /* ── Sanções ── */
+        .sancao-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .sancao-card {
+            border-radius: 10px;
+            padding: 16px 14px;
+            text-align: center;
+        }
+        .sancao-card.s1 { background: #fff7ed; border-top: 3px solid #f59e0b; }
+        .sancao-card.s2 { background: #fef3c7; border-top: 3px solid #eab308; }
+        .sancao-card.s3 { background: #fef2f2; border-top: 3px solid #ef4444; }
+        .sancao-card.s4 { background: #fee2e2; border-top: 3px solid #dc2626; }
+        .san-icon  { font-size: 1.8em; margin-bottom: 6px; }
+        .san-nome  { font-weight: 700; font-size: 0.85em; margin-bottom: 4px; }
+        .sancao-card.s1 .san-nome { color: #b45309; }
+        .sancao-card.s2 .san-nome { color: #854d0e; }
+        .sancao-card.s3 .san-nome { color: #b91c1c; }
+        .sancao-card.s4 .san-nome { color: #991b1b; }
+        .san-desc  { font-size: 0.77em; color: #475569; line-height: 1.5; }
+
+        /* ── Comparativo tabela ── */
+        .compare-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 0.88em;
+        }
+        .compare-table th {
+            background: var(--primary);
+            color: white;
+            padding: 11px 14px;
+            text-align: left;
+        }
+        .compare-table th:first-child { border-radius: 8px 0 0 0; }
+        .compare-table th:last-child  { border-radius: 0 8px 0 0; }
+        .compare-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: top;
+        }
+        .compare-table tr:nth-child(even) td { background: #f8fafc; }
+        .compare-table tr:last-child td { border-bottom: none; }
+
+        /* ── nav ── */
+        .nav-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-bottom: 40px;
+        }
+        .nav-link {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+        .nav-link:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+
+        @media (max-width: 768px) {
+            .content-wrapper { padding: 0 15px; }
+            .lesson-hero, .content-card { padding: 25px; }
+            .lesson-hero h1 { font-size: 1.5em; }
+            .dado-compare { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <a href="index.html" class="back-btn">&#x2B05; Voltar ao Dashboard</a>
+        <span class="page-badge">Unidade 2 &mdash; Internet e Seguran&ccedil;a</span>
+        <button class="slide-toggle" id="slideToggleBtn">&#x1F4FA; Modo Slide</button>
+    </div>
+
+    <div class="content-wrapper">
+
+        <div class="lesson-hero">
+            <h1>&#x1F4DC; LGPD &mdash; Lei Geral de Prote&ccedil;&atilde;o de Dados</h1>
+            <p class="subtitle">Aula 2.8 &mdash; Fundamentos da Lei 13.709/2018: princ&iacute;pios, direitos do titular, obriga&ccedil;&otilde;es das organiza&ccedil;&otilde;es e impactos pr&aacute;ticos no cotidiano</p>
+        </div>
+
+        <!-- CARD 1 — Contexto e o que é a LGPD -->
+        <div class="content-card">
+            <h2>&#x1F4AC; O que &eacute; a LGPD e por que ela existe?</h2>
+            <p>A <strong>LGPD</strong> &mdash; Lei Geral de Prote&ccedil;&atilde;o de Dados (Lei 13.709/2018) &mdash; &eacute; a principal lei brasileira que regula o <strong>tratamento de dados pessoais</strong> por empresas, &oacute;rg&atilde;os p&uacute;blicos e qualquer organiza&ccedil;&atilde;o que colete, armazene, processe ou compartilhe dados de pessoas. Entrou em vigor em setembro de 2020 e se aplica a qualquer opera&ccedil;&atilde;o com dados de pessoas no Brasil, mesmo que a empresa seja estrangeira.</p>
+            <p>A lei surgiu em resposta ao cen&aacute;rio global de uso abusivo de dados pessoais. O esc&acirc;ndalo Cambridge Analytica (2018) &mdash; em que dados de 87 milh&otilde;es de usu&aacute;rios do Facebook foram usados para manipular elei&ccedil;&otilde;es &mdash; acelerou a discuss&atilde;o no Brasil. Ela foi inspirada na <strong>GDPR europeia</strong>, considerada o padr&atilde;o ouro mundial em prote&ccedil;&atilde;o de dados.</p>
+
+            <div class="highlight-box">
+                <p>&#x1F4A1; A LGPD part&eacute; de um princ&iacute;pio fundamental: <strong>dados pessoais pertencem &agrave; pessoa, n&atilde;o &agrave; empresa que os coletou.</strong> Organiza&ccedil;&otilde;es podem usar esses dados, mas com regras claras, finalidade definida e respeitando os direitos do titular.</p>
+            </div>
+
+            <h3>&#x1F4CA; O que a LGPD regula</h3>
+            <ul>
+                <li>Coleta, armazenamento, uso, compartilhamento e exclus&atilde;o de dados pessoais</li>
+                <li>Dados de pessoas f&iacute;sicas &mdash; dados de empresas n&atilde;o s&atilde;o cobertos pela lei</li>
+                <li>Opera&ccedil;&otilde;es realizadas no Brasil ou com dados de pessoas que estejam no Brasil</li>
+                <li>Qualquer setor: sa&uacute;de, educa&ccedil;&atilde;o, com&eacute;rcio, governo, redes sociais, aplicativos</li>
+            </ul>
+        </div>
+
+        <!-- CARD 2 — Conceitos fundamentais -->
+        <div class="content-card">
+            <h2>&#x1F9E9; Conceitos Fundamentais</h2>
+
+            <h3>&#x1F4CB; Dado pessoal vs dado pessoal sens&iacute;vel</h3>
+            <div class="dado-compare">
+                <div class="dado-box comum">
+                    <div class="db-title">&#x1F7E2; Dado Pessoal Comum</div>
+                    <ul>
+                        <li>Nome e sobrenome</li>
+                        <li>CPF e RG</li>
+                        <li>Endere&ccedil;o residencial</li>
+                        <li>E-mail e telefone</li>
+                        <li>Data de nascimento</li>
+                        <li>IP e localiza&ccedil;&atilde;o</li>
+                        <li>Prefer&ecirc;ncias e hist&oacute;rico de compras</li>
+                    </ul>
+                </div>
+                <div class="dado-box sensivel">
+                    <div class="db-title">&#x1F534; Dado Pessoal Sens&iacute;vel</div>
+                    <ul>
+                        <li>Origem racial ou &eacute;tnica</li>
+                        <li>Convic&ccedil;&atilde;o religiosa</li>
+                        <li>Opini&atilde;o pol&iacute;tica</li>
+                        <li>Sa&uacute;de e vida sexual</li>
+                        <li>Dado gen&eacute;tico ou biom&eacute;trico</li>
+                        <li>Filia&ccedil;&atilde;o a sindicato</li>
+                        <li>Dado de crian&ccedil;a ou adolescente</li>
+                    </ul>
+                </div>
+            </div>
+            <p style="font-size:0.87em;color:#475569;">Dados sens&iacute;veis exigem <strong>prote&ccedil;&atilde;o refor&ccedil;ada</strong> e s&oacute; podem ser tratados em bases legais mais restritas. Vazar dados de sa&uacute;de ou religi&atilde;o, por exemplo, pode gerar discrimina&ccedil;&atilde;o &mdash; por isso a lei os protege com maior rigor.</p>
+
+            <h3>&#x1F465; Os atores da LGPD</h3>
+            <div class="ator-grid">
+                <div class="ator-card titular">
+                    <div class="ator-icon">&#x1F464;</div>
+                    <div class="ator-nome">Titular</div>
+                    <div class="ator-desc">A pessoa f&iacute;sica a quem os dados se referem. &Eacute; o detentor dos direitos previstos na lei.</div>
+                </div>
+                <div class="ator-card controlador">
+                    <div class="ator-icon">&#x1F3E2;</div>
+                    <div class="ator-nome">Controlador</div>
+                    <div class="ator-desc">Empresa ou entidade que <strong>decide</strong> como e por que os dados ser&atilde;o tratados. &Eacute; o principal respons&aacute;vel legal.</div>
+                </div>
+                <div class="ator-card operador">
+                    <div class="ator-icon">&#x2699;&#xFE0F;</div>
+                    <div class="ator-nome">Operador</div>
+                    <div class="ator-desc">Empresa que <strong>executa</strong> o tratamento de dados em nome do controlador (ex.: empresa de nuvem).</div>
+                </div>
+                <div class="ator-card encarregado">
+                    <div class="ator-icon">&#x1F9D1;&#x200D;&#x1F4BC;</div>
+                    <div class="ator-nome">Encarregado (DPO)</div>
+                    <div class="ator-desc">Respons&aacute;vel pela prote&ccedil;&atilde;o de dados na organiza&ccedil;&atilde;o. &Eacute; o canal entre empresa, titulares e a ANPD.</div>
+                </div>
+                <div class="ator-card anpd">
+                    <div class="ator-icon">&#x1F3DB;&#xFE0F;</div>
+                    <div class="ator-nome">ANPD</div>
+                    <div class="ator-desc">Autoridade Nacional de Prote&ccedil;&atilde;o de Dados. &Oacute;rg&atilde;o do governo que fiscaliza, orienta e aplica san&ccedil;&otilde;es.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 3 — Princípios -->
+        <div class="content-card">
+            <h2>&#x2696;&#xFE0F; Os 10 Princ&iacute;pios da LGPD</h2>
+            <p>O tratamento de dados pessoais s&oacute; &eacute; legítimo quando respeita os <strong>10 princ&iacute;pios</strong> previstos no Art. 6&ordm; da lei. Qualquer opera&ccedil;&atilde;o que viole um desses princ&iacute;pios &eacute; ilegal:</p>
+
+            <div class="principio-grid">
+                <div class="principio-item">
+                    <div class="pi-nome">&#x1F3AF; Finalidade</div>
+                    <div class="pi-desc">Dados coletados para fins legítimos e espec&iacute;ficos &mdash; n&atilde;o podem ser usados para outro objetivo sem nova base legal</div>
+                </div>
+                <div class="principio-item">
+                    <div class="pi-nome">&#x2705; Adequa&ccedil;&atilde;o</div>
+                    <div class="pi-desc">O tratamento deve ser compat&iacute;vel com a finalidade informada ao titular</div>
+                </div>
+                <div class="principio-item">
+                    <div class="pi-nome">&#x2702;&#xFE0F; Necessidade</div>
+                    <div class="pi-desc">Coletar apenas o m&iacute;nimo de dados necess&aacute;rio para a finalidade &mdash; sem excessos</div>
+                </div>
+                <div class="principio-item">
+                    <div class="pi-nome">&#x1F513; Livre Acesso</div>
+                    <div class="pi-desc">O titular tem direito a consultar seus dados facilmente, sem custo</div>
+                </div>
+                <div class="principio-item">
+                    <div class="pi-nome">&#x1F4CA; Qualidade</div>
+                    <div class="pi-desc">Dados devem ser exatos, claros, relevantes e atualizados</div>
+                </div>
+                <div class="principio-item">
+                    <div class="pi-nome">&#x1F4AC; Transpar&ecirc;ncia</div>
+                    <div class="pi-desc">O titular deve ser informado de forma clara sobre como seus dados s&atilde;o usados</div>
+                </div>
+                <div class="principio-item">
+                    <div class="pi-nome">&#x1F512; Seguran&ccedil;a</div>
+                    <div class="pi-desc">Medidas t&eacute;cnicas e administrativas para proteger os dados contra acesso n&atilde;o autorizado</div>
+                </div>
+                <div class="principio-item">
+                    <div class="pi-nome">&#x1F6E1;&#xFE0F; Preven&ccedil;&atilde;o</div>
+                    <div class="pi-desc">Adotar medidas para prevenir danos antes que ocorram &mdash; n&atilde;o apenas reagir a incidentes</div>
+                </div>
+                <div class="principio-item">
+                    <div class="pi-nome">&#x1F91D; N&atilde;o Discrimina&ccedil;&atilde;o</div>
+                    <div class="pi-desc">Proibido usar dados para fins discriminat&oacute;rios, il&iacute;citos ou abusivos</div>
+                </div>
+                <div class="principio-item">
+                    <div class="pi-nome">&#x1F4CB; Responsabiliza&ccedil;&atilde;o</div>
+                    <div class="pi-desc">O controlador deve demonstrar que cumpre a lei &mdash; o &ocirc;nus da prova &eacute; dele</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 4 — Bases legais -->
+        <div class="content-card">
+            <h2>&#x1F4CB; Bases Legais &mdash; Quando o Tratamento &eacute; Permitido</h2>
+            <p>Nenhum dado pode ser tratado sem uma <strong>base legal</strong> prevista na LGPD. S&atilde;o 10 hip&oacute;teses; as mais comuns no cotidiano s&atilde;o:</p>
+
+            <div class="base-list">
+                <div class="base-item">
+                    <div class="base-num">1</div>
+                    <p><strong>Consentimento:</strong> o titular autoriza expressamente o uso de seus dados para uma finalidade espec&iacute;fica. Deve ser livre, informado e desambíguo. Pode ser revogado a qualquer momento.</p>
+                </div>
+                <div class="base-item">
+                    <div class="base-num">2</div>
+                    <p><strong>Execu&ccedil;&atilde;o de contrato:</strong> dados necess&aacute;rios para cumprir um contrato do qual o titular &eacute; parte &mdash; ex.: seu nome e endere&ccedil;o para entregar uma compra online.</p>
+                </div>
+                <div class="base-item">
+                    <div class="base-num">3</div>
+                    <p><strong>Obriga&ccedil;&atilde;o legal:</strong> quando a lei exige o tratamento &mdash; ex.: uma empresa que precisa enviar dados &agrave; Receita Federal por obriga&ccedil;&atilde;o fiscal.</p>
+                </div>
+                <div class="base-item">
+                    <div class="base-num">4</div>
+                    <p><strong>Interesse legítimo:</strong> quando o tratamento &eacute; necess&aacute;rio para interesses leg&iacute;timos do controlador ou de terceiros, desde que n&atilde;o prevale&ccedil;a sobre os direitos do titular.</p>
+                </div>
+                <div class="base-item">
+                    <div class="base-num">5</div>
+                    <p><strong>Prote&ccedil;&atilde;o da vida:</strong> dados podem ser tratados para proteger a vida do titular ou de terceiros &mdash; ex.: contato de emerg&ecirc;ncia em situa&ccedil;&atilde;o de risco.</p>
+                </div>
+            </div>
+
+            <div class="alert-box">
+                <p>&#x26A0;&#xFE0F; <strong>Consentimento n&atilde;o &eacute; a &uacute;nica base legal</strong> &mdash; &eacute; apenas uma das dez. Muitas empresas usam outras bases (contrato, interesse legítimo) sem precisar do consentimento expl&iacute;cito do usu&aacute;rio. A exist&ecirc;ncia de uma base legal v&aacute;lida &eacute; o que torna o tratamento legal &mdash; n&atilde;o apenas a presen&ccedil;a de um bot&atilde;o &ldquo;aceito&rdquo;.</p>
+            </div>
+        </div>
+
+        <!-- CARD 5 — Direitos do titular -->
+        <div class="content-card">
+            <h2>&#x1F9BE; Direitos do Titular de Dados</h2>
+            <p>A LGPD garante ao titular &mdash; qualquer pessoa cujos dados s&atilde;o tratados &mdash; um conjunto robusto de direitos que podem ser exercidos a qualquer momento perante o controlador:</p>
+
+            <div class="direito-grid">
+                <div class="direito-item">
+                    <div class="dir-icon">&#x2753;</div>
+                    <div class="dir-nome">Confirma&ccedil;&atilde;o</div>
+                    <div class="dir-desc">Saber se uma empresa trata seus dados</div>
+                </div>
+                <div class="direito-item">
+                    <div class="dir-icon">&#x1F4C4;</div>
+                    <div class="dir-nome">Acesso</div>
+                    <div class="dir-desc">Receber c&oacute;pia completa dos seus dados tratados</div>
+                </div>
+                <div class="direito-item">
+                    <div class="dir-icon">&#x270F;&#xFE0F;</div>
+                    <div class="dir-nome">Corre&ccedil;&atilde;o</div>
+                    <div class="dir-desc">Corrigir dados incompletos, inexatos ou desatualizados</div>
+                </div>
+                <div class="direito-item">
+                    <div class="dir-icon">&#x1F5D1;&#xFE0F;</div>
+                    <div class="dir-nome">Elimina&ccedil;&atilde;o</div>
+                    <div class="dir-desc">Solicitar exclus&atilde;o de dados desnecessários ou tratados ilegalmente</div>
+                </div>
+                <div class="direito-item">
+                    <div class="dir-icon">&#x1F4E6;</div>
+                    <div class="dir-nome">Portabilidade</div>
+                    <div class="dir-desc">Transferir seus dados para outro fornecedor de servi&ccedil;o</div>
+                </div>
+                <div class="direito-item">
+                    <div class="dir-icon">&#x1F4CB;</div>
+                    <div class="dir-nome">Informa&ccedil;&atilde;o</div>
+                    <div class="dir-desc">Saber com quem seus dados foram compartilhados</div>
+                </div>
+                <div class="direito-item">
+                    <div class="dir-icon">&#x1F6AB;</div>
+                    <div class="dir-nome">Oposi&ccedil;&atilde;o</div>
+                    <div class="dir-desc">Opor-se a tratamento realizado sem sua concordância</div>
+                </div>
+                <div class="direito-item">
+                    <div class="dir-icon">&#x21A9;&#xFE0F;</div>
+                    <div class="dir-nome">Revoga&ccedil;&atilde;o</div>
+                    <div class="dir-desc">Retirar o consentimento dado anteriormente a qualquer momento</div>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <p>&#x1F4A1; Na pr&aacute;tica: se voc&ecirc; quiser saber quais dados o Instagram tem sobre voc&ecirc;, pode solicit&aacute;-los. Se quiser que uma loja apague seu cadastro, pode exigir. Se uma empresa recusar sem justificativa, pode reportar &agrave; <strong>ANPD</strong> (anpd.gov.br).</p>
+            </div>
+        </div>
+
+        <!-- CARD 6 — Obrigações das organizações -->
+        <div class="content-card">
+            <h2>&#x1F3E2; Obriga&ccedil;&otilde;es das Organiza&ccedil;&otilde;es</h2>
+            <p>Toda organiza&ccedil;&atilde;o que trata dados pessoais no Brasil &mdash; da multinacional ao pequeno neg&oacute;cio &mdash; tem obriga&ccedil;&otilde;es legais perante a LGPD:</p>
+
+            <div class="obrig-grid">
+                <div class="obrig-item">
+                    <div class="ob-icon">&#x1F4CB;</div>
+                    <div class="ob-text">
+                        <strong>Pol&iacute;tica de Privacidade clara</strong>
+                        <span>Informar de forma acess&iacute;vel quais dados s&atilde;o coletados, para qu&ecirc;, por quanto tempo e com quem s&atilde;o compartilhados</span>
+                    </div>
+                </div>
+                <div class="obrig-item">
+                    <div class="ob-icon">&#x1F9D1;&#x200D;&#x1F4BC;</div>
+                    <div class="ob-text">
+                        <strong>Nomear um Encarregado (DPO)</strong>
+                        <span>Indicar um respons&aacute;vel pela prote&ccedil;&atilde;o de dados que seja o canal oficial de comunica&ccedil;&atilde;o com titulares e ANPD</span>
+                    </div>
+                </div>
+                <div class="obrig-item">
+                    <div class="ob-icon">&#x1F6E1;&#xFE0F;</div>
+                    <div class="ob-text">
+                        <strong>Prote&ccedil;&atilde;o desde a concep&ccedil;&atilde;o</strong>
+                        <span><em>Privacy by Design</em>: incluir prote&ccedil;&atilde;o de dados no projeto de sistemas desde o in&iacute;cio, n&atilde;o apenas como camada posterior</span>
+                    </div>
+                </div>
+                <div class="obrig-item">
+                    <div class="ob-icon">&#x23F0;</div>
+                    <div class="ob-text">
+                        <strong>Notificar vazamentos em 72h</strong>
+                        <span>Em caso de incidente de seguran&ccedil;a que afete dados pessoais, a ANPD e os titulares devem ser comunicados em at&eacute; 72 horas</span>
+                    </div>
+                </div>
+                <div class="obrig-item">
+                    <div class="ob-icon">&#x1F5D1;&#xFE0F;</div>
+                    <div class="ob-text">
+                        <strong>Eliminar dados desnecessários</strong>
+                        <span>Ap&oacute;s cumprida a finalidade ou encerrado o relacionamento, os dados devem ser eliminados ou anonimizados</span>
+                    </div>
+                </div>
+                <div class="obrig-item">
+                    <div class="ob-icon">&#x1F4C4;</div>
+                    <div class="ob-text">
+                        <strong>Responder &agrave;s solicita&ccedil;&otilde;es dos titulares</strong>
+                        <span>Atender pedidos de acesso, corre&ccedil;&atilde;o e exclus&atilde;o de dados em prazo razo&aacute;vel e sem cobran&ccedil;a</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 7 — Sanções -->
+        <div class="content-card">
+            <h2>&#x2696;&#xFE0F; San&ccedil;&otilde;es e a ANPD</h2>
+            <p>A <strong>ANPD</strong> (Autoridade Nacional de Prote&ccedil;&atilde;o de Dados) &eacute; o &oacute;rg&atilde;o federal respons&aacute;vel por fiscalizar o cumprimento da LGPD, orientar, investigar e aplicar san&ccedil;&otilde;es. As penalidades previstas na lei s&atilde;o graduadas conforme a gravidade da infra&ccedil;&atilde;o:</p>
+
+            <div class="sancao-row">
+                <div class="sancao-card s1">
+                    <div class="san-icon">&#x26A0;&#xFE0F;</div>
+                    <div class="san-nome">Advertência</div>
+                    <div class="san-desc">Para infra&ccedil;&otilde;es leves com prazo para corre&ccedil;&atilde;o</div>
+                </div>
+                <div class="sancao-card s2">
+                    <div class="san-icon">&#x1F4B0;</div>
+                    <div class="san-nome">Multa simples</div>
+                    <div class="san-desc">At&eacute; 2% do faturamento, limitado a R$ 50 milh&otilde;es por infra&ccedil;&atilde;o</div>
+                </div>
+                <div class="sancao-card s3">
+                    <div class="san-icon">&#x1F4B8;</div>
+                    <div class="san-nome">Multa di&aacute;ria</div>
+                    <div class="san-desc">Aplicada enquanto perdurar a infra&ccedil;&atilde;o, no mesmo limite</div>
+                </div>
+                <div class="sancao-card s4">
+                    <div class="san-icon">&#x1F6AB;</div>
+                    <div class="san-nome">Bloqueio / Elimina&ccedil;&atilde;o</div>
+                    <div class="san-desc">Suspens&atilde;o do banco de dados ou elimina&ccedil;&atilde;o dos dados envolvidos</div>
+                </div>
+            </div>
+
+            <h3>&#x1F4F0; Casos reais no Brasil</h3>
+            <table class="compare-table">
+                <tr><th>Empresa</th><th>Infra&ccedil;&atilde;o</th><th>Resultado</th></tr>
+                <tr>
+                    <td><strong>Teleatendimento (2023)</strong></td>
+                    <td>Compartilhamento indevido de dados de clientes para terceiros sem consentimento</td>
+                    <td>Primeira multa da ANPD: R$ 14.400,00 (empresa de pequeno porte)</td>
+                </tr>
+                <tr>
+                    <td><strong>Plataforma de emprego (2024)</strong></td>
+                    <td>Vaza­mento de dados de 223 milh&otilde;es de brasileiros &mdash; em investiga&ccedil;&atilde;o</td>
+                    <td>Processo administrativo em andamento na ANPD</td>
+                </tr>
+                <tr>
+                    <td><strong>Prefeitura Municipal</strong></td>
+                    <td>Divulga&ccedil;&atilde;o de dados de servidores sem base legal</td>
+                    <td>Recomenda&ccedil;&atilde;o de corre&ccedil;&atilde;o imediata e capacita&ccedil;&atilde;o de equipe</td>
+                </tr>
+            </table>
+
+            <div class="highlight-box">
+                <p>&#x1F4A1; A LGPD se aplica a <strong>todos os tamanhos de organiza&ccedil;&atilde;o</strong> &mdash; inclusive microempresas e aut&ocirc;nomos que tratam dados. Mesmo uma escola, um cons&uacute;lt&oacute;rio m&eacute;dico ou um professor que mant&eacute;m cadastro de alunos est&aacute; sujeito &agrave; lei.</p>
+            </div>
+        </div>
+
+        <!-- CARD 8 — LGPD no dia a dia -->
+        <div class="content-card">
+            <h2>&#x1F4F1; A LGPD no Seu Cotidiano</h2>
+            <p>A LGPD n&atilde;o &eacute; apenas para advogados e empresas. Ela afeta diretamente como voc&ecirc; interage com tecnologia todos os dias:</p>
+            <ul>
+                <li>&#x1F36A; Aquele aviso de <strong>&ldquo;aceitar cookies&rdquo;</strong> ao entrar em um site &eacute; uma exig&ecirc;ncia de transpar&ecirc;ncia da LGPD &mdash; voc&ecirc; tem o direito de recusar os n&atilde;o essenciais</li>
+                <li>&#x1F4E7; Quando um aplicativo pede seu e-mail e nome ao criar uma conta, ele &eacute; obrigado a informar <strong>para qu&ecirc; vai us&aacute;-los</strong></li>
+                <li>&#x1F5D1;&#xFE0F; Voc&ecirc; pode pedir &agrave; qualquer empresa que <strong>exclua seu cadastro</strong> e ela &eacute; obrigada a atender</li>
+                <li>&#x1F4F0; Quando um site sofre vazamento e inclui seus dados, ele &eacute; obrigado a <strong>te avisar</strong> sobre o incidente</li>
+                <li>&#x1F3EB; O IFRN, ao armazenar seus dados acad&ecirc;micos, tem obriga&ccedil;&otilde;es da LGPD: manter seguros, usar apenas para finalidade educacional e n&atilde;o compartilhar sem base legal</li>
+            </ul>
+
+            <div class="alert-box">
+                <p>&#x1F4CC; Se uma empresa descumprir seus direitos como titular, voc&ecirc; pode registrar reclama&ccedil;&atilde;o na <strong>ANPD (anpd.gov.br/cidadaos)</strong> ou via Procon. N&atilde;o &eacute; necess&aacute;rio advogado para acionar o canal administrativo da autoridade.</p>
+            </div>
+        </div>
+
+        <!-- CARD 9 — RECAPITULANDO -->
+        <div class="content-card">
+            <h2>&#x1F4CB; Recapitulando</h2>
+            <ul>
+                <li>A <strong>LGPD</strong> (Lei 13.709/2018) regula o tratamento de dados pessoais no Brasil, inspirada na GDPR europeia e vigente desde 2020</li>
+                <li>Dados pessoais sens&iacute;veis (sa&uacute;de, religi&atilde;o, biometria) t&ecirc;m prote&ccedil;&atilde;o refor&ccedil;ada</li>
+                <li>Os 5 atores principais: <strong>titular, controlador, operador, encarregado (DPO) e ANPD</strong></li>
+                <li>O tratamento de dados &eacute; legal apenas quando h&aacute; uma <strong>base legal</strong> v&aacute;lida &mdash; consentimento &eacute; uma delas, mas n&atilde;o a &uacute;nica</li>
+                <li>Os <strong>8 direitos do titular</strong>: confirma&ccedil;&atilde;o, acesso, corre&ccedil;&atilde;o, elimina&ccedil;&atilde;o, portabilidade, informa&ccedil;&atilde;o, oposi&ccedil;&atilde;o e revoga&ccedil;&atilde;o</li>
+                <li>Organiza&ccedil;&otilde;es devem ter pol&iacute;tica de privacidade, DPO, prote&ccedil;&atilde;o by design e notificar vazamentos em 72h</li>
+                <li>A ANPD fiscaliza e pode multar at&eacute; <strong>2% do faturamento</strong>, limitado a R$ 50 milh&otilde;es por infra&ccedil;&atilde;o</li>
+            </ul>
+
+            <div class="highlight-box">
+                <p>&#x1F4DA; <strong>Na pr&oacute;xima e &uacute;ltima aula da Unidade 2</strong> vamos fechar o ciclo com <strong>Cidadania Digital</strong>: pegada digital, reputa&ccedil;&atilde;o online, bem-estar no ambiente digital e as habilidades essenciais para navegar com consci&ecirc;ncia no s&eacute;culo XXI.</p>
+            </div>
+        </div>
+
+        <!-- EXERCÍCIO -->
+        <div class="content-card exercise-card">
+            <h2>&#x1F3AF; Exerc&iacute;cio &mdash; Arraste e Conecte</h2>
+            <p style="color:#475569;font-size:0.9em;margin-bottom:4px;">Arraste cada descri&ccedil;&atilde;o para o conceito da LGPD correspondente.</p>
+
+            <div class="ex-drag-root" data-ex="ex28">
+                <div class="ex-drag">
+                    <div>
+                        <div class="ex-col-title">Descri&ccedil;&atilde;o</div>
+                        <div class="ex-pool" data-pool="ex28">
+                            <div class="drag-chip" data-id="titular">A pessoa f&iacute;sica a quem os dados pertencem e que possui direitos garantidos pela lei</div>
+                            <div class="drag-chip" data-id="consentimento">Autoriza&ccedil;&atilde;o livre, informada e inequ&iacute;voca do usu&aacute;rio para um uso espec&iacute;fico dos dados</div>
+                            <div class="drag-chip" data-id="dpo">Profissional respons&aacute;vel pela prote&ccedil;&atilde;o de dados na organiza&ccedil;&atilde;o e canal com a ANPD</div>
+                            <div class="drag-chip" data-id="sensivel">Dado de sa&uacute;de, origem racial, religi&atilde;o ou biometria que exige prote&ccedil;&atilde;o refor&ccedil;ada</div>
+                            <div class="drag-chip" data-id="anpd">Autoridade federal que fiscaliza o cumprimento da LGPD e aplica san&ccedil;&otilde;es</div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="ex-col-title">Conceito</div>
+                        <div class="ex-zones" data-zones="ex28">
+                            <div class="drop-zone" data-zone="ex28-z1" data-accept="titular">
+                                <span class="zone-name">Titular</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex28-z2" data-accept="consentimento">
+                                <span class="zone-name">Consentimento</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex28-z3" data-accept="dpo">
+                                <span class="zone-name">Encarregado (DPO)</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex28-z4" data-accept="sensivel">
+                                <span class="zone-name">Dado Sens&iacute;vel</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex28-z5" data-accept="anpd">
+                                <span class="zone-name">ANPD</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ex-actions">
+                <button class="btn-verificar" onclick="dragVerify('ex28')">Verificar</button>
+                <button class="btn-refazer"  onclick="dragReset('ex28')">Refazer</button>
+            </div>
+            <div class="ex-result" id="ex28-result"></div>
+        </div>
+
+        <!-- ATIVIDADE PRÁTICA 2.8 -->
+        <div class="content-card practical-card" id="prat-28">
+            <h2>&#x1F6E0;&#xFE0F; Atividade Pr&aacute;tica &mdash; Aplicando a LGPD no Cotidiano</h2>
+            <div class="prat-meta">
+                <span class="prat-tag">&#x23F1; ~30 min</span>
+                <span class="prat-tag">&#x1F310; Requer internet</span>
+                <span class="prat-tag">&#x1F4DD; Individual</span>
+            </div>
+
+            <div class="prat-steps">
+                <div class="prat-step">
+                    <div class="step-num">1</div>
+                    <div class="step-body">
+                        <div class="step-label">Analise uma pol&iacute;tica de privacidade</div>
+                        <div class="step-desc">Acesse o site de uma empresa que voc&ecirc; usa (Instagram, iFood, Spotify). Localize a <strong>Pol&iacute;tica de Privacidade</strong> (geralmente no rodap&eacute; do site). Responda: Quais dados s&atilde;o coletados? Com quem s&atilde;o compartilhados? Por quanto tempo ficam armazenados? Como voc&ecirc; pode solicitar exclus&atilde;o? A pol&iacute;tica est&aacute; escrita de forma clara?</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">2</div>
+                    <div class="step-body">
+                        <div class="step-label">Verifique seus dados no Google</div>
+                        <div class="step-desc">Acesse <strong>myaccount.google.com &rarr; Dados e privacidade</strong>. Explore: Quais dados o Google armazena sobre voc&ecirc;? H&aacute; hist&oacute;rico de localiza&ccedil;&atilde;o ativo? E hist&oacute;rico de atividade na web? Voc&ecirc; pode pausar ou excluir esses dados. Anote o que encontrou e o que decidiu fazer.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">3</div>
+                    <div class="step-body">
+                        <div class="step-label">Identifique os atores da LGPD em um cen&aacute;rio</div>
+                        <div class="step-desc">Considere o seguinte cen&aacute;rio: o IFRN utiliza o Google Workspace (Gmail, Drive, Classroom) para gerenciar dados dos alunos. Identifique quem &eacute; o <strong>titular</strong>, o <strong>controlador</strong>, o <strong>operador</strong> e qual seria o papel da <strong>ANPD</strong> nessa rela&ccedil;&atilde;o. Justifique cada escolha.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">4</div>
+                    <div class="step-body">
+                        <div class="step-label">Simule um pedido de acesso aos dados</div>
+                        <div class="step-desc">Escreva, no Google Docs, um <strong>e-mail formal solicitando acesso aos seus dados</strong> a uma empresa de sua escolha, exercendo o direito previsto no Art. 18 da LGPD. O e-mail deve conter: identifica&ccedil;&atilde;o, base legal do pedido (Art. 18, III, LGPD), prazo esperado de resposta (15 dias &eacute; o recomendado) e onde enviar a resposta.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">5</div>
+                    <div class="step-body">
+                        <div class="step-label">Explore o portal da ANPD</div>
+                        <div class="step-desc">Acesse <strong>anpd.gov.br</strong>. Navegue pela se&ccedil;&atilde;o <em>Para Cidad&atilde;os</em>. Anote: Como registrar uma reclama&ccedil;&atilde;o? Quais canais est&atilde;o dispon&iacute;veis? Voc&ecirc; encontrou alguma resolu&ccedil;&atilde;o ou orienta&ccedil;&atilde;o interessante? Compartilhe um aprendizado com a turma.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="prat-observe">
+                <strong>&#x1F4CC; Para saber:</strong> O maior vazamento de dados da hist&oacute;ria do Brasil ocorreu em janeiro de 2021: mais de <strong>223 milh&otilde;es de CPFs</strong> &mdash; incluindo de pessoas falecidas &mdash; foram expostos com nome, endere&ccedil;o, renda, foto e outros dados. O caso evidenciou a urg&ecirc;ncia da LGPD e levou a ANPD a iniciar investigações que ainda est&atilde;o em andamento.
+            </div>
+
+            <div class="ex-actions">
+                <button class="btn-print" onclick="printPractical('prat-28', 'Aula 2.8 \u2014 LGPD \u2014 Lei Geral de Prote\u00e7\u00e3o de Dados')">&#x1F5A8;&#xFE0F; Imprimir roteiro</button>
+            </div>
+        </div>
+
+        <div class="nav-footer">
+            <a href="uni2-07-etica-ti.html" class="nav-link">&#x2B05; Anterior: &Eacute;tica e Legisla&ccedil;&atilde;o</a>
+            <a href="index.html" class="nav-link">&#x1F3E0; Voltar ao In&iacute;cio &#x27A1;</a>
+        </div>
+
+    </div>
+
+    <script src="slide-mode.js"></script>
+    <script src="exercise-drag.js"></script>
+    <script src="exercise-print.js"></script>
+</body>
+</html>
