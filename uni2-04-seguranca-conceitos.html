@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 2.4 - Conceitos Fundamentais de Segurança da Informação</title>
+    <link rel="stylesheet" href="slide-mode.css">
+    <link rel="stylesheet" href="exercise.css">
+    <style>
+        :root {
+            --primary: #00838f;
+            --secondary: #006064;
+            --bg-light: #f0f4f8;
+            --text-dark: #1a202c;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        .top-bar {
+            background: white;
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .back-btn {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+        .back-btn:hover { background: rgba(0,131,143,0.08); }
+
+        .page-badge {
+            font-size: 0.8em;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: rgba(0, 131, 143, 0.12);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .content-wrapper {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 30px;
+        }
+
+        .lesson-hero {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            border-top: 4px solid var(--primary);
+        }
+        .lesson-hero h1 { font-size: 2em; margin-bottom: 10px; color: var(--primary); }
+        .lesson-hero .subtitle { font-size: 1.05em; color: #718096; }
+
+        .content-card {
+            background: white;
+            border-radius: 16px;
+            padding: 35px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+        .content-card h2 {
+            font-size: 1.4em;
+            color: var(--primary);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .content-card h3 { font-size: 1.05em; color: var(--secondary); margin: 20px 0 10px; }
+        .content-card p  { margin-bottom: 15px; text-align: justify; }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(0,131,143,0.05), rgba(0,96,100,0.06));
+            border-left: 4px solid var(--primary);
+            padding: 20px 25px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+        }
+        .highlight-box p { margin-bottom: 0; font-style: italic; }
+
+        .alert-box {
+            background: #fff8e1;
+            border-left: 4px solid #f59e0b;
+            padding: 18px 22px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+        }
+        .alert-box p { margin: 0; color: #78350f; font-size: 0.93em; }
+
+        ul, ol { margin: 10px 0 15px 25px; }
+        li { margin-bottom: 8px; }
+
+        /* ── Tríade CID ── */
+        .cid-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin: 20px 0;
+        }
+        .cid-card {
+            border-radius: 14px;
+            padding: 26px 20px;
+            text-align: center;
+        }
+        .cid-card.conf  { background: #eff6ff; border-top: 4px solid #3b82f6; }
+        .cid-card.integ { background: #f0fdf4; border-top: 4px solid #22c55e; }
+        .cid-card.disp  { background: #fff7ed; border-top: 4px solid #f59e0b; }
+        .cid-icon  { font-size: 2.4em; margin-bottom: 10px; }
+        .cid-letra { font-size: 2em; font-weight: 900; margin-bottom: 4px; }
+        .cid-card.conf  .cid-letra { color: #1d4ed8; }
+        .cid-card.integ .cid-letra { color: #15803d; }
+        .cid-card.disp  .cid-letra { color: #b45309; }
+        .cid-nome  { font-weight: 700; font-size: 1em; margin-bottom: 8px; }
+        .cid-card.conf  .cid-nome { color: #1e40af; }
+        .cid-card.integ .cid-nome { color: #166534; }
+        .cid-card.disp  .cid-nome { color: #92400e; }
+        .cid-desc  { font-size: 0.83em; color: #475569; line-height: 1.55; }
+
+        /* ── Cenários CID ── */
+        .cenario-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 14px 0;
+        }
+        .cenario-item {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+            padding: 14px 16px;
+            border-radius: 10px;
+            background: #f8fafc;
+        }
+        .cenario-badge {
+            font-size: 0.72em;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 20px;
+            white-space: nowrap;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .badge-c { background: #dbeafe; color: #1d4ed8; }
+        .badge-i { background: #dcfce7; color: #166534; }
+        .badge-d { background: #fef3c7; color: #92400e; }
+        .cenario-item p { margin: 0; font-size: 0.87em; color: #334155; }
+
+        /* ── Grid de malware ── */
+        .compare-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 0.88em;
+        }
+        .compare-table th {
+            background: var(--primary);
+            color: white;
+            padding: 11px 14px;
+            text-align: left;
+        }
+        .compare-table th:first-child { border-radius: 8px 0 0 0; }
+        .compare-table th:last-child  { border-radius: 0 8px 0 0; }
+        .compare-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: top;
+        }
+        .compare-table tr:nth-child(even) td { background: #f8fafc; }
+        .compare-table tr:last-child td { border-bottom: none; }
+        .malware-nome { font-weight: 700; color: #dc2626; }
+
+        /* ── Vetores de ataque ── */
+        .vetor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .vetor-card {
+            background: #fef2f2;
+            border-radius: 10px;
+            padding: 16px 12px;
+            text-align: center;
+            border-top: 3px solid #ef4444;
+        }
+        .vetor-icon  { font-size: 1.9em; margin-bottom: 6px; }
+        .vetor-title { font-weight: 700; font-size: 0.85em; color: #b91c1c; margin-bottom: 4px; }
+        .vetor-desc  { font-size: 0.76em; color: #475569; line-height: 1.5; }
+
+        /* ── Engenharia social: modalidades ── */
+        .eng-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .eng-card {
+            border-radius: 10px;
+            padding: 18px 14px;
+            border-left: 4px solid #dc2626;
+            background: #fef2f2;
+        }
+        .eng-tipo  { font-weight: 700; font-size: 0.88em; color: #b91c1c; margin-bottom: 4px; }
+        .eng-canal { font-size: 0.75em; color: #6b7280; margin-bottom: 6px; font-style: italic; }
+        .eng-desc  { font-size: 0.82em; color: #374151; line-height: 1.5; }
+
+        /* ── Sinais de alerta ── */
+        .alerta-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin: 14px 0;
+        }
+        .alerta-item {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            background: #fff7ed;
+            border-radius: 8px;
+            padding: 12px 14px;
+        }
+        .alerta-item .al-icon { font-size: 1.3em; flex-shrink: 0; }
+        .alerta-item p { margin: 0; font-size: 0.83em; color: #78350f; }
+
+        /* ── Boas práticas ── */
+        .boas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .boa-item {
+            background: #f0fdfa;
+            border-radius: 10px;
+            padding: 16px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+        .boa-icon { font-size: 1.6em; flex-shrink: 0; }
+        .boa-text strong { display: block; font-size: 0.88em; color: var(--primary); margin-bottom: 3px; }
+        .boa-text span   { font-size: 0.8em; color: #475569; }
+
+        /* ── nav ── */
+        .nav-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-bottom: 40px;
+        }
+        .nav-link {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+        .nav-link:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+
+        @media (max-width: 768px) {
+            .content-wrapper { padding: 0 15px; }
+            .lesson-hero, .content-card { padding: 25px; }
+            .lesson-hero h1 { font-size: 1.5em; }
+            .cid-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <a href="index.html" class="back-btn">&#x2B05; Voltar ao Dashboard</a>
+        <span class="page-badge">Unidade 2 &mdash; Internet e Seguran&ccedil;a</span>
+        <button class="slide-toggle" id="slideToggleBtn">&#x1F4FA; Modo Slide</button>
+    </div>
+
+    <div class="content-wrapper">
+
+        <div class="lesson-hero">
+            <h1>&#x1F6E1;&#xFE0F; Conceitos Fundamentais de Seguran&ccedil;a da Informa&ccedil;&atilde;o</h1>
+            <p class="subtitle">Aula 2.4 &mdash; Os pilares da seguran&ccedil;a (CID), os principais tipos de amea&ccedil;as digitais e como reconhecer ataques antes de ser v&iacute;tima</p>
+        </div>
+
+        <!-- CARD 1 — O que é Segurança da Informação -->
+        <div class="content-card">
+            <h2>&#x1F4AC; O que &eacute; Seguran&ccedil;a da Informa&ccedil;&atilde;o?</h2>
+            <p>A <strong>Seguran&ccedil;a da Informa&ccedil;&atilde;o</strong> &eacute; o conjunto de pr&aacute;ticas, tecnologias e pol&iacute;ticas que protegem os dados contra acesso n&atilde;o autorizado, altera&ccedil;&otilde;es indevidas e indisponibilidade. Seu objetivo &eacute; garantir que a informa&ccedil;&atilde;o certa esteja dispon&iacute;vel para as pessoas certas, no momento certo &mdash; e apenas para elas.</p>
+            <p>Na era digital, <strong>dados s&atilde;o um ativo valioso</strong>. Informa&ccedil;&otilde;es pessoais, senhas, documentos acad&ecirc;micos e financeiros pr&eacute;cisam ser protegidos assim como se protege uma carteira ou um documento f&iacute;sico.</p>
+
+            <div class="highlight-box">
+                <p>&#x1F4A1; Seguran&ccedil;a da Informa&ccedil;&atilde;o n&atilde;o &eacute; apenas responsabilidade de especialistas em TI. <strong>Cada usu&aacute;rio &eacute; a primeira e mais importante linha de defesa</strong> &mdash; a maioria dos ataques explora erros humanos, n&atilde;o falhas t&eacute;cnicas.</p>
+            </div>
+
+            <h3>&#x1F4CA; Panorama das amea&ccedil;as digitais no Brasil</h3>
+            <ul>
+                <li>O Brasil &eacute; um dos pa&iacute;ses <strong>mais atacados da Am&eacute;rica Latina</strong> por ciberataques</li>
+                <li>Phishing &eacute; o tipo de golpe digital mais comum, especialmente por WhatsApp e e-mail</li>
+                <li>Ataques de ransomware (sequestrando dados por resgate) cresceram mais de 90% ap&oacute;s 2020</li>
+                <li>A maior parte das v&iacute;timas n&atilde;o sabia que estava em risco at&eacute; o momento do ataque</li>
+            </ul>
+        </div>
+
+        <!-- CARD 2 — Tríade CID -->
+        <div class="content-card">
+            <h2>&#x1F510; A Tr&iacute;ade CID &mdash; Os Tr&ecirc;s Pilares</h2>
+            <p>A base de toda a Seguran&ccedil;a da Informa&ccedil;&atilde;o &eacute; a <strong>tr&iacute;ade CID</strong> (em ingl&ecirc;s, CIA). Qualquer incidente de seguran&ccedil;a viola ao menos um desses tr&ecirc;s pilares:</p>
+
+            <div class="cid-grid">
+                <div class="cid-card conf">
+                    <div class="cid-icon">&#x1F512;</div>
+                    <div class="cid-letra">C</div>
+                    <div class="cid-nome">Confidencialidade</div>
+                    <div class="cid-desc">A informa&ccedil;&atilde;o s&oacute; &eacute; acessada por quem tem <strong>permiss&atilde;o</strong>. Dados pessoais, senhas e documentos sigilosos devem ser vis&iacute;veis apenas aos autorizados.</div>
+                </div>
+                <div class="cid-card integ">
+                    <div class="cid-icon">&#x2714;&#xFE0F;</div>
+                    <div class="cid-letra">I</div>
+                    <div class="cid-nome">Integridade</div>
+                    <div class="cid-desc">A informa&ccedil;&atilde;o &eacute; <strong>precisa e n&atilde;o foi alterada</strong> indevidamente. Um arquivo corrompido ou uma nota adulterada no sistema viola a integridade.</div>
+                </div>
+                <div class="cid-card disp">
+                    <div class="cid-icon">&#x1F7E1;</div>
+                    <div class="cid-letra">D</div>
+                    <div class="cid-nome">Disponibilidade</div>
+                    <div class="cid-desc">A informa&ccedil;&atilde;o e os sistemas est&atilde;o <strong>acess&iacute;veis quando necess&aacute;rio</strong>. Um site fora do ar ou um sistema travado viola a disponibilidade.</div>
+                </div>
+            </div>
+
+            <h3>&#x1F4CB; Exemplos pr&aacute;ticos da tr&iacute;ade</h3>
+            <div class="cenario-list">
+                <div class="cenario-item">
+                    <span class="cenario-badge badge-c">Confidencialidade</span>
+                    <p>Um colega descobre sua senha e acessa sua conta no SUAP sem permiss&atilde;o, lendo suas notas e mensagens privadas.</p>
+                </div>
+                <div class="cenario-item">
+                    <span class="cenario-badge badge-i">Integridade</span>
+                    <p>Um hacker invade o banco de dados de uma escola e altera notas de alunos para aprovar reprovados mediante pagamento.</p>
+                </div>
+                <div class="cenario-item">
+                    <span class="cenario-badge badge-d">Disponibilidade</span>
+                    <p>O sistema do ENEM fica fora do ar no dia da prova online por causa de um ataque, impedindo candidatos de acessar.</p>
+                </div>
+                <div class="cenario-item">
+                    <span class="cenario-badge badge-c">Confidencialidade</span>
+                    <p>Uma foto sua enviada em conversa privada &eacute; compartilhada sem sua autoriza&ccedil;&atilde;o para outras pessoas.</p>
+                </div>
+                <div class="cenario-item">
+                    <span class="cenario-badge badge-i">Integridade</span>
+                    <p>Um v&iacute;rus modifica os arquivos de um trabalho acad&ecirc;mico salvo no computador, tornando-os ileg&iacute;veis ou com conte&uacute;do diferente.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 3 — Tipos de Malware -->
+        <div class="content-card">
+            <h2>&#x1F9A0; Tipos de Malware</h2>
+            <p>O termo <strong>malware</strong> (do ingl&ecirc;s <em>malicious software</em>) designa qualquer programa criado com inten&ccedil;&atilde;o maliciosa. Cada tipo age de forma diferente e tem objetivos distintos:</p>
+
+            <table class="compare-table">
+                <tr>
+                    <th>Tipo</th>
+                    <th>Como age</th>
+                    <th>Exemplo / Impacto</th>
+                </tr>
+                <tr>
+                    <td><span class="malware-nome">&#x1F9A0; V&iacute;rus</span></td>
+                    <td>Infecta arquivos leg&iacute;timos e se espalha quando o arquivo &eacute; executado. Precisa de a&ccedil;&atilde;o humana para se propagar.</td>
+                    <td>Corrupc&atilde;o de arquivos, lentid&atilde;o do sistema</td>
+                </tr>
+                <tr>
+                    <td><span class="malware-nome">&#x1F40D; Worm</span></td>
+                    <td>Se replica <strong>automaticamente</strong> pela rede sem precisar de a&ccedil;&atilde;o do usu&aacute;rio. Consome recursos e pode abrir portas para outros ataques.</td>
+                    <td>Sobrecarga de redes, espalha outros malwares</td>
+                </tr>
+                <tr>
+                    <td><span class="malware-nome">&#x1F434; Trojan</span></td>
+                    <td>Disfarça-se de programa leg&iacute;timo. Ap&oacute;s instalado, abre acesso remoto ao invasor ou instala outros malwares.</td>
+                    <td>Roubo de dados, controle remoto do dispositivo</td>
+                </tr>
+                <tr>
+                    <td><span class="malware-nome">&#x1F510; Ransomware</span></td>
+                    <td><strong>Criptografa</strong> os arquivos da v&iacute;tima e exige pagamento (resgate) para devolver o acesso. Muito usado contra empresas e &oacute;rg&atilde;os p&uacute;blicos.</td>
+                    <td>Perda total de dados, preju&iacute;zos milion&aacute;rios</td>
+                </tr>
+                <tr>
+                    <td><span class="malware-nome">&#x1F576;&#xFE0F; Spyware</span></td>
+                    <td>Monitora <strong>silenciosamente</strong> as atividades do usu&aacute;rio: teclas digitadas, sites visitados, senhas.</td>
+                    <td>Roubo de credenciais banc&aacute;rias e senhas</td>
+                </tr>
+                <tr>
+                    <td><span class="malware-nome">&#x1F4E2; Adware</span></td>
+                    <td>Exibe an&uacute;ncios indesejados de forma agressiva. Geralmente menos perigoso, mas pode abrir caminho para malwares piores.</td>
+                    <td>Pop-ups, redirecionamentos no navegador</td>
+                </tr>
+            </table>
+
+            <div class="alert-box">
+                <p>&#x26A0;&#xFE0F; O <strong>ransomware</strong> &eacute; considerado a amea&ccedil;a mais destrutiva da atualidade. Em 2023, ataques de ransomware paralisaram hospitais, &oacute;rg&atilde;os do governo e universidades no Brasil. A principal prote&ccedil;&atilde;o &eacute; manter backups atualizados e n&atilde;o abrir arquivos suspeitos.</p>
+            </div>
+        </div>
+
+        <!-- CARD 4 — Vetores de ataque -->
+        <div class="content-card">
+            <h2>&#x1F3AF; Como os Ataques Chegam at&eacute; Voc&ecirc;</h2>
+            <p>Os <strong>vetores de ataque</strong> s&atilde;o os caminhos que os criminosos digitais usam para atingir as v&iacute;timas. Conhec&ecirc;-los &eacute; o primeiro passo para se proteger:</p>
+
+            <div class="vetor-grid">
+                <div class="vetor-card">
+                    <div class="vetor-icon">&#x1F4E7;</div>
+                    <div class="vetor-title">E-mail malicioso</div>
+                    <div class="vetor-desc">Links e anexos falsos enviados por remetentes que parecem confi&aacute;veis. &Eacute; o vetor mais comum.</div>
+                </div>
+                <div class="vetor-card">
+                    <div class="vetor-icon">&#x1F310;</div>
+                    <div class="vetor-title">Sites falsos</div>
+                    <div class="vetor-desc">P&aacute;ginas que imitam bancos, lojas ou institui&ccedil;&otilde;es para roubar dados digitados pelo usu&aacute;rio.</div>
+                </div>
+                <div class="vetor-card">
+                    <div class="vetor-icon">&#x1F4F2;</div>
+                    <div class="vetor-title">WhatsApp / SMS</div>
+                    <div class="vetor-desc">Mensagens com links encurtados ou promo&ccedil;&otilde;es falsas que direcionam para p&aacute;ginas maliciosas.</div>
+                </div>
+                <div class="vetor-card">
+                    <div class="vetor-icon">&#x1F4BE;</div>
+                    <div class="vetor-title">Pendrive infectado</div>
+                    <div class="vetor-desc">Dispositivos USB deixados propositalmente em locais p&uacute;blicos. Ao conectar, instalam malware automaticamente.</div>
+                </div>
+                <div class="vetor-card">
+                    <div class="vetor-icon">&#x1F4F6;</div>
+                    <div class="vetor-title">Wi-Fi p&uacute;blico</div>
+                    <div class="vetor-desc">Redes abertas permitem que atacantes interceptem dados trafegados, como senhas e logins.</div>
+                </div>
+                <div class="vetor-card">
+                    <div class="vetor-icon">&#x1F4F1;</div>
+                    <div class="vetor-title">Apps falsos</div>
+                    <div class="vetor-desc">Aplicativos fora das lojas oficiais ou clones de apps populares que cont&ecirc;m c&oacute;digo malicioso.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 5 — Engenharia social -->
+        <div class="content-card">
+            <h2>&#x1F3AD; Engenharia Social</h2>
+            <p>A <strong>engenharia social</strong> &eacute; a manipula&ccedil;&atilde;o psicol&oacute;gica de pessoas para que revelem informa&ccedil;&otilde;es confidenciais ou executem a&ccedil;&otilde;es prejudiciais. Em vez de atacar sistemas, o criminoso <strong>ataca o ser humano</strong> &mdash; explorando empresos, confian&ccedil;a, medo ou urg&ecirc;ncia.</p>
+            <p>&Eacute; considerada a t&eacute;cnica mais eficaz de ataque porque <strong>nenhum antiv&iacute;rus protege contra um usu&aacute;rio enganado</strong>. Por isso, conhecer os tipos &eacute; a melhor defesa.</p>
+
+            <div class="eng-grid">
+                <div class="eng-card">
+                    <div class="eng-tipo">&#x1F3A3; Phishing</div>
+                    <div class="eng-canal">Via e-mail</div>
+                    <div class="eng-desc">Mensagem falsa que imita uma institui&ccedil;&atilde;o (banco, Receita Federal, IFRN) com link para p&aacute;gina clonada onde a v&iacute;tima digita seus dados.</div>
+                </div>
+                <div class="eng-card">
+                    <div class="eng-tipo">&#x1F4F1; Smishing</div>
+                    <div class="eng-canal">Via SMS ou WhatsApp</div>
+                    <div class="eng-desc">Mesmo princípio do phishing, mas executado por mensagem de texto. Comum com falsas notifica&ccedil;&otilde;es de entrega de encomenda ou premia&ccedil;&otilde;es.</div>
+                </div>
+                <div class="eng-card">
+                    <div class="eng-tipo">&#x1F4DE; Vishing</div>
+                    <div class="eng-canal">Via liga&ccedil;&atilde;o telef&ocirc;nica</div>
+                    <div class="eng-desc">Ligação falsa de "banco" ou "suporte t&eacute;cnico" pedindo senha, token ou acesso remoto ao computador da v&iacute;tima.</div>
+                </div>
+                <div class="eng-card">
+                    <div class="eng-tipo">&#x1F3AD; Pretexting</div>
+                    <div class="eng-canal">Qualquer canal</div>
+                    <div class="eng-desc">O atacante cria um cen&aacute;rio falso convincente (&ldquo;Sou do TI da escola&rdquo;) para extrair informa&ccedil;&otilde;es ou acesso privilegiado.</div>
+                </div>
+            </div>
+
+            <h3>&#x26A0;&#xFE0F; Sinais de alerta &mdash; desconfie quando houver:</h3>
+            <div class="alerta-list">
+                <div class="alerta-item">
+                    <div class="al-icon">&#x23F0;</div>
+                    <p><strong>Urg&ecirc;ncia ou amea&ccedil;a:</strong> &ldquo;Sua conta ser&aacute; bloqueada em 24h se voc&ecirc; n&atilde;o agir agora!&rdquo;</p>
+                </div>
+                <div class="alerta-item">
+                    <div class="al-icon">&#x1F381;</div>
+                    <p><strong>Premia&ccedil;&atilde;o inesperada:</strong> &ldquo;Voc&ecirc; foi selecionado para ganhar um pr&ecirc;mio. Clique aqui!&rdquo;</p>
+                </div>
+                <div class="alerta-item">
+                    <div class="al-icon">&#x1F517;</div>
+                    <p><strong>Links suspeitos:</strong> URL com erros de grafia (<em>bancobrasil.com<strong>br</strong>.xyz</em>) ou encurtadores.</p>
+                </div>
+                <div class="alerta-item">
+                    <div class="al-icon">&#x1F4DD;</div>
+                    <p><strong>Erros de portugu&ecirc;s:</strong> mensagens com gram&aacute;tica estranha ou palavras fora de contexto.</p>
+                </div>
+                <div class="alerta-item">
+                    <div class="al-icon">&#x1F4CE;</div>
+                    <p><strong>Anexo n&atilde;o solicitado:</strong> arquivo enviado por desconhecido ou que voc&ecirc; n&atilde;o esperava receber.</p>
+                </div>
+                <div class="alerta-item">
+                    <div class="al-icon">&#x1F511;</div>
+                    <p><strong>Pedido de senha:</strong> institui&ccedil;&otilde;es leg&iacute;timas <strong>nunca pedem sua senha</strong> por e-mail, SMS ou telefone.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 6 — Boas práticas -->
+        <div class="content-card">
+            <h2>&#x2705; Como se Proteger &mdash; Boas Pr&aacute;ticas</h2>
+
+            <div class="boas-grid">
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F9D0;</div>
+                    <div class="boa-text">
+                        <strong>Pense antes de clicar</strong>
+                        <span>Antes de abrir um link ou anexo, pergunte-se: eu esperava esse e-mail? O remetente &eacute; quem diz ser? O endere&ccedil;o do link faz sentido?</span>
+                    </div>
+                </div>
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F6E1;&#xFE0F;</div>
+                    <div class="boa-text">
+                        <strong>Mantenha antiv&iacute;rus ativo</strong>
+                        <span>Use um antiv&iacute;rus confi&aacute;vel e mantenha-o atualizado. Ele &eacute; a segunda linha de defesa &mdash; a primeira &eacute; voc&ecirc;.</span>
+                    </div>
+                </div>
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F504;</div>
+                    <div class="boa-text">
+                        <strong>Atualize sempre o sistema</strong>
+                        <span>Atualizações corrigem falhas de seguran&ccedil;a exploradas por malwares. N&atilde;o ignore a notifica&ccedil;&atilde;o de atualiza&ccedil;&atilde;o do Windows ou do celular.</span>
+                    </div>
+                </div>
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F4BE;</div>
+                    <div class="boa-text">
+                        <strong>Fa&ccedil;a backups regularmente</strong>
+                        <span>Mantenha c&oacute;pias de arquivos importantes na nuvem e em HD externo. Um backup atual anula o poder de um ataque de ransomware.</span>
+                    </div>
+                </div>
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F4F6;</div>
+                    <div class="boa-text">
+                        <strong>Evite Wi-Fi p&uacute;blico para dados sens&iacute;veis</strong>
+                        <span>N&atilde;o acesse internet banking nem sistemas institucionais em redes abertas. Se precisar, use dados m&oacute;veis ou VPN.</span>
+                    </div>
+                </div>
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F4F1;</div>
+                    <div class="boa-text">
+                        <strong>Instale apps apenas de fontes oficiais</strong>
+                        <span>Baixe aplicativos somente da Google Play Store ou Apple App Store. Nunca instale APKs de sites desconhecidos.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 7 — RECAPITULANDO -->
+        <div class="content-card">
+            <h2>&#x1F4CB; Recapitulando</h2>
+            <ul>
+                <li>A <strong>Seguran&ccedil;a da Informa&ccedil;&atilde;o</strong> protege dados contra acesso indevido, altera&ccedil;&atilde;o e indisponibilidade</li>
+                <li>A <strong>tr&iacute;ade CID</strong>: <em>Confidencialidade</em> (s&oacute; quem pode acessa), <em>Integridade</em> (dado n&atilde;o foi adulterado) e <em>Disponibilidade</em> (acesso garantido quando necess&aacute;rio)</li>
+                <li>Principais malwares: <strong>v&iacute;rus, worm, trojan, ransomware, spyware e adware</strong> &mdash; cada um com mecanismo e impacto diferente</li>
+                <li>Os vetores mais comuns s&atilde;o: <strong>e-mail, sites falsos, WhatsApp, pendrives e Wi-Fi p&uacute;blico</strong></li>
+                <li>A <strong>engenharia social</strong> manipula pessoas &mdash; n&atilde;o sistemas. Phishing, smishing e vishing exploram confian&ccedil;a e urg&ecirc;ncia</li>
+                <li>Sinais de alerta: urg&ecirc;ncia, premia&ccedil;&otilde;es, links estranhos, pedidos de senha e portugu&ecirc;s incorreto</li>
+                <li>A defesa come&ccedil;a com o <strong>comportamento humano</strong>: pensar antes de clicar, atualizar o sistema e fazer backups</li>
+            </ul>
+
+            <div class="highlight-box">
+                <p>&#x1F4DA; <strong>Na pr&oacute;xima aula</strong> vamos aprender <strong>Medidas de Prote&ccedil;&atilde;o de Dados Pessoais</strong>: como criar senhas fortes, ativar a autentica&ccedil;&atilde;o em dois fatores (2FA) e adotar boas pr&aacute;ticas de privacidade no dia a dia digital.</p>
+            </div>
+        </div>
+
+        <!-- EXERCÍCIO: Arrastar e Soltar -->
+        <div class="content-card exercise-card">
+            <h2>&#x1F3AF; Exerc&iacute;cio &mdash; Arraste e Conecte</h2>
+            <p style="color:#475569;font-size:0.9em;margin-bottom:4px;">Arraste cada cen&aacute;rio ou descri&ccedil;&atilde;o para o conceito correspondente. Em dispositivos m&oacute;veis, toque na descri&ccedil;&atilde;o e depois na zona de destino.</p>
+
+            <div class="ex-drag-root" data-ex="ex24">
+                <div class="ex-drag">
+                    <div>
+                        <div class="ex-col-title">Cen&aacute;rio / Descri&ccedil;&atilde;o</div>
+                        <div class="ex-pool" data-pool="ex24">
+                            <div class="drag-chip" data-id="conf">Acesso n&atilde;o autorizado ao e-mail de uma pessoa que teve a senha roubada</div>
+                            <div class="drag-chip" data-id="integ">Hacker altera registros de notas no sistema acad&ecirc;mico sem autoriza&ccedil;&atilde;o</div>
+                            <div class="drag-chip" data-id="disp">Ataque que deixa o site do ENEM fora do ar no dia da prova online</div>
+                            <div class="drag-chip" data-id="ransom">Malware que criptografa todos os arquivos do computador e exige pagamento</div>
+                            <div class="drag-chip" data-id="phish">E-mail falso que imita o banco pedindo para &ldquo;confirmar seus dados&rdquo; em um link</div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="ex-col-title">Conceito</div>
+                        <div class="ex-zones" data-zones="ex24">
+                            <div class="drop-zone" data-zone="ex24-z1" data-accept="conf">
+                                <span class="zone-name">Viola&ccedil;&atilde;o de Confidencialidade</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex24-z2" data-accept="integ">
+                                <span class="zone-name">Viola&ccedil;&atilde;o de Integridade</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex24-z3" data-accept="disp">
+                                <span class="zone-name">Viola&ccedil;&atilde;o de Disponibilidade</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex24-z4" data-accept="ransom">
+                                <span class="zone-name">Ransomware</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex24-z5" data-accept="phish">
+                                <span class="zone-name">Phishing</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ex-actions">
+                <button class="btn-verificar" onclick="dragVerify('ex24')">Verificar</button>
+                <button class="btn-refazer"  onclick="dragReset('ex24')">Refazer</button>
+            </div>
+            <div class="ex-result" id="ex24-result"></div>
+        </div>
+
+        <!-- ATIVIDADE PRÁTICA 2.4 -->
+        <div class="content-card practical-card" id="prat-24">
+            <h2>&#x1F6E0;&#xFE0F; Atividade Pr&aacute;tica &mdash; Analisando Amea&ccedil;as Reais</h2>
+            <div class="prat-meta">
+                <span class="prat-tag">&#x23F1; ~25 min</span>
+                <span class="prat-tag">&#x1F310; Requer internet</span>
+                <span class="prat-tag">&#x1F4DD; Individual ou em dupla</span>
+            </div>
+
+            <div class="prat-steps">
+                <div class="prat-step">
+                    <div class="step-num">1</div>
+                    <div class="step-body">
+                        <div class="step-label">Identifique os pilares violados</div>
+                        <div class="step-desc">Leia os cen&aacute;rios abaixo e, para cada um, anote qual pilar da tr&iacute;ade CID foi violado e justifique:<br>
+                        <strong>a)</strong> O notebook de um aluno &eacute; furtado com trabalhos n&atilde;o enviados ao professor.<br>
+                        <strong>b)</strong> Um funcion&aacute;rio mal-intencionado altera relat&oacute;rios antes de envi&aacute;-los &agrave; dire&ccedil;&atilde;o.<br>
+                        <strong>c)</strong> Um sistema de chamada online fica inacess&iacute;vel por 3 dias por falha no servidor.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">2</div>
+                    <div class="step-body">
+                        <div class="step-label">Analise um e-mail suspeito</div>
+                        <div class="step-desc">O professor disponibilizar&aacute; (ou projeta) um exemplo de e-mail de phishing impresso ou na tela. Identifique e anote pelo menos <strong>4 sinais de alerta</strong> presentes na mensagem: remetente duvidoso, urg&ecirc;ncia, link suspeito, erros gramaticais, pedido de dados, etc.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">3</div>
+                    <div class="step-body">
+                        <div class="step-label">Verifique um link antes de clicar</div>
+                        <div class="step-desc">Acesse o site <strong>virustotal.com</strong> pelo navegador. Na aba <em>URL</em>, cole o endere&ccedil;o que o professor indicar (ou um link encurtado de exemplo). Observe o resultado: quantos antiv&iacute;rus o marcaram como malicioso? O que o relat&oacute;rio mostra sobre o site?</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">4</div>
+                    <div class="step-body">
+                        <div class="step-label">Classifique tipos de malware</div>
+                        <div class="step-desc">Com base na tabela da aula, classifique cada situa&ccedil;&atilde;o pelo tipo de malware:<br>
+                        <strong>a)</strong> O computador come&ccedil;ou a mostrar propagandas em portugu&ecirc;s de lojas nunca visitadas.<br>
+                        <strong>b)</strong> Todos os arquivos da pasta Documentos t&ecirc;m agora a extens&atilde;o <em>.locked</em>.<br>
+                        <strong>c)</strong> Um programa de TV pirata instalado come&ccedil;ou a enviar senhas digitadas para um servidor externo.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">5</div>
+                    <div class="step-body">
+                        <div class="step-label">Crie um checklist de seguran&ccedil;a pessoal</div>
+                        <div class="step-desc">No Google Docs (na pasta criada na Aula 2.2), crie um documento chamado <strong>"Checklist de Seguran&ccedil;a Digital"</strong>. Liste pelo menos <strong>8 h&aacute;bitos</strong> que voc&ecirc; vai adotar (ou j&aacute; adota) para proteger seus dados. Compartilhe com o professor como <em>Comentarista</em>.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="prat-observe">
+                <strong>&#x1F4CC; Para saber:</strong> O <strong>VirusTotal</strong> &eacute; uma ferramenta gratuita do Google que verifica arquivos e URLs com mais de 70 antiv&iacute;rus simultaneamente. &Eacute; uma das primeiras ferramentas a usar antes de acessar um link suspeito &mdash; e salva muita gente de cair em golpes.
+            </div>
+
+            <div class="ex-actions">
+                <button class="btn-print" onclick="printPractical('prat-24', 'Aula 2.4 \u2014 Conceitos Fundamentais de Seguran\u00e7a da Informa\u00e7\u00e3o')">&#x1F5A8;&#xFE0F; Imprimir roteiro</button>
+            </div>
+        </div>
+
+        <div class="nav-footer">
+            <a href="uni2-03-ava.html" class="nav-link">&#x2B05; Anterior: AVA</a>
+            <a href="uni2-05-protecao-dados.html" class="nav-link">Pr&oacute;xima: Prote&ccedil;&atilde;o de Dados &#x27A1;</a>
+        </div>
+
+    </div><!-- fim .content-wrapper -->
+
+    <script src="slide-mode.js"></script>
+    <script src="exercise-drag.js"></script>
+    <script src="exercise-print.js"></script>
+</body>
+</html>
