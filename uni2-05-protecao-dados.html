@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 2.5 - Medidas de Proteção de Dados Pessoais</title>
+    <link rel="stylesheet" href="slide-mode.css">
+    <link rel="stylesheet" href="exercise.css">
+    <style>
+        :root {
+            --primary: #00838f;
+            --secondary: #006064;
+            --bg-light: #f0f4f8;
+            --text-dark: #1a202c;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        .top-bar {
+            background: white;
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .back-btn {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+        .back-btn:hover { background: rgba(0,131,143,0.08); }
+
+        .page-badge {
+            font-size: 0.8em;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: rgba(0, 131, 143, 0.12);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .content-wrapper {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 30px;
+        }
+
+        .lesson-hero {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            border-top: 4px solid var(--primary);
+        }
+        .lesson-hero h1 { font-size: 2em; margin-bottom: 10px; color: var(--primary); }
+        .lesson-hero .subtitle { font-size: 1.05em; color: #718096; }
+
+        .content-card {
+            background: white;
+            border-radius: 16px;
+            padding: 35px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+        .content-card h2 {
+            font-size: 1.4em;
+            color: var(--primary);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .content-card h3 { font-size: 1.05em; color: var(--secondary); margin: 20px 0 10px; }
+        .content-card p  { margin-bottom: 15px; text-align: justify; }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(0,131,143,0.05), rgba(0,96,100,0.06));
+            border-left: 4px solid var(--primary);
+            padding: 20px 25px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+        }
+        .highlight-box p { margin-bottom: 0; font-style: italic; }
+
+        .alert-box {
+            background: #fff8e1;
+            border-left: 4px solid #f59e0b;
+            padding: 18px 22px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+        }
+        .alert-box p { margin: 0; color: #78350f; font-size: 0.93em; }
+
+        ul, ol { margin: 10px 0 15px 25px; }
+        li { margin-bottom: 8px; }
+
+        /* ── Comparativo senhas ── */
+        .senha-compare {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 18px 0;
+        }
+        .senha-box {
+            border-radius: 12px;
+            padding: 20px;
+        }
+        .senha-box.fraca  { background: #fef2f2; border: 2px solid #fca5a5; }
+        .senha-box.forte  { background: #f0fdf4; border: 2px solid #86efac; }
+        .senha-box .sb-title {
+            font-weight: 700;
+            font-size: 0.88em;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .senha-box.fraca .sb-title { color: #dc2626; }
+        .senha-box.forte .sb-title { color: #16a34a; }
+        .senha-exemplo {
+            font-family: 'Consolas', monospace;
+            font-size: 1em;
+            background: rgba(0,0,0,0.04);
+            padding: 6px 10px;
+            border-radius: 6px;
+            margin-bottom: 6px;
+            color: #1a202c;
+        }
+        .senha-box ul { margin: 10px 0 0 18px; }
+        .senha-box li { font-size: 0.82em; color: #475569; margin-bottom: 4px; }
+
+        /* ── Barra de força ── */
+        .forca-demo {
+            margin: 20px 0;
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px 24px;
+        }
+        .forca-label { font-size: 0.85em; font-weight: 600; color: #475569; margin-bottom: 6px; }
+        .forca-senha { font-family: 'Consolas', monospace; font-size: 0.9em; color: #1a202c; margin-bottom: 8px; }
+        .forca-bar-wrap { background: #e2e8f0; border-radius: 99px; height: 10px; overflow: hidden; margin-bottom: 4px; }
+        .forca-bar { height: 10px; border-radius: 99px; }
+        .forca-bar.n1 { width: 15%; background: #ef4444; }
+        .forca-bar.n2 { width: 35%; background: #f59e0b; }
+        .forca-bar.n3 { width: 60%; background: #eab308; }
+        .forca-bar.n4 { width: 85%; background: #22c55e; }
+        .forca-bar.n5 { width: 100%; background: #16a34a; }
+        .forca-nivel { font-size: 0.78em; font-weight: 700; margin-bottom: 16px; }
+        .forca-nivel.n1 { color: #ef4444; }
+        .forca-nivel.n2 { color: #f59e0b; }
+        .forca-nivel.n3 { color: #eab308; }
+        .forca-nivel.n4 { color: #22c55e; }
+        .forca-nivel.n5 { color: #16a34a; }
+
+        /* ── Passphrase ── */
+        .passphrase-box {
+            background: #0f172a;
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin: 18px 0;
+            font-family: 'Consolas', 'Courier New', monospace;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            align-items: center;
+        }
+        .pp-word {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 1em;
+            font-weight: 700;
+        }
+        .pp-w1 { background: #34d399; color: #064e3b; }
+        .pp-w2 { background: #60a5fa; color: #1e3a8a; }
+        .pp-w3 { background: #fbbf24; color: #78350f; }
+        .pp-w4 { background: #f472b6; color: #831843; }
+        .pp-sep { color: #64748b; font-size: 1em; }
+
+        /* ── Gerenciadores ── */
+        .geren-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .geren-card {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 18px 14px;
+            text-align: center;
+            border-top: 3px solid var(--primary);
+        }
+        .geren-icon  { font-size: 2em; margin-bottom: 6px; }
+        .geren-card strong { display: block; font-size: 0.88em; color: var(--primary); margin-bottom: 4px; }
+        .geren-card em    { font-size: 0.78em; color: #718096; font-style: normal; line-height: 1.5; display: block; }
+        .geren-badge {
+            display: inline-block;
+            margin-top: 8px;
+            font-size: 0.72em;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 20px;
+        }
+        .badge-free { background: #dcfce7; color: #166534; }
+        .badge-paid { background: #fef3c7; color: #92400e; }
+
+        /* ── 2FA fatores ── */
+        .fator-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .fator-card {
+            border-radius: 10px;
+            padding: 18px 14px;
+            text-align: center;
+        }
+        .fator-card.sabe { background: #eff6ff; border-top: 3px solid #3b82f6; }
+        .fator-card.tem  { background: #f5f3ff; border-top: 3px solid #8b5cf6; }
+        .fator-card.eh   { background: #f0fdf4; border-top: 3px solid #22c55e; }
+        .fator-icon  { font-size: 2em; margin-bottom: 8px; }
+        .fator-fator { font-size: 0.72em; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+        .fator-card.sabe .fator-fator { color: #1d4ed8; }
+        .fator-card.tem  .fator-fator { color: #6d28d9; }
+        .fator-card.eh   .fator-fator { color: #15803d; }
+        .fator-nome  { font-weight: 700; font-size: 0.9em; margin-bottom: 6px; }
+        .fator-exs   { font-size: 0.78em; color: #475569; line-height: 1.5; }
+
+        /* ── Como ativar 2FA ── */
+        .step-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 14px 0;
+        }
+        .step-item {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 14px 16px;
+        }
+        .step-num {
+            width: 28px; height: 28px; min-width: 28px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            font-weight: 700;
+            font-size: 0.85em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .step-body strong { display: block; font-size: 0.9em; color: var(--secondary); margin-bottom: 2px; }
+        .step-body span   { font-size: 0.83em; color: #475569; line-height: 1.5; }
+
+        /* ── Privacidade: o que não compartilhar ── */
+        .privac-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 10px;
+            margin: 14px 0;
+        }
+        .privac-item {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            background: #fef2f2;
+            border-radius: 8px;
+            padding: 12px 14px;
+            border-left: 3px solid #ef4444;
+        }
+        .privac-item .pv-icon { font-size: 1.3em; flex-shrink: 0; }
+        .privac-item p { margin: 0; font-size: 0.83em; color: #7f1d1d; }
+
+        /* ── Cookies ── */
+        .cookie-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin: 16px 0;
+        }
+        .cookie-card {
+            border-radius: 10px;
+            padding: 18px;
+        }
+        .cookie-card.util   { background: #f0fdf4; border-top: 3px solid #22c55e; }
+        .cookie-card.rastro { background: #fef2f2; border-top: 3px solid #ef4444; }
+        .cookie-card .cc-title { font-weight: 700; font-size: 0.88em; margin-bottom: 8px; }
+        .cookie-card.util   .cc-title { color: #15803d; }
+        .cookie-card.rastro .cc-title { color: #dc2626; }
+        .cookie-card ul { margin: 0 0 0 16px; }
+        .cookie-card li { font-size: 0.82em; color: #475569; margin-bottom: 4px; }
+
+        /* ── Boas práticas ── */
+        .boas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .boa-item {
+            background: #f0fdfa;
+            border-radius: 10px;
+            padding: 16px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+        .boa-icon { font-size: 1.6em; flex-shrink: 0; }
+        .boa-text strong { display: block; font-size: 0.88em; color: var(--primary); margin-bottom: 3px; }
+        .boa-text span   { font-size: 0.8em; color: #475569; }
+
+        /* ── Comparativo tabela ── */
+        .compare-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 0.88em;
+        }
+        .compare-table th {
+            background: var(--primary);
+            color: white;
+            padding: 11px 14px;
+            text-align: left;
+        }
+        .compare-table th:first-child { border-radius: 8px 0 0 0; }
+        .compare-table th:last-child  { border-radius: 0 8px 0 0; }
+        .compare-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: middle;
+        }
+        .compare-table tr:nth-child(even) td { background: #f8fafc; }
+        .compare-table tr:last-child td { border-bottom: none; }
+        .tag-yes { color: #16a34a; font-weight: 700; }
+        .tag-no  { color: #dc2626; }
+
+        /* ── nav ── */
+        .nav-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-bottom: 40px;
+        }
+        .nav-link {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+        .nav-link:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+
+        @media (max-width: 768px) {
+            .content-wrapper { padding: 0 15px; }
+            .lesson-hero, .content-card { padding: 25px; }
+            .lesson-hero h1 { font-size: 1.5em; }
+            .senha-compare { grid-template-columns: 1fr; }
+            .cookie-row    { grid-template-columns: 1fr; }
+            .fator-grid    { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <a href="index.html" class="back-btn">&#x2B05; Voltar ao Dashboard</a>
+        <span class="page-badge">Unidade 2 &mdash; Internet e Seguran&ccedil;a</span>
+        <button class="slide-toggle" id="slideToggleBtn">&#x1F4FA; Modo Slide</button>
+    </div>
+
+    <div class="content-wrapper">
+
+        <div class="lesson-hero">
+            <h1>&#x1F511; Medidas de Prote&ccedil;&atilde;o de Dados Pessoais</h1>
+            <p class="subtitle">Aula 2.5 &mdash; Como criar senhas fortes, usar autentica&ccedil;&atilde;o em dois fatores (2FA) e adotar boas pr&aacute;ticas de privacidade no cotidiano digital</p>
+        </div>
+
+        <!-- CARD 1 — Por que proteger seus dados? -->
+        <div class="content-card">
+            <h2>&#x1F4AC; Por que proteger seus dados pessoais?</h2>
+            <p><strong>Dados pessoais</strong> s&atilde;o qualquer informa&ccedil;&atilde;o que permite identificar uma pessoa: nome, CPF, e-mail, n&uacute;mero de celular, endere&ccedil;o, localiza&ccedil;&atilde;o, fotos, senhas e at&eacute; o hist&oacute;rico de navega&ccedil;&atilde;o. No ambiente digital, esses dados t&ecirc;m valor e s&atilde;o um alvo constante de golpistas e empresas que os exploram sem consentimento.</p>
+
+            <div class="highlight-box">
+                <p>&#x1F4A1; <strong>Analogia:</strong> assim como voc&ecirc; n&atilde;o entregaria sua carteira a um desconhecido na rua, n&atilde;o deve fornecer dados pessoais a qualquer site ou aplicativo. A diferen&ccedil;a &eacute; que na internet o roubo acontece de forma quase impercept&iacute;vel.</p>
+            </div>
+
+            <h3>&#x26A0;&#xFE0F; O que acontece quando seus dados s&atilde;o comprometidos</h3>
+            <ul>
+                <li><strong>Roubo de identidade:</strong> criminosos usam seus dados para abrir contas, fazer empr&eacute;stimos ou aplicar golpes em seu nome</li>
+                <li><strong>Acesso a contas:</strong> com e-mail e senha vazados, o atacante acessa e-mail, redes sociais e at&eacute; contas banc&aacute;rias</li>
+                <li><strong>Chantagem e extors&atilde;o:</strong> fotos ou mensagens privadas podem ser usadas para pressionar a v&iacute;tima</li>
+                <li><strong>Spam e golpes direcionados:</strong> dados cadastrais vendidos a terceiros resultam em liga&ccedil;&otilde;es e mensagens de golpistas altamente personalizadas</li>
+            </ul>
+        </div>
+
+        <!-- CARD 2 — Senhas fortes -->
+        <div class="content-card">
+            <h2>&#x1F510; Senhas Fortes &mdash; Como Criar</h2>
+            <p>A senha &eacute; a primeira barreira de prote&ccedil;&atilde;o de qualquer conta. Uma senha fraca &eacute; t&atilde;o eficaz quanto uma fechadura de papel. Veja a diferen&ccedil;a:</p>
+
+            <div class="senha-compare">
+                <div class="senha-box fraca">
+                    <div class="sb-title">&#x274C; Senhas fracas &mdash; evite</div>
+                    <div class="senha-exemplo">senha123</div>
+                    <div class="senha-exemplo">ifrn2025</div>
+                    <div class="senha-exemplo">joao1990</div>
+                    <div class="senha-exemplo">abc123</div>
+                    <ul>
+                        <li>Curtas (menos de 8 caracteres)</li>
+                        <li>Cont&eacute;m nome ou data de nascimento</li>
+                        <li>S&oacute; letras ou s&oacute; n&uacute;meros</li>
+                        <li>Palavras do dicion&aacute;rio</li>
+                        <li>Reutilizadas em v&aacute;rios sites</li>
+                    </ul>
+                </div>
+                <div class="senha-box forte">
+                    <div class="sb-title">&#x2705; Senhas fortes &mdash; use</div>
+                    <div class="senha-exemplo">G@t0#Azul!2025</div>
+                    <div class="senha-exemplo">7fR$mQz!vL9@</div>
+                    <div class="senha-exemplo">Caval0&amp;Nuvem*42</div>
+                    <div class="senha-exemplo">xK#9pW!rT2$mN</div>
+                    <ul>
+                        <li>M&iacute;nimo de 12 caracteres</li>
+                        <li>Mai&uacute;sculas, min&uacute;sculas, n&uacute;meros e s&iacute;mbolos</li>
+                        <li>Sem informa&ccedil;&otilde;es pessoais</li>
+                        <li>Diferente para cada servi&ccedil;o</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>&#x1F4CA; Quanto tempo leva para quebrar uma senha?</h3>
+            <div class="forca-demo">
+                <div class="forca-label">Senha:</div>
+                <div class="forca-senha">123456</div>
+                <div class="forca-bar-wrap"><div class="forca-bar n1"></div></div>
+                <div class="forca-nivel n1">Instantaneamente &mdash; est&aacute; na lista das mais usadas do mundo</div>
+
+                <div class="forca-label">Senha:</div>
+                <div class="forca-senha">Joao1990</div>
+                <div class="forca-bar-wrap"><div class="forca-bar n2"></div></div>
+                <div class="forca-nivel n2">Segundos &mdash; combina&ccedil;&atilde;o de nome + ano &eacute; previs&iacute;vel</div>
+
+                <div class="forca-label">Senha:</div>
+                <div class="forca-senha">Cachorro@25!</div>
+                <div class="forca-bar-wrap"><div class="forca-bar n3"></div></div>
+                <div class="forca-nivel n3">Horas &mdash; melhor, mas ainda usa palavra do dicion&aacute;rio</div>
+
+                <div class="forca-label">Senha:</div>
+                <div class="forca-senha">7fR$mQz!vL9@</div>
+                <div class="forca-bar-wrap"><div class="forca-bar n5"></div></div>
+                <div class="forca-nivel n5">S&eacute;culos &mdash; aleat&oacute;ria, longa, com todos os tipos de caracteres</div>
+            </div>
+
+            <h3>&#x1F4AC; T&eacute;cnica da frase-senha (passphrase)</h3>
+            <p>Uma <strong>passphrase</strong> &eacute; uma senha formada por v&aacute;rias palavras aleat&oacute;rias combinadas. &Eacute; longa, f&aacute;cil de lembrar e muito dif&iacute;cil de quebrar:</p>
+
+            <div class="passphrase-box">
+                <span class="pp-word pp-w1">Golfinho</span>
+                <span class="pp-sep">+</span>
+                <span class="pp-word pp-w2">Violeta</span>
+                <span class="pp-sep">+</span>
+                <span class="pp-word pp-w3">Bicicleta</span>
+                <span class="pp-sep">+</span>
+                <span class="pp-word pp-w4">42!</span>
+            </div>
+
+            <p style="font-size:0.87em;color:#475569;margin-top:-8px;">Resultado: <strong>GolfinhoVioletaBicicleta42!</strong> &mdash; 27 caracteres, f&aacute;cil de memorizar e extremamente segura.</p>
+
+            <div class="alert-box">
+                <p>&#x1F6AB; <strong>Nunca reutilize senhas.</strong> Se um site for invadido e sua senha vazar, os criminosos v&atilde;o test&aacute;-la automaticamente em e-mail, banco e redes sociais. Senhas diferentes para cada servi&ccedil;o limitam o dano a um &uacute;nico vazamento.</p>
+            </div>
+        </div>
+
+        <!-- CARD 3 — Gerenciadores de senha -->
+        <div class="content-card">
+            <h2>&#x1F5C2;&#xFE0F; Gerenciadores de Senha</h2>
+            <p>Com dezenas de contas e senhas &uacute;nicas para cada uma, &eacute; humanamente imposs&iacute;vel memorizar tudo. Os <strong>gerenciadores de senha</strong> resolvem esse problema: eles armazenam todas as suas senhas de forma criptografada, acess&iacute;veis com uma &uacute;nica <strong>senha mestra</strong>.</p>
+            <p>Funcionam como um cofre digital: voc&ecirc; lembra apenas a chave do cofre; dentro dele, todas as senhas ficam protegidas e podem ser preenchidas automaticamente no navegador.</p>
+
+            <div class="geren-grid">
+                <div class="geren-card">
+                    <div class="geren-icon">&#x1F512;</div>
+                    <strong>Bitwarden</strong>
+                    <em>Open source, sincroniza entre dispositivos, extens&atilde;o para navegador</em>
+                    <span class="geren-badge badge-free">Gratuito</span>
+                </div>
+                <div class="geren-card">
+                    <div class="geren-icon">&#x1F5DD;&#xFE0F;</div>
+                    <strong>1Password</strong>
+                    <em>Interface intuitiva, recursos de equipe, muito usado em empresas</em>
+                    <span class="geren-badge badge-paid">Pago</span>
+                </div>
+                <div class="geren-card">
+                    <div class="geren-icon">&#x1F510;</div>
+                    <strong>Google Passwords</strong>
+                    <em>Integrado ao Chrome e Android, sincroniza com conta Google</em>
+                    <span class="geren-badge badge-free">Gratuito</span>
+                </div>
+                <div class="geren-card">
+                    <div class="geren-icon">&#x1F4F1;</div>
+                    <strong>iCloud Keychain</strong>
+                    <em>Nativo no ecossistema Apple, integrado ao Safari e iOS</em>
+                    <span class="geren-badge badge-free">Gratuito</span>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <p>&#x1F4A1; Usar um gerenciador de senhas &eacute; a mudan&ccedil;a de h&aacute;bito digital com <strong>maior impacto na sua seguran&ccedil;a</strong>. O Bitwarden &eacute; gratuito, open source e recomendado por especialistas em seguran&ccedil;a ao redor do mundo.</p>
+            </div>
+        </div>
+
+        <!-- CARD 4 — 2FA -->
+        <div class="content-card">
+            <h2>&#x1F4F2; Autentica&ccedil;&atilde;o em Dois Fatores (2FA)</h2>
+            <p>A <strong>autentica&ccedil;&atilde;o em dois fatores</strong> (2FA ou MFA) adiciona uma segunda camada de verifica&ccedil;&atilde;o al&eacute;m da senha. Mesmo que algu&eacute;m descubra sua senha, n&atilde;o conseguir&aacute; acessar sua conta sem o segundo fator.</p>
+            <p>Os fatores de autentica&ccedil;&atilde;o s&atilde;o classificados em tr&ecirc;s categorias:</p>
+
+            <div class="fator-grid">
+                <div class="fator-card sabe">
+                    <div class="fator-icon">&#x1F9E0;</div>
+                    <div class="fator-fator">1&ordm; Fator</div>
+                    <div class="fator-nome">Algo que voc&ecirc; <strong>sabe</strong></div>
+                    <div class="fator-exs">Senha, PIN, resposta a pergunta secreta</div>
+                </div>
+                <div class="fator-card tem">
+                    <div class="fator-icon">&#x1F4F1;</div>
+                    <div class="fator-fator">2&ordm; Fator</div>
+                    <div class="fator-nome">Algo que voc&ecirc; <strong>tem</strong></div>
+                    <div class="fator-exs">Celular (SMS ou app autenticador), chave f&iacute;sica USB</div>
+                </div>
+                <div class="fator-card eh">
+                    <div class="fator-icon">&#x1F91A;</div>
+                    <div class="fator-fator">3&ordm; Fator</div>
+                    <div class="fator-nome">Algo que voc&ecirc; <strong>&eacute;</strong></div>
+                    <div class="fator-exs">Impress&atilde;o digital, reconhecimento facial, &iacute;ris</div>
+                </div>
+            </div>
+
+            <h3>&#x1F4CA; Qual tipo de 2FA usar?</h3>
+            <table class="compare-table">
+                <tr>
+                    <th>M&eacute;todo</th>
+                    <th>Como funciona</th>
+                    <th>Seguran&ccedil;a</th>
+                </tr>
+                <tr>
+                    <td><strong>SMS</strong></td>
+                    <td>C&oacute;digo enviado por mensagem de texto ao celular</td>
+                    <td>&#x1F7E1; M&eacute;dia &mdash; vulner&aacute;vel a troca de chip (SIM swap)</td>
+                </tr>
+                <tr>
+                    <td><strong>App autenticador</strong></td>
+                    <td>Google Authenticator ou Authy geram c&oacute;digos que mudam a cada 30 segundos</td>
+                    <td>&#x1F7E2; Alta &mdash; n&atilde;o depende de operadora</td>
+                </tr>
+                <tr>
+                    <td><strong>Chave f&iacute;sica</strong></td>
+                    <td>Dispositivo USB (ex.: YubiKey) conectado ao computador</td>
+                    <td>&#x1F7E2; M&aacute;xima &mdash; imposs&iacute;vel de clonar remotamente</td>
+                </tr>
+                <tr>
+                    <td><strong>Biometria</strong></td>
+                    <td>Impress&atilde;o digital ou rosto cadastrado no dispositivo</td>
+                    <td>&#x1F7E2; Alta &mdash; combinada com outra camada &eacute; muito robusta</td>
+                </tr>
+            </table>
+
+            <h3>Como ativar o 2FA na conta Google</h3>
+            <div class="step-list">
+                <div class="step-item">
+                    <div class="step-num">1</div>
+                    <div class="step-body">
+                        <strong>Acesse myaccount.google.com</strong>
+                        <span>Entre com sua conta Google e v&aacute; em <em>Seguran&ccedil;a</em> no menu lateral.</span>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-num">2</div>
+                    <div class="step-body">
+                        <strong>Clique em &ldquo;Verifica&ccedil;&atilde;o em duas etapas&rdquo;</strong>
+                        <span>Localize a se&ccedil;&atilde;o <em>Como voc&ecirc; faz login no Google</em> e clique na op&ccedil;&atilde;o.</span>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-num">3</div>
+                    <div class="step-body">
+                        <strong>Escolha o segundo fator</strong>
+                        <span>Recomendado: <em>Google Authenticator</em> ou <em>Prompt do Google</em> (notifica&ccedil;&atilde;o no celular). Evite apenas SMS se poss&iacute;vel.</span>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-num">4</div>
+                    <div class="step-body">
+                        <strong>Salve os c&oacute;digos de recupera&ccedil;&atilde;o</strong>
+                        <span>O Google fornece c&oacute;digos de backup para usar se perder o celular. Anote-os e guarde em local seguro &mdash; nunca no pr&oacute;prio celular.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert-box">
+                <p>&#x26A0;&#xFE0F; <strong>Ative o 2FA em todas as contas importantes:</strong> e-mail, redes sociais, bancos e o SUAP (se dispon&iacute;vel). O e-mail &eacute; a prioridade &mdash; quem controla seu e-mail pode redefinir a senha de quase todos os outros servi&ccedil;os.</p>
+            </div>
+        </div>
+
+        <!-- CARD 5 — Privacidade em redes sociais -->
+        <div class="content-card">
+            <h2>&#x1F465; Privacidade nas Redes Sociais</h2>
+            <p>Redes sociais s&atilde;o projetadas para incentivar o compartilhamento &mdash; mas nem tudo precisa (ou deve) ser p&uacute;blico. Informa&ccedil;&otilde;es postadas abertamente podem ser usadas para engenharia social, furtos, golpes e at&eacute; stalking.</p>
+
+            <h3>&#x1F6AB; O que n&atilde;o compartilhar publicamente</h3>
+            <div class="privac-grid">
+                <div class="privac-item">
+                    <div class="pv-icon">&#x1F4CD;</div>
+                    <p><strong>Localiza&ccedil;&atilde;o em tempo real</strong> &mdash; check-ins e stories que revelam onde voc&ecirc; est&aacute; neste momento</p>
+                </div>
+                <div class="privac-item">
+                    <div class="pv-icon">&#x1F3E0;</div>
+                    <p><strong>Endere&ccedil;o residencial</strong> &mdash; nem em conversa, nem em fotos com placa ou refer&ecirc;ncias do bairro</p>
+                </div>
+                <div class="privac-item">
+                    <div class="pv-icon">&#x1F4B3;</div>
+                    <p><strong>Documentos e cart&otilde;es</strong> &mdash; fotos de CPF, RG, passaporte ou cart&atilde;o de cr&eacute;dito</p>
+                </div>
+                <div class="privac-item">
+                    <div class="pv-icon">&#x1F6EB;</div>
+                    <p><strong>Viagens planejadas</strong> &mdash; anunciar que a casa ficar&aacute; vazia por dias &eacute; um convite para furtos</p>
+                </div>
+                <div class="privac-item">
+                    <div class="pv-icon">&#x1F4F1;</div>
+                    <p><strong>N&uacute;mero de telefone</strong> &mdash; facilita golpes de smishing e tentativas de clonagem de conta</p>
+                </div>
+                <div class="privac-item">
+                    <div class="pv-icon">&#x1F4B0;</div>
+                    <p><strong>Situa&ccedil;&atilde;o financeira</strong> &mdash; fotos de compras caras, extrato banc&aacute;rio ou f&eacute;rias de luxo excessivas</p>
+                </div>
+            </div>
+
+            <h3>&#x2699;&#xFE0F; Revise as configura&ccedil;&otilde;es de privacidade</h3>
+            <ul>
+                <li>Defina o perfil como <strong>privado</strong> ou limite quem pode ver suas publica&ccedil;&otilde;es</li>
+                <li>Desative a <strong>geolocaliza&ccedil;&atilde;o</strong> em fotos e aplicativos que n&atilde;o precisam da sua localiza&ccedil;&atilde;o</li>
+                <li>Revise quais <strong>aplicativos t&ecirc;m acesso</strong> &agrave; sua conta (Instagram, Facebook &rarr; Configura&ccedil;&otilde;es &rarr; Aplicativos)</li>
+                <li>Desative o <strong>reconhecimento facial autom&aacute;tico</strong> em plataformas que oferecem essa op&ccedil;&atilde;o</li>
+                <li>N&atilde;o aceite solicita&ccedil;&otilde;es de desconhecidos &mdash; perfis falsos s&atilde;o usados para coletar dados</li>
+            </ul>
+        </div>
+
+        <!-- CARD 6 — Cookies e rastreamento -->
+        <div class="content-card">
+            <h2>&#x1F36A; Cookies e Rastreamento Online</h2>
+            <p><strong>Cookies</strong> s&atilde;o pequenos arquivos de texto que os sites armazenam no seu navegador. Eles t&ecirc;m usos legítimos &mdash; e usos que comprometem sua privacidade:</p>
+
+            <div class="cookie-row">
+                <div class="cookie-card util">
+                    <div class="cc-title">&#x2705; Cookies &uacute;teis</div>
+                    <ul>
+                        <li>Manter voc&ecirc; logado num site</li>
+                        <li>Lembrar prefer&ecirc;ncias (idioma, tema)</li>
+                        <li>Carrinho de compras em lojas virtuais</li>
+                        <li>Configura&ccedil;&otilde;es personalizadas</li>
+                    </ul>
+                </div>
+                <div class="cookie-card rastro">
+                    <div class="cc-title">&#x26A0;&#xFE0F; Cookies de rastreamento</div>
+                    <ul>
+                        <li>Monitorar sites visitados por dias</li>
+                        <li>Criar perfil de comportamento e interesses</li>
+                        <li>Compartilhar dados com anunciantes</li>
+                        <li>Exibir an&uacute;ncios &ldquo;que parecem ler sua mente&rdquo;</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>&#x1F6E1;&#xFE0F; Como reduzir o rastreamento</h3>
+            <ul>
+                <li>Ao aparecer o aviso de cookies, <strong>recuse os n&atilde;o essenciais</strong> &mdash; a maioria dos sites funciona normalmente sem eles</li>
+                <li>Use o <strong>modo an&ocirc;nimo</strong> para navega&ccedil;&atilde;o que n&atilde;o deve ser rastreada pelo dispositivo</li>
+                <li>Instale extens&otilde;es como <strong>uBlock Origin</strong> (bloqueador de rastreadores e an&uacute;ncios)</li>
+                <li>Considere usar o navegador <strong>Firefox</strong> ou <strong>Brave</strong>, que bloqueiam rastreadores por padr&atilde;o</li>
+                <li>Limpe cookies regularmente: Configura&ccedil;&otilde;es do navegador &rarr; Privacidade &rarr; Limpar dados de navega&ccedil;&atilde;o</li>
+            </ul>
+
+            <div class="highlight-box">
+                <p>&#x1F4A1; O modo an&ocirc;nimo <strong>n&atilde;o impede rastreamento</strong> pelos sites &mdash; apenas n&atilde;o salva dados localmente. Para privacidade real, combine modo an&ocirc;nimo + bloqueador de rastreadores + DNS privado.</p>
+            </div>
+        </div>
+
+        <!-- CARD 7 — Boas práticas -->
+        <div class="content-card">
+            <h2>&#x2705; Boas Pr&aacute;ticas &mdash; Checklist de Prote&ccedil;&atilde;o</h2>
+
+            <div class="boas-grid">
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F511;</div>
+                    <div class="boa-text">
+                        <strong>Senha &uacute;nica por servi&ccedil;o</strong>
+                        <span>Nunca reutilize senhas. Use um gerenciador para criar e guardar senhas aleat&oacute;rias longas para cada conta.</span>
+                    </div>
+                </div>
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F4F2;</div>
+                    <div class="boa-text">
+                        <strong>2FA ativado em tudo</strong>
+                        <span>Ative o segundo fator em e-mail, redes sociais e qualquer servi&ccedil;o que ofere&ccedil;a a op&ccedil;&atilde;o. Priorize apps autenticadores em vez de SMS.</span>
+                    </div>
+                </div>
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F4E7;</div>
+                    <div class="boa-text">
+                        <strong>E-mail separado por finalidade</strong>
+                        <span>Use um e-mail para coisas importantes (banco, escola) e outro para cadastros em sites de menor confian&ccedil;a.</span>
+                    </div>
+                </div>
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F50D;</div>
+                    <div class="boa-text">
+                        <strong>Verifique vazamentos</strong>
+                        <span>Acesse <em>haveibeenpwned.com</em> e verifique se seu e-mail aparece em algum banco de dados vazado. &Eacute; gratuito e confi&aacute;vel.</span>
+                    </div>
+                </div>
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F4F1;</div>
+                    <div class="boa-text">
+                        <strong>Permiss&otilde;es de apps</strong>
+                        <span>Revise quais apps t&ecirc;m acesso &agrave; sua c&acirc;mera, microfone, contatos e localiza&ccedil;&atilde;o. Negue o que n&atilde;o for necess&aacute;rio.</span>
+                    </div>
+                </div>
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F517;</div>
+                    <div class="boa-text">
+                        <strong>HTTPS sempre</strong>
+                        <span>Nunca insira dados em sites sem o cadeado (HTTP). Verifique a URL antes de qualquer login ou pagamento online.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 8 — RECAPITULANDO -->
+        <div class="content-card">
+            <h2>&#x1F4CB; Recapitulando</h2>
+            <ul>
+                <li>Dados pessoais v&atilde;o muito al&eacute;m do nome: incluem localiza&ccedil;&atilde;o, hist&oacute;rico de navega&ccedil;&atilde;o e comportamento online</li>
+                <li>Senhas fortes t&ecirc;m mais de 12 caracteres, letras mai&uacute;sculas, min&uacute;sculas, n&uacute;meros e s&iacute;mbolos &mdash; e s&atilde;o &uacute;nicas por servi&ccedil;o</li>
+                <li>A <strong>passphrase</strong> &eacute; uma t&eacute;cnica eficaz: v&aacute;rias palavras aleat&oacute;rias formam uma senha longa e memor&aacute;vel</li>
+                <li><strong>Gerenciadores de senha</strong> como Bitwarden resolvem o problema de memorizar dezenas de senhas fortes</li>
+                <li>O <strong>2FA</strong> adiciona um segundo fator al&eacute;m da senha. Apps autenticadores s&atilde;o mais seguros que SMS</li>
+                <li>Nas redes sociais, evite compartilhar localiza&ccedil;&atilde;o, documentos, viagens e dados financeiros publicamente</li>
+                <li><strong>Cookies de rastreamento</strong> monitoram comportamento &mdash; recuse os n&atilde;o essenciais e use bloqueadores</li>
+            </ul>
+
+            <div class="highlight-box">
+                <p>&#x1F4DA; <strong>Na pr&oacute;xima aula</strong> estudaremos <strong>Preven&ccedil;&atilde;o de Amea&ccedil;as Digitais</strong> &mdash; como identificar e se defender de malware, phishing, ransomware e engenharia social na pr&aacute;tica, com an&aacute;lise de casos reais.</p>
+            </div>
+        </div>
+
+        <!-- EXERCÍCIO: Arrastar e Soltar -->
+        <div class="content-card exercise-card">
+            <h2>&#x1F3AF; Exerc&iacute;cio &mdash; Arraste e Conecte</h2>
+            <p style="color:#475569;font-size:0.9em;margin-bottom:4px;">Arraste cada descri&ccedil;&atilde;o para o conceito ou recurso correspondente. Em dispositivos m&oacute;veis, toque na descri&ccedil;&atilde;o e depois na zona de destino.</p>
+
+            <div class="ex-drag-root" data-ex="ex25">
+                <div class="ex-drag">
+                    <div>
+                        <div class="ex-col-title">Descri&ccedil;&atilde;o</div>
+                        <div class="ex-pool" data-pool="ex25">
+                            <div class="drag-chip" data-id="passphrase">Senha formada por v&aacute;rias palavras aleat&oacute;rias como &ldquo;GolfinhoVioletaBicicleta42!&rdquo;</div>
+                            <div class="drag-chip" data-id="2fa">Segunda camada de verifica&ccedil;&atilde;o que exige algo al&eacute;m da senha para acessar uma conta</div>
+                            <div class="drag-chip" data-id="gerenciador">Aplicativo que armazena todas as suas senhas criptografadas atr&aacute;s de uma senha mestra</div>
+                            <div class="drag-chip" data-id="cookie">Pequeno arquivo salvo pelo navegador que pode ser usado para rastrear seu comportamento online</div>
+                            <div class="drag-chip" data-id="pwned">Site gratuito que verifica se seu e-mail apareceu em algum banco de dados vazado</div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="ex-col-title">Conceito / Ferramenta</div>
+                        <div class="ex-zones" data-zones="ex25">
+                            <div class="drop-zone" data-zone="ex25-z1" data-accept="passphrase">
+                                <span class="zone-name">Passphrase</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex25-z2" data-accept="2fa">
+                                <span class="zone-name">2FA &mdash; Dois Fatores</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex25-z3" data-accept="gerenciador">
+                                <span class="zone-name">Gerenciador de Senhas</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex25-z4" data-accept="cookie">
+                                <span class="zone-name">Cookie de Rastreamento</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex25-z5" data-accept="pwned">
+                                <span class="zone-name">HaveIBeenPwned</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ex-actions">
+                <button class="btn-verificar" onclick="dragVerify('ex25')">Verificar</button>
+                <button class="btn-refazer"  onclick="dragReset('ex25')">Refazer</button>
+            </div>
+            <div class="ex-result" id="ex25-result"></div>
+        </div>
+
+        <!-- ATIVIDADE PRÁTICA 2.5 -->
+        <div class="content-card practical-card" id="prat-25">
+            <h2>&#x1F6E0;&#xFE0F; Atividade Pr&aacute;tica &mdash; Fortalecendo sua Seguran&ccedil;a Digital</h2>
+            <div class="prat-meta">
+                <span class="prat-tag">&#x23F1; ~30 min</span>
+                <span class="prat-tag">&#x1F310; Requer internet</span>
+                <span class="prat-tag">&#x1F4E7; Precisa de conta Google</span>
+            </div>
+
+            <div class="prat-steps">
+                <div class="prat-step">
+                    <div class="step-num">1</div>
+                    <div class="step-body">
+                        <div class="step-label">Avalie a for&ccedil;a de uma senha</div>
+                        <div class="step-desc">Acesse <strong>security.org/how-secure-is-my-password</strong>. Teste pelo menos 3 senhas: uma fraca (tipo <em>senha123</em>), uma m&eacute;dia (tipo <em>Joao@1990</em>) e uma passphrase (tipo <em>GolfinhoVioletaBicicleta42!</em>). Anote o tempo estimado de quebra de cada uma e compare os resultados. <strong>N&atilde;o use sua senha real</strong> &mdash; apenas crie exemplos similares.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">2</div>
+                    <div class="step-body">
+                        <div class="step-label">Verifique se seu e-mail foi vazado</div>
+                        <div class="step-desc">Acesse <strong>haveibeenpwned.com</strong>. Digite seu e-mail institucional ou pessoal e verifique o resultado. Se aparecer algum vazamento, anote: de qual site veio? Quando ocorreu? Quais dados foram expostos? Isso n&atilde;o exige nenhum cadastro e &eacute; completamente seguro.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">3</div>
+                    <div class="step-body">
+                        <div class="step-label">Ative o 2FA na sua conta Google</div>
+                        <div class="step-desc">Acesse <strong>myaccount.google.com &rarr; Seguran&ccedil;a &rarr; Verifica&ccedil;&atilde;o em duas etapas</strong>. Siga o assistente e ative o segundo fator. Prefira o <em>Prompt do Google</em> (notifica&ccedil;&atilde;o no celular) ou instale o <em>Google Authenticator</em> no celular. Salve os c&oacute;digos de backup em local seguro.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">4</div>
+                    <div class="step-body">
+                        <div class="step-label">Revise as permiss&otilde;es do seu celular</div>
+                        <div class="step-desc">No Android: <strong>Configura&ccedil;&otilde;es &rarr; Aplicativos &rarr; [app] &rarr; Permiss&otilde;es</strong>. No iPhone: <strong>Ajustes &rarr; Privacidade</strong>. Escolha 5 aplicativos e verifique a que recursos eles t&ecirc;m acesso (c&acirc;mera, microfone, localiza&ccedil;&atilde;o, contatos). Revogue permiss&otilde;es desnecess&aacute;rias.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">5</div>
+                    <div class="step-body">
+                        <div class="step-label">Crie sua passphrase pessoal</div>
+                        <div class="step-desc">Usando a t&eacute;cnica da aula, crie uma passphrase com <strong>4 palavras aleat&oacute;rias + n&uacute;mero + s&iacute;mbolo</strong>. Teste-a no site do passo 1. Documente no seu checklist de seguran&ccedil;a (criado na Aula 2.4): <em>qual conta voc&ecirc; atualizaria primeiro com essa nova senha?</em> Justifique a escolha.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="prat-observe">
+                <strong>&#x1F4CC; Para saber:</strong> O site <strong>HaveIBeenPwned</strong> foi criado pelo especialista em seguran&ccedil;a Troy Hunt e &eacute; amplamente reconhecido como confi&aacute;vel. Ele n&atilde;o armazena senhas &mdash; apenas verifica e-mails contra uma base de vazamentos conhecidos. &Eacute; usado at&eacute; por governos para monitorar exposi&ccedil;&atilde;o de dados de funcion&aacute;rios.
+            </div>
+
+            <div class="ex-actions">
+                <button class="btn-print" onclick="printPractical('prat-25', 'Aula 2.5 \u2014 Medidas de Prote\u00e7\u00e3o de Dados Pessoais')">&#x1F5A8;&#xFE0F; Imprimir roteiro</button>
+            </div>
+        </div>
+
+        <div class="nav-footer">
+            <a href="uni2-04-seguranca-conceitos.html" class="nav-link">&#x2B05; Anterior: Seguran&ccedil;a da Informa&ccedil;&atilde;o</a>
+            <a href="uni2-06-prevencao-ameacas.html" class="nav-link">Pr&oacute;xima: Preven&ccedil;&atilde;o de Amea&ccedil;as &#x27A1;</a>
+        </div>
+
+    </div><!-- fim .content-wrapper -->
+
+    <script src="slide-mode.js"></script>
+    <script src="exercise-drag.js"></script>
+    <script src="exercise-print.js"></script>
+</body>
+</html>
