@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 2.6 - Prevenção de Ameaças Digitais</title>
+    <link rel="stylesheet" href="slide-mode.css">
+    <link rel="stylesheet" href="exercise.css">
+    <style>
+        :root {
+            --primary: #00838f;
+            --secondary: #006064;
+            --bg-light: #f0f4f8;
+            --text-dark: #1a202c;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        .top-bar {
+            background: white;
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .back-btn {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+        .back-btn:hover { background: rgba(0,131,143,0.08); }
+
+        .page-badge {
+            font-size: 0.8em;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: rgba(0, 131, 143, 0.12);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .content-wrapper {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 30px;
+        }
+
+        .lesson-hero {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            border-top: 4px solid var(--primary);
+        }
+        .lesson-hero h1 { font-size: 2em; margin-bottom: 10px; color: var(--primary); }
+        .lesson-hero .subtitle { font-size: 1.05em; color: #718096; }
+
+        .content-card {
+            background: white;
+            border-radius: 16px;
+            padding: 35px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+        .content-card h2 {
+            font-size: 1.4em;
+            color: var(--primary);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .content-card h3 { font-size: 1.05em; color: var(--secondary); margin: 20px 0 10px; }
+        .content-card p  { margin-bottom: 15px; text-align: justify; }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(0,131,143,0.05), rgba(0,96,100,0.06));
+            border-left: 4px solid var(--primary);
+            padding: 20px 25px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+        }
+        .highlight-box p { margin-bottom: 0; font-style: italic; }
+
+        .alert-box {
+            background: #fff8e1;
+            border-left: 4px solid #f59e0b;
+            padding: 18px 22px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+        }
+        .alert-box p { margin: 0; color: #78350f; font-size: 0.93em; }
+
+        .danger-box {
+            background: #fef2f2;
+            border-left: 4px solid #ef4444;
+            padding: 18px 22px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+        }
+        .danger-box p { margin: 0; color: #7f1d1d; font-size: 0.93em; }
+
+        ul, ol { margin: 10px 0 15px 25px; }
+        li { margin-bottom: 8px; }
+
+        /* ── Checklist de phishing ── */
+        .checklist {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin: 16px 0;
+        }
+        .check-item {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            padding: 12px 16px;
+            border-radius: 10px;
+            background: #f8fafc;
+        }
+        .check-item .ci-icon { font-size: 1.2em; flex-shrink: 0; margin-top: 1px; }
+        .check-item p { margin: 0; font-size: 0.87em; color: #334155; }
+        .check-item p strong { color: var(--secondary); }
+
+        /* ── URL compare ── */
+        .url-compare {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 16px 0;
+        }
+        .url-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-radius: 10px;
+        }
+        .url-row.real  { background: #f0fdf4; border-left: 4px solid #22c55e; }
+        .url-row.falsa { background: #fef2f2; border-left: 4px solid #ef4444; }
+        .url-badge {
+            font-size: 0.72em;
+            font-weight: 700;
+            padding: 3px 9px;
+            border-radius: 20px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .url-badge.ok  { background: #dcfce7; color: #166534; }
+        .url-badge.nok { background: #fee2e2; color: #991b1b; }
+        .url-text {
+            font-family: 'Consolas', monospace;
+            font-size: 0.88em;
+            color: #1a202c;
+            flex: 1;
+            word-break: break-all;
+        }
+        .url-obs { font-size: 0.78em; color: #718096; flex: 1; }
+
+        /* ── Regra 3-2-1 ── */
+        .regra321 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin: 18px 0;
+        }
+        .r321-card {
+            border-radius: 12px;
+            padding: 22px 14px;
+            text-align: center;
+        }
+        .r321-card.r3 { background: #eff6ff; border-top: 4px solid #3b82f6; }
+        .r321-card.r2 { background: #f5f3ff; border-top: 4px solid #8b5cf6; }
+        .r321-card.r1 { background: #f0fdf4; border-top: 4px solid #22c55e; }
+        .r321-num  { font-size: 2.8em; font-weight: 900; margin-bottom: 4px; }
+        .r321-card.r3 .r321-num { color: #1d4ed8; }
+        .r321-card.r2 .r321-num { color: #6d28d9; }
+        .r321-card.r1 .r321-num { color: #15803d; }
+        .r321-titulo { font-weight: 700; font-size: 0.9em; margin-bottom: 6px; }
+        .r321-card.r3 .r321-titulo { color: #1e40af; }
+        .r321-card.r2 .r321-titulo { color: #5b21b6; }
+        .r321-card.r1 .r321-titulo { color: #166534; }
+        .r321-desc { font-size: 0.8em; color: #475569; line-height: 1.5; }
+
+        /* ── Passo a passo emergência ── */
+        .step-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 14px 0;
+        }
+        .step-item {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 14px 16px;
+        }
+        .step-num {
+            width: 28px; height: 28px; min-width: 28px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            font-weight: 700;
+            font-size: 0.85em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .step-num.urgente { background: #dc2626; }
+        .step-body strong { display: block; font-size: 0.9em; color: var(--secondary); margin-bottom: 2px; }
+        .step-body.urgente strong { color: #b91c1c; }
+        .step-body span   { font-size: 0.83em; color: #475569; line-height: 1.5; }
+
+        /* ── Wi-Fi / VPN ── */
+        .wifi-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin: 16px 0;
+        }
+        .wifi-card {
+            border-radius: 10px;
+            padding: 18px;
+        }
+        .wifi-card.risco    { background: #fef2f2; border-top: 3px solid #ef4444; }
+        .wifi-card.protecao { background: #f0fdf4; border-top: 3px solid #22c55e; }
+        .wifi-card .wc-title { font-weight: 700; font-size: 0.88em; margin-bottom: 8px; }
+        .wifi-card.risco    .wc-title { color: #dc2626; }
+        .wifi-card.protecao .wc-title { color: #15803d; }
+        .wifi-card ul { margin: 0 0 0 16px; }
+        .wifi-card li { font-size: 0.82em; color: #475569; margin-bottom: 4px; }
+
+        /* ── Ferramentas grid ── */
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .tool-card {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 18px 14px;
+            text-align: center;
+            border-top: 3px solid var(--primary);
+            transition: transform 0.2s;
+        }
+        .tool-card:hover { transform: translateY(-3px); }
+        .tool-icon  { font-size: 2em; margin-bottom: 6px; }
+        .tool-card strong { display: block; font-size: 0.88em; color: var(--primary); margin-bottom: 4px; }
+        .tool-card em     { font-size: 0.77em; color: #718096; font-style: normal; line-height: 1.5; display: block; }
+        .tool-badge {
+            display: inline-block;
+            margin-top: 8px;
+            font-size: 0.72em;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 20px;
+        }
+        .tb-free { background: #dcfce7; color: #166534; }
+        .tb-nav  { background: #dbeafe; color: #1d4ed8; }
+        .tb-site { background: #f3e8ff; color: #6d28d9; }
+
+        /* ── Atualizações: por que importa ── */
+        .update-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .update-item {
+            background: #f0fdfa;
+            border-radius: 10px;
+            padding: 16px 14px;
+            border-left: 4px solid var(--primary);
+        }
+        .update-item .ui-title { font-weight: 700; font-size: 0.88em; color: var(--primary); margin-bottom: 4px; }
+        .update-item .ui-desc  { font-size: 0.8em; color: #475569; line-height: 1.5; }
+
+        /* ── Boas práticas ── */
+        .boas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .boa-item {
+            background: #f0fdfa;
+            border-radius: 10px;
+            padding: 16px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+        .boa-icon { font-size: 1.6em; flex-shrink: 0; }
+        .boa-text strong { display: block; font-size: 0.88em; color: var(--primary); margin-bottom: 3px; }
+        .boa-text span   { font-size: 0.8em; color: #475569; }
+
+        /* ── nav ── */
+        .nav-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-bottom: 40px;
+        }
+        .nav-link {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+        .nav-link:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+
+        @media (max-width: 768px) {
+            .content-wrapper { padding: 0 15px; }
+            .lesson-hero, .content-card { padding: 25px; }
+            .lesson-hero h1 { font-size: 1.5em; }
+            .regra321   { grid-template-columns: 1fr; }
+            .wifi-grid  { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <a href="index.html" class="back-btn">&#x2B05; Voltar ao Dashboard</a>
+        <span class="page-badge">Unidade 2 &mdash; Internet e Seguran&ccedil;a</span>
+        <button class="slide-toggle" id="slideToggleBtn">&#x1F4FA; Modo Slide</button>
+    </div>
+
+    <div class="content-wrapper">
+
+        <div class="lesson-hero">
+            <h1>&#x1F9F9; Preven&ccedil;&atilde;o de Amea&ccedil;as Digitais</h1>
+            <p class="subtitle">Aula 2.6 &mdash; Como identificar e se defender na pr&aacute;tica de phishing, malware, ransomware e engenharia social &mdash; e o que fazer quando algo d&aacute; errado</p>
+        </div>
+
+        <!-- CARD 1 — Da teoria à prática -->
+        <div class="content-card">
+            <h2>&#x1F4AC; Da Teoria &agrave; Pr&aacute;tica &mdash; Preven&ccedil;&atilde;o Ativa</h2>
+            <p>Na aula anterior aprendemos a identificar as amea&ccedil;as. Agora vamos ao passo seguinte: <strong>como se defender ativamente</strong>. Conhecer o nome de um ataque n&atilde;o protege ningu&eacute;m &mdash; o que protege s&atilde;o os h&aacute;bitos e ferramentas corretos aplicados antes que o ataque aconte&ccedil;a.</p>
+            <p>A seguran&ccedil;a digital funciona como as camadas de uma cebola: cada camada de prote&ccedil;&atilde;o que voc&ecirc; adiciona torna o ataque mais dif&iacute;cil. Nenhuma camada sozinha &eacute; perfeita, mas <strong>v&aacute;rias camadas combinadas</strong> tornam um ataque bem-sucedido improvável.</p>
+
+            <div class="highlight-box">
+                <p>&#x1F4A1; <strong>Postura proativa:</strong> n&atilde;o espere ser atacado para se proteger. Configure senhas fortes, ative o 2FA e mantenha backups <em>antes</em> que qualquer incidente ocorra. Recuperar dados perdidos &eacute; muito mais custoso do que preven&iacute;-los.</p>
+            </div>
+
+            <h3>&#x1F6E1;&#xFE0F; As tr&ecirc;s camadas de defesa pessoal</h3>
+            <ul>
+                <li><strong>Comportamento:</strong> pensar antes de clicar, desconfiar de urg&ecirc;ncia e verificar fontes</li>
+                <li><strong>Configura&ccedil;&atilde;o:</strong> senhas fortes, 2FA ativo, atualizações em dia e backups regulares</li>
+                <li><strong>Ferramentas:</strong> antiv&iacute;rus, gerenciador de senhas, extensões de seguran&ccedil;a e VPN em redes abertas</li>
+            </ul>
+        </div>
+
+        <!-- CARD 2 — Reconhecer e evitar phishing -->
+        <div class="content-card">
+            <h2>&#x1F3A3; Como Reconhecer e Evitar Phishing</h2>
+            <p>O phishing &eacute; a amea&ccedil;a mais comum no dia a dia. Antes de clicar em qualquer link recebido por e-mail, WhatsApp ou SMS, use este <strong>checklist mental</strong>:</p>
+
+            <div class="checklist">
+                <div class="check-item">
+                    <div class="ci-icon">&#x1F914;</div>
+                    <p><strong>Eu estava esperando essa mensagem?</strong> Se chegou do nada &mdash; uma cobran&ccedil;a, premia&ccedil;&atilde;o ou aviso urgente que voc&ecirc; n&atilde;o esperava &mdash; j&aacute; &eacute; sinal de alerta.</p>
+                </div>
+                <div class="check-item">
+                    <div class="ci-icon">&#x1F4E7;</div>
+                    <p><strong>O remetente &eacute; quem diz ser?</strong> Confira o endere&ccedil;o completo do e-mail, n&atilde;o apenas o nome exibido. <em>suporte@banco-bradesco.com.br.xyz</em> n&atilde;o &eacute; o Bradesco.</p>
+                </div>
+                <div class="check-item">
+                    <div class="ci-icon">&#x1F517;</div>
+                    <p><strong>O link leva para onde diz?</strong> Passe o mouse sobre o link (sem clicar) e veja o endere&ccedil;o real na barra inferior. No celular, segure o dedo sobre o link para visualizar.</p>
+                </div>
+                <div class="check-item">
+                    <div class="ci-icon">&#x23F0;</div>
+                    <p><strong>A mensagem cria urg&ecirc;ncia artificial?</strong> &ldquo;Sua conta ser&aacute; bloqueada em 2 horas!&rdquo; &eacute; uma t&eacute;cnica para fazer voc&ecirc; agir sem pensar. Institui&ccedil;&otilde;es leg&iacute;timas n&atilde;o fazem isso.</p>
+                </div>
+                <div class="check-item">
+                    <div class="ci-icon">&#x1F4DD;</div>
+                    <p><strong>H&aacute; erros de portugu&ecirc;s ou formato estranho?</strong> Logotipos desproporcionais, fontes diferentes no mesmo texto e erros gramaticais s&atilde;o sinais cl&aacute;ssicos de mensagem falsa.</p>
+                </div>
+                <div class="check-item">
+                    <div class="ci-icon">&#x1F511;</div>
+                    <p><strong>Est&atilde;o pedindo senha, c&oacute;digo ou dados pessoais?</strong> Nenhum banco, escola ou empresa leg&iacute;tima pede sua senha por mensagem. Ponto final.</p>
+                </div>
+            </div>
+
+            <h3>&#x1F50D; Identificando URLs falsas</h3>
+            <div class="url-compare">
+                <div class="url-row real">
+                    <span class="url-badge ok">&#x2705; Real</span>
+                    <span class="url-text">https://www.bradesco.com.br/login</span>
+                    <span class="url-obs">Dom&iacute;nio principal correto, HTTPS, sem subdom&iacute;nios estranhos</span>
+                </div>
+                <div class="url-row falsa">
+                    <span class="url-badge nok">&#x274C; Falsa</span>
+                    <span class="url-text">https://bradesco.login-seguro.com/acesso</span>
+                    <span class="url-obs">O dom&iacute;nio real &eacute; <em>login-seguro.com</em>, n&atilde;o o Bradesco</span>
+                </div>
+                <div class="url-row real">
+                    <span class="url-badge ok">&#x2705; Real</span>
+                    <span class="url-text">https://suap.ifrn.edu.br</span>
+                    <span class="url-obs">Dom&iacute;nio <em>.edu.br</em> oficial do IFRN</span>
+                </div>
+                <div class="url-row falsa">
+                    <span class="url-badge nok">&#x274C; Falsa</span>
+                    <span class="url-text">http://suap-ifrn.com.br/login</span>
+                    <span class="url-obs">Dom&iacute;nio diferente, sem HTTPS e com h&iacute;fen suspeito</span>
+                </div>
+                <div class="url-row real">
+                    <span class="url-badge ok">&#x2705; Real</span>
+                    <span class="url-text">https://www.receita.fazenda.gov.br</span>
+                    <span class="url-obs">Dom&iacute;nio <em>.gov.br</em> confirma site oficial do governo</span>
+                </div>
+                <div class="url-row falsa">
+                    <span class="url-badge nok">&#x274C; Falsa</span>
+                    <span class="url-text">https://receitafederal-restituicao.net/cpf</span>
+                    <span class="url-obs">Receita Federal nunca usa dom&iacute;nios <em>.net</em> ou <em>.com</em></span>
+                </div>
+            </div>
+
+            <div class="alert-box">
+                <p>&#x1F4CC; <strong>Regra de ouro:</strong> em caso de d&uacute;vida, <strong>n&atilde;o clique no link</strong>. Acesse o site diretamente digitando o endere&ccedil;o no navegador ou use o aplicativo oficial. Isso elimina 100% do risco de phishing por link.</p>
+            </div>
+        </div>
+
+        <!-- CARD 3 — Proteção contra malware -->
+        <div class="content-card">
+            <h2>&#x1F6E1;&#xFE0F; Prote&ccedil;&atilde;o contra Malware</h2>
+            <p>A melhor defesa contra malware &eacute; uma combina&ccedil;&atilde;o de <strong>bom senso + antiv&iacute;rus + sistema atualizado</strong>. Nenhum antiv&iacute;rus &eacute; 100% eficaz, mas remove a grande maioria das amea&ccedil;as conhecidas.</p>
+
+            <h3>&#x1F9EA; Como o antiv&iacute;rus funciona</h3>
+            <ul>
+                <li><strong>Detec&ccedil;&atilde;o por assinatura:</strong> compara arquivos com um banco de dados de malwares conhecidos &mdash; por isso precisa ser atualizado regularmente</li>
+                <li><strong>An&aacute;lise heur&iacute;stica:</strong> identifica comportamentos suspeitos em programas desconhecidos, mesmo sem ter visto aquele malware antes</li>
+                <li><strong>Sandbox:</strong> executa arquivos suspeitos em um ambiente isolado para observar o comportamento antes de permitir a execu&ccedil;&atilde;o real</li>
+                <li><strong>Prote&ccedil;&atilde;o em tempo real:</strong> monitora continuamente o sistema e bloqueia ameaças antes de causarem dano</li>
+            </ul>
+
+            <h3>&#x1F6AB; H&aacute;bitos que previnem infec&ccedil;&otilde;es</h3>
+            <ul>
+                <li>Nunca abra anexos de e-mails n&atilde;o solicitados &mdash; mesmo de contatos conhecidos (a conta deles pode estar comprometida)</li>
+                <li>Baixe programas <strong>apenas dos sites oficiais</strong> dos fabricantes ou lojas confi&aacute;veis (Microsoft Store, App Store, Google Play)</li>
+                <li>Desconfie de programas que pedem para <strong>desativar o antiv&iacute;rus</strong> durante a instala&ccedil;&atilde;o</li>
+                <li>N&atilde;o conecte <strong>pendrives desconhecidos</strong>. Um pendrive encontrado no ch&atilde;o pode ser uma armadilha deliberada</li>
+                <li>Evite software pirata &mdash; al&eacute;m de ilegal, &eacute; um dos principais vetores de malware no Brasil</li>
+                <li>Revise as <strong>extens&otilde;es instaladas</strong> no navegador: remova as que voc&ecirc; n&atilde;o reconhece ou n&atilde;o usa mais</li>
+            </ul>
+
+            <div class="alert-box">
+                <p>&#x26A0;&#xFE0F; O <strong>Windows Defender</strong>, antiv&iacute;rus nativo do Windows 10/11, &eacute; hoje considerado uma prote&ccedil;&atilde;o s&oacute;lida para uso dom&eacute;stico e escolar. N&atilde;o &eacute; necess&aacute;rio pagar por antiv&iacute;rus adicional se ele estiver ativo e atualizado. Verifique em: <em>Seguran&ccedil;a do Windows &rarr; Prote&ccedil;&atilde;o contra v&iacute;rus e amea&ccedil;as</em>.</p>
+            </div>
+        </div>
+
+        <!-- CARD 4 — Proteção contra ransomware -->
+        <div class="content-card">
+            <h2>&#x1F510; Prote&ccedil;&atilde;o contra Ransomware &mdash; A Regra 3-2-1</h2>
+            <p>O ransomware &eacute; a amea&ccedil;a mais destrutiva porque criptografa seus arquivos e os torna inacess&iacute;veis. A &uacute;nica defesa verdadeiramente eficaz &eacute; ter um <strong>backup atualizado</strong> &mdash; porque se voc&ecirc; tem c&oacute;pia dos dados, o sequestro perde o poder.</p>
+            <p>A estrat&eacute;gia reconhecida mundialmente &eacute; a <strong>Regra 3-2-1</strong>:</p>
+
+            <div class="regra321">
+                <div class="r321-card r3">
+                    <div class="r321-num">3</div>
+                    <div class="r321-titulo">C&oacute;pias dos dados</div>
+                    <div class="r321-desc">Mantenha 3 c&oacute;pias de tudo que &eacute; importante: o original mais 2 backups</div>
+                </div>
+                <div class="r321-card r2">
+                    <div class="r321-num">2</div>
+                    <div class="r321-titulo">M&iacute;dias diferentes</div>
+                    <div class="r321-desc">Guarde em 2 tipos de m&iacute;dia diferentes: ex. HD externo + nuvem (Google Drive)</div>
+                </div>
+                <div class="r321-card r1">
+                    <div class="r321-num">1</div>
+                    <div class="r321-titulo">C&oacute;pia fora do local</div>
+                    <div class="r321-desc">Ao menos 1 c&oacute;pia deve estar fora do seu dispositivo principal &mdash; preferencialmente na nuvem</div>
+                </div>
+            </div>
+
+            <h3>&#x1F6A8; Se voc&ecirc; for infectado por ransomware &mdash; o que fazer</h3>
+            <div class="step-list">
+                <div class="step-item">
+                    <div class="step-num urgente">1</div>
+                    <div class="step-body urgente">
+                        <strong>Desconecte da rede imediatamente</strong>
+                        <span>Desligue o Wi-Fi e desplugue o cabo de rede. O ransomware se espalha pela rede local e pode infectar outros dispositivos e servidores.</span>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-num urgente">2</div>
+                    <div class="step-body urgente">
+                        <strong>N&atilde;o desligue o computador ainda</strong>
+                        <span>Especialistas podem recuperar chaves de criptografia da mem&oacute;ria RAM. Desligue apenas se orientado por um t&eacute;cnico.</span>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-num">3</div>
+                    <div class="step-body">
+                        <strong>N&atilde;o pague o resgate</strong>
+                        <span>O pagamento financia o crime e n&atilde;o garante a devolução dos dados. Menos de 50% das v&iacute;timas que pagam recuperam tudo.</span>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-num">4</div>
+                    <div class="step-body">
+                        <strong>Acesse nomoreransom.org</strong>
+                        <span>Projeto criado pela Europol com descriptografadores gratuitos para centenas de variantes de ransomware. Muitos casos podem ser resolvidos sem pagar.</span>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-num">5</div>
+                    <div class="step-body">
+                        <strong>Restaure o backup</strong>
+                        <span>Se voc&ecirc; seguiu a Regra 3-2-1, formate o sistema, reinstale o Windows e restaure seus arquivos do backup na nuvem ou HD externo.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="danger-box">
+                <p>&#x1F6AB; <strong>N&atilde;o existe negocia&ccedil;&atilde;o honesta com criminosos.</strong> Empresas e &oacute;rg&atilde;os p&uacute;blicos que pagaram resgates milion&aacute;rios muitas vezes n&atilde;o recuperaram os dados e ainda foram atacados novamente meses depois.</p>
+            </div>
+        </div>
+
+        <!-- CARD 5 — Wi-Fi público e VPN -->
+        <div class="content-card">
+            <h2>&#x1F4F6; Wi-Fi P&uacute;blico e VPN</h2>
+            <p>Redes Wi-Fi abertas &mdash; de shoppings, caf&eacute;s, aeroportos e at&eacute; escolas &mdash; s&atilde;o convenientes, mas criam riscos reais. Nelas, um atacante na mesma rede pode interceptar o tr&aacute;fego de dados num ataque chamado <strong>Man-in-the-Middle (MitM)</strong>: ele se posiciona entre voc&ecirc; e o servidor, lendo ou modificando tudo que passa.</p>
+
+            <div class="wifi-grid">
+                <div class="wifi-card risco">
+                    <div class="wc-title">&#x26A0;&#xFE0F; Riscos do Wi-Fi p&uacute;blico</div>
+                    <ul>
+                        <li>Intercepta&ccedil;&atilde;o de dados n&atilde;o criptografados</li>
+                        <li>Captura de cookies de sess&atilde;o (sequestro de conta)</li>
+                        <li>Redes falsas com nomes parecidos (<em>Free WiFi</em>)</li>
+                        <li>Injecção de scripts maliciosos em p&aacute;ginas HTTP</li>
+                        <li>Acesso a dispositivos com compartilhamento ativo</li>
+                    </ul>
+                </div>
+                <div class="wifi-card protecao">
+                    <div class="wc-title">&#x2705; Como se proteger</div>
+                    <ul>
+                        <li>Use <strong>apenas HTTPS</strong> em redes abertas</li>
+                        <li>Evite acessar banco, e-mail ou SUAP em Wi-Fi p&uacute;blico</li>
+                        <li>Prefira <strong>dados m&oacute;veis</strong> para opera&ccedil;&otilde;es sens&iacute;veis</li>
+                        <li>Use uma <strong>VPN</strong> se precisar usar Wi-Fi aberto</li>
+                        <li>Desligue o Wi-Fi quando n&atilde;o estiver usando</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>&#x1F310; O que &eacute; uma VPN?</h3>
+            <p>A <strong>VPN</strong> (<em>Virtual Private Network</em>) cria um <strong>t&uacute;nel criptografado</strong> entre seu dispositivo e um servidor da VPN. Todo o seu tr&aacute;fego passa por esse t&uacute;nel, impedindo que qualquer pessoa na mesma rede intercepte seus dados &mdash; mesmo em Wi-Fi p&uacute;blico.</p>
+            <ul>
+                <li>Gratuitas confi&aacute;veis: <strong>ProtonVPN</strong> (sem limite de dados), <strong>Cloudflare WARP</strong></li>
+                <li>Pagas com mais recursos: <strong>Mullvad</strong>, <strong>NordVPN</strong>, <strong>ExpressVPN</strong></li>
+                <li>Evite VPNs gratuitas desconhecidas &mdash; algumas vendem seu hist&oacute;rico de navega&ccedil;&atilde;o</li>
+            </ul>
+
+            <div class="highlight-box">
+                <p>&#x1F4A1; A VPN protege o tr&aacute;fego entre voc&ecirc; e o servidor VPN &mdash; mas <strong>n&atilde;o torna voc&ecirc; an&ocirc;nimo</strong> na internet. O servidor de destino ainda pode registrar sua atividade. VPN &eacute; uma ferramenta de prote&ccedil;&atilde;o, n&atilde;o de invisibilidade.</p>
+            </div>
+        </div>
+
+        <!-- CARD 6 — Atualizações: a defesa mais subestimada -->
+        <div class="content-card">
+            <h2>&#x1F504; Atualizações &mdash; A Defesa Mais Subestimada</h2>
+            <p>A maioria dos ataques bem-sucedidos explora <strong>vulnerabilidades j&aacute; conhecidas e corrigidas</strong> &mdash; em sistemas que simplesmente n&atilde;o foram atualizados. Manter o sistema e os aplicativos atualizados &eacute; a medida preventiva com maior retorno por menos esfor&ccedil;o.</p>
+
+            <div class="update-row">
+                <div class="update-item">
+                    <div class="ui-title">&#x1FA9F; Sistema Operacional</div>
+                    <div class="ui-desc">Windows Update corrige falhas de seguran&ccedil;a toda segunda ter&ccedil;a do m&ecirc;s (Patch Tuesday). Ative atualizações autom&aacute;ticas.</div>
+                </div>
+                <div class="update-item">
+                    <div class="ui-title">&#x1F310; Navegador</div>
+                    <div class="ui-desc">Chrome, Edge e Firefox atualizam silenciosamente. Reinicie o navegador regularmente para aplicar as atualizações baixadas.</div>
+                </div>
+                <div class="update-item">
+                    <div class="ui-title">&#x1F4F1; Apps do celular</div>
+                    <div class="ui-desc">Ative atualizações autom&aacute;ticas na Play Store ou App Store. Apps desatualizados s&atilde;o portas de entrada comuns.</div>
+                </div>
+                <div class="update-item">
+                    <div class="ui-title">&#x1F9E9; Extens&otilde;es</div>
+                    <div class="ui-desc">Extens&otilde;es de navegador tamb&eacute;m t&ecirc;m vulnerabilidades. Remova as que n&atilde;o usa e mantenha as restantes atualizadas.</div>
+                </div>
+            </div>
+
+            <div class="alert-box">
+                <p>&#x26A0;&#xFE0F; O ataque de ransomware <strong>WannaCry</strong> (2017) infectou mais de 200 mil computadores em 150 pa&iacute;ses &mdash; incluindo hospitais e bancos &mdash; em menos de 24 horas. A falha que ele explorava j&aacute; tinha <strong>corre&ccedil;&atilde;o dispon&iacute;vel h&aacute; 2 meses</strong>. A causa foi simples: sistemas n&atilde;o atualizados.</p>
+            </div>
+        </div>
+
+        <!-- CARD 7 — Ferramentas de defesa -->
+        <div class="content-card">
+            <h2>&#x1F9F0; Ferramentas de Defesa &mdash; Gratuitas e Confi&aacute;veis</h2>
+            <p>Al&eacute;m do comportamento e das configura&ccedil;&otilde;es, algumas ferramentas gratuitas aumentam significativamente sua prote&ccedil;&atilde;o:</p>
+
+            <div class="tool-grid">
+                <div class="tool-card">
+                    <div class="tool-icon">&#x1F6E1;&#xFE0F;</div>
+                    <strong>Windows Defender</strong>
+                    <em>Antiv&iacute;rus nativo do Windows, eficaz e sem custo extra</em>
+                    <span class="tool-badge tb-free">Gratuito</span>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">&#x1F9A0;</div>
+                    <strong>Malwarebytes</strong>
+                    <em>Especialista em remover malwares que antiv&iacute;rus tradicionais perdem</em>
+                    <span class="tool-badge tb-free">Gratuito</span>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">&#x1F6AB;</div>
+                    <strong>uBlock Origin</strong>
+                    <em>Extens&atilde;o que bloqueia an&uacute;ncios, rastreadores e sites maliciosos</em>
+                    <span class="tool-badge tb-nav">Extens&atilde;o</span>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">&#x1F50E;</div>
+                    <strong>VirusTotal</strong>
+                    <em>Verifica arquivos e URLs com +70 antiv&iacute;rus antes de abrir</em>
+                    <span class="tool-badge tb-site">Site</span>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">&#x1F517;</div>
+                    <strong>Google Safe Browsing</strong>
+                    <em>Alerta autom&aacute;tico do Chrome sobre sites de phishing e malware</em>
+                    <span class="tool-badge tb-nav">Nativo</span>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">&#x1F310;</div>
+                    <strong>ProtonVPN</strong>
+                    <em>VPN gratuita e sem limite de dados, criada pela equipe do ProtonMail</em>
+                    <span class="tool-badge tb-free">Gratuito</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 8 — O que fazer quando algo dá errado -->
+        <div class="content-card">
+            <h2>&#x1F6A8; O que Fazer Quando Algo D&aacute; Errado</h2>
+            <p>Mesmo com todas as precau&ccedil;&otilde;es, acidentes acontecem. Saber reagir r&aacute;pido limita o dano significativamente.</p>
+
+            <h3>&#x1F3A3; Se voc&ecirc; caiu em um phishing &mdash; a&ccedil;&otilde;es imediatas</h3>
+            <div class="step-list">
+                <div class="step-item">
+                    <div class="step-num urgente">1</div>
+                    <div class="step-body urgente">
+                        <strong>Troque a senha da conta afetada agora</strong>
+                        <span>Fa&ccedil;a isso antes de qualquer outra coisa, no pr&oacute;prio dispositivo ou em outro dispositivo seguro.</span>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-num urgente">2</div>
+                    <div class="step-body urgente">
+                        <strong>Ative o 2FA se ainda n&atilde;o tinha</strong>
+                        <span>Mesmo que o atacante tenha sua senha, sem o segundo fator n&atilde;o conseguir&aacute; entrar.</span>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-num">3</div>
+                    <div class="step-body">
+                        <strong>Verifique sess&otilde;es ativas</strong>
+                        <span>No Google: <em>Conta &rarr; Seguran&ccedil;a &rarr; Seus dispositivos</em>. Remova qualquer sess&atilde;o desconhecida.</span>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-num">4</div>
+                    <div class="step-body">
+                        <strong>Troque senhas de outros servi&ccedil;os que usam o mesmo e-mail</strong>
+                        <span>Se seu e-mail foi comprometido, o atacante pode solicitar redefini&ccedil;&atilde;o de senha em outros sites.</span>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-num">5</div>
+                    <div class="step-body">
+                        <strong>Reporte o golpe</strong>
+                        <span>Registre um boletim de ocorr&ecirc;ncia na Delegacia de Crimes Cibern&eacute;ticos (presencialmente ou online) e denuncie o site falso em <em>safernet.org.br</em>.</span>
+                    </div>
+                </div>
+            </div>
+
+            <h3>&#x1F4DE; Onde reportar crimes digitais no Brasil</h3>
+            <ul>
+                <li><strong>SaferNet Brasil</strong> (safernet.org.br): denúncias de crimes na internet, incluindo phishing e golpes</li>
+                <li><strong>Delegacia de Crimes Cibern&eacute;ticos</strong>: presencial ou via portal da Pol&iacute;cia Civil do seu estado</li>
+                <li><strong>ANPD</strong> (anpd.gov.br): para violações da LGPD e vazamento de dados pessoais</li>
+                <li><strong>Banco Central / Procon</strong>: para golpes financeiros e fraudes em servi&ccedil;os banc&aacute;rios</li>
+            </ul>
+        </div>
+
+        <!-- CARD 9 — RECAPITULANDO -->
+        <div class="content-card">
+            <h2>&#x1F4CB; Recapitulando</h2>
+            <ul>
+                <li>A preven&ccedil;&atilde;o funciona em tr&ecirc;s camadas: <strong>comportamento, configura&ccedil;&atilde;o e ferramentas</strong></li>
+                <li>Antes de clicar em qualquer link: verifique remetente, URL, urg&ecirc;ncia e se est&aacute; sendo pedido dado ou senha</li>
+                <li>URLs falsas imitam dom&iacute;nios reais &mdash; o dom&iacute;nio principal (antes do &uacute;ltimo <em>/</em>) &eacute; o que define o site real</li>
+                <li>A <strong>Regra 3-2-1</strong> de backup neutraliza ransomware: 3 c&oacute;pias, 2 m&iacute;dias, 1 fora do local</li>
+                <li>Wi-Fi p&uacute;blico &eacute; arriscado: use HTTPS, dados m&oacute;veis ou VPN para opera&ccedil;&otilde;es sens&iacute;veis</li>
+                <li><strong>Atualizar o sistema</strong> &eacute; a defesa mais eficaz e subestimada &mdash; a maioria dos ataques explora falhas j&aacute; corrigidas</li>
+                <li>Ferramentas gratuitas confi&aacute;veis: Windows Defender, Malwarebytes, uBlock Origin, VirusTotal, ProtonVPN</li>
+                <li>Se cair em golpe: trocar senha, ativar 2FA, verificar sess&otilde;es e reportar &agrave; SaferNet ou delegacia</li>
+            </ul>
+
+            <div class="highlight-box">
+                <p>&#x1F4DA; <strong>Na pr&oacute;xima aula</strong> encerramos a se&ccedil;&atilde;o de seguran&ccedil;a com <strong>Quest&otilde;es &Eacute;ticas e Legais em TI</strong>: direitos autorais digitais, cyberbullying, fake news e responsabilidade no ambiente digital &mdash; o que a lei diz e o que a &eacute;tica exige.</p>
+            </div>
+        </div>
+
+        <!-- EXERCÍCIO: Arrastar e Soltar -->
+        <div class="content-card exercise-card">
+            <h2>&#x1F3AF; Exerc&iacute;cio &mdash; Arraste e Conecte</h2>
+            <p style="color:#475569;font-size:0.9em;margin-bottom:4px;">Arraste cada a&ccedil;&atilde;o preventiva para a amea&ccedil;a que ela combate principalmente. Em dispositivos m&oacute;veis, toque na descri&ccedil;&atilde;o e depois na zona de destino.</p>
+
+            <div class="ex-drag-root" data-ex="ex26">
+                <div class="ex-drag">
+                    <div>
+                        <div class="ex-col-title">A&ccedil;&atilde;o Preventiva</div>
+                        <div class="ex-pool" data-pool="ex26">
+                            <div class="drag-chip" data-id="backup">Manter 3 c&oacute;pias dos dados em 2 m&iacute;dias diferentes, sendo 1 na nuvem</div>
+                            <div class="drag-chip" data-id="url">Verificar o dom&iacute;nio real de um link antes de clicar e nunca fornecer senha por mensagem</div>
+                            <div class="drag-chip" data-id="vpn">Usar uma VPN e prefer&ecirc;ncia por dados m&oacute;veis ao acessar o banco em espa&ccedil;os p&uacute;blicos</div>
+                            <div class="drag-chip" data-id="update">Ativar atualizações autom&aacute;ticas do Windows e reiniciar o navegador regularmente</div>
+                            <div class="drag-chip" data-id="antivirus">Manter o Windows Defender ativo e varrer o sistema com o Malwarebytes mensalmente</div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="ex-col-title">Amea&ccedil;a Combatida</div>
+                        <div class="ex-zones" data-zones="ex26">
+                            <div class="drop-zone" data-zone="ex26-z1" data-accept="backup">
+                                <span class="zone-name">Ransomware</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex26-z2" data-accept="url">
+                                <span class="zone-name">Phishing</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex26-z3" data-accept="vpn">
+                                <span class="zone-name">Ataque Man-in-the-Middle</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex26-z4" data-accept="update">
+                                <span class="zone-name">Exploits de Vulnerabilidade</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex26-z5" data-accept="antivirus">
+                                <span class="zone-name">Malware e V&iacute;rus</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ex-actions">
+                <button class="btn-verificar" onclick="dragVerify('ex26')">Verificar</button>
+                <button class="btn-refazer"  onclick="dragReset('ex26')">Refazer</button>
+            </div>
+            <div class="ex-result" id="ex26-result"></div>
+        </div>
+
+        <!-- ATIVIDADE PRÁTICA 2.6 -->
+        <div class="content-card practical-card" id="prat-26">
+            <h2>&#x1F6E0;&#xFE0F; Atividade Pr&aacute;tica &mdash; Auditoria de Seguran&ccedil;a do Computador</h2>
+            <div class="prat-meta">
+                <span class="prat-tag">&#x23F1; ~30 min</span>
+                <span class="prat-tag">&#x1F4BB; No computador da escola</span>
+                <span class="prat-tag">&#x1F310; Requer internet</span>
+            </div>
+
+            <div class="prat-steps">
+                <div class="prat-step">
+                    <div class="step-num">1</div>
+                    <div class="step-body">
+                        <div class="step-label">Verifique o antiv&iacute;rus do Windows</div>
+                        <div class="step-desc">Clique no menu Iniciar e pesquise <strong>&ldquo;Seguran&ccedil;a do Windows&rdquo;</strong>. Abra o aplicativo e verifique em <em>Prote&ccedil;&atilde;o contra v&iacute;rus e amea&ccedil;as</em>: o antiv&iacute;rus est&aacute; ativo? As defini&ccedil;&otilde;es de v&iacute;rus est&atilde;o atualizadas? Quando foi feita a &uacute;ltima verifica&ccedil;&atilde;o? Anote o que encontrou.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">2</div>
+                    <div class="step-body">
+                        <div class="step-label">Verifique atualizações pendentes do Windows</div>
+                        <div class="step-desc">V&aacute; em <strong>Iniciar &rarr; Configura&ccedil;&otilde;es &rarr; Windows Update</strong>. H&aacute; atualizações pendentes? Quantos dias faz que foi feita a &uacute;ltima atualiza&ccedil;&atilde;o? Se estiver autorizado pelo professor, clique em <em>Verificar atualiza&ccedil;&otilde;es</em>. Anote as informa&ccedil;&otilde;es encontradas.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">3</div>
+                    <div class="step-body">
+                        <div class="step-label">Analise uma URL suspeita no VirusTotal</div>
+                        <div class="step-desc">Acesse <strong>virustotal.com</strong>. Clique na aba <em>URL</em>. O professor ir&aacute; fornecer um endere&ccedil;o de teste (ou use: <em>http://malware.testing.google.test/testing/malware/</em> &mdash; um site de teste oficial do Google). Observe quantos mecanismos o detectaram e que categoria de amea&ccedil;a foi identificada.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">4</div>
+                    <div class="step-body">
+                        <div class="step-label">Inspecione as extens&otilde;es do navegador</div>
+                        <div class="step-desc">No Chrome ou Edge: clique nos tr&ecirc;s pontos &rarr; <strong>Extens&otilde;es &rarr; Gerenciar extens&otilde;es</strong>. Liste todas as extens&otilde;es instaladas. Para cada uma, verifique: voc&ecirc; a conhece? Ela tem boa avalia&ccedil;&atilde;o? Quantas permiss&otilde;es solicita? Se houver alguma desconhecida, anote o nome para pesquisar depois.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">5</div>
+                    <div class="step-body">
+                        <div class="step-label">Monte o plano de backup pessoal</div>
+                        <div class="step-desc">No Google Docs (na pasta da Unidade 2), crie um documento chamado <strong>&ldquo;Meu Plano de Backup 3-2-1&rdquo;</strong>. Descreva: quais arquivos voc&ecirc; tem que s&atilde;o importantes? Onde est&atilde;o guardados hoje? Como voc&ecirc; aplicaria a Regra 3-2-1 na sua realidade? Quais servi&ccedil;os de nuvem e m&iacute;dias f&iacute;sicas usaria?</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="prat-observe">
+                <strong>&#x1F4CC; Para saber:</strong> O endere&ccedil;o <em>malware.testing.google.test</em> &eacute; um site oficial mantido pelo Google <strong>exclusivamente para testar</strong> se antiv&iacute;rus e ferramentas de seguran&ccedil;a est&atilde;o funcionando. Ele n&atilde;o cont&eacute;m malware real &mdash; apenas simula o comportamento para fins de teste. &Eacute; completamente seguro acess&aacute;-lo para fins did&aacute;ticos.
+            </div>
+
+            <div class="ex-actions">
+                <button class="btn-print" onclick="printPractical('prat-26', 'Aula 2.6 \u2014 Preven\u00e7\u00e3o de Amea\u00e7as Digitais')">&#x1F5A8;&#xFE0F; Imprimir roteiro</button>
+            </div>
+        </div>
+
+        <div class="nav-footer">
+            <a href="uni2-05-protecao-dados.html" class="nav-link">&#x2B05; Anterior: Prote&ccedil;&atilde;o de Dados</a>
+            <a href="uni2-07-etica-ti.html" class="nav-link">Pr&oacute;xima: &Eacute;tica e Legisla&ccedil;&atilde;o &#x27A1;</a>
+        </div>
+
+    </div><!-- fim .content-wrapper -->
+
+    <script src="slide-mode.js"></script>
+    <script src="exercise-drag.js"></script>
+    <script src="exercise-print.js"></script>
+</body>
+</html>
