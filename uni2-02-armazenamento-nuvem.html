@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 2.2 - Armazenamento em Nuvem</title>
+    <link rel="stylesheet" href="slide-mode.css">
+    <link rel="stylesheet" href="exercise.css">
+    <style>
+        :root {
+            --primary: #00838f;
+            --secondary: #006064;
+            --bg-light: #f0f4f8;
+            --text-dark: #1a202c;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        .top-bar {
+            background: white;
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .back-btn {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+
+        .back-btn:hover { background: rgba(0,131,143,0.08); }
+
+        .page-badge {
+            font-size: 0.8em;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: rgba(0, 131, 143, 0.12);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .content-wrapper {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 30px;
+        }
+
+        .lesson-hero {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            border-top: 4px solid var(--primary);
+        }
+
+        .lesson-hero h1 { font-size: 2em; margin-bottom: 10px; color: var(--primary); }
+        .lesson-hero .subtitle { font-size: 1.05em; color: #718096; }
+
+        .content-card {
+            background: white;
+            border-radius: 16px;
+            padding: 35px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+
+        .content-card h2 {
+            font-size: 1.4em;
+            color: var(--primary);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .content-card h3 { font-size: 1.05em; color: var(--secondary); margin: 20px 0 10px; }
+        .content-card p { margin-bottom: 15px; text-align: justify; }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(0,131,143,0.05), rgba(0,96,100,0.06));
+            border-left: 4px solid var(--primary);
+            padding: 20px 25px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+        }
+        .highlight-box p { margin-bottom: 0; font-style: italic; }
+
+        .alert-box {
+            background: #fff8e1;
+            border-left: 4px solid #f59e0b;
+            padding: 18px 22px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+        }
+        .alert-box p { margin: 0; color: #78350f; font-size: 0.93em; }
+
+        ul, ol { margin: 10px 0 15px 25px; }
+        li { margin-bottom: 8px; }
+
+        /* ── Grid de serviços ── */
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 14px;
+            margin: 20px 0;
+        }
+
+        .service-card {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 22px 14px;
+            text-align: center;
+            border-top: 3px solid var(--primary);
+            transition: transform 0.2s;
+        }
+        .service-card:hover { transform: translateY(-3px); }
+        .service-icon { font-size: 2.2em; margin-bottom: 8px; }
+        .service-card strong { display: block; font-size: 0.9em; color: var(--primary); margin-bottom: 4px; }
+        .service-card em { font-size: 0.78em; color: #718096; font-style: normal; }
+        .service-storage {
+            display: inline-block;
+            margin-top: 8px;
+            font-size: 0.75em;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 20px;
+            background: rgba(0,131,143,0.1);
+            color: var(--secondary);
+        }
+
+        /* ── Comparativo tabela ── */
+        .compare-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 0.88em;
+        }
+        .compare-table th {
+            background: var(--primary);
+            color: white;
+            padding: 11px 14px;
+            text-align: left;
+        }
+        .compare-table th:first-child { border-radius: 8px 0 0 0; }
+        .compare-table th:last-child  { border-radius: 0 8px 0 0; }
+        .compare-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: middle;
+        }
+        .compare-table tr:nth-child(even) td { background: #f8fafc; }
+        .compare-table tr:last-child td { border-bottom: none; }
+        .tag-yes { color: #16a34a; font-weight: 700; }
+        .tag-no  { color: #dc2626; }
+        .tag-partial { color: #d97706; }
+
+        /* ── Como usar — steps ── */
+        .how-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin: 18px 0;
+        }
+        .how-step {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 16px 18px;
+        }
+        .how-num {
+            width: 32px;
+            height: 32px;
+            min-width: 32px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            font-weight: 700;
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .how-body strong { display: block; font-size: 0.93em; color: var(--secondary); margin-bottom: 3px; }
+        .how-body span   { font-size: 0.84em; color: #475569; line-height: 1.5; }
+
+        /* ── Permissões grid ── */
+        .perm-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .perm-card {
+            border-radius: 10px;
+            padding: 18px;
+            text-align: center;
+        }
+        .perm-card.ver      { background: #eff6ff; border-top: 3px solid #3b82f6; }
+        .perm-card.comentar { background: #fff7ed; border-top: 3px solid #f59e0b; }
+        .perm-card.editar   { background: #f0fdf4; border-top: 3px solid #22c55e; }
+        .perm-icon   { font-size: 1.8em; margin-bottom: 6px; }
+        .perm-title  { font-weight: 700; font-size: 0.9em; margin-bottom: 4px; }
+        .perm-card.ver      .perm-title { color: #1d4ed8; }
+        .perm-card.comentar .perm-title { color: #b45309; }
+        .perm-card.editar   .perm-title { color: #15803d; }
+        .perm-desc   { font-size: 0.8em; color: #475569; line-height: 1.5; }
+
+        /* ── Sync diagram ── */
+        .sync-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        .sync-node {
+            background: #f0fdfa;
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            padding: 14px 18px;
+            text-align: center;
+            font-size: 0.85em;
+            min-width: 100px;
+        }
+        .sync-node .sn-icon { font-size: 1.7em; margin-bottom: 4px; }
+        .sync-node strong { display: block; color: var(--secondary); }
+        .sync-arrow {
+            font-size: 1.4em;
+            color: var(--primary);
+            font-weight: 700;
+        }
+        .sync-center {
+            background: var(--primary);
+            color: white;
+            border-radius: 12px;
+            padding: 14px 18px;
+            text-align: center;
+            font-size: 0.85em;
+            min-width: 100px;
+        }
+        .sync-center .sn-icon { font-size: 1.7em; margin-bottom: 4px; }
+        .sync-center strong { display: block; }
+
+        /* ── Boas práticas ── */
+        .boas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .boa-item {
+            background: #f0fdfa;
+            border-radius: 10px;
+            padding: 16px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+        .boa-icon { font-size: 1.6em; flex-shrink: 0; }
+        .boa-text strong { display: block; font-size: 0.88em; color: var(--primary); margin-bottom: 3px; }
+        .boa-text span   { font-size: 0.8em; color: #475569; }
+
+        /* ── nav ── */
+        .nav-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-bottom: 40px;
+        }
+        .nav-link {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+        .nav-link:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+
+        @media (max-width: 768px) {
+            .content-wrapper { padding: 0 15px; }
+            .lesson-hero, .content-card { padding: 25px; }
+            .lesson-hero h1 { font-size: 1.5em; }
+            .sync-diagram { flex-direction: column; }
+            .sync-arrow { transform: rotate(90deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <a href="index.html" class="back-btn">&#x2B05; Voltar ao Dashboard</a>
+        <span class="page-badge">Unidade 2 &mdash; Internet e Seguran&ccedil;a</span>
+        <button class="slide-toggle" id="slideToggleBtn">&#x1F4FA; Modo Slide</button>
+    </div>
+
+    <div class="content-wrapper">
+
+        <div class="lesson-hero">
+            <h1>&#x2601;&#xFE0F; Armazenamento em Nuvem</h1>
+            <p class="subtitle">Aula 2.2 &mdash; Como guardar, organizar e compartilhar arquivos na nuvem com Google Drive, OneDrive e Dropbox</p>
+        </div>
+
+        <!-- CARD 1 — O que é a nuvem? -->
+        <div class="content-card">
+            <h2>&#x1F4AC; O que &eacute; armazenamento em nuvem?</h2>
+            <p>O <strong>armazenamento em nuvem</strong> (<em>cloud storage</em>) &eacute; um modelo em que seus arquivos ficam salvos em <strong>servidores remotos</strong> &mdash; computadores potentes mantidos por grandes empresas &mdash; e s&atilde;o acessados pela internet a partir de qualquer dispositivo.</p>
+            <p>Ao inv&eacute;s de depender apenas do HD ou pendrive, voc&ecirc; pode abrir seus documentos no celular, no computador da escola ou em casa, sem precisar carregá-los fisicamente.</p>
+
+            <div class="highlight-box">
+                <p>&#x1F4A1; <strong>Analogia:</strong> imagine que a nuvem &eacute; um arm&aacute;rio virtual que voc&ecirc; pode acessar de qualquer lugar &mdash; desde que tenha a chave certa (sua conta) e uma conex&atilde;o com a internet.</p>
+            </div>
+
+            <h3>&#x2705; Vantagens do armazenamento em nuvem</h3>
+            <ul>
+                <li><strong>Acessibilidade:</strong> acesse seus arquivos de qualquer dispositivo com internet</li>
+                <li><strong>Backup autom&aacute;tico:</strong> se o computador estragar, seus dados permanecem seguros</li>
+                <li><strong>Colabora&ccedil;&atilde;o em tempo real:</strong> v&aacute;rias pessoas editam o mesmo documento ao mesmo tempo</li>
+                <li><strong>Economia de espa&ccedil;o local:</strong> libera armazenamento no HD e no celular</li>
+                <li><strong>Compartilhamento simplificado:</strong> envie um link em vez de e-mail com anexo</li>
+            </ul>
+
+            <h3>&#x26A0;&#xFE0F; Limita&ccedil;&otilde;es</h3>
+            <ul>
+                <li>Depende de conex&atilde;o com a internet (sem internet, arquivos podem ficar inacess&iacute;veis)</li>
+                <li>Espa&ccedil;o gratuito &eacute; limitado &mdash; planos pagos para mais capacidade</li>
+                <li>Privacidade depende da pol&iacute;tica de cada servi&ccedil;o</li>
+            </ul>
+        </div>
+
+        <!-- CARD 2 — Principais serviços -->
+        <div class="content-card">
+            <h2>&#x1F9E9; Principais Servi&ccedil;os de Nuvem</h2>
+
+            <div class="service-grid">
+                <div class="service-card">
+                    <div class="service-icon">&#x1F4C2;</div>
+                    <strong>Google Drive</strong>
+                    <em>Integrado ao Gmail, Google Docs, Sheets e Slides. &Oacute;timo para colabora&ccedil;&atilde;o.</em>
+                    <span class="service-storage">15 GB gr&aacute;tis</span>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">&#x1F4C1;</div>
+                    <strong>OneDrive</strong>
+                    <em>Nativo no Windows 11. Integrado ao Microsoft 365 (Word, Excel, PowerPoint).</em>
+                    <span class="service-storage">5 GB gr&aacute;tis</span>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">&#x1F4E6;</div>
+                    <strong>Dropbox</strong>
+                    <em>Sincronia seletiva de pastas. Muito usado em ambientes corporativos e por equipes.</em>
+                    <span class="service-storage">2 GB gr&aacute;tis</span>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">&#x1F34E;</div>
+                    <strong>iCloud</strong>
+                    <em>Exclusivo do ecossistema Apple (iPhone, iPad, Mac). Sincroniza fotos e documentos.</em>
+                    <span class="service-storage">5 GB gr&aacute;tis</span>
+                </div>
+            </div>
+
+            <div class="alert-box">
+                <p>&#x1F4CC; Para quem usa dispositivos Android e o Gmail escolar, o <strong>Google Drive</strong> &eacute; a escolha mais natural &mdash; j&aacute; vem integrado e &eacute; o mais usado no ambiente acad&ecirc;mico brasileiro.</p>
+            </div>
+        </div>
+
+        <!-- CARD 3 — Comparativo -->
+        <div class="content-card">
+            <h2>&#x1F4CA; Comparativo dos Principais Servi&ccedil;os</h2>
+
+            <table class="compare-table">
+                <tr>
+                    <th>Recurso</th>
+                    <th>Google Drive</th>
+                    <th>OneDrive</th>
+                    <th>Dropbox</th>
+                </tr>
+                <tr>
+                    <td>Espa&ccedil;o gratuito</td>
+                    <td>15 GB</td>
+                    <td>5 GB</td>
+                    <td>2 GB</td>
+                </tr>
+                <tr>
+                    <td>Edi&ccedil;&atilde;o colaborativa online</td>
+                    <td class="tag-yes">&#x2714; Excelente</td>
+                    <td class="tag-yes">&#x2714; Boa</td>
+                    <td class="tag-partial">&#x26AB; Limitada</td>
+                </tr>
+                <tr>
+                    <td>Integra&ccedil;&atilde;o com e-mail</td>
+                    <td class="tag-yes">&#x2714; Gmail</td>
+                    <td class="tag-yes">&#x2714; Outlook</td>
+                    <td class="tag-no">&#x2715; N&atilde;o nativa</td>
+                </tr>
+                <tr>
+                    <td>App desktop (Windows)</td>
+                    <td class="tag-yes">&#x2714; Drive for Desktop</td>
+                    <td class="tag-yes">&#x2714; Nativo no Windows</td>
+                    <td class="tag-yes">&#x2714; Dropbox Desktop</td>
+                </tr>
+                <tr>
+                    <td>Trabalho offline</td>
+                    <td class="tag-partial">&#x26AB; Parcial</td>
+                    <td class="tag-yes">&#x2714; Sim</td>
+                    <td class="tag-yes">&#x2714; Sim</td>
+                </tr>
+                <tr>
+                    <td>Hist&oacute;rico de vers&otilde;es</td>
+                    <td class="tag-yes">&#x2714; 30 dias</td>
+                    <td class="tag-yes">&#x2714; 30 dias</td>
+                    <td class="tag-partial">&#x26AB; 30 dias (180 no pago)</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- CARD 4 — Como usar o Google Drive -->
+        <div class="content-card">
+            <h2>&#x1F528; Como Usar o Google Drive</h2>
+            <p>O Google Drive &eacute; acessado pelo navegador em <strong>drive.google.com</strong> ou pelo aplicativo no celular. Confira as opera&ccedil;&otilde;es mais importantes:</p>
+
+            <div class="how-steps">
+                <div class="how-step">
+                    <div class="how-num">1</div>
+                    <div class="how-body">
+                        <strong>Fazer upload de arquivos</strong>
+                        <span>Clique em <strong>+ Novo &rarr; Upload de arquivo</strong> (ou arraste o arquivo direto para a p&aacute;gina). O arquivo ser&aacute; enviado para a nuvem e ficar&aacute; acess&iacute;vel de qualquer lugar.</span>
+                    </div>
+                </div>
+                <div class="how-step">
+                    <div class="how-num">2</div>
+                    <div class="how-body">
+                        <strong>Criar e organizar pastas</strong>
+                        <span>Clique em <strong>+ Novo &rarr; Pasta</strong>. Use uma estrutura como: <em>Escola &rsaquo; Inform&aacute;tica &rsaquo; Unidade 2</em>. Uma boa organiza&ccedil;&atilde;o economiza tempo na hora de encontrar arquivos.</span>
+                    </div>
+                </div>
+                <div class="how-step">
+                    <div class="how-num">3</div>
+                    <div class="how-body">
+                        <strong>Criar documentos diretamente na nuvem</strong>
+                        <span>Clique em <strong>+ Novo</strong> e escolha <strong>Google Docs</strong> (texto), <strong>Google Sheets</strong> (planilha) ou <strong>Google Slides</strong> (apresenta&ccedil;&atilde;o). Tudo &eacute; salvo automaticamente, sem precisar apertar Ctrl+S.</span>
+                    </div>
+                </div>
+                <div class="how-step">
+                    <div class="how-num">4</div>
+                    <div class="how-body">
+                        <strong>Compartilhar arquivos e pastas</strong>
+                        <span>Clique com o bot&atilde;o direito no arquivo &rarr; <strong>Compartilhar</strong>. Informe o e-mail do destinat&aacute;rio ou gere um link. Defina a permiss&atilde;o: <em>Ver</em>, <em>Comentar</em> ou <em>Editar</em>.</span>
+                    </div>
+                </div>
+                <div class="how-step">
+                    <div class="how-num">5</div>
+                    <div class="how-body">
+                        <strong>Colaborar em tempo real</strong>
+                        <span>Quando um documento &eacute; aberto por v&aacute;rias pessoas ao mesmo tempo, cada uma aparece com um cursor colorido diferente. As altera&ccedil;&otilde;es aparecem instantaneamente para todos &mdash; sem precisar enviar e receber arquivos por e-mail.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 5 — Permissões -->
+        <div class="content-card">
+            <h2>&#x1F510; N&iacute;veis de Permiss&atilde;o ao Compartilhar</h2>
+            <p>Ao compartilhar um arquivo ou pasta no Google Drive (e na maioria dos servi&ccedil;os de nuvem), voc&ecirc; escolhe <strong>o quanto cada pessoa pode fazer</strong>:</p>
+
+            <div class="perm-grid">
+                <div class="perm-card ver">
+                    <div class="perm-icon">&#x1F441;&#xFE0F;</div>
+                    <div class="perm-title">Visualizador</div>
+                    <div class="perm-desc">Pode <strong>apenas ler</strong> o arquivo. N&atilde;o consegue alterar nem comentar nada. Ideal para entregar um material finalizado.</div>
+                </div>
+                <div class="perm-card comentar">
+                    <div class="perm-icon">&#x1F4AC;</div>
+                    <div class="perm-title">Comentarista</div>
+                    <div class="perm-desc">Pode ler e <strong>adicionar coment&aacute;rios e sugest&otilde;es</strong>, sem editar o conte&uacute;do diretamente. Muito usado em revis&otilde;es.</div>
+                </div>
+                <div class="perm-card editar">
+                    <div class="perm-icon">&#x270F;&#xFE0F;</div>
+                    <div class="perm-title">Editor</div>
+                    <div class="perm-desc">Pode <strong>ler, comentar e editar</strong> livremente. Cuidado: com essa permiss&atilde;o, a pessoa pode at&eacute; excluir conte&uacute;do.</div>
+                </div>
+            </div>
+
+            <div class="alert-box">
+                <p>&#x26A0;&#xFE0F; <strong>Cuidado com &ldquo;Qualquer pessoa com o link pode editar&rdquo;.</strong> Ao gerar um link p&uacute;blico com permiss&atilde;o de edi&ccedil;&atilde;o, qualquer pessoa que receber esse link poder&aacute; alterar ou excluir seu arquivo. Prefira sempre especificar e-mails ou usar permiss&atilde;o de &ldquo;apenas visualiza&ccedil;&atilde;o&rdquo; ao compartilhar com p&uacute;blico amplo.</p>
+            </div>
+        </div>
+
+        <!-- CARD 6 — Sincronização -->
+        <div class="content-card">
+            <h2>&#x1F504; Como Funciona a Sincroniza&ccedil;&atilde;o</h2>
+            <p>A <strong>sincroniza&ccedil;&atilde;o</strong> &eacute; o processo que mant&eacute;m os arquivos <strong>iguais</strong> entre seu dispositivo local e a nuvem. Quando voc&ecirc; instala o aplicativo de desktop (como o Google Drive for Desktop ou OneDrive), uma pasta especial &eacute; criada no seu computador:</p>
+
+            <div class="sync-diagram">
+                <div class="sync-node">
+                    <div class="sn-icon">&#x1F4BB;</div>
+                    <strong>Computador</strong>
+                </div>
+                <div class="sync-arrow">&#x21C4;</div>
+                <div class="sync-center">
+                    <div class="sn-icon">&#x2601;&#xFE0F;</div>
+                    <strong>Nuvem</strong>
+                </div>
+                <div class="sync-arrow">&#x21C4;</div>
+                <div class="sync-node">
+                    <div class="sn-icon">&#x1F4F1;</div>
+                    <strong>Celular</strong>
+                </div>
+            </div>
+
+            <ul>
+                <li>Qualquer arquivo colocado nessa pasta &eacute; enviado automaticamente para a nuvem</li>
+                <li>Qualquer altera&ccedil;&atilde;o feita na nuvem ou em outro dispositivo aparece logo no seu computador</li>
+                <li>Mesmo sem internet, voc&ecirc; pode trabalhar nos arquivos baixados &mdash; eles s&atilde;o sincronizados assim que a conex&atilde;o retornar</li>
+            </ul>
+
+            <div class="highlight-box">
+                <p>&#x1F4A1; O Google Drive no celular permite marcar arquivos para <strong>acesso offline</strong>: toque nos tr&ecirc;s pontos ao lado do arquivo &rarr; <strong>Tornar dispon&iacute;vel offline</strong>. Assim, voc&ecirc; os acessa mesmo sem internet.</p>
+            </div>
+        </div>
+
+        <!-- CARD 7 — Boas práticas -->
+        <div class="content-card">
+            <h2>&#x2705; Boas Pr&aacute;ticas ao Usar a Nuvem</h2>
+
+            <div class="boas-grid">
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F4C2;</div>
+                    <div class="boa-text">
+                        <strong>Organize em pastas com nomes claros</strong>
+                        <span>Use uma hierarquia l&oacute;gica: por disciplina, ano ou projeto. Evite jogar tudo na raiz do Drive.</span>
+                    </div>
+                </div>
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F512;</div>
+                    <div class="boa-text">
+                        <strong>Revise as permiss&otilde;es regularmente</strong>
+                        <span>Verifique quem tem acesso aos seus arquivos. Remova permiss&otilde;es de pessoas que n&atilde;o precisam mais do acesso.</span>
+                    </div>
+                </div>
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F6AB;</div>
+                    <div class="boa-text">
+                        <strong>N&atilde;o armazene senhas ou dados banc&aacute;rios</strong>
+                        <span>A nuvem n&atilde;o &eacute; o lugar certo para guardar senhas, n&uacute;meros de cart&atilde;o ou documentos altamente sens&iacute;veis sem criptografia adicional.</span>
+                    </div>
+                </div>
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F4BE;</div>
+                    <div class="boa-text">
+                        <strong>Use a nuvem como backup, n&atilde;o substituto</strong>
+                        <span>Arquivos importantes devem estar em pelo menos dois lugares: no computador local e na nuvem. Se um falhar, o outro salva.</span>
+                    </div>
+                </div>
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F517;</div>
+                    <div class="boa-text">
+                        <strong>Prefira links a anexos em e-mails</strong>
+                        <span>Ao invés de anexar um arquivo grande, compartilhe o link do Google Drive. Mais r&aacute;pido, mais leve e permite que o receptor acesse sempre a vers&atilde;o mais atualizada.</span>
+                    </div>
+                </div>
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F4F1;</div>
+                    <div class="boa-text">
+                        <strong>Cuidado com redes Wi-Fi p&uacute;blicas</strong>
+                        <span>Evite acessar a nuvem em Wi-Fi p&uacute;blico sem VPN. Em redes abertas, dados podem ser interceptados por terceiros.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 8 — RECAPITULANDO -->
+        <div class="content-card">
+            <h2>&#x1F4CB; Recapitulando</h2>
+            <ul>
+                <li>O <strong>armazenamento em nuvem</strong> guarda arquivos em servidores remotos, acess&iacute;veis pela internet de qualquer dispositivo</li>
+                <li>Principais servi&ccedil;os: <strong>Google Drive</strong> (15 GB gr&aacute;tis), <strong>OneDrive</strong> (5 GB) e <strong>Dropbox</strong> (2 GB)</li>
+                <li>O Google Drive permite <strong>criar, organizar, compartilhar e colaborar</strong> em documentos em tempo real</li>
+                <li>Ao compartilhar, escolha o n&iacute;vel correto: <strong>Visualizador, Comentarista ou Editor</strong></li>
+                <li>A <strong>sincroniza&ccedil;&atilde;o</strong> mant&eacute;m os arquivos atualizados entre todos os dispositivos automaticamente</li>
+                <li>Boas pr&aacute;ticas incluem organizar pastas, revisar permiss&otilde;es e nunca compartilhar dados sens&iacute;veis publicamente</li>
+            </ul>
+
+            <div class="highlight-box">
+                <p>&#x1F4DA; <strong>Na pr&oacute;xima aula</strong> vamos explorar os <strong>Ambientes Virtuais de Aprendizagem (AVA)</strong> &mdash; plataformas como SUAP e Google Classroom &mdash; aprendendo a navegar, entregar atividades e interagir no ambiente digital da escola.</p>
+            </div>
+        </div>
+
+        <!-- EXERCÍCIO: Arrastar e Soltar -->
+        <div class="content-card exercise-card">
+            <h2>&#x1F3AF; Exerc&iacute;cio &mdash; Arraste e Conecte</h2>
+            <p style="color:#475569;font-size:0.9em;margin-bottom:4px;">Arraste cada descri&ccedil;&atilde;o para o conceito ou servi&ccedil;o correspondente. Em dispositivos m&oacute;veis, toque na descri&ccedil;&atilde;o e depois na zona de destino.</p>
+
+            <div class="ex-drag-root" data-ex="ex22">
+                <div class="ex-drag">
+                    <div>
+                        <div class="ex-col-title">Descri&ccedil;&atilde;o</div>
+                        <div class="ex-pool" data-pool="ex22">
+                            <div class="drag-chip" data-id="gdrive">15 GB gratuitos, integrado ao Gmail e Docs &mdash; &oacute;timo para colabora&ccedil;&atilde;o</div>
+                            <div class="drag-chip" data-id="onedrive">5 GB gratuitos e nativo no Windows 11, integra com Word e Excel</div>
+                            <div class="drag-chip" data-id="dropbox">2 GB gratuitos, sincronia seletiva de pastas, foco em equipes corporativas</div>
+                            <div class="drag-chip" data-id="sync">Processo que mant&eacute;m arquivos iguais entre o dispositivo local e a nuvem</div>
+                            <div class="drag-chip" data-id="editor">Permiss&atilde;o que permite ler, comentar e modificar livremente o arquivo</div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="ex-col-title">Conceito / Servi&ccedil;o</div>
+                        <div class="ex-zones" data-zones="ex22">
+                            <div class="drop-zone" data-zone="ex22-z1" data-accept="gdrive">
+                                <span class="zone-name">Google Drive</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex22-z2" data-accept="onedrive">
+                                <span class="zone-name">OneDrive</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex22-z3" data-accept="dropbox">
+                                <span class="zone-name">Dropbox</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex22-z4" data-accept="sync">
+                                <span class="zone-name">Sincroniza&ccedil;&atilde;o</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex22-z5" data-accept="editor">
+                                <span class="zone-name">Permiss&atilde;o: Editor</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ex-actions">
+                <button class="btn-verificar" onclick="dragVerify('ex22')">Verificar</button>
+                <button class="btn-refazer"  onclick="dragReset('ex22')">Refazer</button>
+            </div>
+            <div class="ex-result" id="ex22-result"></div>
+        </div>
+
+        <!-- ATIVIDADE PRÁTICA 2.2 -->
+        <div class="content-card practical-card" id="prat-22">
+            <h2>&#x1F6E0;&#xFE0F; Atividade Pr&aacute;tica &mdash; Organizando Arquivos no Google Drive</h2>
+            <div class="prat-meta">
+                <span class="prat-tag">&#x23F1; ~25 min</span>
+                <span class="prat-tag">&#x1F310; Requer internet</span>
+                <span class="prat-tag">&#x1F4E7; Precisa de conta Google</span>
+            </div>
+
+            <div class="prat-steps">
+                <div class="prat-step">
+                    <div class="step-num">1</div>
+                    <div class="step-body">
+                        <div class="step-label">Acesse o Google Drive</div>
+                        <div class="step-desc">Abra o navegador e acesse <strong>drive.google.com</strong>. Entre com sua conta Google (pode ser a conta institucional do IFRN ou uma conta pessoal). Se n&atilde;o tiver conta, o professor orientar&aacute; a cria&ccedil;&atilde;o.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">2</div>
+                    <div class="step-body">
+                        <div class="step-label">Crie uma estrutura de pastas</div>
+                        <div class="step-desc">Clique em <strong>+ Novo &rarr; Pasta</strong>. Crie a seguinte estrutura: uma pasta chamada <strong>"Escola"</strong>, dentro dela uma pasta <strong>"Inform&aacute;tica"</strong> e dentro dela <strong>"Unidade 2"</strong>. Essa organiza&ccedil;&atilde;o ser&aacute; usada durante toda a unidade.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">3</div>
+                    <div class="step-body">
+                        <div class="step-label">Crie e salve um documento</div>
+                        <div class="step-desc">Dentro da pasta <strong>Unidade 2</strong>, crie um novo <strong>Google Docs</strong> (+ Novo &rarr; Google Docs). Escreva o t&iacute;tulo <em>"Minhas anotações &mdash; Aula 2.2"</em> e anote ao menos tr&ecirc;s coisas que voc&ecirc; aprendeu hoje. O documento &eacute; salvo automaticamente na nuvem.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">4</div>
+                    <div class="step-body">
+                        <div class="step-label">Compartilhe com o professor</div>
+                        <div class="step-desc">Clique com o bot&atilde;o direito no documento &rarr; <strong>Compartilhar</strong>. No campo de e-mail, digite o endere&ccedil;o do professor: <strong>cesar.augusto@escolar.ifrn.edu.br</strong>. Defina a permiss&atilde;o como <strong>Comentarista</strong> e clique em Enviar.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">5</div>
+                    <div class="step-body">
+                        <div class="step-label">Explore o hist&oacute;rico de vers&otilde;es</div>
+                        <div class="step-desc">Dentro do Google Docs, clique em <strong>Arquivo &rarr; Hist&oacute;rico de vers&otilde;es &rarr; Ver hist&oacute;rico de vers&otilde;es</strong>. Observe que cada altera&ccedil;&atilde;o feita fica registrada com hor&aacute;rio e autor. Isso permite restaurar qualquer vers&atilde;o anterior do documento.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="prat-observe">
+                <strong>&#x1F4CC; Para saber:</strong> O Google Drive n&atilde;o substitui um sistema de backup profissional. Embora seja muito seguro, &eacute; recomend&aacute;vel manter c&oacute;pias de arquivos muito importantes em mais de um lugar &mdash; por exemplo, tamb&eacute;m no computador local ou em um HD externo.
+            </div>
+
+            <div class="ex-actions">
+                <button class="btn-print" onclick="printPractical('prat-22', 'Aula 2.2 \u2014 Armazenamento em Nuvem')">&#x1F5A8;&#xFE0F; Imprimir roteiro</button>
+            </div>
+        </div>
+
+        <div class="nav-footer">
+            <a href="uni2-01-navegadores-email.html" class="nav-link">&#x2B05; Anterior: Navegadores e E-mail</a>
+            <a href="uni2-03-ava.html" class="nav-link">Pr&oacute;xima: AVA &#x27A1;</a>
+        </div>
+
+    </div><!-- fim .content-wrapper -->
+
+    <script src="slide-mode.js"></script>
+    <script src="exercise-drag.js"></script>
+    <script src="exercise-print.js"></script>
+</body>
+</html>
