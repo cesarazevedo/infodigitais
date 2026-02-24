@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 4.7 - Texto: Automatização e Colaboração</title>
+    <link rel="stylesheet" href="slide-mode.css">
+    <link rel="stylesheet" href="exercise.css">
+    <style>
+        :root {
+            --primary: #bf360c;
+            --secondary: #870000;
+            --bg-light: #f0f4f8;
+            --text-dark: #1a202c;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        .top-bar {
+            background: white;
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .back-btn {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+        .back-btn:hover { background: rgba(191,54,12,0.08); }
+        .page-badge {
+            font-size: 0.8em;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: rgba(191,54,12,0.12);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .content-wrapper { max-width: 800px; margin: 40px auto; padding: 0 30px; }
+
+        .lesson-hero {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            border-top: 4px solid var(--primary);
+        }
+        .lesson-hero h1 { font-size: 2em; margin-bottom: 10px; color: var(--primary); }
+        .lesson-hero .subtitle { font-size: 1.05em; color: #718096; }
+
+        .content-card {
+            background: white;
+            border-radius: 16px;
+            padding: 35px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+        .content-card h2 { font-size: 1.4em; color: var(--primary); margin-bottom: 18px; display: flex; align-items: center; gap: 10px; }
+        .content-card h3 { font-size: 1.05em; color: var(--secondary); margin: 20px 0 10px; }
+        .content-card p  { margin-bottom: 15px; text-align: justify; }
+
+        .highlight-box { background: linear-gradient(135deg,rgba(191,54,12,.05),rgba(135,0,0,.06)); border-left: 4px solid var(--primary); padding: 20px 25px; border-radius: 0 12px 12px 0; margin: 20px 0; }
+        .highlight-box p { margin-bottom: 0; font-style: italic; }
+        .alert-box { background: #fff8e1; border-left: 4px solid #f59e0b; padding: 18px 22px; border-radius: 0 12px 12px 0; margin: 20px 0; }
+        .alert-box p { margin: 0; color: #78350f; font-size: .93em; }
+        .tip-box { background: #f0fdf4; border-left: 4px solid #16a34a; padding: 18px 22px; border-radius: 0 12px 12px 0; margin: 20px 0; }
+        .tip-box p { margin: 0; color: #14532d; font-size: .93em; }
+
+        ul, ol { margin: 10px 0 15px 25px; }
+        li { margin-bottom: 8px; }
+
+        .kbd-sm { background: #1e293b; color: #e2e8f0; border-radius: 4px; padding: 2px 6px; font-family: 'Consolas',monospace; font-size: .82em; white-space: nowrap; }
+
+        /* ── Sumário demo ── */
+        .toc-demo {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 20px 24px;
+            margin: 16px 0;
+            font-size: .88em;
+        }
+        .toc-title { font-weight: 700; font-size: .8em; color: #64748b; margin-bottom: 12px; text-transform: uppercase; letter-spacing: .05em; }
+        .toc-entry { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
+        .toc-entry.level1 { font-weight: 700; color: var(--primary); }
+        .toc-entry.level2 { padding-left: 18px; color: #475569; }
+        .toc-entry.level3 { padding-left: 36px; color: #94a3b8; font-size: .92em; }
+        .toc-dots { flex: 1; border-bottom: 1px dotted #cbd5e0; margin: 0 8px; position: relative; top: -3px; }
+        .toc-page { font-family: 'Consolas', monospace; color: #64748b; font-size: .9em; }
+        .toc-update-btn {
+            display: inline-block; margin-top: 14px; padding: 6px 14px;
+            background: var(--primary); color: white; border-radius: 6px;
+            font-size: .78em; font-weight: 600; cursor: default;
+        }
+
+        /* ── Legenda ABNT demo ── */
+        .caption-demo {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 16px 0;
+        }
+        .caption-img-area {
+            background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4338ca;
+            font-size: .8em;
+            font-weight: 600;
+        }
+        .caption-above { background: #fefce8; padding: 6px 12px; font-size: .8em; border-bottom: 1px solid #fde68a; }
+        .caption-below { background: #f8fafc; padding: 6px 12px; font-size: .78em; color: #64748b; border-top: 1px solid #e2e8f0; }
+        .caption-label { font-size: .68em; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; padding: 3px 7px; border-radius: 4px; margin-bottom: 4px; display: inline-block; }
+        .caption-label.acima { background: #fde68a; color: #92400e; }
+        .caption-label.abaixo { background: #e0e7ff; color: #3730a3; }
+
+        /* ── Referências cruzadas ── */
+        .crossref-flow {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 14px 0;
+            flex-wrap: wrap;
+        }
+        .crossref-box {
+            flex: 1;
+            min-width: 140px;
+            border-radius: 10px;
+            padding: 12px 14px;
+            text-align: center;
+            font-size: .82em;
+        }
+        .crossref-box.origem { background: #eff6ff; border: 2px solid #93c5fd; color: #1d4ed8; }
+        .crossref-box.destino { background: #f0fdf4; border: 2px solid #86efac; color: #15803d; }
+        .crossref-arrow { font-size: 1.4em; color: #94a3b8; }
+        .crossref-box strong { display: block; font-size: 1.05em; margin-bottom: 3px; }
+
+        /* ── Nota de rodapé demo ── */
+        .footnote-demo {
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 16px 0;
+            font-size: .84em;
+        }
+        .fn-body {
+            padding: 14px 16px;
+            background: white;
+            color: #374151;
+        }
+        .fn-body .fn-sup { vertical-align: super; font-size: .75em; color: var(--primary); font-weight: 700; }
+        .fn-separator { border: none; border-top: 1px solid #cbd5e0; margin: 0 16px; }
+        .fn-area {
+            padding: 10px 16px;
+            background: #f8fafc;
+            font-size: .87em;
+            color: #475569;
+        }
+        .fn-area .fn-num { color: var(--primary); font-weight: 700; margin-right: 4px; }
+
+        /* ── Controle de alterações ── */
+        .track-demo {
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 16px;
+            margin: 14px 0;
+            background: white;
+            font-size: .88em;
+            line-height: 1.9;
+        }
+        .track-del { text-decoration: line-through; color: #dc2626; background: #fee2e2; padding: 0 2px; border-radius: 2px; }
+        .track-ins { color: #15803d; background: #dcfce7; padding: 0 2px; border-radius: 2px; text-decoration: underline; }
+        .track-comment-mark { background: #fef9c3; color: #92400e; padding: 0 2px; border-radius: 2px; border-bottom: 2px solid #f59e0b; cursor: default; }
+        .track-balloon {
+            margin-top: 10px;
+            border-left: 3px solid #f59e0b;
+            background: #fffbeb;
+            padding: 8px 12px;
+            border-radius: 0 8px 8px 0;
+            font-size: .85em;
+        }
+        .track-balloon .balloon-author { font-weight: 700; color: #92400e; font-size: .85em; }
+        .track-balloon .balloon-text { color: #78350f; }
+
+        /* ── Ações de revisão ── */
+        .review-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 10px;
+            margin: 14px 0;
+        }
+        .review-item {
+            border-radius: 10px;
+            padding: 14px;
+            border-left: 4px solid var(--primary);
+            background: #fff5f2;
+        }
+        .review-item strong { display: block; font-size: .88em; color: var(--primary); margin-bottom: 4px; }
+        .review-item span   { font-size: .78em; color: #475569; }
+
+        /* ── OneDrive colaboração ── */
+        .colab-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 14px 0;
+        }
+        .colab-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 12px 16px;
+        }
+        .colab-num {
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            width: 26px;
+            height: 26px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .8em;
+            font-weight: 700;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .colab-text strong { display: block; font-size: .9em; color: #1e293b; margin-bottom: 2px; }
+        .colab-text span   { font-size: .8em; color: #64748b; }
+
+        /* ── Atalhos ── */
+        .shortcut-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 8px;
+            margin: 14px 0;
+        }
+        .shortcut-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 10px 14px;
+        }
+        .shortcut-item .kbd-sm { min-width: fit-content; }
+        .shortcut-desc { font-size: .83em; color: #374151; }
+
+        /* ── Boas práticas ── */
+        .boas-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(200px,1fr)); gap: 12px; margin: 16px 0; }
+        .boa-item { background: #fff7ed; border-radius: 10px; padding: 16px; display: flex; gap: 12px; align-items: flex-start; }
+        .boa-icon { font-size: 1.6em; flex-shrink: 0; }
+        .boa-text strong { display: block; font-size: .88em; color: var(--primary); margin-bottom: 3px; }
+        .boa-text span   { font-size: .8em; color: #475569; }
+
+        /* ── nav ── */
+        .nav-footer { display: flex; justify-content: space-between; margin-top: 40px; padding-bottom: 40px; }
+        .nav-link { text-decoration: none; color: var(--primary); font-weight: 600; padding: 12px 24px; border-radius: 10px; background: white; box-shadow: 0 2px 8px rgba(0,0,0,.05); transition: all .3s; }
+        .nav-link:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,.1); }
+
+        @media (max-width: 768px) {
+            .content-wrapper { padding: 0 15px; }
+            .lesson-hero, .content-card { padding: 25px; }
+            .lesson-hero h1 { font-size: 1.5em; }
+            .crossref-flow { flex-direction: column; }
+            .crossref-arrow { transform: rotate(90deg); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="top-bar">
+    <a href="index.html" class="back-btn">&#x2B05; Voltar ao Dashboard</a>
+    <span class="page-badge">Unidade 4 &mdash; Su&iacute;te de Escrit&oacute;rio</span>
+    <button class="slide-toggle" id="slideToggleBtn">&#x1F4FA; Modo Slide</button>
+</div>
+
+<div class="content-wrapper">
+
+    <div class="lesson-hero">
+        <h1>&#x1F504; Texto: Automatiza&ccedil;&atilde;o e Colabora&ccedil;&atilde;o</h1>
+        <p class="subtitle">Aula 4.7 &mdash; Sum&aacute;rio autom&aacute;tico, legendas ABNT, refer&ecirc;ncias cruzadas, notas de rodap&eacute;, controle de altera&ccedil;&otilde;es e coedita&ccedil;&atilde;o no Microsoft Word</p>
+    </div>
+
+    <!-- CARD 1 — Sumário Automático -->
+    <div class="content-card">
+        <h2>&#x1F4CB; Sum&aacute;rio Autom&aacute;tico</h2>
+        <p>O Word gera um sum&aacute;rio (ou &ldquo;&iacute;ndice&rdquo;) automaticamente com base nos <strong>Estilos de T&iacute;tulo</strong> aplicados ao documento. Isso significa que, se voc&ecirc; usou os estilos <em>T&iacute;tulo 1</em>, <em>T&iacute;tulo 2</em> e <em>T&iacute;tulo 3</em> corretamente, o sum&aacute;rio &eacute; criado em segundos &mdash; e se atualiza automaticamente quando o conte&uacute;do muda de p&aacute;gina.</p>
+
+        <h3>&#x1F449; Como inserir</h3>
+        <ol>
+            <li>Posicione o cursor no local onde o sum&aacute;rio deve aparecer (geralmente ap&oacute;s a capa e o resumo).</li>
+            <li>Acesse <strong>Refer&ecirc;ncias &rarr; Sum&aacute;rio &rarr; Sum&aacute;rio Autom&aacute;tico 1</strong> (ou 2).</li>
+            <li>O Word gera o sum&aacute;rio com p&aacute;ginas e hierarquia automaticamente.</li>
+        </ol>
+
+        <div class="toc-demo">
+            <div class="toc-title">Sum&aacute;rio gerado automaticamente</div>
+            <div class="toc-entry level1">
+                <span>1 Introdu&ccedil;&atilde;o</span>
+                <span class="toc-dots"></span>
+                <span class="toc-page">3</span>
+            </div>
+            <div class="toc-entry level2">
+                <span>1.1 Justificativa</span>
+                <span class="toc-dots"></span>
+                <span class="toc-page">3</span>
+            </div>
+            <div class="toc-entry level2">
+                <span>1.2 Objetivos</span>
+                <span class="toc-dots"></span>
+                <span class="toc-page">4</span>
+            </div>
+            <div class="toc-entry level1">
+                <span>2 Desenvolvimento</span>
+                <span class="toc-dots"></span>
+                <span class="toc-page">5</span>
+            </div>
+            <div class="toc-entry level2">
+                <span>2.1 Metodologia</span>
+                <span class="toc-dots"></span>
+                <span class="toc-page">5</span>
+            </div>
+            <div class="toc-entry level3">
+                <span>2.1.1 Coleta de dados</span>
+                <span class="toc-dots"></span>
+                <span class="toc-page">6</span>
+            </div>
+            <div class="toc-entry level1">
+                <span>3 Conclus&atilde;o</span>
+                <span class="toc-dots"></span>
+                <span class="toc-page">9</span>
+            </div>
+            <div class="toc-entry level1">
+                <span>Refer&ecirc;ncias</span>
+                <span class="toc-dots"></span>
+                <span class="toc-page">10</span>
+            </div>
+            <span class="toc-update-btn">&#x1F504; Atualizar Sum&aacute;rio</span>
+        </div>
+
+        <h3>&#x1F504; Atualizando o sum&aacute;rio</h3>
+        <p>Ap&oacute;s editar o documento, clique com o bot&atilde;o direito sobre o sum&aacute;rio e escolha <strong>Atualizar Campo &rarr; Atualizar o sum&aacute;rio inteiro</strong>. Tamb&eacute;m &eacute; poss&iacute;vel pressionar <span class="kbd-sm">F9</span> com o cursor dentro do sum&aacute;rio.</p>
+
+        <div class="alert-box">
+            <p>&#x26A0;&#xFE0F; <strong>Erro comum:</strong> digitar os t&iacute;tulos manualmente sem aplicar estilos. Nesse caso, o sum&aacute;rio autom&aacute;tico fica vazio. Sempre aplique os estilos <em>T&iacute;tulo 1</em>, <em>T&iacute;tulo 2</em> etc. antes de gerar o sum&aacute;rio.</p>
+        </div>
+    </div>
+
+    <!-- CARD 2 — Legendas ABNT -->
+    <div class="content-card">
+        <h2>&#x1F3F7;&#xFE0F; Legendas ABNT</h2>
+        <p>Toda figura, tabela ou gr&aacute;fico em um trabalho acad&ecirc;mico precisa de <strong>legenda</strong>. A norma ABNT NBR 14724 define regras espec&iacute;ficas: a legenda da figura fica <em>acima</em> da imagem, e a fonte (origem da imagem) fica <em>abaixo</em>. O Word possui um recurso de legenda autom&aacute;tica que facilita isso.</p>
+
+        <div class="caption-demo">
+            <div class="caption-above">
+                <div class="caption-label acima">Acima &mdash; ABNT</div>
+                <div>Figura 1 &mdash; Interface do Microsoft Word com a aba Refer&ecirc;ncias ativa</div>
+            </div>
+            <div class="caption-img-area">[ imagem do documento ]</div>
+            <div class="caption-below">
+                <div class="caption-label abaixo">Abaixo &mdash; Fonte</div>
+                Fonte: Elaborado pelo autor (2025).
+            </div>
+        </div>
+
+        <h3>&#x1F449; Como inserir legenda autom&aacute;tica</h3>
+        <ol>
+            <li>Clique na imagem (ou na tabela) para selecion&aacute;-la.</li>
+            <li>Acesse <strong>Refer&ecirc;ncias &rarr; Inserir Legenda</strong>.</li>
+            <li>Escolha o r&oacute;tulo (<em>Figura</em>, <em>Tabela</em> ou <em>Gr&aacute;fico</em>) e a posi&ccedil;&atilde;o (<em>acima</em> ou <em>abaixo</em> do item selecionado).</li>
+            <li>Digite o t&iacute;tulo da legenda ap&oacute;s o n&uacute;mero gerado automaticamente.</li>
+        </ol>
+
+        <div class="tip-box">
+            <p>&#x1F4A1; <strong>Vantagem das legendas autom&aacute;ticas:</strong> a numera&ccedil;&atilde;o &eacute; gerenciada pelo Word. Se voc&ecirc; inserir uma nova figura no meio do documento, os n&uacute;meros de todas as outras figuras s&atilde;o atualizados automaticamente com <span class="kbd-sm">F9</span>.</p>
+        </div>
+
+        <p>Ap&oacute;s inserir as legendas, &eacute; poss&iacute;vel gerar uma <strong>Lista de Figuras</strong> autom&aacute;tica (semelhante ao sum&aacute;rio): acesse <strong>Refer&ecirc;ncias &rarr; Inserir Lista de Figuras</strong>.</p>
+    </div>
+
+    <!-- CARD 3 — Referências Cruzadas -->
+    <div class="content-card">
+        <h2>&#x1F517; Refer&ecirc;ncias Cruzadas</h2>
+        <p>Uma <strong>refer&ecirc;ncia cruzada</strong> &eacute; um link interno dentro do pr&oacute;prio documento. Por exemplo: &ldquo;conforme a Figura 3 (p&aacute;gina 8)&rdquo; ou &ldquo;veja a Se&ccedil;&atilde;o 2.1&rdquo;. Com o recurso do Word, esses links se atualizam automaticamente caso o n&uacute;mero da figura ou o n&uacute;mero da p&aacute;gina mude.</p>
+
+        <div class="crossref-flow">
+            <div class="crossref-box origem">
+                <strong>Ponto de origem</strong>
+                Texto onde aparece &ldquo;veja a Figura 3&rdquo;
+            </div>
+            <div class="crossref-arrow">&#x27A1;</div>
+            <div class="crossref-box destino">
+                <strong>Destino</strong>
+                Legenda &ldquo;Figura 3 &mdash; T&iacute;tulo&rdquo; na p&aacute;gina 8
+            </div>
+        </div>
+
+        <h3>&#x1F449; Como inserir</h3>
+        <ol>
+            <li>Posicione o cursor onde voc&ecirc; quer inserir a refer&ecirc;ncia (ex.: dentro de um par&aacute;grafo).</li>
+            <li>Acesse <strong>Refer&ecirc;ncias &rarr; Refer&ecirc;ncia Cruzada</strong>.</li>
+            <li>Escolha o tipo (<em>Figura</em>, <em>Tabela</em>, <em>T&iacute;tulo</em>, <em>Nota de rodap&eacute;</em>) e o item espec&iacute;fico da lista.</li>
+            <li>Selecione o que inserir: n&uacute;mero, p&aacute;gina, texto ou apenas o r&oacute;tulo.</li>
+        </ol>
+
+        <div class="highlight-box">
+            <p>&#x1F4A1; Para atualizar todas as refer&ecirc;ncias cruzadas de uma vez, pressione <span class="kbd-sm">Ctrl+A</span> para selecionar o documento inteiro e depois <span class="kbd-sm">F9</span> para atualizar todos os campos.</p>
+        </div>
+    </div>
+
+    <!-- CARD 4 — Notas de Rodapé -->
+    <div class="content-card">
+        <h2>&#x1F4DD; Notas de Rodap&eacute;</h2>
+        <p>Notas de rodap&eacute; s&atilde;o usadas para incluir observa&ccedil;&otilde;es, explica&ccedil;&otilde;es complementares ou cita&ccedil;&otilde;es que n&atilde;o cabem no corpo principal do texto sem interromper a leitura. Aparecem na parte inferior da p&aacute;gina onde s&atilde;o inseridas, separadas do texto por uma linha horizontal.</p>
+
+        <div class="footnote-demo">
+            <div class="fn-body">
+                O Microsoft Word &eacute; o processador de texto mais utilizado no ambiente corporativo e acad&ecirc;mico no Brasil<span class="fn-sup">1</span>, sendo adotado como padr&atilde;o na maioria das institui&ccedil;&otilde;es de ensino do pa&iacute;s.
+            </div>
+            <hr class="fn-separator">
+            <div class="fn-area">
+                <span class="fn-num">1</span> Dados da Microsoft Corporation referentes ao uso corporativo da su&iacute;te Microsoft 365 no Brasil, 2024.
+            </div>
+        </div>
+
+        <h3>&#x1F449; Inserindo notas de rodap&eacute;</h3>
+        <ul>
+            <li>Posicione o cursor ap&oacute;s a palavra ou frase que receber&aacute; a nota.</li>
+            <li>Acesse <strong>Refer&ecirc;ncias &rarr; Inserir Nota de Rodap&eacute;</strong> ou pressione <span class="kbd-sm">Alt+Ctrl+F</span>.</li>
+            <li>O cursor vai automaticamente para o &aacute;rea de notas na parte inferior da p&aacute;gina. Digite o texto da nota.</li>
+            <li>Pressione <span class="kbd-sm">Esc</span> ou clique no corpo do texto para retornar.</li>
+        </ul>
+
+        <div class="tip-box">
+            <p>&#x1F4A1; As notas de rodap&eacute; s&atilde;o numeradas automaticamente. Se voc&ecirc; remover ou reordenar notas, a numera&ccedil;&atilde;o &eacute; ajustada pelo Word sem esfor&ccedil;o manual. Para <strong>notas de fim</strong> (que aparecem ao final do documento, n&atilde;o da p&aacute;gina), use <strong>Refer&ecirc;ncias &rarr; Inserir Nota de Fim</strong>.</p>
+        </div>
+    </div>
+
+    <!-- CARD 5 — Controle de Alterações -->
+    <div class="content-card">
+        <h2>&#x270F;&#xFE0F; Controle de Altera&ccedil;&otilde;es</h2>
+        <p>O <strong>Controle de Altera&ccedil;&otilde;es</strong> (aba <strong>Revis&atilde;o</strong>) registra cada modifica&ccedil;&atilde;o feita no documento: textos inseridos aparecem sublinhados em verde, textos removidos aparecem tachados em vermelho. O autor original pode aceitar ou rejeitar cada altera&ccedil;&atilde;o individualmente.</p>
+
+        <div class="track-demo">
+            O aluno deve entregar o trabalho <span class="track-del">at&eacute; sexta-feira</span> <span class="track-ins">at&eacute; segunda-feira</span>, acompanhado de uma <span class="track-comment-mark">apresenta&ccedil;&atilde;o oral</span>.
+            <div class="track-balloon">
+                <div class="balloon-author">&#x1F4AC; Prof. Azevedo &mdash; Revis&atilde;o</div>
+                <div class="balloon-text">A apresenta&ccedil;&atilde;o ser&aacute; realizada em grupo ou individual? Deixar claro nas instru&ccedil;&otilde;es.</div>
+            </div>
+        </div>
+
+        <h3>&#x2699;&#xFE0F; Ativando o controle</h3>
+        <ul>
+            <li>Acesse <strong>Revis&atilde;o &rarr; Controlar Altera&ccedil;&otilde;es</strong> (ou <span class="kbd-sm">Ctrl+Shift+E</span>) para ativar/desativar o registro.</li>
+            <li>Todas as edi&ccedil;&otilde;es feitas enquanto ativado ser&atilde;o marcadas com a cor do revisor e seu nome.</li>
+        </ul>
+
+        <div class="review-actions">
+            <div class="review-item">
+                <strong>Aceitar altera&ccedil;&atilde;o</strong>
+                <span>Incorpora a mudan&ccedil;a ao texto definitivo e remove a marca. Revis&atilde;o &rarr; Aceitar.</span>
+            </div>
+            <div class="review-item">
+                <strong>Rejeitar altera&ccedil;&atilde;o</strong>
+                <span>Descarta a mudan&ccedil;a e retorna ao texto original. Revis&atilde;o &rarr; Rejeitar.</span>
+            </div>
+            <div class="review-item">
+                <strong>Aceitar tudo</strong>
+                <span>Aceita todas as altera&ccedil;&otilde;es de uma vez. &Uacute;til ao finalizar um ciclo de revis&atilde;o.</span>
+            </div>
+            <div class="review-item">
+                <strong>Painel de revis&otilde;es</strong>
+                <span>Exibe lista lateral com todas as altera&ccedil;&otilde;es e coment&aacute;rios do documento.</span>
+            </div>
+        </div>
+
+        <h3>&#x1F4AC; Coment&aacute;rios</h3>
+        <p>Al&eacute;m de rastrear altera&ccedil;&otilde;es, &eacute; poss&iacute;vel inserir <strong>coment&aacute;rios</strong> sem modificar o texto: selecione o trecho e acesse <strong>Revis&atilde;o &rarr; Novo Coment&aacute;rio</strong> (ou <span class="kbd-sm">Ctrl+Alt+M</span>). Os coment&aacute;rios aparecem como bal&otilde;es na lateral do documento e s&atilde;o identificados pelo nome do autor.</p>
+
+        <div class="alert-box">
+            <p>&#x26A0;&#xFE0F; <strong>Aten&ccedil;&atilde;o antes de entregar:</strong> sempre verifique se o documento n&atilde;o cont&eacute;m altera&ccedil;&otilde;es pendentes ou coment&aacute;rios vis&iacute;veis antes de enviar para o professor. Use <strong>Revis&atilde;o &rarr; Aceitar Tudo</strong> e exclua todos os coment&aacute;rios.</p>
+        </div>
+    </div>
+
+    <!-- CARD 6 — Co-autoria e OneDrive -->
+    <div class="content-card">
+        <h2>&#x2601;&#xFE0F; Co-autoria e Colabora&ccedil;&atilde;o OneDrive</h2>
+        <p>Com o documento salvo no <strong>OneDrive</strong> (ou SharePoint), v&aacute;rias pessoas podem editar o mesmo arquivo simultaneamente. O Word exibe cursores coloridos de cada colaborador em tempo real, sem necessidade de enviar o arquivo por e-mail a cada edi&ccedil;&atilde;o.</p>
+
+        <div class="colab-steps">
+            <div class="colab-step">
+                <div class="colab-num">1</div>
+                <div class="colab-text">
+                    <strong>Salvar na nuvem</strong>
+                    <span>Arquivo &rarr; Salvar como &rarr; OneDrive &rarr; escolha a pasta desejada. O arquivo passa a ser um documento na nuvem, com URL pr&oacute;pria.</span>
+                </div>
+            </div>
+            <div class="colab-step">
+                <div class="colab-num">2</div>
+                <div class="colab-text">
+                    <strong>Compartilhar o documento</strong>
+                    <span>Clique em <strong>Compartilhar</strong> no canto superior direito &rarr; insira os e-mails dos colaboradores ou copie o link. Defina permiss&atilde;o: <em>Pode editar</em> ou <em>Pode exibir</em>.</span>
+                </div>
+            </div>
+            <div class="colab-step">
+                <div class="colab-num">3</div>
+                <div class="colab-text">
+                    <strong>Coedi&ccedil;&atilde;o em tempo real</strong>
+                    <span>Cada colaborador abre o link no Word ou no navegador (Word Online). Os cursores aparecem com o nome de cada pessoa. As altera&ccedil;&otilde;es s&atilde;o sincronizadas automaticamente.</span>
+                </div>
+            </div>
+            <div class="colab-step">
+                <div class="colab-num">4</div>
+                <div class="colab-text">
+                    <strong>Hist&oacute;rico de vers&otilde;es</strong>
+                    <span>Arquivo &rarr; Informa&ccedil;&otilde;es &rarr; Hist&oacute;rico de vers&otilde;es. O Word salva snapshots autom&aacute;ticos do documento, permitindo restaurar qualquer vers&atilde;o anterior.</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="highlight-box">
+            <p>&#x1F4A1; O IFRN disponibiliza o <strong>Microsoft 365</strong> (incluindo OneDrive com 1 TB) gratuitamente para todos os alunos matriculados, atrav&eacute;s do e-mail institucional <em>@escolar.ifrn.edu.br</em>. Use esse recurso para seus trabalhos em grupo.</p>
+        </div>
+    </div>
+
+    <!-- CARD 7 — Atalhos de Referências -->
+    <div class="content-card">
+        <h2>&#x2328;&#xFE0F; Atalhos de Refer&ecirc;ncias e Revis&atilde;o</h2>
+        <div class="shortcut-grid">
+            <div class="shortcut-item">
+                <span class="kbd-sm">Alt+Ctrl+F</span>
+                <span class="shortcut-desc">Inserir nota de rodap&eacute;</span>
+            </div>
+            <div class="shortcut-item">
+                <span class="kbd-sm">Ctrl+Shift+E</span>
+                <span class="shortcut-desc">Ativar/desativar controle de altera&ccedil;&otilde;es</span>
+            </div>
+            <div class="shortcut-item">
+                <span class="kbd-sm">Ctrl+Alt+M</span>
+                <span class="shortcut-desc">Inserir coment&aacute;rio</span>
+            </div>
+            <div class="shortcut-item">
+                <span class="kbd-sm">F9</span>
+                <span class="shortcut-desc">Atualizar campo (sum&aacute;rio, legenda, refer&ecirc;ncia)</span>
+            </div>
+            <div class="shortcut-item">
+                <span class="kbd-sm">Ctrl+A</span> + <span class="kbd-sm">F9</span>
+                <span class="shortcut-desc">Atualizar todos os campos do documento</span>
+            </div>
+            <div class="shortcut-item">
+                <span class="kbd-sm">Alt+Shift+I</span>
+                <span class="shortcut-desc">Marcar entrada de &iacute;ndice</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- CARD 8 — Boas Práticas -->
+    <div class="content-card">
+        <h2>&#x2705; Boas Pr&aacute;ticas de Automatiza&ccedil;&atilde;o</h2>
+        <div class="boas-grid">
+            <div class="boa-item">
+                <div class="boa-icon">&#x1F4CB;</div>
+                <div class="boa-text">
+                    <strong>Sum&aacute;rio sempre por &uacute;ltimo</strong>
+                    <span>Gere o sum&aacute;rio somente quando o documento estiver quase finalizado. Atualize com F9 antes de imprimir.</span>
+                </div>
+            </div>
+            <div class="boa-item">
+                <div class="boa-icon">&#x1F3F7;&#xFE0F;</div>
+                <div class="boa-text">
+                    <strong>Use legendas autom&aacute;ticas</strong>
+                    <span>Nunca numere figuras manualmente. Inserir Legenda garante numera&ccedil;&atilde;o consistente e lista de figuras autom&aacute;tica.</span>
+                </div>
+            </div>
+            <div class="boa-item">
+                <div class="boa-icon">&#x270F;&#xFE0F;</div>
+                <div class="boa-text">
+                    <strong>Aceite altera&ccedil;&otilde;es antes de entregar</strong>
+                    <span>Documentos com marcas vis&iacute;veis de revis&atilde;o revelam o hist&oacute;rico de edi&ccedil;&atilde;o. Aceite tudo e remova coment&aacute;rios antes de enviar.</span>
+                </div>
+            </div>
+            <div class="boa-item">
+                <div class="boa-icon">&#x2601;&#xFE0F;</div>
+                <div class="boa-text">
+                    <strong>Prefira OneDrive ao e-mail</strong>
+                    <span>Compartilhar via link evita m&uacute;ltiplas vers&otilde;es do mesmo arquivo circulando por e-mail. Um link, um documento atualizado.</span>
+                </div>
+            </div>
+            <div class="boa-item">
+                <div class="boa-icon">&#x1F517;</div>
+                <div class="boa-text">
+                    <strong>Refer&ecirc;ncias cruzadas s&atilde;o links</strong>
+                    <span>Segure Ctrl e clique em uma refer&ecirc;ncia cruzada para navegar diretamente ao elemento referenciado &mdash; funciona no Word e no PDF exportado.</span>
+                </div>
+            </div>
+            <div class="boa-item">
+                <div class="boa-icon">&#x23F3;</div>
+                <div class="boa-text">
+                    <strong>Hist&oacute;rico de vers&otilde;es &eacute; seu backup</strong>
+                    <span>Com o documento no OneDrive, o Word salva vers&otilde;es autom&aacute;ticas. Voc&ecirc; pode voltar a qualquer ponto sem precisa de backup manual.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- EXERCÍCIO -->
+    <div class="content-card exercise-card">
+        <h2>&#x1F3AF; Exerc&iacute;cio &mdash; Arraste e Conecte</h2>
+        <p style="color:#475569;font-size:.9em;margin-bottom:4px;">Arraste cada descri&ccedil;&atilde;o para o recurso correto do Word.</p>
+
+        <div class="ex-drag-root" data-ex="ex47">
+            <div class="ex-drag">
+                <div>
+                    <div class="ex-col-title">Descri&ccedil;&atilde;o</div>
+                    <div class="ex-pool" data-pool="ex47">
+                        <div class="drag-chip" data-id="c1">Gera automaticamente a lista de se&ccedil;&otilde;es do documento com n&uacute;meros de p&aacute;gina, a partir dos estilos de t&iacute;tulo aplicados</div>
+                        <div class="drag-chip" data-id="c2">Identifica texto inserido em verde sublinhado e texto removido em vermelho tachado durante uma revis&atilde;o</div>
+                        <div class="drag-chip" data-id="c3">Texto explicativo que aparece na parte inferior da p&aacute;gina, vinculado a uma marca num&eacute;rica sobrescrita no corpo do texto</div>
+                        <div class="drag-chip" data-id="c4">Inserc&atilde;o autom&aacute;tica de &ldquo;veja a Figura 3&rdquo; no texto, com n&uacute;mero que se atualiza se a figura mudar de posi&ccedil;&atilde;o</div>
+                        <div class="drag-chip" data-id="c5">Permite que m&uacute;ltiplas pessoas editem o mesmo documento simultaneamente, com cursores coloridos identificando cada colaborador</div>
+                        <div class="drag-chip" data-id="c6">T&iacute;tulo descritivo colocado acima de figuras e gr&aacute;ficos em documentos ABNT, gerado automaticamente com numera&ccedil;&atilde;o sequencial</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="ex-col-title">Recurso do Word</div>
+                    <div class="ex-zones" data-zones="ex47">
+                        <div class="drop-zone" data-zone="ex47-z1" data-accept="c1">
+                            <span class="zone-name">Sum&aacute;rio Autom&aacute;tico</span>
+                            <div class="zone-slot"></div>
+                            <div class="zone-feedback"></div>
+                        </div>
+                        <div class="drop-zone" data-zone="ex47-z2" data-accept="c2">
+                            <span class="zone-name">Controle de Altera&ccedil;&otilde;es</span>
+                            <div class="zone-slot"></div>
+                            <div class="zone-feedback"></div>
+                        </div>
+                        <div class="drop-zone" data-zone="ex47-z3" data-accept="c3">
+                            <span class="zone-name">Nota de Rodap&eacute;</span>
+                            <div class="zone-slot"></div>
+                            <div class="zone-feedback"></div>
+                        </div>
+                        <div class="drop-zone" data-zone="ex47-z4" data-accept="c4">
+                            <span class="zone-name">Refer&ecirc;ncia Cruzada</span>
+                            <div class="zone-slot"></div>
+                            <div class="zone-feedback"></div>
+                        </div>
+                        <div class="drop-zone" data-zone="ex47-z5" data-accept="c5">
+                            <span class="zone-name">Co-autoria OneDrive</span>
+                            <div class="zone-slot"></div>
+                            <div class="zone-feedback"></div>
+                        </div>
+                        <div class="drop-zone" data-zone="ex47-z6" data-accept="c6">
+                            <span class="zone-name">Legenda Autom&aacute;tica</span>
+                            <div class="zone-slot"></div>
+                            <div class="zone-feedback"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ex-actions">
+            <button class="btn-verificar" onclick="dragVerify('ex47')">Verificar</button>
+            <button class="btn-refazer"  onclick="dragReset('ex47')">Refazer</button>
+        </div>
+        <div class="ex-result" id="ex47-result"></div>
+    </div>
+
+    <!-- ATIVIDADE PRÁTICA 4.7 -->
+    <div class="content-card practical-card" id="prat-47">
+        <h2>&#x1F6E0;&#xFE0F; Atividade Pr&aacute;tica &mdash; Documento Acad&ecirc;mico Completo</h2>
+        <div class="prat-meta">
+            <span class="prat-tag">&#x23F1; ~55 min</span>
+            <span class="prat-tag">&#x1F4BB; Microsoft Word + OneDrive</span>
+            <span class="prat-tag">&#x1F4BE; Salvar como .docx e compartilhar link</span>
+        </div>
+
+        <div class="prat-steps">
+            <div class="prat-step">
+                <div class="step-num">1</div>
+                <div class="step-body">
+                    <div class="step-label">Abra e organize o documento da aula anterior</div>
+                    <div class="step-desc">Abra o arquivo <strong>Trabalho_SeuNome.docx</strong> criado na Aula 4.6. Verifique que as margens ABNT est&atilde;o corretas (3 cm superior/esquerdo, 2 cm inferior/direito) e que os t&iacute;tulos usam estilos <em>T&iacute;tulo 1</em>, <em>T&iacute;tulo 2</em> e os par&aacute;grafos usam estilo <em>Normal</em>. Se necess&aacute;rio, corrija os estilos antes de continuar.</div>
+                </div>
+            </div>
+            <div class="prat-step">
+                <div class="step-num">2</div>
+                <div class="step-body">
+                    <div class="step-label">Insira um sum&aacute;rio autom&aacute;tico</div>
+                    <div class="step-desc">Logo ap&oacute;s a p&aacute;gina de t&iacute;tulo (insira <strong>Ctrl+Enter</strong> para uma nova p&aacute;gina), posicione o cursor e acesse <strong>Refer&ecirc;ncias &rarr; Sum&aacute;rio &rarr; Sum&aacute;rio Autom&aacute;tico 1</strong>. O sum&aacute;rio deve listar todas as se&ccedil;&otilde;es com seus n&uacute;meros de p&aacute;gina. Se aparecer vazio, verifique se os estilos de t&iacute;tulo foram aplicados corretamente (passo anterior).</div>
+                </div>
+            </div>
+            <div class="prat-step">
+                <div class="step-num">3</div>
+                <div class="step-body">
+                    <div class="step-label">Adicione legenda autom&aacute;tica a uma imagem</div>
+                    <div class="step-desc">Selecione a imagem j&aacute; inserida no documento. Acesse <strong>Refer&ecirc;ncias &rarr; Inserir Legenda</strong>. Escolha o r&oacute;tulo <em>Figura</em> e a posi&ccedil;&atilde;o <em>Acima do item selecionado</em>. Digite um t&iacute;tulo descritivo ap&oacute;s o n&uacute;mero. Abaixo da imagem, escreva manualmente a fonte: <em>Fonte: Elaborado pelo autor (2025).</em></div>
+                </div>
+            </div>
+            <div class="prat-step">
+                <div class="step-num">4</div>
+                <div class="step-body">
+                    <div class="step-label">Insira nota de rodap&eacute; e refer&ecirc;ncia cruzada</div>
+                    <div class="step-desc">No texto, selecione uma palavra ou trecho e pressione <span style="font-family:monospace;background:#1e293b;color:#e2e8f0;padding:1px 5px;border-radius:3px;font-size:.85em;">Alt+Ctrl+F</span> para inserir uma nota de rodap&eacute;. Digite uma explica&ccedil;&atilde;o ou fonte bibliogr&aacute;fica. Em outro par&aacute;grafo, crie uma refer&ecirc;ncia cruzada para a figura: acesse <strong>Refer&ecirc;ncias &rarr; Refer&ecirc;ncia Cruzada &rarr; Figura &rarr; Somente o r&oacute;tulo e o n&uacute;mero</strong>. O texto &ldquo;Figura 1&rdquo; aparecer&aacute; como link interno.</div>
+                </div>
+            </div>
+            <div class="prat-step">
+                <div class="step-num">5</div>
+                <div class="step-body">
+                    <div class="step-label">Simule uma revis&atilde;o com controle de altera&ccedil;&otilde;es</div>
+                    <div class="step-desc">Ative <strong>Revis&atilde;o &rarr; Controlar Altera&ccedil;&otilde;es</strong> (<span style="font-family:monospace;background:#1e293b;color:#e2e8f0;padding:1px 5px;border-radius:3px;font-size:.85em;">Ctrl+Shift+E</span>). Fa&ccedil;a pelo menos duas modifica&ccedil;&otilde;es no texto (altere uma frase, remova um par&aacute;grafo). Observe as marcas de inser&ccedil;&atilde;o e remo&ccedil;&atilde;o coloridas. Insira um coment&aacute;rio em um trecho selecionado (<span style="font-family:monospace;background:#1e293b;color:#e2e8f0;padding:1px 5px;border-radius:3px;font-size:.85em;">Ctrl+Alt+M</span>). Depois desative o controle e use <strong>Aceitar Tudo</strong> para limpar as marcas.</div>
+                </div>
+            </div>
+            <div class="prat-step">
+                <div class="step-num">6</div>
+                <div class="step-body">
+                    <div class="step-label">Atualize o sum&aacute;rio e exporte o PDF final</div>
+                    <div class="step-desc">Pressione <strong>Ctrl+A</strong> para selecionar o documento todo e <strong>F9</strong> para atualizar todos os campos (sum&aacute;rio, legendas, refer&ecirc;ncias cruzadas). Confirme &ldquo;Atualizar o sum&aacute;rio inteiro&rdquo;. Verifique se o sum&aacute;rio reflete as p&aacute;ginas corretas. Exporte o documento: <strong>Arquivo &rarr; Exportar &rarr; Criar PDF/XPS</strong>. Abra o PDF e teste clicar nas refer&ecirc;ncias cruzadas &mdash; elas devem navegar diretamente para a figura.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="prat-observe">
+            <strong>&#x1F4CC; Para refletir:</strong> Os recursos de automatiza&ccedil;&atilde;o do Word &mdash; sum&aacute;rio, legendas, refer&ecirc;ncias cruzadas e controle de altera&ccedil;&otilde;es &mdash; existem para eliminar trabalho repetitivo e reduzir erros humanos. Um documento bem estruturado desde a formata&ccedil;&atilde;o (Aulas 4.5 e 4.6) permite que esses recursos funcionem de forma integrada, tornando a produ&ccedil;&atilde;o acad&ecirc;mica mais eficiente e profissional.
+        </div>
+
+        <div class="ex-actions">
+            <button class="btn-print" onclick="printPractical('prat-47', 'Aula 4.7 \u2014 Texto: Automatiza\u00e7\u00e3o e Colabora\u00e7\u00e3o')">&#x1F5A8;&#xFE0F; Imprimir roteiro</button>
+        </div>
+    </div>
+
+    <div class="nav-footer">
+        <a href="uni4-06-texto-estrutura.html" class="nav-link">&#x2B05; Anterior: Texto &mdash; Estrutura</a>
+        <a href="uni4-08-planilhas-dados.html" class="nav-link">Pr&oacute;xima: Planilhas &mdash; Dados &#x27A1;</a>
+    </div>
+
+</div>
+
+<script src="slide-mode.js"></script>
+<script src="exercise-drag.js"></script>
+<script src="exercise-print.js"></script>
+</body>
+</html>
