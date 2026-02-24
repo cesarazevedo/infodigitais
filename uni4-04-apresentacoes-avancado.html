@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 4.4 - Apresenta&ccedil;&otilde;es: Recursos Avan&ccedil;ados</title>
+    <link rel="stylesheet" href="slide-mode.css">
+    <link rel="stylesheet" href="exercise.css">
+    <style>
+        :root {
+            --primary: #bf360c;
+            --secondary: #870000;
+            --bg-light: #f0f4f8;
+            --text-dark: #1a202c;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        .top-bar {
+            background: white;
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .back-btn {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+        .back-btn:hover { background: rgba(191,54,12,0.08); }
+
+        .page-badge {
+            font-size: 0.8em;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: rgba(191,54,12,0.12);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .content-wrapper {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 30px;
+        }
+
+        .lesson-hero {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            border-top: 4px solid var(--primary);
+        }
+        .lesson-hero h1 { font-size: 2em; margin-bottom: 10px; color: var(--primary); }
+        .lesson-hero .subtitle { font-size: 1.05em; color: #718096; }
+
+        .content-card {
+            background: white;
+            border-radius: 16px;
+            padding: 35px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+        .content-card h2 {
+            font-size: 1.4em;
+            color: var(--primary);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .content-card h3 { font-size: 1.05em; color: var(--secondary); margin: 20px 0 10px; }
+        .content-card p  { margin-bottom: 15px; text-align: justify; }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(191,54,12,0.05), rgba(135,0,0,0.06));
+            border-left: 4px solid var(--primary);
+            padding: 20px 25px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+        }
+        .highlight-box p { margin-bottom: 0; font-style: italic; }
+
+        .alert-box {
+            background: #fff8e1;
+            border-left: 4px solid #f59e0b;
+            padding: 18px 22px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+        }
+        .alert-box p { margin: 0; color: #78350f; font-size: 0.93em; }
+
+        .tip-box {
+            background: #f0fdf4;
+            border-left: 4px solid #16a34a;
+            padding: 18px 22px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+        }
+        .tip-box p { margin: 0; color: #14532d; font-size: 0.93em; }
+
+        ul, ol { margin: 10px 0 15px 25px; }
+        li { margin-bottom: 8px; }
+
+        /* ── Transições: galeria visual ── */
+        .transicoes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin: 16px 0;
+        }
+        .trans-group {
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+        }
+        .trans-header {
+            padding: 6px 10px;
+            font-size: 0.74em;
+            font-weight: 700;
+            text-align: center;
+        }
+        .trans-header.sutil  { background: #eff6ff; color: #1d4ed8; }
+        .trans-header.anim   { background: #f0fdf4; color: #15803d; }
+        .trans-header.divert { background: #fdf4ff; color: #7e22ce; }
+        .trans-items { padding: 6px 8px; background: #f8fafc; }
+        .trans-item {
+            font-size: 0.76em;
+            color: #475569;
+            padding: 3px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .trans-item:last-child { border-bottom: none; }
+
+        /* ── Animações: quatro tipos ── */
+        .anim-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .anim-type {
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+        .at-entrada  { background: #eff6ff; border-top: 3px solid #2563eb; }
+        .at-enfase   { background: #fef3c7; border-top: 3px solid #d97706; }
+        .at-saida    { background: #fef2f2; border-top: 3px solid #ef4444; }
+        .at-trajet   { background: #f0fdf4; border-top: 3px solid #16a34a; }
+        .at-icon { font-size: 2em; margin-bottom: 8px; }
+        .at-name { font-size: 0.9em; font-weight: 700; margin-bottom: 4px; }
+        .at-entrada .at-name  { color: #1d4ed8; }
+        .at-enfase  .at-name  { color: #b45309; }
+        .at-saida   .at-name  { color: #dc2626; }
+        .at-trajet  .at-name  { color: #15803d; }
+        .at-desc { font-size: 0.76em; color: #475569; }
+        .at-exemplos { font-size: 0.72em; color: #94a3b8; margin-top: 6px; font-style: italic; }
+
+        /* ── Painel de Animação simulado ── */
+        .painel-anim {
+            background: #1e293b;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 16px 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        .pa-header {
+            background: #334155;
+            padding: 8px 14px;
+            font-size: 0.8em;
+            color: #e2e8f0;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .pa-body { padding: 10px; display: flex; flex-direction: column; gap: 4px; }
+        .pa-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #334155;
+            border-radius: 6px;
+            padding: 7px 10px;
+        }
+        .pa-num {
+            background: var(--primary);
+            color: white;
+            min-width: 22px; height: 22px;
+            border-radius: 4px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.72em; font-weight: 700;
+        }
+        .pa-icon { font-size: 1em; }
+        .pa-label { font-size: 0.76em; color: #e2e8f0; flex: 1; }
+        .pa-timing { font-size: 0.68em; color: #94a3b8; white-space: nowrap; }
+        .pa-start {
+            font-size: 0.65em;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+        .pa-start.click { background: rgba(37,99,235,0.3); color: #93c5fd; }
+        .pa-start.with  { background: rgba(22,163,74,0.3); color: #86efac; }
+        .pa-start.after { background: rgba(217,119,6,0.3); color: #fcd34d; }
+
+        /* ── Início da animação ── */
+        .inicio-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 14px 0;
+        }
+        .inicio-item {
+            border-radius: 10px;
+            padding: 14px;
+            text-align: center;
+        }
+        .in-click { background: #eff6ff; border-top: 3px solid #2563eb; }
+        .in-with  { background: #f0fdf4; border-top: 3px solid #16a34a; }
+        .in-after { background: #fff7ed; border-top: 3px solid #f59e0b; }
+        .in-icon { font-size: 1.6em; margin-bottom: 6px; }
+        .in-name { font-size: 0.82em; font-weight: 700; margin-bottom: 3px; }
+        .in-click .in-name { color: #1d4ed8; }
+        .in-with  .in-name { color: #15803d; }
+        .in-after .in-name { color: #b45309; }
+        .in-desc { font-size: 0.74em; color: #475569; }
+
+        /* ── Modo Apresentador ── */
+        .modo-apres {
+            background: #0f172a;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 16px 0;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+        }
+        .ma-barra {
+            background: #1e293b;
+            padding: 8px 14px;
+            font-size: 0.78em;
+            color: #94a3b8;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .ma-body {
+            display: grid;
+            grid-template-columns: 1.6fr 1fr;
+            gap: 10px;
+            padding: 12px;
+        }
+        .ma-slide-atual {
+            background: white;
+            border-radius: 6px;
+            aspect-ratio: 16/9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .ma-slide-atual span { font-size: 0.8em; color: #475569; font-weight: 600; }
+        .ma-right { display: flex; flex-direction: column; gap: 8px; }
+        .ma-proximo {
+            background: #1e293b;
+            border-radius: 6px;
+            aspect-ratio: 16/9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .ma-proximo span { font-size: 0.68em; color: #64748b; }
+        .ma-notas {
+            background: #1e293b;
+            border-radius: 6px;
+            padding: 8px;
+            flex: 1;
+        }
+        .ma-notas p { font-size: 0.68em; color: #94a3b8; margin: 0; }
+        .ma-footer {
+            background: #1e293b;
+            padding: 6px 14px;
+            display: flex;
+            gap: 14px;
+            align-items: center;
+        }
+        .ma-btn {
+            background: #334155;
+            color: #e2e8f0;
+            border-radius: 6px;
+            padding: 4px 10px;
+            font-size: 0.72em;
+        }
+        .ma-timer { font-size: 0.78em; color: #60a5fa; font-weight: 700; margin-left: auto; }
+
+        /* ── Atalhos apresentação ── */
+        .atalhos-apres {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 8px;
+            margin: 14px 0;
+        }
+        .atal-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            background: #f8fafc;
+            border-radius: 8px;
+        }
+        .kbd {
+            background: #1e293b;
+            color: #e2e8f0;
+            border-radius: 5px;
+            padding: 3px 8px;
+            font-family: 'Consolas', monospace;
+            font-size: 0.78em;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .atal-desc { font-size: 0.82em; color: #475569; }
+
+        /* ── Hiperlinks / Botões de ação ── */
+        .link-tipos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin: 14px 0;
+        }
+        .link-item {
+            border-radius: 10px;
+            padding: 14px;
+            border-left: 4px solid var(--primary);
+            background: #fff5f2;
+        }
+        .link-item strong { display: block; font-size: 0.88em; color: var(--primary); margin-bottom: 4px; }
+        .link-item span   { font-size: 0.78em; color: #475569; }
+
+        /* ── Exportação ── */
+        .export-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+            margin: 14px 0;
+        }
+        .export-item {
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+        .ex-pdf   { background: #fef2f2; border-top: 3px solid #ef4444; }
+        .ex-vid   { background: #eff6ff; border-top: 3px solid #2563eb; }
+        .ex-img   { background: #f0fdf4; border-top: 3px solid #16a34a; }
+        .ex-hand  { background: #fdf4ff; border-top: 3px solid #9333ea; }
+        .ex-pptx  { background: #fff7ed; border-top: 3px solid #f59e0b; }
+        .ex-icon  { font-size: 2em; margin-bottom: 8px; }
+        .ex-name  { font-size: 0.86em; font-weight: 700; margin-bottom: 3px; }
+        .ex-desc  { font-size: 0.74em; color: #475569; }
+
+        /* ── Boas práticas ── */
+        .boas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .boa-item {
+            background: #fff7ed;
+            border-radius: 10px;
+            padding: 16px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+        .boa-icon { font-size: 1.6em; flex-shrink: 0; }
+        .boa-text strong { display: block; font-size: 0.88em; color: var(--primary); margin-bottom: 3px; }
+        .boa-text span   { font-size: 0.8em; color: #475569; }
+
+        /* ── nav ── */
+        .nav-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-bottom: 40px;
+        }
+        .nav-link {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+        .nav-link:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+
+        @media (max-width: 768px) {
+            .content-wrapper { padding: 0 15px; }
+            .lesson-hero, .content-card { padding: 25px; }
+            .lesson-hero h1 { font-size: 1.5em; }
+            .inicio-grid { grid-template-columns: 1fr; }
+            .ma-body { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <a href="index.html" class="back-btn">&#x2B05; Voltar ao Dashboard</a>
+        <span class="page-badge">Unidade 4 &mdash; Su&iacute;te de Escrit&oacute;rio</span>
+        <button class="slide-toggle" id="slideToggleBtn">&#x1F4FA; Modo Slide</button>
+    </div>
+
+    <div class="content-wrapper">
+
+        <div class="lesson-hero">
+            <h1>&#x2728; Apresenta&ccedil;&otilde;es: Recursos Avan&ccedil;ados</h1>
+            <p class="subtitle">Aula 4.4 &mdash; Transi&ccedil;&otilde;es, anima&ccedil;&otilde;es, modo apresentador, hiperlinks, colabora&ccedil;&atilde;o e exporta&ccedil;&atilde;o de apresenta&ccedil;&otilde;es no PowerPoint</p>
+        </div>
+
+        <!-- CARD 1 — Transições -->
+        <div class="content-card">
+            <h2>&#x27A1; Transi&ccedil;&otilde;es entre Slides</h2>
+            <p>Uma <strong>transi&ccedil;&atilde;o</strong> &eacute; o efeito visual que ocorre ao passar de um slide para o pr&oacute;ximo durante a apresenta&ccedil;&atilde;o. As op&ccedil;&otilde;es ficam na aba <strong>Transi&ccedil;&otilde;es</strong> do Ribbon. Ao clicar em uma transi&ccedil;&atilde;o, a pr&eacute;-visualiza&ccedil;&atilde;o &eacute; exibida imediatamente na &aacute;rea de edi&ccedil;&atilde;o.</p>
+
+            <div class="transicoes-grid">
+                <div class="trans-group">
+                    <div class="trans-header sutil">Sutil</div>
+                    <div class="trans-items">
+                        <div class="trans-item">Cortar</div>
+                        <div class="trans-item">Dissolver</div>
+                        <div class="trans-item">Aparecer</div>
+                        <div class="trans-item">Empurrar</div>
+                        <div class="trans-item">Varrer</div>
+                        <div class="trans-item">Dividir</div>
+                    </div>
+                </div>
+                <div class="trans-group">
+                    <div class="trans-header anim">Animado</div>
+                    <div class="trans-items">
+                        <div class="trans-item">Afastar</div>
+                        <div class="trans-item">Ampliar</div>
+                        <div class="trans-item">Quadro</div>
+                        <div class="trans-item">Drapej.</div>
+                        <div class="trans-item">Cortina</div>
+                        <div class="trans-item">Vento</div>
+                    </div>
+                </div>
+                <div class="trans-group">
+                    <div class="trans-header divert">Divertido</div>
+                    <div class="trans-items">
+                        <div class="trans-item">Avi&atilde;o</div>
+                        <div class="trans-item">Origami</div>
+                        <div class="trans-item">Dissolver</div>
+                        <div class="trans-item">Quebra-c.</div>
+                        <div class="trans-item">Ampulheta</div>
+                        <div class="trans-item">Vort.</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>&#x2699;&#xFE0F; Configura&ccedil;&otilde;es de transi&ccedil;&atilde;o</h3>
+            <ul>
+                <li><strong>Op&ccedil;&otilde;es de Efeito:</strong> muitas transi&ccedil;&otilde;es t&ecirc;m varia&ccedil;&otilde;es de dire&ccedil;&atilde;o (da esquerda, da direita, de cima). Clique em <em>Op&ccedil;&otilde;es de Efeito</em> ao lado da galeria.</li>
+                <li><strong>Dura&ccedil;&atilde;o:</strong> tempo em segundos que a transi&ccedil;&atilde;o leva. Geralmente entre 0,5s e 1,5s. Transi&ccedil;&otilde;es longas cansam o p&uacute;blico.</li>
+                <li><strong>Som:</strong> evite. Sons de transi&ccedil;&atilde;o soam amadores na maioria dos contextos profissionais e acad&ecirc;micos.</li>
+                <li><strong>Avan&ccedil;ar slide:</strong> <em>Ao clicar no mouse</em> (padr&atilde;o, ideal para apresenta&ccedil;&atilde;o ao vivo) ou <em>Ap&oacute;s</em> X segundos (para quiosques e apresenta&ccedil;&otilde;es autom&aacute;ticas).</li>
+                <li><strong>Aplicar a todos:</strong> bot&atilde;o <em>Aplicar a Todos</em> replica a transi&ccedil;&atilde;o e configura&ccedil;&otilde;es para todos os slides da apresenta&ccedil;&atilde;o de uma vez.</li>
+            </ul>
+
+            <div class="alert-box">
+                <p>&#x26A0;&#xFE0F; <strong>Regra de ouro:</strong> use <strong>uma &uacute;nica transi&ccedil;&atilde;o</strong> para toda a apresenta&ccedil;&atilde;o, preferencialmente da categoria <em>Sutil</em>. Misturar 5 transi&ccedil;&otilde;es diferentes distrai o p&uacute;blico e passa impress&atilde;o de falta de preparo.</p>
+            </div>
+        </div>
+
+        <!-- CARD 2 — Tipos de Animação -->
+        <div class="content-card">
+            <h2>&#x1F4AB; Anima&ccedil;&otilde;es de Elementos</h2>
+            <p>Enquanto transi&ccedil;&otilde;es afetam a passagem <em>entre</em> slides, <strong>anima&ccedil;&otilde;es</strong> afetam os objetos <em>dentro</em> de um slide &mdash; texto, imagens, formas, gr&aacute;ficos. S&atilde;o configuradas na aba <strong>Anima&ccedil;&otilde;es</strong> do Ribbon.</p>
+            <p>O PowerPoint divide as anima&ccedil;&otilde;es em quatro categorias com cores distintas na galeria:</p>
+
+            <div class="anim-types">
+                <div class="anim-type at-entrada">
+                    <div class="at-icon">&#x2B05;&#xFE0F;</div>
+                    <div class="at-name">Entrada</div>
+                    <div class="at-desc">O objeto aparece no slide com um efeito.</div>
+                    <div class="at-exemplos">Aparecer, Esmaecer, Voar para Dentro, Ampliar e Girar</div>
+                </div>
+                <div class="anim-type at-enfase">
+                    <div class="at-icon">&#x2B50;</div>
+                    <div class="at-name">&Ecirc;nfase</div>
+                    <div class="at-desc">O objeto j&aacute; est&aacute; vis&iacute;vel e &eacute; destacado com um efeito.</div>
+                    <div class="at-exemplos">Pulsar, Mudar Cor, Girar, Ampliar/Reduzir</div>
+                </div>
+                <div class="anim-type at-saida">
+                    <div class="at-icon">&#x27A1;&#xFE0F;</div>
+                    <div class="at-name">Sa&iacute;da</div>
+                    <div class="at-desc">O objeto desaparece do slide com um efeito.</div>
+                    <div class="at-exemplos">Desaparecer, Esmaecer, Voar para Fora, Encolher</div>
+                </div>
+                <div class="anim-type at-trajet">
+                    <div class="at-icon">&#x27B0;</div>
+                    <div class="at-name">Trajet&oacute;ria de Movimento</div>
+                    <div class="at-desc">O objeto se move ao longo de um caminho desenhado.</div>
+                    <div class="at-exemplos">Linha, Arco, Loop, Caminho Personalizado</div>
+                </div>
+            </div>
+
+            <h3>&#x1F4CC; Como adicionar uma anima&ccedil;&atilde;o</h3>
+            <ol>
+                <li>Selecione o objeto (caixa de texto, imagem, forma, gr&aacute;fico).</li>
+                <li>V&aacute; &agrave; aba <strong>Anima&ccedil;&otilde;es</strong> e clique no efeito desejado na galeria.</li>
+                <li>Use <strong>Op&ccedil;&otilde;es de Efeito</strong> para escolher a dire&ccedil;&atilde;o ou quantidade do efeito.</li>
+                <li>Ajuste <strong>Dura&ccedil;&atilde;o</strong> e <strong>Atraso</strong> no grupo <em>Intervalo</em>.</li>
+                <li>Para adicionar uma segunda anima&ccedil;&atilde;o ao mesmo objeto, clique em <strong>Adicionar Anima&ccedil;&atilde;o</strong> (n&atilde;o clique diretamente na galeria, pois isso substituiria a primeira).</li>
+            </ol>
+        </div>
+
+        <!-- CARD 3 — Painel de Animação -->
+        <div class="content-card">
+            <h2>&#x1F4CB; O Painel de Anima&ccedil;&atilde;o</h2>
+            <p>O <strong>Painel de Anima&ccedil;&atilde;o</strong> &eacute; a ferramenta central para gerenciar todas as anima&ccedil;&otilde;es de um slide. Acesse por <strong>Anima&ccedil;&otilde;es &rarr; Painel de Anima&ccedil;&atilde;o</strong>. Ele exibe cada anima&ccedil;&atilde;o em ordem de execu&ccedil;&atilde;o:</p>
+
+            <div class="painel-anim">
+                <div class="pa-header">&#x1F4CB; Painel de Anima&ccedil;&atilde;o &mdash; Slide 3</div>
+                <div class="pa-body">
+                    <div class="pa-item">
+                        <div class="pa-num">1</div>
+                        <div class="pa-icon">&#x2B05;&#xFE0F;</div>
+                        <div class="pa-label">T&iacute;tulo 1: "Resultados"</div>
+                        <span class="pa-start click">Ao clicar</span>
+                        <div class="pa-timing">0,5s</div>
+                    </div>
+                    <div class="pa-item">
+                        <div class="pa-num">2</div>
+                        <div class="pa-icon">&#x2B05;&#xFE0F;</div>
+                        <div class="pa-label">Imagem 3</div>
+                        <span class="pa-start with">Com anterior</span>
+                        <div class="pa-timing">0,8s</div>
+                    </div>
+                    <div class="pa-item">
+                        <div class="pa-num">3</div>
+                        <div class="pa-icon">&#x2B05;&#xFE0F;</div>
+                        <div class="pa-label">Gr&aacute;fico 2</div>
+                        <span class="pa-start after">Ap&oacute;s anterior</span>
+                        <div class="pa-timing">1,0s · atraso 0,3s</div>
+                    </div>
+                    <div class="pa-item">
+                        <div class="pa-num">4</div>
+                        <div class="pa-icon">&#x2B50;</div>
+                        <div class="pa-label">Caixa de Texto 5</div>
+                        <span class="pa-start click">Ao clicar</span>
+                        <div class="pa-timing">0,6s</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>&#x23F1; Quando cada anima&ccedil;&atilde;o inicia</h3>
+            <div class="inicio-grid">
+                <div class="inicio-item in-click">
+                    <div class="in-icon">&#x1F5B1;&#xFE0F;</div>
+                    <div class="in-name">Ao Clicar</div>
+                    <div class="in-desc">Inicia quando o apresentador clica ou pressiona a seta. Garante controle total do ritmo.</div>
+                </div>
+                <div class="inicio-item in-with">
+                    <div class="in-icon">&#x23F0;</div>
+                    <div class="in-name">Com o Anterior</div>
+                    <div class="in-desc">Come&ccedil;a junto com a anima&ccedil;&atilde;o anterior, sem clique adicional. &Uacute;til para efeitos simult&acirc;neos.</div>
+                </div>
+                <div class="inicio-item in-after">
+                    <div class="in-icon">&#x27A1;&#xFE0F;</div>
+                    <div class="in-name">Ap&oacute;s o Anterior</div>
+                    <div class="in-desc">Aguarda a anima&ccedil;&atilde;o anterior terminar e inicia automaticamente. Cria sequ&ecirc;ncias fluidas.</div>
+                </div>
+            </div>
+
+            <div class="tip-box">
+                <p>&#x1F4A1; <strong>Dica profissional:</strong> Anime apenas os elementos que merecem aten&ccedil;&atilde;o especial &mdash; uma conclus&atilde;o importante, um dado surpreendente, um passo novo de um processo. Animar <em>tudo</em> em todos os slides transforma a apresenta&ccedil;&atilde;o em show de efeitos e dispersa o p&uacute;blico.</p>
+            </div>
+        </div>
+
+        <!-- CARD 4 — Modo Apresentador -->
+        <div class="content-card">
+            <h2>&#x1F5A5;&#xFE0F; Modo Apresentador</h2>
+            <p>O <strong>Modo Apresentador</strong> &eacute; a melhor forma de conduzir uma apresenta&ccedil;&atilde;o profissional. Quando conectado a um projetor ou segundo monitor, exibe para o apresentador uma vis&atilde;o privativa com muito mais informa&ccedil;&atilde;o do que o p&uacute;blico v&ecirc;:</p>
+
+            <div class="modo-apres">
+                <div class="ma-barra">
+                    <span>&#x1F4BB; Monitor do apresentador (privativo)</span>
+                    <span style="color:#60a5fa;">&#x23F1; 00:05:42</span>
+                </div>
+                <div class="ma-body">
+                    <div class="ma-slide-atual">
+                        <span>Slide atual (p&uacute;blico v&ecirc; este)</span>
+                    </div>
+                    <div class="ma-right">
+                        <div class="ma-proximo">
+                            <span>Pr&oacute;ximo slide</span>
+                        </div>
+                        <div class="ma-notas">
+                            <p>&#x1F4DD; Notas: Mencionar o dado de 2024. Fazer pergunta ao p&uacute;blico antes de avan&ccedil;ar...</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="ma-footer">
+                    <span class="ma-btn">&#x2B05; Anterior</span>
+                    <span class="ma-btn">Pr&oacute;ximo &#x27A1;</span>
+                    <span class="ma-btn">&#x1F58A; Caneta</span>
+                    <span class="ma-btn">&#x1F5A5; Slides</span>
+                    <span class="ma-timer">Slide 4 / 12</span>
+                </div>
+            </div>
+
+            <h3>&#x2699;&#xFE0F; Como ativar</h3>
+            <ul>
+                <li>Conecte o projetor ou segundo monitor. O Windows deve detectar automaticamente.</li>
+                <li>No PowerPoint: aba <strong>Apresenta&ccedil;&atilde;o de Slides</strong> &rarr; marque <em>Usar Modo Apresentador</em>.</li>
+                <li>Pressione <strong>F5</strong> para iniciar. O modo apresentador abre automaticamente no monitor principal e o slide limpo vai ao projetor.</li>
+                <li>Em computador sem segundo monitor: simule com <strong>Alt+F5</strong> para ver como ficaria.</li>
+            </ul>
+
+            <h3>&#x2328;&#xFE0F; Atalhos durante a apresenta&ccedil;&atilde;o</h3>
+            <div class="atalhos-apres">
+                <div class="atal-item">
+                    <span class="kbd">F5</span>
+                    <span class="atal-desc">Iniciar do primeiro slide</span>
+                </div>
+                <div class="atal-item">
+                    <span class="kbd">Shift+F5</span>
+                    <span class="atal-desc">Iniciar do slide atual</span>
+                </div>
+                <div class="atal-item">
+                    <span class="kbd">B</span>
+                    <span class="atal-desc">Tela preta (focar no apresentador)</span>
+                </div>
+                <div class="atal-item">
+                    <span class="kbd">W</span>
+                    <span class="atal-desc">Tela branca</span>
+                </div>
+                <div class="atal-item">
+                    <span class="kbd">Ctrl+P</span>
+                    <span class="atal-desc">Ativar caneta para anotar na tela</span>
+                </div>
+                <div class="atal-item">
+                    <span class="kbd">Ctrl+L</span>
+                    <span class="atal-desc">Ativar ponteiro laser</span>
+                </div>
+                <div class="atal-item">
+                    <span class="kbd">Ctrl+E</span>
+                    <span class="atal-desc">Ativar borracha (apagar anota&ccedil;&otilde;es)</span>
+                </div>
+                <div class="atal-item">
+                    <span class="kbd">N&uacute;mero + Enter</span>
+                    <span class="atal-desc">Ir diretamente para um slide espec&iacute;fico</span>
+                </div>
+                <div class="atal-item">
+                    <span class="kbd">Esc</span>
+                    <span class="atal-desc">Encerrar a apresenta&ccedil;&atilde;o</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 5 — Hiperlinks e Botões de Ação -->
+        <div class="content-card">
+            <h2>&#x1F517; Hiperlinks e Bot&otilde;es de A&ccedil;&atilde;o</h2>
+            <p>O PowerPoint permite criar apresenta&ccedil;&otilde;es interativas com hiperlinks e bot&otilde;es de a&ccedil;&atilde;o. S&atilde;o &uacute;teis para navegar entre slides fora de ordem, abrir sites ou criar menus de navega&ccedil;&atilde;o.</p>
+
+            <div class="link-tipos">
+                <div class="link-item">
+                    <strong>&#x1F310; Hiperlink Externo</strong>
+                    <span>Abre um site no navegador. Selecione o texto ou objeto &rarr; Inserir &rarr; Link &rarr; cole a URL. Requer internet durante a apresenta&ccedil;&atilde;o.</span>
+                </div>
+                <div class="link-item">
+                    <strong>&#x1F4CB; Hiperlink Interno</strong>
+                    <span>Navega para outro slide da mesma apresenta&ccedil;&atilde;o. Inserir &rarr; Link &rarr; <em>Colocar neste documento</em> &rarr; escolha o slide de destino.</span>
+                </div>
+                <div class="link-item">
+                    <strong>&#x1F4C4; Hiperlink para Arquivo</strong>
+                    <span>Abre outro arquivo (documento Word, PDF, planilha Excel). &Uacute;til para apresenta&ccedil;&otilde;es com material de apoio complementar.</span>
+                </div>
+            </div>
+
+            <h3>&#x25B6;&#xFE0F; Bot&otilde;es de A&ccedil;&atilde;o</h3>
+            <p>Bot&otilde;es de A&ccedil;&atilde;o s&atilde;o formas especiais com comportamento de link pr&eacute;-definido. Acesse por <strong>Inserir &rarr; Formas &rarr; Bot&otilde;es de A&ccedil;&atilde;o</strong> (no final da lista de formas):</p>
+            <ul>
+                <li><strong>In&iacute;cio, Fim, Anterior, Pr&oacute;ximo:</strong> navega&ccedil;&atilde;o entre slides com &iacute;cones intuitivos.</li>
+                <li><strong>Documento, Som, Filme:</strong> abrem arquivos espec&iacute;ficos ao ser clicados.</li>
+                <li><strong>Personalizar:</strong> crie qualquer navega&ccedil;&atilde;o com uma forma comum usando Inserir &rarr; Link.</li>
+            </ul>
+
+            <div class="highlight-box">
+                <p>&#x1F4A1; <strong>Apresenta&ccedil;&otilde;es n&atilde;o lineares:</strong> usando hiperlinks internos, voc&ecirc; pode criar um <strong>menu de navega&ccedil;&atilde;o</strong> no primeiro slide com bot&otilde;es para cada se&ccedil;&atilde;o &mdash; permitindo pular para qualquer parte sem navegar sequencialmente. &Eacute; muito usado em quiosques interativos e portif&oacute;lios.</p>
+            </div>
+        </div>
+
+        <!-- CARD 6 — Colaboração -->
+        <div class="content-card">
+            <h2>&#x1F465; Colabora&ccedil;&atilde;o e Compartilhamento</h2>
+            <p>O PowerPoint no Microsoft 365 permite trabalhar em equipe no mesmo arquivo em tempo real, de forma semelhante ao Google Slides, desde que o arquivo esteja salvo no <strong>OneDrive</strong> ou <strong>SharePoint</strong>.</p>
+
+            <h3>&#x2601;&#xFE0F; Salvar e compartilhar no OneDrive</h3>
+            <ol>
+                <li>Salve o arquivo no OneDrive: <strong>Arquivo &rarr; Salvar como &rarr; OneDrive</strong>. O arquivo fica na nuvem e pode ser acessado de qualquer dispositivo.</li>
+                <li>Compartilhe: bot&atilde;o <strong>Compartilhar</strong> (canto superior direito) &rarr; insira o e-mail do colega ou gere um link. Defina se a pessoa pode <em>Editar</em> ou apenas <em>Exibir</em>.</li>
+                <li>Co-autoria: quando outra pessoa abre o arquivo compartilhado, o cursor dela aparece com uma cor diferente &mdash; voc&ecirc;s editam simultaneamente sem conflito.</li>
+            </ol>
+
+            <h3>&#x1F4AC; Coment&aacute;rios</h3>
+            <ul>
+                <li><strong>Adicionar:</strong> Revis&atilde;o &rarr; Novo Coment&aacute;rio (ou clique com o bot&atilde;o direito no objeto &rarr; <em>Novo Coment&aacute;rio</em>). O coment&aacute;rio fica ancorado ao objeto selecionado.</li>
+                <li><strong>Responder:</strong> Coment&aacute;rios t&ecirc;m thread de respostas &mdash; &uacute;til para revis&atilde;o de trabalhos em grupo.</li>
+                <li><strong>Resolver:</strong> ao resolver um coment&aacute;rio ele &eacute; arquivado, mas pode ser reaberto. &Uacute;til para acompanhar o que j&aacute; foi corrigido.</li>
+                <li><strong>Painel de coment&aacute;rios:</strong> Revis&atilde;o &rarr; Mostrar Coment&aacute;rios. Exibe todos os coment&aacute;rios do arquivo em uma lista lateral.</li>
+            </ul>
+
+            <div class="alert-box">
+                <p>&#x26A0;&#xFE0F; <strong>Aten&ccedil;&atilde;o ao enviar:</strong> antes de compartilhar o arquivo final, remova todos os coment&aacute;rios e anota&ccedil;&otilde;es internas. V&aacute; em <strong>Arquivo &rarr; Informa&ccedil;&otilde;es &rarr; Verificar Problemas &rarr; Inspecionar Documento</strong> para localizar e remover metadados.</p>
+            </div>
+        </div>
+
+        <!-- CARD 7 — Exportação -->
+        <div class="content-card">
+            <h2>&#x1F4E4; Formatos de Exporta&ccedil;&atilde;o</h2>
+            <p>Al&eacute;m do .pptx padr&atilde;o, o PowerPoint exporta para diversos formatos para atender diferentes finalidades. Acesse por <strong>Arquivo &rarr; Exportar</strong>:</p>
+
+            <div class="export-grid">
+                <div class="export-item ex-pdf">
+                    <div class="ex-icon">&#x1F4C4;</div>
+                    <div class="ex-name">PDF</div>
+                    <div class="ex-desc">Layout garantido em qualquer dispositivo. Ideal para entregar ao professor ou imprimir.</div>
+                </div>
+                <div class="export-item ex-vid">
+                    <div class="ex-icon">&#x1F3A5;</div>
+                    <div class="ex-name">V&iacute;deo (.mp4)</div>
+                    <div class="ex-desc">Exporta a apresenta&ccedil;&atilde;o como v&iacute;deo com anima&ccedil;&otilde;es e narr&ccedil;&atilde;o gravada. Resoluc&ccedil;&otilde;es: 1080p, 720p ou 480p.</div>
+                </div>
+                <div class="export-item ex-img">
+                    <div class="ex-icon">&#x1F5BC;&#xFE0F;</div>
+                    <div class="ex-name">Imagens (PNG/JPG)</div>
+                    <div class="ex-desc">Exporta cada slide como arquivo de imagem separado. &Uacute;til para compartilhar em redes sociais.</div>
+                </div>
+                <div class="export-item ex-hand">
+                    <div class="ex-icon">&#x1F4CB;</div>
+                    <div class="ex-name">Handout (PDF)</div>
+                    <div class="ex-desc">Imprime 2, 3, 4 ou 6 slides por p&aacute;gina com espa&ccedil;o para anota&ccedil;&otilde;es. Ideal para distribui&ccedil;&atilde;o ao p&uacute;blico.</div>
+                </div>
+                <div class="export-item ex-pptx">
+                    <div class="ex-icon">&#x1F5C3;&#xFE0F;</div>
+                    <div class="ex-name">Apresenta&ccedil;&atilde;o (.ppsx)</div>
+                    <div class="ex-desc">Abre diretamente em modo de apresenta&ccedil;&atilde;o. O p&uacute;blico n&atilde;o v&ecirc; a edi&ccedil;&atilde;o; ideal para envio final.</div>
+                </div>
+            </div>
+
+            <h3>&#x1F3A5; Exportar como v&iacute;deo &mdash; passo a passo</h3>
+            <ol>
+                <li>Grave a narra&ccedil;&atilde;o (opcional): <strong>Apresenta&ccedil;&atilde;o de Slides &rarr; Gravar Apresenta&ccedil;&atilde;o</strong>. Fala e cliques ficam sincronizados.</li>
+                <li>Acesse <strong>Arquivo &rarr; Exportar &rarr; Criar um V&iacute;deo</strong>.</li>
+                <li>Escolha a resolu&ccedil;&atilde;o: <em>Full HD (1080p)</em> para YouTube/TV; <em>HD (720p)</em> para web; <em>Padr&atilde;o (480p)</em> para e-mail.</li>
+                <li>Defina os segundos por slide (se n&atilde;o houver narra&ccedil;&atilde;o gravada). Tipicamente 5&ndash;10 segundos.</li>
+                <li>Clique em <strong>Criar V&iacute;deo</strong> e aguarde. Arquivos com muitas anima&ccedil;&otilde;es podem demorar alguns minutos.</li>
+            </ol>
+        </div>
+
+        <!-- CARD 8 — Boas Práticas -->
+        <div class="content-card">
+            <h2>&#x2705; Boas Pr&aacute;ticas com Recursos Avan&ccedil;ados</h2>
+            <div class="boas-grid">
+                <div class="boa-item">
+                    <div class="boa-icon">&#x2728;</div>
+                    <div class="boa-text">
+                        <strong>Uma transi&ccedil;&atilde;o para todos</strong>
+                        <span>Escolha uma &uacute;nica transi&ccedil;&atilde;o sutil (como <em>Dissolver</em> ou <em>Aparecer</em>) e aplique a todos os slides. Consist&ecirc;ncia transmite profissionalismo.</span>
+                    </div>
+                </div>
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F3AF;</div>
+                    <div class="boa-text">
+                        <strong>Anime com prop&oacute;sito</strong>
+                        <span>Use anima&ccedil;&otilde;es apenas para revelar informa&ccedil;&otilde;es progressivamente ou destacar um dado-chave. Nunca anime apenas por estilo.</span>
+                    </div>
+                </div>
+                <div class="boa-item">
+                    <div class="boa-icon">&#x23F1;</div>
+                    <div class="boa-text">
+                        <strong>Ensaie com o cron&ocirc;metro</strong>
+                        <span>Use <strong>Apresenta&ccedil;&atilde;o de Slides &rarr; Ensaiar Intervalos</strong> para cronometrar cada slide e garantir que o tempo total caiba no prazo.</span>
+                    </div>
+                </div>
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F517;</div>
+                    <div class="boa-text">
+                        <strong>Teste links antes de apresentar</strong>
+                        <span>Todo hiperlink externo deve ser testado no modo de apresenta&ccedil;&atilde;o no computador que ser&aacute; usado. Links que funcionam em um dispositivo podem falhar em outro.</span>
+                    </div>
+                </div>
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F4AC;</div>
+                    <div class="boa-text">
+                        <strong>Use o Painel de Anima&ccedil;&atilde;o</strong>
+                        <span>Nunca confie apenas na pr&eacute;-visualiza&ccedil;&atilde;o r&aacute;pida. Abra o Painel de Anima&ccedil;&atilde;o para verificar a ordem exata e os tempos de cada efeito.</span>
+                    </div>
+                </div>
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F4BE;</div>
+                    <div class="boa-text">
+                        <strong>Remova metadados antes de entregar</strong>
+                        <span>Inspecione o documento (Arquivo &rarr; Informa&ccedil;&otilde;es &rarr; Verificar Problemas) para remover coment&aacute;rios internos, anota&ccedil;&otilde;es e dados do autor antes de entregar o arquivo.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXERCÍCIO -->
+        <div class="content-card exercise-card">
+            <h2>&#x1F3AF; Exerc&iacute;cio &mdash; Arraste e Conecte</h2>
+            <p style="color:#475569;font-size:0.9em;margin-bottom:4px;">Arraste cada descri&ccedil;&atilde;o para o recurso correto do PowerPoint. Em dispositivos m&oacute;veis, toque na descri&ccedil;&atilde;o e depois na zona de destino.</p>
+
+            <div class="ex-drag-root" data-ex="ex44">
+                <div class="ex-drag">
+                    <div>
+                        <div class="ex-col-title">Descri&ccedil;&atilde;o</div>
+                        <div class="ex-pool" data-pool="ex44">
+                            <div class="drag-chip" data-id="c1">Efeito visual que ocorre ao passar de um slide para o pr&oacute;ximo durante a apresenta&ccedil;&atilde;o</div>
+                            <div class="drag-chip" data-id="c2">Painel que exibe e permite reordenar todas as anima&ccedil;&otilde;es de um slide em sequ&ecirc;ncia</div>
+                            <div class="drag-chip" data-id="c3">Modo que exibe o slide atual, o pr&oacute;ximo e as notas do apresentador num monitor privativo</div>
+                            <div class="drag-chip" data-id="c4">Tipo de anima&ccedil;&atilde;o que faz um objeto j&aacute; vis&iacute;vel piscar ou mudar de cor para chamar aten&ccedil;&atilde;o</div>
+                            <div class="drag-chip" data-id="c5">Atalho que deixa a tela completamente preta durante a apresenta&ccedil;&atilde;o para focar no apresentador</div>
+                            <div class="drag-chip" data-id="c6">Configura&ccedil;&atilde;o de anima&ccedil;&atilde;o que inicia o efeito automaticamente assim que o anterior termina</div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="ex-col-title">Recurso</div>
+                        <div class="ex-zones" data-zones="ex44">
+                            <div class="drop-zone" data-zone="ex44-z1" data-accept="c1">
+                                <span class="zone-name">Transi&ccedil;&atilde;o</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex44-z2" data-accept="c2">
+                                <span class="zone-name">Painel de Anima&ccedil;&atilde;o</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex44-z3" data-accept="c3">
+                                <span class="zone-name">Modo Apresentador</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex44-z4" data-accept="c4">
+                                <span class="zone-name">Anima&ccedil;&atilde;o de &Ecirc;nfase</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex44-z5" data-accept="c5">
+                                <span class="zone-name">Tecla B</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex44-z6" data-accept="c6">
+                                <span class="zone-name">Ap&oacute;s o Anterior</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ex-actions">
+                <button class="btn-verificar" onclick="dragVerify('ex44')">Verificar</button>
+                <button class="btn-refazer"  onclick="dragReset('ex44')">Refazer</button>
+            </div>
+            <div class="ex-result" id="ex44-result"></div>
+        </div>
+
+        <!-- ATIVIDADE PRÁTICA 4.4 -->
+        <div class="content-card practical-card" id="prat-44">
+            <h2>&#x1F6E0;&#xFE0F; Atividade Pr&aacute;tica &mdash; Apresenta&ccedil;&atilde;o Interativa e Animada</h2>
+            <div class="prat-meta">
+                <span class="prat-tag">&#x23F1; ~50 min</span>
+                <span class="prat-tag">&#x1F4BB; Microsoft PowerPoint</span>
+                <span class="prat-tag">&#x1F4E4; Exportar como PDF e .ppsx</span>
+            </div>
+
+            <div class="prat-steps">
+                <div class="prat-step">
+                    <div class="step-num">1</div>
+                    <div class="step-body">
+                        <div class="step-label">Abra a apresenta&ccedil;&atilde;o anterior e adicione transi&ccedil;&atilde;o</div>
+                        <div class="step-desc">Abra o arquivo <strong>Apresentacao_SeuNome.pptx</strong> das aulas anteriores. V&aacute; &agrave; aba <strong>Transi&ccedil;&otilde;es</strong> e escolha <strong>Dissolver</strong> ou <strong>Aparecer</strong>. Configure a dura&ccedil;&atilde;o para <strong>0,7 segundos</strong>. Clique em <strong>Aplicar a Todos</strong>. Pressione F5 para verificar o efeito entre os slides.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">2</div>
+                    <div class="step-body">
+                        <div class="step-label">Adicione anima&ccedil;&otilde;es em dois slides</div>
+                        <div class="step-desc">Escolha dois slides de conte&uacute;do. Em cada um, selecione a <strong>caixa de t&iacute;tulo</strong> e adicione uma anima&ccedil;&atilde;o de <strong>Entrada &rarr; Aparecer</strong>. Depois selecione o corpo de texto (lista ou imagem) e adicione <strong>Entrada &rarr; Esmaecer</strong> com in&iacute;cio <em>Ap&oacute;s o Anterior</em>, dura&ccedil;&atilde;o 0,8s. Abra o <strong>Painel de Anima&ccedil;&atilde;o</strong> para conferir a ordem.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">3</div>
+                    <div class="step-body">
+                        <div class="step-label">Crie um slide de menu com hiperlinks internos</div>
+                        <div class="step-desc">Insira um novo slide ap&oacute;s o de t&iacute;tulo com layout <em>Em Branco</em>. Crie um t&iacute;tulo <strong>"Menu"</strong> e adicione 3 bot&otilde;es (formas de ret&acirc;ngulo com texto) representando as 3 se&ccedil;&otilde;es da sua apresenta&ccedil;&atilde;o. Em cada bot&atilde;o: clique com o bot&atilde;o direito &rarr; <em>Link</em> &rarr; <em>Colocar neste documento</em> &rarr; selecione o slide de destino correspondente.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">4</div>
+                    <div class="step-body">
+                        <div class="step-label">Adicione notas do apresentador</div>
+                        <div class="step-desc">Em pelo menos 3 slides, clique no <strong>Painel de Notas</strong> (abaixo do slide) e escreva o que voc&ecirc; falaria durante a apresenta&ccedil;&atilde;o daquele slide. As notas n&atilde;o aparecem para o p&uacute;blico. Elas s&atilde;o vis&iacute;veis no Modo Apresentador e tamb&eacute;m s&atilde;o inclu&iacute;das quando se exporta o handout.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">5</div>
+                    <div class="step-body">
+                        <div class="step-label">Simule o Modo Apresentador</div>
+                        <div class="step-desc">Pressione <strong>Alt+F5</strong> para simular o Modo Apresentador em uma &uacute;nica tela. Observe o painel com slide atual, pr&oacute;ximo slide, notas e cron&ocirc;metro. Navegue pelos slides e teste os hiperlinks do menu. Use a <strong>caneta (Ctrl+P)</strong> para fazer uma anota&ccedil;&atilde;o na tela e depois apague com <strong>Ctrl+E</strong>. Encerre com <strong>Esc</strong>.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">6</div>
+                    <div class="step-body">
+                        <div class="step-label">Exporte como .ppsx e como PDF handout</div>
+                        <div class="step-desc">Salve uma c&oacute;pia como <strong>.ppsx</strong>: Arquivo &rarr; Salvar Como &rarr; altere o tipo para <em>Apresenta&ccedil;&atilde;o do PowerPoint (.ppsx)</em>. Abra o arquivo .ppsx e veja que ele j&aacute; inicia diretamente em modo de apresenta&ccedil;&atilde;o. Depois, exporte um <strong>PDF handout</strong> com 3 slides por p&aacute;gina: Arquivo &rarr; Exportar &rarr; Criar PDF/XPS &rarr; clique em <em>Op&ccedil;&otilde;es</em> &rarr; Handout &rarr; 3 slides.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="prat-observe">
+                <strong>&#x1F4CC; Para refletir:</strong> Os recursos avan&ccedil;ados &mdash; transi&ccedil;&otilde;es, anima&ccedil;&otilde;es, hiperlinks, modo apresentador &mdash; existem para <strong>servir &agrave; comunica&ccedil;&atilde;o</strong>, n&atilde;o para impressionar. Uma apresenta&ccedil;&atilde;o cheia de efeitos, mas com conte&uacute;do fraco, n&atilde;o convence ningu&eacute;m. Uma apresenta&ccedil;&atilde;o simples e bem estruturada sempre vence.
+            </div>
+
+            <div class="ex-actions">
+                <button class="btn-print" onclick="printPractical('prat-44', 'Aula 4.4 \u2014 Apresenta\u00e7\u00f5es: Recursos Avan\u00e7ados')">&#x1F5A8;&#xFE0F; Imprimir roteiro</button>
+            </div>
+        </div>
+
+        <div class="nav-footer">
+            <a href="uni4-03-apresentacoes-conteudo.html" class="nav-link">&#x2B05; Anterior: Apresenta&ccedil;&otilde;es &mdash; Conte&uacute;do</a>
+            <a href="uni4-05-texto-visao-geral.html" class="nav-link">Pr&oacute;xima: Texto &mdash; Vis&atilde;o Geral &#x27A1;</a>
+        </div>
+
+    </div>
+
+    <script src="slide-mode.js"></script>
+    <script src="exercise-drag.js"></script>
+    <script src="exercise-print.js"></script>
+</body>
+</html>
