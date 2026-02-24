@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 4.8 - Planilhas: Interface e Dados</title>
+    <link rel="stylesheet" href="slide-mode.css">
+    <link rel="stylesheet" href="exercise.css">
+    <style>
+        :root {
+            --primary: #bf360c;
+            --secondary: #870000;
+            --bg-light: #f0f4f8;
+            --text-dark: #1a202c;
+            --excel-green: #217346;
+            --excel-green-light: #e8f5e9;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        .top-bar {
+            background: white;
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .back-btn {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+        .back-btn:hover { background: rgba(191,54,12,0.08); }
+        .page-badge {
+            font-size: 0.8em;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: rgba(191,54,12,0.12);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .content-wrapper { max-width: 800px; margin: 40px auto; padding: 0 30px; }
+
+        .lesson-hero {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            border-top: 4px solid var(--primary);
+        }
+        .lesson-hero h1 { font-size: 2em; margin-bottom: 10px; color: var(--primary); }
+        .lesson-hero .subtitle { font-size: 1.05em; color: #718096; }
+
+        .content-card {
+            background: white;
+            border-radius: 16px;
+            padding: 35px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+        .content-card h2 { font-size: 1.4em; color: var(--primary); margin-bottom: 18px; display: flex; align-items: center; gap: 10px; }
+        .content-card h3 { font-size: 1.05em; color: var(--secondary); margin: 20px 0 10px; }
+        .content-card p  { margin-bottom: 15px; text-align: justify; }
+
+        .highlight-box { background: linear-gradient(135deg,rgba(191,54,12,.05),rgba(135,0,0,.06)); border-left: 4px solid var(--primary); padding: 20px 25px; border-radius: 0 12px 12px 0; margin: 20px 0; }
+        .highlight-box p { margin-bottom: 0; font-style: italic; }
+        .alert-box { background: #fff8e1; border-left: 4px solid #f59e0b; padding: 18px 22px; border-radius: 0 12px 12px 0; margin: 20px 0; }
+        .alert-box p { margin: 0; color: #78350f; font-size: .93em; }
+        .tip-box { background: #f0fdf4; border-left: 4px solid #16a34a; padding: 18px 22px; border-radius: 0 12px 12px 0; margin: 20px 0; }
+        .tip-box p { margin: 0; color: #14532d; font-size: .93em; }
+
+        ul, ol { margin: 10px 0 15px 25px; }
+        li { margin-bottom: 8px; }
+
+        .kbd-sm { background: #1e293b; color: #e2e8f0; border-radius: 4px; padding: 2px 6px; font-family: 'Consolas',monospace; font-size: .82em; white-space: nowrap; }
+
+        /* ── Interface do Excel mockup ── */
+        .excel-mockup {
+            border: 1px solid #d1d5db;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 16px 0;
+            font-size: .78em;
+        }
+        .xl-titlebar {
+            background: var(--excel-green);
+            color: white;
+            padding: 6px 12px;
+            font-size: .9em;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .xl-ribbon-tabs {
+            background: #f3f4f6;
+            border-bottom: 1px solid #d1d5db;
+            display: flex;
+            gap: 0;
+        }
+        .xl-tab {
+            padding: 6px 12px;
+            font-size: .82em;
+            color: #374151;
+            cursor: default;
+            border-right: 1px solid #e5e7eb;
+        }
+        .xl-tab.active {
+            background: white;
+            color: var(--excel-green);
+            font-weight: 700;
+            border-bottom: 2px solid var(--excel-green);
+        }
+        .xl-formula-bar {
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 8px;
+        }
+        .xl-name-box {
+            background: #f9fafb;
+            border: 1px solid #d1d5db;
+            border-radius: 3px;
+            padding: 2px 8px;
+            font-family: 'Consolas', monospace;
+            font-size: .9em;
+            width: 60px;
+            color: #374151;
+        }
+        .xl-fx { color: var(--excel-green); font-weight: 700; font-size: .9em; }
+        .xl-formula-input {
+            flex: 1;
+            background: #f9fafb;
+            border: 1px solid #d1d5db;
+            border-radius: 3px;
+            padding: 2px 8px;
+            font-family: 'Consolas', monospace;
+            font-size: .9em;
+            color: #374151;
+        }
+        .xl-grid {
+            overflow-x: auto;
+            background: white;
+        }
+        .xl-table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        .xl-col-header {
+            background: #f3f4f6;
+            border: 1px solid #d1d5db;
+            padding: 3px 8px;
+            text-align: center;
+            font-size: .82em;
+            color: #6b7280;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .xl-col-header.selected { background: #dcfce7; color: var(--excel-green); }
+        .xl-row-num {
+            background: #f3f4f6;
+            border: 1px solid #d1d5db;
+            padding: 3px 8px;
+            text-align: center;
+            font-size: .82em;
+            color: #6b7280;
+            font-weight: 600;
+            width: 32px;
+        }
+        .xl-row-num.selected { background: #dcfce7; color: var(--excel-green); }
+        .xl-cell {
+            border: 1px solid #e5e7eb;
+            padding: 3px 8px;
+            font-size: .82em;
+            color: #374151;
+            white-space: nowrap;
+            min-width: 70px;
+        }
+        .xl-cell.selected { background: #e0f2fe; border: 2px solid #0284c7; }
+        .xl-cell.header-cell { background: var(--excel-green); color: white; font-weight: 700; }
+        .xl-cell.num { text-align: right; }
+        .xl-cell.date { text-align: right; color: #374151; }
+        .xl-cell.formula { color: #0284c7; }
+        .xl-sheets {
+            background: #f3f4f6;
+            border-top: 1px solid #d1d5db;
+            display: flex;
+            gap: 0;
+            padding: 4px 8px 0;
+        }
+        .xl-sheet-tab {
+            padding: 4px 14px;
+            font-size: .78em;
+            border-radius: 4px 4px 0 0;
+            border: 1px solid #d1d5db;
+            border-bottom: none;
+            cursor: default;
+            color: #6b7280;
+        }
+        .xl-sheet-tab.active { background: white; color: var(--excel-green); font-weight: 700; }
+        .xl-sheet-add { padding: 4px 8px; font-size: .78em; color: #9ca3af; cursor: default; }
+
+        /* ── Endereçamento de células ── */
+        .addr-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 10px;
+            margin: 14px 0;
+        }
+        .addr-item {
+            border-radius: 10px;
+            padding: 14px;
+            background: #f8fafc;
+            border-left: 4px solid var(--excel-green);
+        }
+        .addr-ref {
+            font-family: 'Consolas', monospace;
+            font-size: 1.1em;
+            font-weight: 700;
+            color: var(--excel-green);
+            display: block;
+            margin-bottom: 4px;
+        }
+        .addr-desc { font-size: .8em; color: #475569; }
+
+        /* ── Tipos de dados ── */
+        .dtype-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 10px;
+            margin: 14px 0;
+        }
+        .dtype-item {
+            border-radius: 10px;
+            padding: 14px 12px;
+            text-align: center;
+        }
+        .dtype-item.texto   { background: #eff6ff; border-top: 3px solid #3b82f6; }
+        .dtype-item.numero  { background: #f0fdf4; border-top: 3px solid #22c55e; }
+        .dtype-item.data    { background: #fef3c7; border-top: 3px solid #f59e0b; }
+        .dtype-item.logico  { background: #fdf4ff; border-top: 3px solid #a855f7; }
+        .dtype-item.formula { background: #fff1f2; border-top: 3px solid #ef4444; }
+        .dtype-name { font-weight: 700; font-size: .88em; margin-bottom: 4px; }
+        .dtype-item.texto   .dtype-name { color: #1d4ed8; }
+        .dtype-item.numero  .dtype-name { color: #15803d; }
+        .dtype-item.data    .dtype-name { color: #92400e; }
+        .dtype-item.logico  .dtype-name { color: #7e22ce; }
+        .dtype-item.formula .dtype-name { color: #b91c1c; }
+        .dtype-example {
+            font-family: 'Consolas', monospace;
+            font-size: .82em;
+            background: rgba(0,0,0,.06);
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin-bottom: 5px;
+            display: block;
+        }
+        .dtype-align { font-size: .72em; color: #64748b; }
+
+        /* ── Alça de preenchimento ── */
+        .fill-demo {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin: 14px 0;
+            flex-wrap: wrap;
+        }
+        .fill-seq {
+            display: flex;
+            gap: 2px;
+        }
+        .fill-cell {
+            width: 46px;
+            height: 28px;
+            border: 1px solid #d1d5db;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .8em;
+            font-family: 'Consolas', monospace;
+            color: #374151;
+            background: white;
+            position: relative;
+        }
+        .fill-cell.origin {
+            background: #e0f2fe;
+            border: 2px solid #0284c7;
+        }
+        .fill-cell.generated {
+            background: #f0fdf4;
+            border-color: #86efac;
+            color: #15803d;
+        }
+        .fill-handle {
+            position: absolute;
+            bottom: -3px;
+            right: -3px;
+            width: 8px;
+            height: 8px;
+            background: #0284c7;
+            cursor: crosshair;
+        }
+        .fill-arrow { font-size: 1.2em; color: #94a3b8; }
+
+        /* ── Formatar células ── */
+        .format-tabs {
+            display: flex;
+            gap: 4px;
+            margin: 14px 0 0;
+            border-bottom: 2px solid #e5e7eb;
+            flex-wrap: wrap;
+        }
+        .fmt-tab {
+            padding: 6px 14px;
+            font-size: .8em;
+            border-radius: 6px 6px 0 0;
+            border: 1px solid #e5e7eb;
+            border-bottom: none;
+            cursor: default;
+            color: #6b7280;
+            background: #f8fafc;
+        }
+        .fmt-tab.active {
+            background: white;
+            color: var(--excel-green);
+            font-weight: 700;
+            border-color: #e5e7eb;
+            border-bottom: 2px solid white;
+            margin-bottom: -2px;
+        }
+        .format-panel {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-top: none;
+            border-radius: 0 0 10px 10px;
+            padding: 14px;
+            margin-bottom: 14px;
+        }
+        .fmt-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 8px;
+        }
+        .fmt-opt {
+            background: #f8fafc;
+            border-radius: 7px;
+            padding: 10px 12px;
+            font-size: .8em;
+        }
+        .fmt-opt strong { display: block; color: #1e293b; margin-bottom: 2px; }
+        .fmt-opt span { color: #64748b; font-size: .9em; }
+
+        /* ── Tabela formatada ── */
+        .xl-table-fmt {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 14px 0;
+            font-size: .84em;
+        }
+        .xl-table-fmt th {
+            background: var(--excel-green);
+            color: white;
+            padding: 8px 12px;
+            text-align: left;
+            position: relative;
+        }
+        .xl-table-fmt th:first-child { border-radius: 6px 0 0 0; }
+        .xl-table-fmt th:last-child  { border-radius: 0 6px 0 0; }
+        .xl-filter-btn {
+            display: inline-block;
+            background: rgba(255,255,255,.25);
+            border-radius: 3px;
+            padding: 0 4px;
+            font-size: .75em;
+            margin-left: 4px;
+            cursor: default;
+        }
+        .xl-table-fmt td { padding: 7px 12px; border-bottom: 1px solid #e5e7eb; }
+        .xl-table-fmt tr:nth-child(even) td { background: #f0fdf4; }
+        .xl-table-fmt tr:last-child td { border-bottom: none; }
+        .xl-table-fmt td.num { text-align: right; font-family: 'Consolas', monospace; }
+
+        /* ── Atalhos ── */
+        .shortcut-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 8px;
+            margin: 14px 0;
+        }
+        .shortcut-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 10px 14px;
+        }
+        .shortcut-desc { font-size: .83em; color: #374151; }
+
+        /* ── Boas práticas ── */
+        .boas-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(200px,1fr)); gap: 12px; margin: 16px 0; }
+        .boa-item { background: #fff7ed; border-radius: 10px; padding: 16px; display: flex; gap: 12px; align-items: flex-start; }
+        .boa-icon { font-size: 1.6em; flex-shrink: 0; }
+        .boa-text strong { display: block; font-size: .88em; color: var(--primary); margin-bottom: 3px; }
+        .boa-text span   { font-size: .8em; color: #475569; }
+
+        /* ── nav ── */
+        .nav-footer { display: flex; justify-content: space-between; margin-top: 40px; padding-bottom: 40px; }
+        .nav-link { text-decoration: none; color: var(--primary); font-weight: 600; padding: 12px 24px; border-radius: 10px; background: white; box-shadow: 0 2px 8px rgba(0,0,0,.05); transition: all .3s; }
+        .nav-link:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,.1); }
+
+        @media (max-width: 768px) {
+            .content-wrapper { padding: 0 15px; }
+            .lesson-hero, .content-card { padding: 25px; }
+            .lesson-hero h1 { font-size: 1.5em; }
+            .xl-ribbon-tabs { flex-wrap: wrap; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="top-bar">
+    <a href="index.html" class="back-btn">&#x2B05; Voltar ao Dashboard</a>
+    <span class="page-badge">Unidade 4 &mdash; Su&iacute;te de Escrit&oacute;rio</span>
+    <button class="slide-toggle" id="slideToggleBtn">&#x1F4FA; Modo Slide</button>
+</div>
+
+<div class="content-wrapper">
+
+    <div class="lesson-hero">
+        <h1>&#x1F4C8; Planilhas: Interface e Dados</h1>
+        <p class="subtitle">Aula 4.8 &mdash; Interface do Microsoft Excel, endere&ccedil;amento de c&eacute;lulas, tipos de dados, formata&ccedil;&atilde;o e organiza&ccedil;&atilde;o em tabelas</p>
+    </div>
+
+    <!-- CARD 1 — Interface do Excel -->
+    <div class="content-card">
+        <h2>&#x1F5A5;&#xFE0F; Interface do Microsoft Excel</h2>
+        <p>O Excel &eacute; o editor de planilhas da su&iacute;te Microsoft Office. Sua interface &eacute; organizada em torno de uma <strong>grade de c&eacute;lulas</strong> identificadas por coluna (letras) e linha (n&uacute;meros). Cada arquivo &eacute; chamado de <strong>pasta de trabalho</strong> e pode conter v&aacute;rias <strong>planilhas (abas)</strong>.</p>
+
+        <div class="excel-mockup">
+            <div class="xl-titlebar">&#x1F4C8; Pasta1.xlsx &mdash; Microsoft Excel</div>
+            <div class="xl-ribbon-tabs">
+                <div class="xl-tab active">P&aacute;gina Inicial</div>
+                <div class="xl-tab">Inserir</div>
+                <div class="xl-tab">Layout</div>
+                <div class="xl-tab">F&oacute;rmulas</div>
+                <div class="xl-tab">Dados</div>
+                <div class="xl-tab">Revis&atilde;o</div>
+                <div class="xl-tab">Exibir</div>
+            </div>
+            <div class="xl-formula-bar">
+                <div class="xl-name-box">B2</div>
+                <span class="xl-fx">&#x192;</span>
+                <div class="xl-formula-input">Produto A</div>
+            </div>
+            <div class="xl-grid">
+                <table class="xl-table">
+                    <thead>
+                        <tr>
+                            <th class="xl-row-num"></th>
+                            <th class="xl-col-header">A</th>
+                            <th class="xl-col-header selected">B</th>
+                            <th class="xl-col-header">C</th>
+                            <th class="xl-col-header">D</th>
+                            <th class="xl-col-header">E</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="xl-row-num">1</td>
+                            <td class="xl-cell header-cell">C&oacute;digo</td>
+                            <td class="xl-cell header-cell selected">Produto</td>
+                            <td class="xl-cell header-cell">Qtd.</td>
+                            <td class="xl-cell header-cell">Pre&ccedil;o Unit.</td>
+                            <td class="xl-cell header-cell">Total</td>
+                        </tr>
+                        <tr>
+                            <td class="xl-row-num selected">2</td>
+                            <td class="xl-cell">001</td>
+                            <td class="xl-cell selected">Produto A</td>
+                            <td class="xl-cell num">10</td>
+                            <td class="xl-cell num">R$ 25,00</td>
+                            <td class="xl-cell formula">&#61;C2*D2</td>
+                        </tr>
+                        <tr>
+                            <td class="xl-row-num">3</td>
+                            <td class="xl-cell">002</td>
+                            <td class="xl-cell">Produto B</td>
+                            <td class="xl-cell num">5</td>
+                            <td class="xl-cell num">R$ 48,00</td>
+                            <td class="xl-cell formula">&#61;C3*D3</td>
+                        </tr>
+                        <tr>
+                            <td class="xl-row-num">4</td>
+                            <td class="xl-cell">003</td>
+                            <td class="xl-cell">Produto C</td>
+                            <td class="xl-cell num">20</td>
+                            <td class="xl-cell num">R$ 12,50</td>
+                            <td class="xl-cell formula">&#61;C4*D4</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="xl-sheets">
+                <div class="xl-sheet-tab active">Vendas</div>
+                <div class="xl-sheet-tab">Estoque</div>
+                <div class="xl-sheet-tab">Relat&oacute;rio</div>
+                <div class="xl-sheet-add">&#x2B;</div>
+            </div>
+        </div>
+
+        <h3>&#x1F4CC; Elementos da interface</h3>
+        <ul>
+            <li><strong>Ribbon:</strong> barra de abas com todos os comandos agrupados por categoria (P&aacute;gina Inicial, Inserir, F&oacute;rmulas, Dados&hellip;).</li>
+            <li><strong>Caixa de Nome:</strong> campo &agrave; esquerda da barra de f&oacute;rmulas que exibe o endere&ccedil;o da c&eacute;lula selecionada (ex.: B2).</li>
+            <li><strong>Barra de F&oacute;rmulas:</strong> exibe e permite editar o conte&uacute;do da c&eacute;lula ativa &mdash; um texto, n&uacute;mero ou f&oacute;rmula.</li>
+            <li><strong>Grade de c&eacute;lulas:</strong> &aacute;rea principal; cada c&eacute;lula &eacute; identificada pela intersec&ccedil;&atilde;o de coluna (A&ndash;XFD) e linha (1&ndash;1.048.576).</li>
+            <li><strong>Abas de planilha:</strong> na parte inferior; uma pasta de trabalho pode ter m&uacute;ltiplas planilhas independentes.</li>
+        </ul>
+    </div>
+
+    <!-- CARD 2 — Endereçamento de Células -->
+    <div class="content-card">
+        <h2>&#x1F4CD; Endere&ccedil;amento de C&eacute;lulas</h2>
+        <p>Cada c&eacute;lula no Excel &eacute; identificada por um <strong>endere&ccedil;o</strong> formado pela letra da coluna seguida do n&uacute;mero da linha. Entender esse sistema &eacute; fundamental para criar f&oacute;rmulas e navegar pelo documento com precis&atilde;o.</p>
+
+        <div class="addr-grid">
+            <div class="addr-item">
+                <span class="addr-ref">A1</span>
+                <span class="addr-desc">C&eacute;lula na coluna A, linha 1 &mdash; geralmente o canto superior esquerdo da planilha.</span>
+            </div>
+            <div class="addr-item">
+                <span class="addr-ref">C5</span>
+                <span class="addr-desc">C&eacute;lula na coluna C, linha 5. Qualquer c&eacute;lula individual &eacute; referenciada assim.</span>
+            </div>
+            <div class="addr-item">
+                <span class="addr-ref">A1:C5</span>
+                <span class="addr-desc">Intervalo de c&eacute;lulas: da A1 at&eacute; C5, formando um ret&acirc;ngulo de 3 colunas &times; 5 linhas.</span>
+            </div>
+            <div class="addr-item">
+                <span class="addr-ref">B:B</span>
+                <span class="addr-desc">Coluna B inteira. &Uacute;til para aplicar formata&ccedil;&atilde;o ou calcular o total de toda uma coluna.</span>
+            </div>
+            <div class="addr-item">
+                <span class="addr-ref">3:3</span>
+                <span class="addr-desc">Linha 3 inteira. Permite selecionar ou formatar uma linha completa de uma vez.</span>
+            </div>
+            <div class="addr-item">
+                <span class="addr-ref">Planilha2!B3</span>
+                <span class="addr-desc">C&eacute;lula B3 em outra planilha da mesma pasta. O &ldquo;!&rdquo; separa o nome da planilha do endere&ccedil;o.</span>
+            </div>
+        </div>
+
+        <div class="tip-box">
+            <p>&#x1F4A1; <strong>Navegar r&aacute;pido:</strong> pressione <span class="kbd-sm">Ctrl+Home</span> para ir &agrave; c&eacute;lula A1, <span class="kbd-sm">Ctrl+End</span> para a &uacute;ltima c&eacute;lula com dados, e <span class="kbd-sm">Ctrl+&#x2192;</span> para pular ao final de um bloco de dados na mesma linha.</p>
+        </div>
+    </div>
+
+    <!-- CARD 3 — Tipos de Dados -->
+    <div class="content-card">
+        <h2>&#x1F522; Tipos de Dados</h2>
+        <p>O Excel identifica automaticamente o tipo do dado digitado em uma c&eacute;lula. Isso influencia o alinhamento padr&atilde;o, as opera&ccedil;&otilde;es dispon&iacute;veis e como o dado ser&aacute; exibido. &Eacute; importante entender cada tipo para evitar erros em f&oacute;rmulas e c&aacute;lculos.</p>
+
+        <div class="dtype-grid">
+            <div class="dtype-item texto">
+                <div class="dtype-name">Texto</div>
+                <span class="dtype-example">&ldquo;Produto A&rdquo;</span>
+                <div class="dtype-align">&#x2B05; Alinhado &agrave; esquerda</div>
+            </div>
+            <div class="dtype-item numero">
+                <div class="dtype-name">N&uacute;mero</div>
+                <span class="dtype-example">1250,75</span>
+                <div class="dtype-align">&#x27A1; Alinhado &agrave; direita</div>
+            </div>
+            <div class="dtype-item data">
+                <div class="dtype-name">Data / Hora</div>
+                <span class="dtype-example">15/03/2025</span>
+                <div class="dtype-align">&#x27A1; Alinhado &agrave; direita</div>
+            </div>
+            <div class="dtype-item logico">
+                <div class="dtype-name">L&oacute;gico</div>
+                <span class="dtype-example">VERDADEIRO</span>
+                <div class="dtype-align">&#x2194; Centralizado</div>
+            </div>
+            <div class="dtype-item formula">
+                <div class="dtype-name">F&oacute;rmula</div>
+                <span class="dtype-example">=A1+B1</span>
+                <div class="dtype-align">Resultado exibido</div>
+            </div>
+        </div>
+
+        <div class="alert-box">
+            <p>&#x26A0;&#xFE0F; <strong>Armadilha comum:</strong> digitar um n&uacute;mero com texto junto (ex.: &ldquo;R$ 150&rdquo;) faz o Excel tratar como texto. O valor fica alinhado &agrave; esquerda e n&atilde;o pode ser somado. Use formato de moeda nas configura&ccedil;&otilde;es da c&eacute;lula, n&atilde;o digitando o s&iacute;mbolo.</p>
+        </div>
+
+        <h3>&#x1F4C6; Datas no Excel</h3>
+        <p>O Excel armazena datas como n&uacute;meros inteiros (o dia 1&ordm; de janeiro de 1900 &eacute; o n&uacute;mero 1). Isso permite calcular diferen&ccedil;as entre datas subtraindo-as diretamente. Por exemplo: <code style="background:#f1f5f9;padding:1px 5px;border-radius:3px;font-size:.88em;">=HOJE()-A1</code> retorna quantos dias passaram desde a data em A1.</p>
+    </div>
+
+    <!-- CARD 4 — Entrada de Dados e Alça de Preenchimento -->
+    <div class="content-card">
+        <h2>&#x270F;&#xFE0F; Entrada de Dados e Alinhamento R&aacute;pido</h2>
+        <p>O Excel oferece recursos que aceleram muito a entrada de dados repetitivos ou sequenciais. O mais poderoso deles &eacute; a <strong>al&ccedil;a de preenchimento</strong>: o pequeno quadrado verde no canto inferior direito de uma c&eacute;lula selecionada.</p>
+
+        <h3>&#x1F4CC; Al&ccedil;a de preenchimento &mdash; arrastar para gerar s&eacute;ries</h3>
+        <div class="fill-demo">
+            <div>
+                <div style="font-size:.75em;color:#64748b;margin-bottom:6px;">Sequência de números</div>
+                <div class="fill-seq">
+                    <div class="fill-cell origin">1<div class="fill-handle"></div></div>
+                    <div class="fill-cell origin">2</div>
+                    <div class="fill-cell generated">3</div>
+                    <div class="fill-cell generated">4</div>
+                    <div class="fill-cell generated">5</div>
+                </div>
+            </div>
+            <div class="fill-arrow">&#x27A1;</div>
+            <div>
+                <div style="font-size:.75em;color:#64748b;margin-bottom:6px;">Sequência de meses</div>
+                <div class="fill-seq">
+                    <div class="fill-cell origin">Jan<div class="fill-handle"></div></div>
+                    <div class="fill-cell generated">Fev</div>
+                    <div class="fill-cell generated">Mar</div>
+                    <div class="fill-cell generated">Abr</div>
+                    <div class="fill-cell generated">Mai</div>
+                </div>
+            </div>
+        </div>
+
+        <ul>
+            <li><strong>S&eacute;ries num&eacute;ricas:</strong> selecione duas c&eacute;lulas com valores iniciais (ex.: 1 e 2) e arraste a al&ccedil;a &mdash; o Excel continua o padr&atilde;o (3, 4, 5&hellip;).</li>
+            <li><strong>Meses e dias:</strong> digite &ldquo;Janeiro&rdquo; ou &ldquo;Segunda&rdquo; e arraste &mdash; o Excel completa a s&eacute;rie automaticamente.</li>
+            <li><strong>Copiar f&oacute;rmula:</strong> arraste a al&ccedil;a de uma c&eacute;lula com f&oacute;rmula para copiar para as c&eacute;lulas vizinhas, ajustando os endere&ccedil;os automaticamente.</li>
+            <li><strong>AutoCompletar:</strong> ao digitar numa coluna que j&aacute; tem dados, o Excel sugere o texto anterior que come&ccedil;a com as mesmas letras. Pressione Enter para aceitar.</li>
+        </ul>
+
+        <h3>&#x1F4CB; Colar especial &mdash; <span class="kbd-sm">Ctrl+Alt+V</span></h3>
+        <p>Ao copiar e colar entre c&eacute;lulas, o <strong>Colar Especial</strong> d&aacute; controle preciso: colar apenas <em>valores</em> (sem f&oacute;rmulas), apenas <em>formata&ccedil;&atilde;o</em>, apenas <em>f&oacute;rmulas</em>, ou <em>transpor</em> (inverter linhas e colunas).</p>
+    </div>
+
+    <!-- CARD 5 — Formatação de Células -->
+    <div class="content-card">
+        <h2>&#x1F3A8; Formata&ccedil;&atilde;o de C&eacute;lulas</h2>
+        <p>A formata&ccedil;&atilde;o no Excel <em>n&atilde;o altera o valor da c&eacute;lula</em> &mdash; apenas muda como ele &eacute; exibido. A janela completa de formata&ccedil;&atilde;o &eacute; aberta com <span class="kbd-sm">Ctrl+1</span> e possui cinco abas principais.</p>
+
+        <div class="format-tabs">
+            <div class="fmt-tab active">N&uacute;mero</div>
+            <div class="fmt-tab">Alinhamento</div>
+            <div class="fmt-tab">Fonte</div>
+            <div class="fmt-tab">Bordas</div>
+            <div class="fmt-tab">Preenchimento</div>
+        </div>
+        <div class="format-panel">
+            <div class="fmt-options">
+                <div class="fmt-opt">
+                    <strong>Geral</strong>
+                    <span>Sem formato espec&iacute;fico; o Excel detecta o tipo automaticamente.</span>
+                </div>
+                <div class="fmt-opt">
+                    <strong>N&uacute;mero</strong>
+                    <span>Define casas decimais e separador de milhar. Ex.: 1.250,75</span>
+                </div>
+                <div class="fmt-opt">
+                    <strong>Moeda</strong>
+                    <span>Adiciona s&iacute;mbolo monet&aacute;rio. Ex.: R$ 1.250,75</span>
+                </div>
+                <div class="fmt-opt">
+                    <strong>Data</strong>
+                    <span>Define o formato de exibi&ccedil;&atilde;o: 15/03/2025 ou 15-mar-25.</span>
+                </div>
+                <div class="fmt-opt">
+                    <strong>Porcentagem</strong>
+                    <span>Multiplica o valor por 100 e adiciona %. Ex.: 0,25 &rarr; 25%</span>
+                </div>
+                <div class="fmt-opt">
+                    <strong>Texto</strong>
+                    <span>For&ccedil;a o Excel a tratar o conte&uacute;do como texto, mesmo que seja um n&uacute;mero.</span>
+                </div>
+            </div>
+        </div>
+
+        <h3>&#x1F4CF; Ajustando colunas e linhas</h3>
+        <ul>
+            <li><strong>Largura da coluna:</strong> arraste a borda direita do cabe&ccedil;alho da coluna; ou clique duplo na borda para <em>ajuste autom&aacute;tico</em> ao conte&uacute;do mais largo.</li>
+            <li><strong>Altura da linha:</strong> arraste a borda inferior do n&uacute;mero da linha; ou clique com o bot&atilde;o direito &rarr; <em>Altura da Linha</em>.</li>
+            <li><strong>Inserir coluna/linha:</strong> clique com o bot&atilde;o direito no cabe&ccedil;alho e escolha <em>Inserir</em>. As refer&ecirc;ncias nas f&oacute;rmulas s&atilde;o atualizadas automaticamente.</li>
+            <li><strong>Mesclar c&eacute;lulas:</strong> P&aacute;gina Inicial &rarr; Mesclar e Centralizar. Use com parcim&ocirc;nia em cabe&ccedil;alhos; mesclar em &aacute;reas de dados prejudica filtros e f&oacute;rmulas.</li>
+        </ul>
+    </div>
+
+    <!-- CARD 6 — Planilhas (abas) -->
+    <div class="content-card">
+        <h2>&#x1F5C2;&#xFE0F; Gerenciando Planilhas e Abas</h2>
+        <p>Uma <strong>pasta de trabalho</strong> do Excel pode conter m&uacute;ltiplas <strong>planilhas</strong>, exibidas como abas na parte inferior da tela. Organizar os dados em abas separadas &eacute; uma boa pr&aacute;tica: por exemplo, uma aba por m&ecirc;s, uma para dados brutos e outra para o relat&oacute;rio.</p>
+
+        <ul>
+            <li><strong>Renomear:</strong> clique duas vezes na aba &rarr; digite o novo nome.</li>
+            <li><strong>Inserir nova planilha:</strong> clique no bot&atilde;o <strong>&#x2B;</strong> ao lado das abas, ou pressione <span class="kbd-sm">Shift+F11</span>.</li>
+            <li><strong>Mover ou copiar:</strong> clique com o bot&atilde;o direito na aba &rarr; <em>Mover ou Copiar</em>. Marque &ldquo;Criar uma c&oacute;pia&rdquo; para duplicar.</li>
+            <li><strong>Colorir a aba:</strong> clique com o bot&atilde;o direito &rarr; <em>Cor da Guia</em>. &Uacute;til para distinguir categorias de planilhas visualmente.</li>
+            <li><strong>Navegar entre planilhas:</strong> <span class="kbd-sm">Ctrl+PgDn</span> para avan&ccedil;ar e <span class="kbd-sm">Ctrl+PgUp</span> para recuar.</li>
+        </ul>
+
+        <div class="highlight-box">
+            <p>&#x1F4A1; Para referenciar dados de outra planilha em uma f&oacute;rmula, use a sintaxe <code style="background:rgba(255,255,255,.5);padding:1px 5px;border-radius:3px;">Planilha2!A1</code>. Se o nome da planilha tiver espa&ccedil;os, use asp&aacute;s simples: <code style="background:rgba(255,255,255,.5);padding:1px 5px;border-radius:3px;">'Dados Brutos'!A1</code>.</p>
+        </div>
+    </div>
+
+    <!-- CARD 7 — Tabela Formatada -->
+    <div class="content-card">
+        <h2>&#x1F4CA; Tabela Formatada (Ctrl+T)</h2>
+        <p>Converter um intervalo de dados em uma <strong>Tabela Formatada</strong> (Inserir &rarr; Tabela ou <span class="kbd-sm">Ctrl+T</span>) &eacute; uma das melhores pr&aacute;ticas do Excel. A tabela recebe um nome, aplica estilo visual autom&aacute;tico e ativa recursos poderosos que facilitam an&aacute;lise de dados.</p>
+
+        <table class="xl-table-fmt">
+            <thead>
+                <tr>
+                    <th>C&oacute;digo <span class="xl-filter-btn">&#x25BE;</span></th>
+                    <th>Produto <span class="xl-filter-btn">&#x25BE;</span></th>
+                    <th>Categoria <span class="xl-filter-btn">&#x25BE;</span></th>
+                    <th>Qtd. <span class="xl-filter-btn">&#x25BE;</span></th>
+                    <th>Total <span class="xl-filter-btn">&#x25BE;</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>001</td>
+                    <td>Caderno A4</td>
+                    <td>Papelaria</td>
+                    <td class="num">50</td>
+                    <td class="num">R$ 375,00</td>
+                </tr>
+                <tr>
+                    <td>002</td>
+                    <td>Caneta Azul</td>
+                    <td>Papelaria</td>
+                    <td class="num">200</td>
+                    <td class="num">R$ 180,00</td>
+                </tr>
+                <tr>
+                    <td>003</td>
+                    <td>Toner HP</td>
+                    <td>Inform&aacute;tica</td>
+                    <td class="num">10</td>
+                    <td class="num">R$ 1.200,00</td>
+                </tr>
+                <tr>
+                    <td>004</td>
+                    <td>Mouse sem fio</td>
+                    <td>Inform&aacute;tica</td>
+                    <td class="num">15</td>
+                    <td class="num">R$ 637,50</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>&#x2728; Vantagens das tabelas formatadas</h3>
+        <ul>
+            <li><strong>Filtros autom&aacute;ticos:</strong> bot&otilde;es de filtro s&atilde;o adicionados ao cabe&ccedil;alho automaticamente.</li>
+            <li><strong>Estilo visual:</strong> linhas alternadas coloridas facilitam a leitura sem esfor&ccedil;o de formata&ccedil;&atilde;o manual.</li>
+            <li><strong>Expans&atilde;o autom&aacute;tica:</strong> ao adicionar dados na pr&oacute;xima linha da tabela, ela expande e inclui automaticamente o novo dado nas f&oacute;rmulas.</li>
+            <li><strong>Linha de totais:</strong> clique com bot&atilde;o direito &rarr; Tabela &rarr; Linha de Totais para adicionar soma, m&eacute;dia ou contagem rapidamente.</li>
+            <li><strong>Nome estruturado:</strong> a tabela recebe um nome (ex.: Tabela1) que pode ser usado em f&oacute;rmulas como <code style="background:#f1f5f9;padding:1px 5px;border-radius:3px;font-size:.88em;">=SOMA(Tabela1[Total])</code>.</li>
+        </ul>
+    </div>
+
+    <!-- CARD 8 — Boas Práticas -->
+    <div class="content-card">
+        <h2>&#x2705; Boas Pr&aacute;ticas de Organiza&ccedil;&atilde;o</h2>
+        <div class="boas-grid">
+            <div class="boa-item">
+                <div class="boa-icon">&#x1F3F7;&#xFE0F;</div>
+                <div class="boa-text">
+                    <strong>Uma linha de cabe&ccedil;alho, sem mesclagem</strong>
+                    <span>Sempre inicie os dados com uma linha de cabe&ccedil;alho clara. N&atilde;o mescle c&eacute;lulas em &aacute;reas de dados &mdash; isso quebra filtros e f&oacute;rmulas.</span>
+                </div>
+            </div>
+            <div class="boa-item">
+                <div class="boa-icon">&#x1F6AB;</div>
+                <div class="boa-text">
+                    <strong>N&atilde;o misture tipos numa coluna</strong>
+                    <span>Uma coluna deve ter sempre o mesmo tipo de dado: apenas n&uacute;meros, apenas texto ou apenas datas. Misturar impede c&aacute;lculos e ordena&ccedil;&otilde;es corretas.</span>
+                </div>
+            </div>
+            <div class="boa-item">
+                <div class="boa-icon">&#x1F4CA;</div>
+                <div class="boa-text">
+                    <strong>Use Tabela Formatada</strong>
+                    <span>Ctrl+T transforma um intervalo comum em tabela com filtros, estilos e expans&atilde;o autom&aacute;tica &mdash; ideal para qualquer base de dados.</span>
+                </div>
+            </div>
+            <div class="boa-item">
+                <div class="boa-icon">&#x1F4C1;</div>
+                <div class="boa-text">
+                    <strong>Separe dados brutos do relat&oacute;rio</strong>
+                    <span>Mantenha os dados originais em uma aba e os c&aacute;lculos/relat&oacute;rios em abas separadas. Nunca edite os dados brutos manualmente depois de importados.</span>
+                </div>
+            </div>
+            <div class="boa-item">
+                <div class="boa-icon">&#x1F522;</div>
+                <div class="boa-text">
+                    <strong>Formate n&uacute;meros corretamente</strong>
+                    <span>Use formato de moeda, porcentagem e data pelas op&ccedil;&otilde;es do Excel. Nunca digit&iacute;-los com s&iacute;mbolos manuais &mdash; isso transforma n&uacute;meros em texto.</span>
+                </div>
+            </div>
+            <div class="boa-item">
+                <div class="boa-icon">&#x1F4BE;</div>
+                <div class="boa-text">
+                    <strong>Salve em .xlsx, compartilhe via OneDrive</strong>
+                    <span>O formato .xlsx &eacute; o padr&atilde;o atual do Excel. Para colabora&ccedil;&atilde;o, salve no OneDrive e compartilhe o link em vez de enviar o arquivo por e-mail.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- EXERCÍCIO -->
+    <div class="content-card exercise-card">
+        <h2>&#x1F3AF; Exerc&iacute;cio &mdash; Arraste e Conecte</h2>
+        <p style="color:#475569;font-size:.9em;margin-bottom:4px;">Arraste cada descri&ccedil;&atilde;o para o conceito ou recurso correto do Excel.</p>
+
+        <div class="ex-drag-root" data-ex="ex48">
+            <div class="ex-drag">
+                <div>
+                    <div class="ex-col-title">Descri&ccedil;&atilde;o</div>
+                    <div class="ex-pool" data-pool="ex48">
+                        <div class="drag-chip" data-id="c1">Pequeno quadrado verde no canto inferior direito de uma c&eacute;lula; ao arrastar, gera s&eacute;ries num&eacute;ricas, de datas ou copia f&oacute;rmulas</div>
+                        <div class="drag-chip" data-id="c2">Identifica&ccedil;&atilde;o &uacute;nica de uma c&eacute;lula formada pela letra da coluna seguida do n&uacute;mero da linha, como A1 ou C10</div>
+                        <div class="drag-chip" data-id="c3">Janela aberta com Ctrl+1 que permite definir formato de n&uacute;mero, alinhamento, fonte, bordas e cor de fundo de uma c&eacute;lula</div>
+                        <div class="drag-chip" data-id="c4">Intervalo de dados convertido com Ctrl+T que ganha filtros autom&aacute;ticos, estilo alternado e expans&atilde;o autom&aacute;tica ao adicionar linhas</div>
+                        <div class="drag-chip" data-id="c5">Campo localizado &agrave; esquerda da barra de f&oacute;rmulas que exibe e permite navegar diretamente para o endere&ccedil;o de uma c&eacute;lula</div>
+                        <div class="drag-chip" data-id="c6">Tipo de dado que o Excel armazena internamente como n&uacute;mero inteiro, permitindo calcular diferen&ccedil;as simplesmente subtraindo duas c&eacute;lulas</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="ex-col-title">Conceito / Recurso</div>
+                    <div class="ex-zones" data-zones="ex48">
+                        <div class="drop-zone" data-zone="ex48-z1" data-accept="c1">
+                            <span class="zone-name">Al&ccedil;a de Preenchimento</span>
+                            <div class="zone-slot"></div>
+                            <div class="zone-feedback"></div>
+                        </div>
+                        <div class="drop-zone" data-zone="ex48-z2" data-accept="c2">
+                            <span class="zone-name">Endere&ccedil;o de C&eacute;lula</span>
+                            <div class="zone-slot"></div>
+                            <div class="zone-feedback"></div>
+                        </div>
+                        <div class="drop-zone" data-zone="ex48-z3" data-accept="c3">
+                            <span class="zone-name">Formatar C&eacute;lulas (Ctrl+1)</span>
+                            <div class="zone-slot"></div>
+                            <div class="zone-feedback"></div>
+                        </div>
+                        <div class="drop-zone" data-zone="ex48-z4" data-accept="c4">
+                            <span class="zone-name">Tabela Formatada</span>
+                            <div class="zone-slot"></div>
+                            <div class="zone-feedback"></div>
+                        </div>
+                        <div class="drop-zone" data-zone="ex48-z5" data-accept="c5">
+                            <span class="zone-name">Caixa de Nome</span>
+                            <div class="zone-slot"></div>
+                            <div class="zone-feedback"></div>
+                        </div>
+                        <div class="drop-zone" data-zone="ex48-z6" data-accept="c6">
+                            <span class="zone-name">Data / Hora</span>
+                            <div class="zone-slot"></div>
+                            <div class="zone-feedback"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ex-actions">
+            <button class="btn-verificar" onclick="dragVerify('ex48')">Verificar</button>
+            <button class="btn-refazer"  onclick="dragReset('ex48')">Refazer</button>
+        </div>
+        <div class="ex-result" id="ex48-result"></div>
+    </div>
+
+    <!-- ATIVIDADE PRÁTICA 4.8 -->
+    <div class="content-card practical-card" id="prat-48">
+        <h2>&#x1F6E0;&#xFE0F; Atividade Pr&aacute;tica &mdash; Planilha de Controle de Estoque</h2>
+        <div class="prat-meta">
+            <span class="prat-tag">&#x23F1; ~45 min</span>
+            <span class="prat-tag">&#x1F4BB; Microsoft Excel</span>
+            <span class="prat-tag">&#x1F4BE; Salvar como .xlsx</span>
+        </div>
+
+        <div class="prat-steps">
+            <div class="prat-step">
+                <div class="step-num">1</div>
+                <div class="step-body">
+                    <div class="step-label">Crie e nomeie as planilhas</div>
+                    <div class="step-desc">Abra o Excel e crie um novo arquivo. Renomeie a aba padr&atilde;o para <strong>Estoque</strong> (clique duplo na aba). Adicione mais uma aba chamada <strong>Resumo</strong> (bot&atilde;o &#x2B;). Colora a aba Estoque de verde e a aba Resumo de azul (bot&atilde;o direito na aba &rarr; Cor da Guia). Salve o arquivo como <strong>Estoque_SeuNome.xlsx</strong>.</div>
+                </div>
+            </div>
+            <div class="prat-step">
+                <div class="step-num">2</div>
+                <div class="step-body">
+                    <div class="step-label">Monte a estrutura de dados na aba Estoque</div>
+                    <div class="step-desc">Na aba <strong>Estoque</strong>, crie os cabe&ccedil;alhos na linha 1: <em>C&oacute;digo</em> (A1), <em>Produto</em> (B1), <em>Categoria</em> (C1), <em>Quantidade</em> (D1), <em>Pre&ccedil;o Unit&aacute;rio</em> (E1), <em>Total</em> (F1), <em>&Uacute;ltima Atualiza&ccedil;&atilde;o</em> (G1). Preencha pelo menos <strong>8 linhas</strong> de dados fict&iacute;cios com diferentes categorias e quantidades. Na coluna F, use a f&oacute;rmula <strong>=D2*E2</strong> (n&atilde;o calcule manualmente).</div>
+                </div>
+            </div>
+            <div class="prat-step">
+                <div class="step-num">3</div>
+                <div class="step-body">
+                    <div class="step-label">Use a al&ccedil;a de preenchimento para os c&oacute;digos e f&oacute;rmulas</div>
+                    <div class="step-desc">Na coluna A, digite <strong>001</strong> na linha 2 e <strong>002</strong> na linha 3. Selecione as duas c&eacute;lulas e arraste a al&ccedil;a de preenchimento at&eacute; a linha 9 (ou mais). Os c&oacute;digos devem ser gerados automaticamente. Fa&ccedil;a o mesmo com a f&oacute;rmula da coluna F: ap&oacute;s escrever =D2*E2, arraste a al&ccedil;a para as linhas seguintes.</div>
+                </div>
+            </div>
+            <div class="prat-step">
+                <div class="step-num">4</div>
+                <div class="step-body">
+                    <div class="step-label">Converta em Tabela Formatada e formate os dados</div>
+                    <div class="step-desc">Clique em qualquer c&eacute;lula com dado e pressione <strong>Ctrl+T</strong> (minha tabela tem cabe&ccedil;alhos: sim). Aplique um estilo de tabela verde. Na coluna E (Pre&ccedil;o Unit&aacute;rio) e F (Total), selecione os valores e formate como <strong>Moeda</strong> (Ctrl+1 &rarr; N&uacute;mero &rarr; Moeda, s&iacute;mbolo R$, 2 casas decimais). Na coluna G, formate como <strong>Data</strong> no formato dd/mm/aaaa e preencha datas para cada produto.</div>
+                </div>
+            </div>
+            <div class="prat-step">
+                <div class="step-num">5</div>
+                <div class="step-body">
+                    <div class="step-label">Ajuste colunas e adicione linha de totais</div>
+                    <div class="step-desc">Selecione todas as colunas (clique no cabe&ccedil;alho A, shift-clique em G) e clique duplo na borda de qualquer cabe&ccedil;alho para <strong>ajuste autom&aacute;tico</strong> da largura. Ative a <strong>Linha de Totais</strong> da tabela (Design da Tabela &rarr; Linha de Totais). Na coluna Total (F), configure o total como <em>Soma</em>; na coluna Quantidade (D), configure como <em>Soma</em> tamb&eacute;m.</div>
+                </div>
+            </div>
+            <div class="prat-step">
+                <div class="step-num">6</div>
+                <div class="step-body">
+                    <div class="step-label">Crie um resumo na segunda aba</div>
+                    <div class="step-desc">V&aacute; para a aba <strong>Resumo</strong>. Na c&eacute;lula A1 escreva &ldquo;Total de itens em estoque:&rdquo;. Em B1, referencie o total de quantidade da aba Estoque: comece digitando <strong>=</strong>, clique na aba <em>Estoque</em> e clique na c&eacute;lula da Linha de Totais da coluna Quantidade &mdash; o Excel cria a refer&ecirc;ncia automaticamente. Fa&ccedil;a o mesmo para o valor total. Formate o resumo com cores e negrito para destacar os n&uacute;meros.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="prat-observe">
+            <strong>&#x1F4CC; Para refletir:</strong> Uma planilha bem estruturada &mdash; com uma linha de cabe&ccedil;alho, dados homog&ecirc;neos por coluna, f&oacute;rmulas autom&aacute;ticas e formato correto de n&uacute;meros &mdash; &eacute; muito mais f&aacute;cil de manter e analisar do que uma planilha desorganizada. Bons h&aacute;bitos na entrada de dados economizam horas de corre&ccedil;&atilde;o e retrabalho no futuro.
+        </div>
+
+        <div class="ex-actions">
+            <button class="btn-print" onclick="printPractical('prat-48', 'Aula 4.8 \u2014 Planilhas: Interface e Dados')">&#x1F5A8;&#xFE0F; Imprimir roteiro</button>
+        </div>
+    </div>
+
+    <div class="nav-footer">
+        <a href="uni4-07-texto-automacao.html" class="nav-link">&#x2B05; Anterior: Texto &mdash; Automatiza&ccedil;&atilde;o</a>
+        <a href="uni4-09-planilhas-formulas.html" class="nav-link">Pr&oacute;xima: Planilhas &mdash; F&oacute;rmulas &#x27A1;</a>
+    </div>
+
+</div>
+
+<script src="slide-mode.js"></script>
+<script src="exercise-drag.js"></script>
+<script src="exercise-print.js"></script>
+</body>
+</html>
