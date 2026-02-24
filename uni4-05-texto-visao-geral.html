@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 4.5 - Texto: Vis&atilde;o Geral e Formata&ccedil;&atilde;o</title>
+    <link rel="stylesheet" href="slide-mode.css">
+    <link rel="stylesheet" href="exercise.css">
+    <style>
+        :root {
+            --primary: #bf360c;
+            --secondary: #870000;
+            --bg-light: #f0f4f8;
+            --text-dark: #1a202c;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        .top-bar {
+            background: white;
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .back-btn {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+        .back-btn:hover { background: rgba(191,54,12,0.08); }
+
+        .page-badge {
+            font-size: 0.8em;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: rgba(191,54,12,0.12);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .content-wrapper {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 30px;
+        }
+
+        .lesson-hero {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            border-top: 4px solid var(--primary);
+        }
+        .lesson-hero h1 { font-size: 2em; margin-bottom: 10px; color: var(--primary); }
+        .lesson-hero .subtitle { font-size: 1.05em; color: #718096; }
+
+        .content-card {
+            background: white;
+            border-radius: 16px;
+            padding: 35px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+        .content-card h2 {
+            font-size: 1.4em;
+            color: var(--primary);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .content-card h3 { font-size: 1.05em; color: var(--secondary); margin: 20px 0 10px; }
+        .content-card p  { margin-bottom: 15px; text-align: justify; }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(191,54,12,0.05), rgba(135,0,0,0.06));
+            border-left: 4px solid var(--primary);
+            padding: 20px 25px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+        }
+        .highlight-box p { margin-bottom: 0; font-style: italic; }
+
+        .alert-box {
+            background: #fff8e1;
+            border-left: 4px solid #f59e0b;
+            padding: 18px 22px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+        }
+        .alert-box p { margin: 0; color: #78350f; font-size: 0.93em; }
+
+        .tip-box {
+            background: #f0fdf4;
+            border-left: 4px solid #16a34a;
+            padding: 18px 22px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+        }
+        .tip-box p { margin: 0; color: #14532d; font-size: 0.93em; }
+
+        ul, ol { margin: 10px 0 15px 25px; }
+        li { margin-bottom: 8px; }
+
+        /* ── Interface do Word ── */
+        .word-interface {
+            background: #f3f2f1;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 20px 0;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+        }
+        .wi-titlebar {
+            background: #2b579a;
+            padding: 8px 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8em;
+            color: white;
+            font-weight: 600;
+        }
+        .wi-ribbon-tabs {
+            background: #2b579a;
+            display: flex;
+            gap: 2px;
+            padding: 0 10px;
+        }
+        .wrtab {
+            font-size: 0.72em;
+            padding: 5px 10px;
+            border-radius: 4px 4px 0 0;
+            cursor: default;
+            color: rgba(255,255,255,0.75);
+        }
+        .wrtab.active { background: #f3f2f1; color: #2b579a; font-weight: 700; }
+        .wi-ribbon-tools {
+            background: white;
+            border-bottom: 1px solid #d0cfd1;
+            padding: 6px 12px;
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .wtool {
+            background: #f3f2f1;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            font-size: 0.68em;
+            padding: 3px 8px;
+            color: #333;
+        }
+        .wtool.sep { width: 1px; height: 20px; background: #d0cfd1; border: none; padding: 0; margin: 0 4px; }
+        .wi-regua {
+            background: #e8e8e8;
+            height: 18px;
+            border-bottom: 1px solid #c8c8c8;
+            display: flex;
+            align-items: center;
+            padding: 0 54px;
+            gap: 20px;
+        }
+        .wi-regua span { font-size: 0.55em; color: #888; }
+        .wi-body {
+            display: flex;
+            min-height: 140px;
+        }
+        .wi-nav-panel {
+            width: 90px;
+            background: #f3f2f1;
+            border-right: 1px solid #d0cfd1;
+            padding: 8px;
+        }
+        .wi-nav-title { font-size: 0.65em; font-weight: 700; color: #555; margin-bottom: 6px; }
+        .wi-nav-item {
+            font-size: 0.6em;
+            color: #2b579a;
+            padding: 2px 0;
+            border-bottom: 1px solid #e0e0e0;
+            cursor: default;
+        }
+        .wi-page-area {
+            flex: 1;
+            background: #737373;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+        }
+        .wi-page {
+            background: white;
+            width: 100%;
+            max-width: 300px;
+            min-height: 100px;
+            border-radius: 2px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            padding: 14px 16px;
+        }
+        .wi-page-title { font-size: 0.78em; font-weight: 700; color: #1a237e; margin-bottom: 6px; }
+        .wi-page-line {
+            height: 7px;
+            background: #e8e8e8;
+            border-radius: 3px;
+            margin-bottom: 4px;
+        }
+        .wi-status {
+            background: #2b579a;
+            padding: 4px 12px;
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+        .wi-status span { font-size: 0.62em; color: rgba(255,255,255,0.8); }
+
+        /* Legenda */
+        .wi-legend {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 10px;
+            margin-top: 14px;
+        }
+        .wl-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 10px 12px;
+        }
+        .wl-num {
+            background: #2b579a;
+            color: white;
+            min-width: 22px; height: 22px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.72em; font-weight: 700; flex-shrink: 0;
+        }
+        .wl-text strong { display: block; font-size: 0.84em; color: #2b579a; }
+        .wl-text span   { font-size: 0.76em; color: #475569; }
+
+        /* ── Abas do Word ── */
+        .abas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin: 16px 0;
+        }
+        .aba-item {
+            border-radius: 10px;
+            padding: 14px 16px;
+            border-left: 4px solid #2b579a;
+            background: #eff3fb;
+        }
+        .aba-item strong { display: block; font-size: 0.88em; color: #1a3a6e; margin-bottom: 4px; }
+        .aba-item span   { font-size: 0.78em; color: #475569; }
+
+        /* ── Formatação de caracteres: tabela visual ── */
+        .char-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 14px 0;
+            font-size: 0.88em;
+        }
+        .char-table th {
+            background: var(--primary);
+            color: white;
+            padding: 10px 14px;
+            text-align: left;
+        }
+        .char-table th:first-child { border-radius: 8px 0 0 0; }
+        .char-table th:last-child  { border-radius: 0 8px 0 0; }
+        .char-table td {
+            padding: 9px 14px;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: middle;
+        }
+        .char-table tr:nth-child(even) td { background: #f8fafc; }
+        .char-table tr:last-child td { border-bottom: none; }
+        .char-table .demo { font-size: 1em; }
+        .kbd-sm {
+            background: #1e293b;
+            color: #e2e8f0;
+            border-radius: 4px;
+            padding: 2px 6px;
+            font-family: 'Consolas', monospace;
+            font-size: 0.82em;
+            white-space: nowrap;
+        }
+
+        /* ── Alinhamentos ── */
+        .align-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+            margin: 14px 0;
+        }
+        .al-item {
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+        }
+        .al-header {
+            padding: 7px 10px;
+            font-size: 0.76em;
+            font-weight: 700;
+        }
+        .al-header.esq { background: #eff6ff; color: #1d4ed8; }
+        .al-header.cen { background: #f0fdf4; color: #15803d; }
+        .al-header.dir { background: #fdf4ff; color: #7e22ce; }
+        .al-header.jus { background: #fff7ed; color: #b45309; }
+        .al-body { padding: 8px; background: white; }
+        .al-line {
+            height: 6px;
+            background: #e2e8f0;
+            border-radius: 3px;
+            margin-bottom: 4px;
+        }
+        .al-line.esq { width: 75%; }
+        .al-line.cen { width: 55%; margin: 0 auto 4px; }
+        .al-line.dir { width: 70%; margin-left: auto; margin-bottom: 4px; }
+        .al-line.jus { width: 100%; }
+        .al-line.short-esq { width: 40%; }
+        .al-line.short-cen { width: 30%; margin: 0 auto 0; }
+        .al-line.short-dir { width: 35%; margin-left: auto; }
+        .al-line.short-jus { width: 50%; }
+        .al-kbd { text-align: center; font-family: 'Consolas', monospace; font-size: 0.7em; color: #94a3b8; padding-top: 6px; padding-bottom: 4px; }
+
+        /* ── Estilos do Word ── */
+        .estilos-demo {
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            overflow: hidden;
+            margin: 16px 0;
+        }
+        .ed-header {
+            background: #2b579a;
+            color: white;
+            padding: 8px 14px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+        .ed-body { padding: 16px; background: white; }
+        .estilo-linha {
+            padding: 6px 10px;
+            border-radius: 6px;
+            margin-bottom: 6px;
+            cursor: default;
+        }
+        .es-normal   { font-size: 0.88em; color: #334155; background: #f8fafc; }
+        .es-titulo1  { font-size: 1.3em; font-weight: 700; color: #1a237e; background: #eff3fb; }
+        .es-titulo2  { font-size: 1.1em; font-weight: 700; color: #283593; background: #f0f4ff; }
+        .es-titulo3  { font-size: 0.96em; font-weight: 700; color: #303f9f; background: #f3f5ff; }
+        .es-subtitulo{ font-size: 0.88em; font-style: italic; color: #546e7a; background: #f0f7ff; }
+        .es-citacao  { font-size: 0.84em; font-style: italic; color: #546e7a; border-left: 3px solid #90a4ae; padding-left: 10px; background: #f8fafc; }
+        .estilo-tag {
+            float: right;
+            font-size: 0.65em;
+            background: #e2e8f0;
+            color: #64748b;
+            padding: 2px 7px;
+            border-radius: 10px;
+            font-style: normal;
+            font-weight: 600;
+        }
+
+        /* ── Por que usar estilos ── */
+        .motivos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin: 14px 0;
+        }
+        .motivo-item {
+            border-radius: 10px;
+            padding: 14px;
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+        .mot-a { background: #eff6ff; }
+        .mot-b { background: #f0fdf4; }
+        .mot-c { background: #fdf4ff; }
+        .mot-d { background: #fff7ed; }
+        .motivo-icon { font-size: 1.6em; flex-shrink: 0; }
+        .motivo-text strong { display: block; font-size: 0.86em; margin-bottom: 3px; color: #1e293b; }
+        .motivo-text span   { font-size: 0.76em; color: #475569; }
+
+        /* ── Erros comuns ── */
+        .erros-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin: 14px 0;
+        }
+        .erro-item {
+            background: #fef2f2;
+            border-radius: 10px;
+            padding: 14px;
+            border-left: 4px solid #ef4444;
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+        .erro-icon { font-size: 1.4em; flex-shrink: 0; }
+        .erro-text strong { display: block; font-size: 0.84em; color: #dc2626; margin-bottom: 3px; }
+        .erro-text span   { font-size: 0.76em; color: #7f1d1d; }
+
+        /* ── Atalhos ── */
+        .atalhos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 8px;
+            margin: 14px 0;
+        }
+        .atalho-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            background: #f8fafc;
+            border-radius: 8px;
+        }
+        .kbd {
+            background: #1e293b;
+            color: #e2e8f0;
+            border-radius: 5px;
+            padding: 3px 8px;
+            font-family: 'Consolas', monospace;
+            font-size: 0.78em;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .atalho-desc { font-size: 0.82em; color: #475569; }
+
+        /* ── Boas práticas ── */
+        .boas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .boa-item {
+            background: #fff7ed;
+            border-radius: 10px;
+            padding: 16px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+        .boa-icon { font-size: 1.6em; flex-shrink: 0; }
+        .boa-text strong { display: block; font-size: 0.88em; color: var(--primary); margin-bottom: 3px; }
+        .boa-text span   { font-size: 0.8em; color: #475569; }
+
+        /* ── nav ── */
+        .nav-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-bottom: 40px;
+        }
+        .nav-link {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+        .nav-link:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+
+        @media (max-width: 768px) {
+            .content-wrapper { padding: 0 15px; }
+            .lesson-hero, .content-card { padding: 25px; }
+            .lesson-hero h1 { font-size: 1.5em; }
+            .wi-nav-panel { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <a href="index.html" class="back-btn">&#x2B05; Voltar ao Dashboard</a>
+        <span class="page-badge">Unidade 4 &mdash; Su&iacute;te de Escrit&oacute;rio</span>
+        <button class="slide-toggle" id="slideToggleBtn">&#x1F4FA; Modo Slide</button>
+    </div>
+
+    <div class="content-wrapper">
+
+        <div class="lesson-hero">
+            <h1>&#x1F4DD; Texto: Vis&atilde;o Geral e Formata&ccedil;&atilde;o</h1>
+            <p class="subtitle">Aula 4.5 &mdash; Interface do Word, formata&ccedil;&atilde;o de caracteres e par&aacute;grafos, estilos, verifica&ccedil;&atilde;o ortogr&aacute;fica e boas pr&aacute;ticas de documentos profissionais</p>
+        </div>
+
+        <!-- CARD 1 — O que é o Word -->
+        <div class="content-card">
+            <h2>&#x1F4BB; O que &eacute; o Microsoft Word?</h2>
+            <p>O <strong>Microsoft Word</strong> &eacute; o editor de textos mais utilizado no mundo, parte da su&iacute;te Microsoft Office. Diferente de editores simples como o Bloco de Notas, o Word &eacute; um <strong>processador de textos</strong>: permite formatar fontes, criar estilos, inserir imagens e tabelas, gerar sum&aacute;rios autom&aacute;ticos e muito mais.</p>
+            <p>No mercado de trabalho e na vida acad&ecirc;mica, o Word &eacute; a ferramenta padr&atilde;o para curr&iacute;culos, relat&oacute;rios, trabalhos escolares, contratos, of&iacute;cios e qualquer documento de texto profissional.</p>
+
+            <div class="highlight-box">
+                <p>&#x1F4A1; O Word est&aacute; dispon&iacute;vel instalado (Microsoft 365) ou diretamente no navegador em <strong>office.com</strong> &mdash; gratuitamente para alunos do IFRN com conta institucional.</p>
+            </div>
+
+            <h3>&#x1F4C4; Formatos de arquivo do Word</h3>
+            <ul>
+                <li><strong>.docx</strong> &mdash; formato padr&atilde;o edit&aacute;vel (Word Open XML). Use para salvar e compartilhar documentos para edi&ccedil;&atilde;o.</li>
+                <li><strong>.pdf</strong> &mdash; exporta&ccedil;&atilde;o final; layout garantido em qualquer dispositivo. Use para entregar curr&iacute;culo, relat&oacute;rio ou trabalho ao professor.</li>
+                <li><strong>.odt</strong> &mdash; formato aberto (OpenDocument Text); compat&iacute;vel com LibreOffice e Google Docs.</li>
+                <li><strong>.docm</strong> &mdash; documento com macros (uso avan&ccedil;ado); aceite apenas de fontes confi&aacute;veis.</li>
+            </ul>
+        </div>
+
+        <!-- CARD 2 — Interface -->
+        <div class="content-card">
+            <h2>&#x1F5A5;&#xFE0F; A Interface do Word</h2>
+            <p>A interface do Word segue o mesmo padr&atilde;o do Ribbon que vimos no PowerPoint, com abas tem&aacute;ticas e &aacute;rea de edi&ccedil;&atilde;o central. Duas pe&ccedil;as exclusivas do Word merecem aten&ccedil;&atilde;o: a <strong>r&eacute;gua</strong> e o <strong>Painel de Navega&ccedil;&atilde;o</strong>.</p>
+
+            <div class="word-interface">
+                <div class="wi-titlebar">
+                    &#x1F4DD; &nbsp; Relatorio_Final.docx &mdash; Word &nbsp;|&nbsp; Microsoft 365
+                </div>
+                <div class="wi-ribbon-tabs">
+                    <span class="wrtab active">P&aacute;g. Inicial</span>
+                    <span class="wrtab">Inserir</span>
+                    <span class="wrtab">Design</span>
+                    <span class="wrtab">Layout</span>
+                    <span class="wrtab">Refer&ecirc;ncias</span>
+                    <span class="wrtab">Revis&atilde;o</span>
+                    <span class="wrtab">Exibir</span>
+                </div>
+                <div class="wi-ribbon-tools">
+                    <span class="wtool">Calibri &#x25BC;</span>
+                    <span class="wtool">11 &#x25BC;</span>
+                    <span class="wtool sep"></span>
+                    <span class="wtool"><strong>N</strong></span>
+                    <span class="wtool"><em>I</em></span>
+                    <span class="wtool"><u>S</u></span>
+                    <span class="wtool sep"></span>
+                    <span class="wtool">&#x2261;</span>
+                    <span class="wtool">&#x2630;</span>
+                    <span class="wtool">&#x2261;&#x2261;</span>
+                    <span class="wtool sep"></span>
+                    <span class="wtool" style="background:#dbeafe;color:#1d4ed8;font-weight:600;">T&iacute;tulo 1</span>
+                    <span class="wtool">T&iacute;tulo 2</span>
+                    <span class="wtool">Normal</span>
+                </div>
+                <div class="wi-regua">
+                    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span>
+                </div>
+                <div class="wi-body">
+                    <div class="wi-nav-panel">
+                        <div class="wi-nav-title">Navega&ccedil;&atilde;o</div>
+                        <div class="wi-nav-item">1. Introdu&ccedil;&atilde;o</div>
+                        <div class="wi-nav-item">2. Desenvolvimento</div>
+                        <div class="wi-nav-item">3. Conclus&atilde;o</div>
+                    </div>
+                    <div class="wi-page-area">
+                        <div class="wi-page">
+                            <div class="wi-page-title">Relat&oacute;rio Final</div>
+                            <div class="wi-page-line" style="width:90%"></div>
+                            <div class="wi-page-line" style="width:80%"></div>
+                            <div class="wi-page-line" style="width:95%"></div>
+                            <div class="wi-page-line" style="width:70%"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="wi-status">
+                    <span>P&aacute;gina 1 de 4</span>
+                    <span>342 palavras</span>
+                    <span>&#x1F1E7;&#x1F1F7; Portugu&ecirc;s (Brasil)</span>
+                    <span style="margin-left:auto;">Layout de Impress&atilde;o &nbsp; 100%</span>
+                </div>
+            </div>
+
+            <div class="wi-legend">
+                <div class="wl-item">
+                    <div class="wl-num">1</div>
+                    <div class="wl-text">
+                        <strong>Faixa de Op&ccedil;&otilde;es (Ribbon)</strong>
+                        <span>Ferramentas organizadas em abas. Abas contextuais aparecem ao selecionar tabelas, imagens, etc.</span>
+                    </div>
+                </div>
+                <div class="wl-item">
+                    <div class="wl-num">2</div>
+                    <div class="wl-text">
+                        <strong>R&eacute;gua</strong>
+                        <span>Exibe margens, recuos e tabulações. Ative em Exibir &rarr; R&eacute;gua. Arraste os marcadores para ajustar recuos.</span>
+                    </div>
+                </div>
+                <div class="wl-item">
+                    <div class="wl-num">3</div>
+                    <div class="wl-text">
+                        <strong>Painel de Navega&ccedil;&atilde;o</strong>
+                        <span>Lista os t&iacute;tulos do documento para navegar rapidamente. Ative com Ctrl+F ou Exibir &rarr; Painel de Navega&ccedil;&atilde;o.</span>
+                    </div>
+                </div>
+                <div class="wl-item">
+                    <div class="wl-num">4</div>
+                    <div class="wl-text">
+                        <strong>Barra de Status</strong>
+                        <span>Exibe p&aacute;gina atual, contagem de palavras, idioma e modo de exibi&ccedil;&atilde;o. Clique para mais op&ccedil;&otilde;es.</span>
+                    </div>
+                </div>
+            </div>
+
+            <h3>&#x1F4F1; Modos de Exibi&ccedil;&atilde;o</h3>
+            <ul>
+                <li><strong>Layout de Impress&atilde;o</strong> &mdash; modo padr&atilde;o; mostra o documento exatamente como ser&aacute; impresso, com margens e cabe&ccedil;alhos.</li>
+                <li><strong>Modo de Leitura</strong> &mdash; oculta o Ribbon e exibe o texto em colunas otimizadas para leitura na tela.</li>
+                <li><strong>Layout da Web</strong> &mdash; mostra como o documento ficaria em um navegador (sem quebras de p&aacute;gina).</li>
+                <li><strong>Rascunho</strong> &mdash; exibe apenas o texto sem imagens ou cabe&ccedil;alhos, ideal para escrever com foco.</li>
+            </ul>
+        </div>
+
+        <!-- CARD 3 — Abas do Ribbon -->
+        <div class="content-card">
+            <h2>&#x1F9F0; As Abas do Ribbon no Word</h2>
+            <p>Cada aba agrupa ferramentas espec&iacute;ficas. Conhecer a fun&ccedil;&atilde;o de cada uma evita perder tempo procurando recursos:</p>
+            <div class="abas-grid">
+                <div class="aba-item">
+                    <strong>P&aacute;gina Inicial</strong>
+                    <span>Formata&ccedil;&atilde;o de fonte e par&aacute;grafo, estilos r&aacute;pidos, copiar/colar e localizar.</span>
+                </div>
+                <div class="aba-item">
+                    <strong>Inserir</strong>
+                    <span>Imagens, tabelas, gr&aacute;ficos, cabe&ccedil;alho/rodap&eacute;, links, equa&ccedil;&otilde;es e n&uacute;mero de p&aacute;gina.</span>
+                </div>
+                <div class="aba-item">
+                    <strong>Design</strong>
+                    <span>Temas do documento, cores e fontes do tema, marca d&aacute;gua e cor de p&aacute;gina.</span>
+                </div>
+                <div class="aba-item">
+                    <strong>Layout</strong>
+                    <span>Margens, orienta&ccedil;&atilde;o, tamanho de papel, colunas, recuos e espa&ccedil;amento de par&aacute;grafo.</span>
+                </div>
+                <div class="aba-item">
+                    <strong>Refer&ecirc;ncias</strong>
+                    <span>Sum&aacute;rio, notas de rodap&eacute;, cita&ccedil;&otilde;es, bibliografia, &iacute;ndices e legendas.</span>
+                </div>
+                <div class="aba-item">
+                    <strong>Correspondi&ecirc;ncias</strong>
+                    <span>Mala direta: envio personalizado de e-mails ou cartas para uma lista de destinat&aacute;rios.</span>
+                </div>
+                <div class="aba-item">
+                    <strong>Revis&atilde;o</strong>
+                    <span>Ortografia e gram&aacute;tica, coment&aacute;rios, controle de altera&ccedil;&otilde;es e comparar vers&otilde;es.</span>
+                </div>
+                <div class="aba-item">
+                    <strong>Exibir</strong>
+                    <span>Modos de exibi&ccedil;&atilde;o, r&eacute;gua, grade, painel de navega&ccedil;&atilde;o e lado a lado.</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 4 — Formatação de Caracteres -->
+        <div class="content-card">
+            <h2>&#x1F524; Formata&ccedil;&atilde;o de Caracteres</h2>
+            <p>A <strong>formata&ccedil;&atilde;o de caracteres</strong> afeta letras, palavras ou trechos selecionados. Fica no grupo <em>Fonte</em> da aba P&aacute;gina Inicial. Para abrir todas as op&ccedil;&otilde;es de uma vez: clique na setinha do canto do grupo ou pressione <span class="kbd-sm">Ctrl+D</span>.</p>
+
+            <table class="char-table">
+                <tr>
+                    <th>Recurso</th>
+                    <th>Atalho</th>
+                    <th>Demonstra&ccedil;&atilde;o</th>
+                </tr>
+                <tr>
+                    <td>Negrito</td>
+                    <td><span class="kbd-sm">Ctrl+N</span></td>
+                    <td class="demo"><strong>Texto em negrito</strong></td>
+                </tr>
+                <tr>
+                    <td>It&aacute;lico</td>
+                    <td><span class="kbd-sm">Ctrl+I</span></td>
+                    <td class="demo"><em>Texto em it&aacute;lico</em></td>
+                </tr>
+                <tr>
+                    <td>Sublinhado</td>
+                    <td><span class="kbd-sm">Ctrl+U</span></td>
+                    <td class="demo"><u>Texto sublinhado</u></td>
+                </tr>
+                <tr>
+                    <td>Tachado</td>
+                    <td>&mdash;</td>
+                    <td class="demo"><s>Texto tachado</s></td>
+                </tr>
+                <tr>
+                    <td>Sobrescrito</td>
+                    <td><span class="kbd-sm">Ctrl+Shift+=</span></td>
+                    <td class="demo">x<sup>2</sup> &nbsp; m<sup>3</sup></td>
+                </tr>
+                <tr>
+                    <td>Subscrito</td>
+                    <td><span class="kbd-sm">Ctrl+=</span></td>
+                    <td class="demo">H<sub>2</sub>O &nbsp; CO<sub>2</sub></td>
+                </tr>
+                <tr>
+                    <td>Mai&uacute;sculas/min&uacute;sculas</td>
+                    <td><span class="kbd-sm">Shift+F3</span></td>
+                    <td class="demo">TEXTO → texto → Texto</td>
+                </tr>
+                <tr>
+                    <td>Limpar formata&ccedil;&atilde;o</td>
+                    <td><span class="kbd-sm">Ctrl+Espa&ccedil;o</span></td>
+                    <td class="demo">Remove toda a formata&ccedil;&atilde;o</td>
+                </tr>
+            </table>
+
+            <h3>&#x1F58C;&#xFE0F; Pincel de Formata&ccedil;&atilde;o</h3>
+            <p>O <strong>Pincel de Formata&ccedil;&atilde;o</strong> &eacute; uma das ferramentas mais &uacute;teis do Word para manter consist&ecirc;ncia:</p>
+            <ol>
+                <li>Selecione o texto que tem a formata&ccedil;&atilde;o desejada (fonte, tamanho, cor, negrito, etc.).</li>
+                <li>Clique no &iacute;cone do <strong>Pincel de Formata&ccedil;&atilde;o</strong> na aba P&aacute;gina Inicial (ou pressione <span class="kbd-sm">Ctrl+Shift+C</span>).</li>
+                <li>Selecione o texto que deve receber a mesma formata&ccedil;&atilde;o. Ela &eacute; copiada instantaneamente.</li>
+            </ol>
+            <p style="font-size:0.88em;color:#475569;">Para aplicar em v&aacute;rios trechos: <strong>d&ecirc; um clique duplo</strong> no Pincel. Ele permanecer&aacute; ativo at&eacute; voc&ecirc; pressionar <span class="kbd-sm">Esc</span>.</p>
+        </div>
+
+        <!-- CARD 5 — Formatação de Parágrafos -->
+        <div class="content-card">
+            <h2>&#x1F4CF; Formata&ccedil;&atilde;o de Par&aacute;grafos</h2>
+            <p>A <strong>formata&ccedil;&atilde;o de par&aacute;grafo</strong> afeta o bloco de texto inteiro: alinhamento, espa&ccedil;amento entre linhas, recuos e listas. Clique em qualquer lugar do par&aacute;grafo (sem precisar selecionar) e aplique. Para abrir a janela completa: setinha do grupo <em>Par&aacute;grafo</em> ou <span class="kbd-sm">Alt+O, P</span>.</p>
+
+            <h3>&#x2194; Alinhamento</h3>
+            <div class="align-demo">
+                <div class="al-item">
+                    <div class="al-header esq">&#x2190; Esquerda</div>
+                    <div class="al-body">
+                        <div class="al-line esq"></div>
+                        <div class="al-line esq" style="width:85%"></div>
+                        <div class="al-line esq" style="width:60%"></div>
+                        <div class="al-line short-esq"></div>
+                    </div>
+                    <div class="al-kbd">Ctrl+Q</div>
+                </div>
+                <div class="al-item">
+                    <div class="al-header cen">&#x2194; Centro</div>
+                    <div class="al-body">
+                        <div class="al-line cen"></div>
+                        <div class="al-line cen" style="width:70%;margin:0 auto 4px;"></div>
+                        <div class="al-line cen" style="width:45%;margin:0 auto 4px;"></div>
+                        <div class="al-line short-cen"></div>
+                    </div>
+                    <div class="al-kbd">Ctrl+E</div>
+                </div>
+                <div class="al-item">
+                    <div class="al-header dir">&#x2192; Direita</div>
+                    <div class="al-body">
+                        <div class="al-line dir"></div>
+                        <div class="al-line dir" style="width:80%;margin-left:auto;margin-bottom:4px;"></div>
+                        <div class="al-line dir" style="width:55%;margin-left:auto;margin-bottom:4px;"></div>
+                        <div class="al-line short-dir"></div>
+                    </div>
+                    <div class="al-kbd">Ctrl+G</div>
+                </div>
+                <div class="al-item">
+                    <div class="al-header jus">&#x2263; Justificado</div>
+                    <div class="al-body">
+                        <div class="al-line jus"></div>
+                        <div class="al-line jus"></div>
+                        <div class="al-line jus"></div>
+                        <div class="al-line short-jus"></div>
+                    </div>
+                    <div class="al-kbd">Ctrl+J</div>
+                </div>
+            </div>
+
+            <div class="alert-box">
+                <p>&#x26A0;&#xFE0F; Normas acad&ecirc;micas como a <strong>ABNT NBR 14724</strong> exigem alinhamento <strong>justificado</strong> para o corpo do texto e <strong>centralizado</strong> para t&iacute;tulos de capa. Verifique sempre as normas do IFRN antes de entregar trabalhos.</p>
+            </div>
+
+            <h3>&#x2195; Espa&ccedil;amento entre linhas</h3>
+            <ul>
+                <li><span class="kbd-sm">Ctrl+1</span> &mdash; espa&ccedil;amento simples (1,0)</li>
+                <li><span class="kbd-sm">Ctrl+5</span> &mdash; espa&ccedil;amento de 1,5 linha (exigido pela ABNT)</li>
+                <li><span class="kbd-sm">Ctrl+2</span> &mdash; espa&ccedil;amento duplo (2,0)</li>
+                <li>Para valores personalizados: P&aacute;g. Inicial &rarr; grupo Par&aacute;grafo &rarr; &#x2195; &rarr; <em>Op&ccedil;&otilde;es de Espa&ccedil;amento de Linha</em>.</li>
+            </ul>
+
+            <h3>&#x2194; Recuos</h3>
+            <ul>
+                <li><strong>Recuo de primeira linha:</strong> a primeira linha do par&aacute;grafo avan&ccedil;a 1,25 cm (padr&atilde;o ABNT). Configure em Par&aacute;grafo &rarr; Especial &rarr; Primeira linha.</li>
+                <li><strong>Recuo deslocado:</strong> todas as linhas exceto a primeira avan&ccedil;am (usado em bibliografias).</li>
+                <li><strong>Nunca use a barra de espa&ccedil;o ou Tab para criar recuo</strong> &mdash; isso quebra o espa&ccedil;amento em diferentes telas e impressoras.</li>
+            </ul>
+        </div>
+
+        <!-- CARD 6 — Estilos -->
+        <div class="content-card">
+            <h2>&#x1F3A8; Estilos de Texto</h2>
+            <p>Um <strong>estilo</strong> &eacute; um conjunto nomeado de formata&ccedil;&otilde;es &mdash; fonte, tamanho, cor, espa&ccedil;amento &mdash; que pode ser aplicado com um &uacute;nico clique. A galeria de Estilos fica na aba <strong>P&aacute;gina Inicial</strong>.</p>
+
+            <div class="estilos-demo">
+                <div class="ed-header">&#x1F4CB; Galeria de Estilos &mdash; Microsoft Word</div>
+                <div class="ed-body">
+                    <div class="estilo-linha es-titulo1">1. Introdu&ccedil;&atilde;o <span class="estilo-tag">T&iacute;tulo 1</span></div>
+                    <div class="estilo-linha es-titulo2">1.1 Contexto do Problema <span class="estilo-tag">T&iacute;tulo 2</span></div>
+                    <div class="estilo-linha es-titulo3">1.1.1 Dados Hist&oacute;ricos <span class="estilo-tag">T&iacute;tulo 3</span></div>
+                    <div class="estilo-linha es-normal">Este &eacute; o corpo do texto em estilo Normal. &Eacute; aplicado automaticamente ao digitar. Define fonte, tamanho e espa&ccedil;amento base do documento. <span class="estilo-tag">Normal</span></div>
+                    <div class="estilo-linha es-subtitulo">Informa&ccedil;&otilde;es complementares ao t&iacute;tulo da p&aacute;gina. <span class="estilo-tag">Subt&iacute;tulo</span></div>
+                    <div class="estilo-linha es-citacao">&ldquo;A tecnologia &eacute; melhor quando une as pessoas.&rdquo; &mdash; Matt Mullenweg <span class="estilo-tag">Cita&ccedil;&atilde;o</span></div>
+                </div>
+            </div>
+
+            <h3>&#x2753; Por que usar estilos em vez de formatar manualmente?</h3>
+            <div class="motivos-grid">
+                <div class="motivo-item mot-a">
+                    <div class="motivo-icon">&#x1F4D6;</div>
+                    <div class="motivo-text">
+                        <strong>Sum&aacute;rio autom&aacute;tico</strong>
+                        <span>O Word gera sum&aacute;rios a partir dos estilos T&iacute;tulo 1, T&iacute;tulo 2, etc. Sem estilos, n&atilde;o h&aacute; sum&aacute;rio autom&aacute;tico.</span>
+                    </div>
+                </div>
+                <div class="motivo-item mot-b">
+                    <div class="motivo-icon">&#x1F504;</div>
+                    <div class="motivo-text">
+                        <strong>Atualiza&ccedil;&atilde;o global</strong>
+                        <span>Ao modificar um estilo, <em>todos</em> os t&iacute;tulos do documento s&atilde;o atualizados de uma vez. Sem estilos, seria necess&aacute;rio reformatar um por um.</span>
+                    </div>
+                </div>
+                <div class="motivo-item mot-c">
+                    <div class="motivo-icon">&#x1F4D0;</div>
+                    <div class="motivo-text">
+                        <strong>Consist&ecirc;ncia visual</strong>
+                        <span>Todos os t&iacute;tulos do mesmo n&iacute;vel ficam id&ecirc;nticos, sem risco de um estar em Calibri 14 e outro em Arial 13.</span>
+                    </div>
+                </div>
+                <div class="motivo-item mot-d">
+                    <div class="motivo-icon">&#x267F;</div>
+                    <div class="motivo-text">
+                        <strong>Acessibilidade</strong>
+                        <span>Leitores de tela usam os estilos de t&iacute;tulo para navegar no documento. Documentos sem estilos s&atilde;o inacess&iacute;veis para pessoas com defici&ecirc;ncia visual.</span>
+                    </div>
+                </div>
+            </div>
+
+            <h3>&#x2699;&#xFE0F; Como usar e modificar estilos</h3>
+            <ul>
+                <li><strong>Aplicar:</strong> clique no texto e clique no nome do estilo na galeria. Para ver todos: clique na setinha da galeria de Estilos.</li>
+                <li><strong>Modificar:</strong> clique com o bot&atilde;o direito no nome do estilo na galeria &rarr; <em>Modificar</em>. Altere a fonte, tamanho ou cor e o estilo muda em todo o documento.</li>
+                <li><strong>Criar novo:</strong> formate um trecho &rarr; clique com o bot&atilde;o direito &rarr; <em>Estilos &rarr; Salvar sele&ccedil;&atilde;o como novo estilo r&aacute;pido</em>.</li>
+            </ul>
+        </div>
+
+        <!-- CARD 7 — Localizar, Substituir e Revisão -->
+        <div class="content-card">
+            <h2>&#x1F50D; Localizar, Substituir e Revis&atilde;o Ortogr&aacute;fica</h2>
+
+            <h3>&#x1F50D; Localizar e Substituir</h3>
+            <ul>
+                <li><strong>Localizar</strong> <span class="kbd-sm">Ctrl+L</span>: abre o Painel de Navega&ccedil;&atilde;o com o campo de busca. Destaca todas as ocorr&ecirc;ncias no texto.</li>
+                <li><strong>Substituir</strong> <span class="kbd-sm">Ctrl+H</span>: abre a janela Localizar e Substituir. Digite o termo a encontrar e o substituto. Use <em>Substituir Tudo</em> com cuidado em documentos longos.</li>
+                <li><strong>Op&ccedil;&otilde;es avan&ccedil;adas:</strong> clique em <em>Mais &gt;&gt;</em> para ativar <em>Diferenciar mai&uacute;sculas de min&uacute;sculas</em>, <em>Somente palavras inteiras</em> e busca por formata&ccedil;&atilde;o espec&iacute;fica.</li>
+                <li><strong>Ir Para</strong> <span class="kbd-sm">Ctrl+G</span>: navega diretamente para uma p&aacute;gina, linha, t&iacute;tulo ou indicador espec&iacute;fico.</li>
+            </ul>
+
+            <h3>&#x1F4DD; Verifica&ccedil;&atilde;o Ortogr&aacute;fica e Gramatical</h3>
+            <p>O Word verifica continuamente enquanto voc&ecirc; digita e sinaliza erros com linhas onduladas:</p>
+            <ul>
+                <li><span style="color:#dc2626;font-weight:600;">Linha vermelha</span> &mdash; poss&iacute;vel erro ortogr&aacute;fico. Clique com o bot&atilde;o direito para ver sugest&otilde;es.</li>
+                <li><span style="color:#2563eb;font-weight:600;">Linha azul</span> &mdash; erro gramatical ou de estilo (ex: frase muito longa, voz passiva excessiva).</li>
+            </ul>
+            <ul>
+                <li><strong>Iniciar verifica&ccedil;&atilde;o completa:</strong> tecla <span class="kbd-sm">F7</span> ou Revis&atilde;o &rarr; Ortografia e Gram&aacute;tica.</li>
+                <li><strong>Idioma correto:</strong> Revis&atilde;o &rarr; Idioma &rarr; Definir Idioma de Revis&atilde;o de Texto &rarr; selecione <em>Portugu&ecirc;s (Brasil)</em>. Sem isso, o Word pode n&atilde;o detectar erros corretamente.</li>
+                <li><strong>Contar palavras:</strong> Revis&atilde;o &rarr; Contar Palavras (ou clique no contador na barra de status inferior).</li>
+                <li><strong>AutoCorrec&ccedil;&atilde;o:</strong> o Word corrige automaticamente erros comuns (ex: &ldquo;teh&rdquo; &rarr; &ldquo;the&rdquo;). Configure em Arquivo &rarr; Op&ccedil;&otilde;es &rarr; Revisores de Texto &rarr; Op&ccedil;&otilde;es de AutoCorrec&ccedil;&atilde;o.</li>
+            </ul>
+        </div>
+
+        <!-- CARD 8 — Erros comuns, atalhos e boas práticas -->
+        <div class="content-card">
+            <h2>&#x2705; Erros Comuns, Atalhos e Boas Pr&aacute;ticas</h2>
+
+            <h3>&#x26A0;&#xFE0F; Erros que todo iniciante comete</h3>
+            <div class="erros-grid">
+                <div class="erro-item">
+                    <div class="erro-icon">&#x2423;</div>
+                    <div class="erro-text">
+                        <strong>Espa&ccedil;os para alinhar texto</strong>
+                        <span>Nunca use a barra de espa&ccedil;o para centralizar ou alinhar. Use alinhamento de par&aacute;grafo ou tabulações.</span>
+                    </div>
+                </div>
+                <div class="erro-item">
+                    <div class="erro-icon">&#x23CE;&#x23CE;</div>
+                    <div class="erro-text">
+                        <strong>Enter duplo entre par&aacute;grafos</strong>
+                        <span>Use o espa&ccedil;amento ap&oacute;s o par&aacute;grafo (Layout &rarr; Espa&ccedil;amento &rarr; Depois). Enters manuais s&atilde;o inconsistentes e dif&iacute;ceis de remover.</span>
+                    </div>
+                </div>
+                <div class="erro-item">
+                    <div class="erro-icon">&#x1F3A8;</div>
+                    <div class="erro-text">
+                        <strong>Formatar t&iacute;tulos manualmente</strong>
+                        <span>Usar Calibri 16 negrito azul em vez do estilo T&iacute;tulo 1 impede o sum&aacute;rio autom&aacute;tico e dificulta atualiza&ccedil;&otilde;es futuras.</span>
+                    </div>
+                </div>
+                <div class="erro-item">
+                    <div class="erro-icon">&#x1F6AB;</div>
+                    <div class="erro-text">
+                        <strong>Ignorar o idioma do documento</strong>
+                        <span>Sem definir Portugu&ecirc;s (Brasil), a verifica&ccedil;&atilde;o ortogr&aacute;fica marca palavras corretas como erradas e ignora erros reais.</span>
+                    </div>
+                </div>
+            </div>
+
+            <h3>&#x2328;&#xFE0F; Atalhos essenciais do Word</h3>
+            <div class="atalhos-grid">
+                <div class="atalho-item">
+                    <span class="kbd">Ctrl+N</span>
+                    <span class="atalho-desc">Negrito</span>
+                </div>
+                <div class="atalho-item">
+                    <span class="kbd">Ctrl+I</span>
+                    <span class="atalho-desc">It&aacute;lico</span>
+                </div>
+                <div class="atalho-item">
+                    <span class="kbd">Ctrl+U</span>
+                    <span class="atalho-desc">Sublinhado</span>
+                </div>
+                <div class="atalho-item">
+                    <span class="kbd">Ctrl+J</span>
+                    <span class="atalho-desc">Justificar</span>
+                </div>
+                <div class="atalho-item">
+                    <span class="kbd">Ctrl+E</span>
+                    <span class="atalho-desc">Centralizar</span>
+                </div>
+                <div class="atalho-item">
+                    <span class="kbd">Ctrl+5</span>
+                    <span class="atalho-desc">Espa&ccedil;amento 1,5</span>
+                </div>
+                <div class="atalho-item">
+                    <span class="kbd">Ctrl+L</span>
+                    <span class="atalho-desc">Localizar</span>
+                </div>
+                <div class="atalho-item">
+                    <span class="kbd">Ctrl+H</span>
+                    <span class="atalho-desc">Localizar e Substituir</span>
+                </div>
+                <div class="atalho-item">
+                    <span class="kbd">Ctrl+Espa&ccedil;o</span>
+                    <span class="atalho-desc">Limpar formata&ccedil;&atilde;o</span>
+                </div>
+                <div class="atalho-item">
+                    <span class="kbd">F7</span>
+                    <span class="atalho-desc">Ortografia e gram&aacute;tica</span>
+                </div>
+                <div class="atalho-item">
+                    <span class="kbd">Shift+F3</span>
+                    <span class="atalho-desc">Alternar mai&uacute;sculas/min&uacute;sculas</span>
+                </div>
+                <div class="atalho-item">
+                    <span class="kbd">Ctrl+S</span>
+                    <span class="atalho-desc">Salvar</span>
+                </div>
+            </div>
+
+            <h3>&#x1F4CC; Boas pr&aacute;ticas</h3>
+            <div class="boas-grid">
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F3A8;</div>
+                    <div class="boa-text">
+                        <strong>Use sempre os Estilos</strong>
+                        <span>Aplique T&iacute;tulo 1, T&iacute;tulo 2 e Normal para todo o documento. N&atilde;o formate t&iacute;tulos manualmente. &Eacute; a base de qualquer documento profissional.</span>
+                    </div>
+                </div>
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F30D;</div>
+                    <div class="boa-text">
+                        <strong>Defina o idioma logo no in&iacute;cio</strong>
+                        <span>Antes de come&ccedil;ar a digitar, verifique se o idioma na barra de status est&aacute; como <em>Portugu&ecirc;s (Brasil)</em>.</span>
+                    </div>
+                </div>
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F4BE;</div>
+                    <div class="boa-text">
+                        <strong>Salve no OneDrive</strong>
+                        <span>Documentos no OneDrive s&atilde;o salvos automaticamente e acess&iacute;veis de qualquer dispositivo. Configure em Arquivo &rarr; Salvar como &rarr; OneDrive.</span>
+                    </div>
+                </div>
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F4E4;</div>
+                    <div class="boa-text">
+                        <strong>Entregue sempre em PDF</strong>
+                        <span>Para trabalhos, curr&iacute;culos e qualquer documento final: Arquivo &rarr; Exportar &rarr; Criar PDF/XPS. Garante que o layout ser&aacute; preservado em qualquer computador.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXERCÍCIO -->
+        <div class="content-card exercise-card">
+            <h2>&#x1F3AF; Exerc&iacute;cio &mdash; Arraste e Conecte</h2>
+            <p style="color:#475569;font-size:0.9em;margin-bottom:4px;">Arraste cada descri&ccedil;&atilde;o para o recurso correto do Word. Em dispositivos m&oacute;veis, toque na descri&ccedil;&atilde;o e depois na zona de destino.</p>
+
+            <div class="ex-drag-root" data-ex="ex45">
+                <div class="ex-drag">
+                    <div>
+                        <div class="ex-col-title">Descri&ccedil;&atilde;o</div>
+                        <div class="ex-pool" data-pool="ex45">
+                            <div class="drag-chip" data-id="c1">Conjunto nomeado de formata&ccedil;&otilde;es &mdash; fonte, tamanho, cor e espa&ccedil;amento &mdash; aplicado com um clique e essencial para gerar sum&aacute;rios autom&aacute;ticos</div>
+                            <div class="drag-chip" data-id="c2">Alinhamento que distribui as palavras uniformemente entre as margens esquerda e direita, criando bordas retas dos dois lados</div>
+                            <div class="drag-chip" data-id="c3">Ferramenta que copia toda a formata&ccedil;&atilde;o de um trecho selecionado e a aplica em outro texto com um clique</div>
+                            <div class="drag-chip" data-id="c4">Atalho de teclado para abrir a janela de Localizar e Substituir no Word</div>
+                            <div class="drag-chip" data-id="c5">Linha ondulada vermelha exibida automaticamente pelo Word abaixo de palavras com poss&iacute;vel erro de ortografia</div>
+                            <div class="drag-chip" data-id="c6">Atalho que altera o espa&ccedil;amento entre linhas do par&aacute;grafo para 1,5 &mdash; padr&atilde;o exigido pela ABNT</div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="ex-col-title">Recurso</div>
+                        <div class="ex-zones" data-zones="ex45">
+                            <div class="drop-zone" data-zone="ex45-z1" data-accept="c1">
+                                <span class="zone-name">Estilo</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex45-z2" data-accept="c2">
+                                <span class="zone-name">Justificado</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex45-z3" data-accept="c3">
+                                <span class="zone-name">Pincel de Formata&ccedil;&atilde;o</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex45-z4" data-accept="c4">
+                                <span class="zone-name">Ctrl+H</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex45-z5" data-accept="c5">
+                                <span class="zone-name">Verifica&ccedil;&atilde;o Ortogr&aacute;fica</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex45-z6" data-accept="c6">
+                                <span class="zone-name">Ctrl+5</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ex-actions">
+                <button class="btn-verificar" onclick="dragVerify('ex45')">Verificar</button>
+                <button class="btn-refazer"  onclick="dragReset('ex45')">Refazer</button>
+            </div>
+            <div class="ex-result" id="ex45-result"></div>
+        </div>
+
+        <!-- ATIVIDADE PRÁTICA 4.5 -->
+        <div class="content-card practical-card" id="prat-45">
+            <h2>&#x1F6E0;&#xFE0F; Atividade Pr&aacute;tica &mdash; Meu Primeiro Documento Profissional</h2>
+            <div class="prat-meta">
+                <span class="prat-tag">&#x23F1; ~45 min</span>
+                <span class="prat-tag">&#x1F4BB; Microsoft Word</span>
+                <span class="prat-tag">&#x1F4BE; Salvar como .docx e .pdf</span>
+            </div>
+
+            <div class="prat-steps">
+                <div class="prat-step">
+                    <div class="step-num">1</div>
+                    <div class="step-body">
+                        <div class="step-label">Crie um novo documento e configure o idioma</div>
+                        <div class="step-desc">Abra o Word e crie um novo documento em branco. Antes de digitar, verifique a barra de status: o idioma deve estar como <strong>Portugu&ecirc;s (Brasil)</strong>. Se estiver diferente, clique no idioma na barra de status e corrija. Salve imediatamente como <strong>Documento_SeuNome.docx</strong> em uma pasta organizada.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">2</div>
+                    <div class="step-body">
+                        <div class="step-label">Aplique estilos para estruturar o documento</div>
+                        <div class="step-desc">Digite o seguinte texto usando os Estilos corretos: <strong>"Tecnologias Digitais"</strong> com estilo <em>T&iacute;tulo 1</em>; <strong>"1. Sistemas Operacionais"</strong> com estilo <em>T&iacute;tulo 2</em>; escreva um par&aacute;grafo de 3&ndash;4 linhas sobre sistemas operacionais com estilo <em>Normal</em>; adicione <strong>"2. Aplicativos de Produtividade"</strong> com <em>T&iacute;tulo 2</em> e mais um par&aacute;grafo.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">3</div>
+                    <div class="step-body">
+                        <div class="step-label">Formate o texto e pratique atalhos</div>
+                        <div class="step-desc">No corpo do texto, selecione uma palavra importante e aplique <strong>negrito (Ctrl+N)</strong>. Selecione um nome t&eacute;cnico e aplique <strong>it&aacute;lico (Ctrl+I)</strong>. Aplique <strong>espa&ccedil;amento 1,5 (Ctrl+5)</strong> em todos os par&aacute;grafos. Defina o alinhamento como <strong>justificado (Ctrl+J)</strong> em todos os par&aacute;grafos de corpo. Nos t&iacute;tulos, mantenha o alinhamento do estilo.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">4</div>
+                    <div class="step-body">
+                        <div class="step-label">Modifique um estilo globalmente</div>
+                        <div class="step-desc">Na galeria de Estilos, clique com o bot&atilde;o direito em <strong>T&iacute;tulo 2</strong> &rarr; <em>Modificar</em>. Mude a cor para azul escuro (#1a3a6e) e o tamanho para 13pt. Clique em OK. Observe que <strong>ambos os t&iacute;tulos 2 do documento foram atualizados simultaneamente</strong>. Esse &eacute; o poder dos estilos.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">5</div>
+                    <div class="step-body">
+                        <div class="step-label">Use Localizar e Substituir</div>
+                        <div class="step-desc">Pressione <strong>Ctrl+H</strong> para abrir Localizar e Substituir. No campo <em>Localizar</em>, digite uma palavra que aparece mais de uma vez no documento. No campo <em>Substituir por</em>, escreva a palavra no plural ou uma varia&ccedil;&atilde;o. Clique em <em>Localizar Pr&oacute;ximo</em> para revisar cada ocorr&ecirc;ncia antes de substituir. Feche a janela quando terminar.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">6</div>
+                    <div class="step-body">
+                        <div class="step-label">Verifique a ortografia e exporte em PDF</div>
+                        <div class="step-desc">Pressione <strong>F7</strong> para iniciar a verifica&ccedil;&atilde;o completa. Corrija os erros sugeridos ou clique em <em>Ignorar</em> para termos t&eacute;cnicos corretos. Quando terminar, v&aacute; em <strong>Arquivo &rarr; Exportar &rarr; Criar PDF/XPS</strong> e salve uma c&oacute;pia em PDF. Abra o PDF e confirme que o layout est&aacute; correto.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="prat-observe">
+                <strong>&#x1F4CC; Para refletir:</strong> Trabalhos acad&ecirc;micos do IFRN seguem as normas da <strong>ABNT</strong>, que especificam fonte (Arial ou Times New Roman), tamanho (12pt), margens (3cm superior e esquerda, 2cm inferior e direita), espa&ccedil;amento (1,5), recuo de primeira linha (1,25cm) e alinhamento (justificado). Usar os Estilos do Word torna a aplica&ccedil;&atilde;o dessas normas muito mais r&aacute;pida e consistente &mdash; basta configurar os estilos uma vez e aplicar em todo o documento.
+            </div>
+
+            <div class="ex-actions">
+                <button class="btn-print" onclick="printPractical('prat-45', 'Aula 4.5 \u2014 Texto: Vis\u00e3o Geral e Formata\u00e7\u00e3o')">&#x1F5A8;&#xFE0F; Imprimir roteiro</button>
+            </div>
+        </div>
+
+        <div class="nav-footer">
+            <a href="uni4-04-apresentacoes-avancado.html" class="nav-link">&#x2B05; Anterior: Apresenta&ccedil;&otilde;es &mdash; Recursos Avan&ccedil;ados</a>
+            <a href="uni4-06-texto-estrutura.html" class="nav-link">Pr&oacute;xima: Texto &mdash; Estrutura e Elementos &#x27A1;</a>
+        </div>
+
+    </div>
+
+    <script src="slide-mode.js"></script>
+    <script src="exercise-drag.js"></script>
+    <script src="exercise-print.js"></script>
+</body>
+</html>
