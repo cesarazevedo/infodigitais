@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 4.2 - Apresenta&ccedil;&otilde;es: Vis&atilde;o Geral e Design</title>
+    <link rel="stylesheet" href="slide-mode.css">
+    <link rel="stylesheet" href="exercise.css">
+    <style>
+        :root {
+            --primary: #bf360c;
+            --secondary: #870000;
+            --bg-light: #f0f4f8;
+            --text-dark: #1a202c;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        .top-bar {
+            background: white;
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .back-btn {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+        .back-btn:hover { background: rgba(191,54,12,0.08); }
+
+        .page-badge {
+            font-size: 0.8em;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: rgba(191,54,12,0.12);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .content-wrapper {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 30px;
+        }
+
+        .lesson-hero {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            border-top: 4px solid var(--primary);
+        }
+        .lesson-hero h1 { font-size: 2em; margin-bottom: 10px; color: var(--primary); }
+        .lesson-hero .subtitle { font-size: 1.05em; color: #718096; }
+
+        .content-card {
+            background: white;
+            border-radius: 16px;
+            padding: 35px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+        .content-card h2 {
+            font-size: 1.4em;
+            color: var(--primary);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .content-card h3 { font-size: 1.05em; color: var(--secondary); margin: 20px 0 10px; }
+        .content-card p  { margin-bottom: 15px; text-align: justify; }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(191,54,12,0.05), rgba(135,0,0,0.06));
+            border-left: 4px solid var(--primary);
+            padding: 20px 25px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+        }
+        .highlight-box p { margin-bottom: 0; font-style: italic; }
+
+        .alert-box {
+            background: #fff8e1;
+            border-left: 4px solid #f59e0b;
+            padding: 18px 22px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+        }
+        .alert-box p { margin: 0; color: #78350f; font-size: 0.93em; }
+
+        ul, ol { margin: 10px 0 15px 25px; }
+        li { margin-bottom: 8px; }
+
+        /* ── Interface diagram ── */
+        .interface-diagram {
+            background: #1e1e2e;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 20px 0;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+        }
+        .ifd-titlebar {
+            background: #c0392b;
+            padding: 8px 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8em;
+            color: white;
+            font-weight: 600;
+        }
+        .ifd-ribbon {
+            background: #f3f2f1;
+            border-bottom: 1px solid #d0cfd1;
+            padding: 6px 10px;
+        }
+        .ribbon-tabs {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 4px;
+        }
+        .rtab {
+            font-size: 0.72em;
+            padding: 4px 10px;
+            border-radius: 4px 4px 0 0;
+            cursor: default;
+            color: #444;
+        }
+        .rtab.active { background: white; color: #c0392b; font-weight: 700; border-bottom: 2px solid #c0392b; }
+        .ribbon-tools {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .rtool {
+            background: white;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            font-size: 0.68em;
+            padding: 3px 8px;
+            color: #333;
+        }
+        .ifd-body {
+            display: flex;
+            min-height: 160px;
+        }
+        .ifd-slides-panel {
+            width: 80px;
+            background: #f8f7f6;
+            border-right: 1px solid #d0cfd1;
+            padding: 6px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .ifd-mini-slide {
+            background: white;
+            border: 1.5px solid #bbb;
+            border-radius: 3px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.55em;
+            color: #888;
+        }
+        .ifd-mini-slide.sel { border-color: #c0392b; }
+        .ifd-edit-area {
+            flex: 1;
+            background: #737373;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+        }
+        .ifd-slide-canvas {
+            background: white;
+            width: 100%;
+            max-width: 260px;
+            aspect-ratio: 16/9;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+        .ifd-slide-title { font-size: 0.7em; font-weight: 700; color: #333; }
+        .ifd-slide-sub   { font-size: 0.55em; color: #666; }
+        .ifd-notes {
+            background: white;
+            border-top: 1px solid #d0cfd1;
+            padding: 6px 12px;
+            font-size: 0.68em;
+            color: #888;
+        }
+
+        /* Legenda da interface */
+        .ifd-legend {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 10px;
+            margin-top: 14px;
+        }
+        .ifd-leg-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 10px 12px;
+        }
+        .leg-num {
+            background: var(--primary);
+            color: white;
+            width: 22px; height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.72em;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .leg-text strong { display: block; font-size: 0.84em; color: var(--secondary); }
+        .leg-text span   { font-size: 0.76em; color: #475569; }
+
+        /* ── Abas do Ribbon ── */
+        .ribbon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin: 16px 0;
+        }
+        .ribbon-item {
+            border-radius: 10px;
+            padding: 14px 16px;
+            border-left: 4px solid var(--primary);
+            background: #fff5f2;
+        }
+        .ribbon-item strong { display: block; font-size: 0.88em; color: var(--primary); margin-bottom: 4px; }
+        .ribbon-item span   { font-size: 0.78em; color: #475569; }
+
+        /* ── Layouts de slide ── */
+        .layouts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .layout-thumb {
+            border-radius: 10px;
+            border: 2px solid #e2e8f0;
+            overflow: hidden;
+            cursor: default;
+            transition: border-color 0.2s;
+        }
+        .layout-thumb:hover { border-color: var(--primary); }
+        .lt-canvas {
+            aspect-ratio: 16/9;
+            background: #f8fafc;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding: 8px;
+            position: relative;
+        }
+        .lt-title-bar {
+            height: 20px;
+            background: #cbd5e0;
+            border-radius: 3px;
+        }
+        .lt-title-bar.big { height: 28px; }
+        .lt-body-bar {
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 3px;
+        }
+        .lt-two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px;
+            flex: 1;
+        }
+        .lt-col-block {
+            background: #e2e8f0;
+            border-radius: 3px;
+        }
+        .lt-name {
+            padding: 6px 8px;
+            font-size: 0.72em;
+            font-weight: 600;
+            color: #475569;
+            background: white;
+        }
+
+        /* ── Design principles ── */
+        .design-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 14px;
+            margin: 16px 0;
+        }
+        .design-principle {
+            border-radius: 12px;
+            padding: 18px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+        .dp-a { background: #eff6ff; border-top: 3px solid #2563eb; }
+        .dp-b { background: #f0fdf4; border-top: 3px solid #16a34a; }
+        .dp-c { background: #fef3c7; border-top: 3px solid #d97706; }
+        .dp-d { background: #fdf2f8; border-top: 3px solid #9333ea; }
+        .dp-e { background: #fff1f2; border-top: 3px solid #e11d48; }
+        .dp-f { background: #f0fdfa; border-top: 3px solid #0d9488; }
+        .dp-icon { font-size: 1.8em; flex-shrink: 0; }
+        .dp-text strong { display: block; font-size: 0.88em; margin-bottom: 4px; color: #1e293b; }
+        .dp-text span   { font-size: 0.78em; color: #475569; }
+
+        /* ── Regra 6x6 visual ── */
+        .rule66-demo {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin: 16px 0;
+        }
+        .demo-slide {
+            border-radius: 10px;
+            overflow: hidden;
+            border: 2px solid #e2e8f0;
+        }
+        .demo-slide-header {
+            padding: 6px 10px;
+            font-size: 0.72em;
+            font-weight: 700;
+        }
+        .demo-slide-header.bad  { background: #fef2f2; color: #dc2626; }
+        .demo-slide-header.good { background: #f0fdf4; color: #16a34a; }
+        .demo-slide-body {
+            background: #f8fafc;
+            padding: 10px;
+            aspect-ratio: 16/9;
+            font-size: 0.68em;
+            color: #475569;
+            line-height: 1.4;
+            overflow: hidden;
+        }
+
+        /* ── Temas ── */
+        .themes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px;
+            margin: 16px 0;
+        }
+        .theme-swatch {
+            border-radius: 10px;
+            overflow: hidden;
+            border: 2px solid #e2e8f0;
+            cursor: default;
+        }
+        .theme-colors {
+            height: 24px;
+            display: flex;
+        }
+        .theme-colors span { flex: 1; }
+        .theme-name {
+            padding: 6px 8px;
+            font-size: 0.74em;
+            font-weight: 600;
+            color: #475569;
+            background: white;
+            text-align: center;
+        }
+
+        /* ── Erros comuns ── */
+        .erros-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .erro-item {
+            background: #fef2f2;
+            border-radius: 10px;
+            padding: 14px;
+            border-left: 4px solid #ef4444;
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+        .erro-icon { font-size: 1.4em; flex-shrink: 0; }
+        .erro-text strong { display: block; font-size: 0.84em; color: #dc2626; margin-bottom: 3px; }
+        .erro-text span   { font-size: 0.76em; color: #7f1d1d; }
+
+        /* ── Atalhos ── */
+        .atalhos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 8px;
+            margin: 16px 0;
+        }
+        .atalho-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            background: #f8fafc;
+            border-radius: 8px;
+        }
+        .kbd {
+            background: #1e293b;
+            color: #e2e8f0;
+            border-radius: 5px;
+            padding: 3px 8px;
+            font-family: 'Consolas', monospace;
+            font-size: 0.78em;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .atalho-desc { font-size: 0.82em; color: #475569; }
+
+        /* ── Boas práticas ── */
+        .boas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .boa-item {
+            background: #fff7ed;
+            border-radius: 10px;
+            padding: 16px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+        .boa-icon { font-size: 1.6em; flex-shrink: 0; }
+        .boa-text strong { display: block; font-size: 0.88em; color: var(--primary); margin-bottom: 3px; }
+        .boa-text span   { font-size: 0.8em; color: #475569; }
+
+        /* ── nav ── */
+        .nav-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-bottom: 40px;
+        }
+        .nav-link {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+        .nav-link:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+
+        @media (max-width: 768px) {
+            .content-wrapper { padding: 0 15px; }
+            .lesson-hero, .content-card { padding: 25px; }
+            .lesson-hero h1 { font-size: 1.5em; }
+            .rule66-demo { grid-template-columns: 1fr; }
+            .ribbon-tabs { flex-wrap: wrap; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <a href="index.html" class="back-btn">&#x2B05; Voltar ao Dashboard</a>
+        <span class="page-badge">Unidade 4 &mdash; Su&iacute;te de Escrit&oacute;rio</span>
+        <button class="slide-toggle" id="slideToggleBtn">&#x1F4FA; Modo Slide</button>
+    </div>
+
+    <div class="content-wrapper">
+
+        <div class="lesson-hero">
+            <h1>&#x1F4CA; Apresenta&ccedil;&otilde;es: Vis&atilde;o Geral e Design</h1>
+            <p class="subtitle">Aula 4.2 &mdash; Interface do PowerPoint, princ&iacute;pios de design de slides, layouts e estrutura&ccedil;&atilde;o eficiente do conte&uacute;do</p>
+        </div>
+
+        <!-- CARD 1 — O que é o PowerPoint -->
+        <div class="content-card">
+            <h2>&#x1F5A5;&#xFE0F; O que &eacute; o Microsoft PowerPoint?</h2>
+            <p>O <strong>Microsoft PowerPoint</strong> &eacute; o editor de apresenta&ccedil;&otilde;es da su&iacute;te Microsoft Office &mdash; e o mais utilizado no mundo. Com ele, cria-se apresenta&ccedil;&otilde;es compostas por <strong>slides</strong>: telas individuais que combinam texto, imagens, gr&aacute;ficos, v&iacute;deos e anima&ccedil;&otilde;es para comunicar uma ideia de forma visual e estruturada.</p>
+            <p>O PowerPoint est&aacute; presente em aulas, defesas de trabalho, reuni&otilde;es empresariais, congressos cient&iacute;ficos e pitchs de projetos. Dominar sua interface e os princ&iacute;pios de design &eacute; uma <strong>compet&ecirc;ncia profissional essencial</strong>.</p>
+
+            <div class="highlight-box">
+                <p>&#x1F4A1; No Microsoft 365 Education (dispon&iacute;vel gratuitamente para alunos e professores do IFRN), o PowerPoint pode ser usado tanto instalado no computador quanto diretamente no navegador em <strong>office.com</strong>.</p>
+            </div>
+
+            <h3>&#x1F4C4; Formatos de arquivo do PowerPoint</h3>
+            <ul>
+                <li><strong>.pptx</strong> &mdash; formato padr&atilde;o edit&aacute;vel (PowerPoint Open XML). Use para salvar e editar suas apresenta&ccedil;&otilde;es.</li>
+                <li><strong>.ppsx</strong> &mdash; abre diretamente em modo de apresenta&ccedil;&atilde;o (ideal para enviar ao p&uacute;blico).</li>
+                <li><strong>.pdf</strong> &mdash; exporta&ccedil;&atilde;o final, n&atilde;o edit&aacute;vel, com layout garantido em qualquer dispositivo.</li>
+                <li><strong>.pptm</strong> &mdash; apresenta&ccedil;&atilde;o com macros (uso avan&ccedil;ado).</li>
+            </ul>
+
+            <div class="alert-box">
+                <p>&#x26A0;&#xFE0F; <strong>Aten&ccedil;&atilde;o:</strong> Ao enviar uma apresenta&ccedil;&atilde;o para algu&eacute;m editar, use <strong>.pptx</strong>. Para apresentar em computador desconhecido ou enviar ao professor, prefira <strong>.pdf</strong> &mdash; evita que fontes ou elementos sejam alterados.</p>
+            </div>
+        </div>
+
+        <!-- CARD 2 — Interface -->
+        <div class="content-card">
+            <h2>&#x1F5BC;&#xFE0F; A Interface do PowerPoint</h2>
+            <p>A interface do PowerPoint &eacute; dividida em &aacute;reas bem definidas. Conhec&ecirc;-las acelera muito o trabalho e evita perder tempo procurando ferramentas:</p>
+
+            <div class="interface-diagram">
+                <div class="ifd-titlebar">
+                    &#x1F4CA; &nbsp; Apresenta&ccedil;&atilde;o1 &mdash; PowerPoint &nbsp;|&nbsp; Microsoft 365
+                </div>
+                <div class="ifd-ribbon">
+                    <div class="ribbon-tabs">
+                        <span class="rtab active">P&aacute;g. Inicial</span>
+                        <span class="rtab">Inserir</span>
+                        <span class="rtab">Design</span>
+                        <span class="rtab">Transi&ccedil;&otilde;es</span>
+                        <span class="rtab">Anima&ccedil;&otilde;es</span>
+                        <span class="rtab">Apresentar</span>
+                    </div>
+                    <div class="ribbon-tools">
+                        <span class="rtool">Novo Slide</span>
+                        <span class="rtool">Layout &#x25BC;</span>
+                        <span class="rtool">Segoe UI &#x25BC;</span>
+                        <span class="rtool">24 &#x25BC;</span>
+                        <span class="rtool"><strong>N</strong></span>
+                        <span class="rtool"><em>I</em></span>
+                        <span class="rtool"><u>S</u></span>
+                        <span class="rtool">Cor &#x25BC;</span>
+                    </div>
+                </div>
+                <div class="ifd-body">
+                    <div class="ifd-slides-panel">
+                        <div class="ifd-mini-slide sel">1</div>
+                        <div class="ifd-mini-slide">2</div>
+                        <div class="ifd-mini-slide">3</div>
+                    </div>
+                    <div class="ifd-edit-area">
+                        <div class="ifd-slide-canvas">
+                            <div class="ifd-slide-title">T&iacute;tulo da Apresenta&ccedil;&atilde;o</div>
+                            <div class="ifd-slide-sub">Subt&iacute;tulo ou autor</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ifd-notes">
+                    &#x1F4DD; Clique para adicionar notas do apresentador...
+                </div>
+            </div>
+
+            <div class="ifd-legend">
+                <div class="ifd-leg-item">
+                    <div class="leg-num">1</div>
+                    <div class="leg-text">
+                        <strong>Faixa de Op&ccedil;&otilde;es (Ribbon)</strong>
+                        <span>Barra com todas as ferramentas organizadas em abas tem&aacute;ticas.</span>
+                    </div>
+                </div>
+                <div class="ifd-leg-item">
+                    <div class="leg-num">2</div>
+                    <div class="leg-text">
+                        <strong>Painel de Slides</strong>
+                        <span>Miniaturas dos slides &agrave; esquerda para navegar e reorganizar.</span>
+                    </div>
+                </div>
+                <div class="ifd-leg-item">
+                    <div class="leg-num">3</div>
+                    <div class="leg-text">
+                        <strong>&Aacute;rea de Edi&ccedil;&atilde;o</strong>
+                        <span>Slide atual em tamanho ampliado, onde voc&ecirc; edita diretamente.</span>
+                    </div>
+                </div>
+                <div class="ifd-leg-item">
+                    <div class="leg-num">4</div>
+                    <div class="leg-text">
+                        <strong>Painel de Notas</strong>
+                        <span>Espa&ccedil;o para o apresentador escrever anota&ccedil;&otilde;es que o p&uacute;blico n&atilde;o v&ecirc;.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 3 — Faixa de Opções -->
+        <div class="content-card">
+            <h2>&#x1F9F0; As Abas da Faixa de Op&ccedil;&otilde;es</h2>
+            <p>Cada aba do Ribbon agrupa ferramentas relacionadas. Conhecer a fun&ccedil;&atilde;o de cada uma evita procurar recursos em lugares errados:</p>
+
+            <div class="ribbon-grid">
+                <div class="ribbon-item">
+                    <strong>P&aacute;gina Inicial</strong>
+                    <span>Formata&ccedil;&atilde;o de texto (fonte, tamanho, negrito), inser&ccedil;&atilde;o de novo slide e escolha de layout.</span>
+                </div>
+                <div class="ribbon-item">
+                    <strong>Inserir</strong>
+                    <span>Adicionar imagens, formas, &iacute;cones, gr&aacute;ficos, tabelas, v&iacute;deos, &aacute;udio e caixas de texto.</span>
+                </div>
+                <div class="ribbon-item">
+                    <strong>Design</strong>
+                    <span>Escolher temas visuais, paleta de cores, fontes do tema e formatar o fundo dos slides.</span>
+                </div>
+                <div class="ribbon-item">
+                    <strong>Transi&ccedil;&otilde;es</strong>
+                    <span>Efeitos animados entre um slide e o pr&oacute;ximo (corte, dissolver, revelar, etc.).</span>
+                </div>
+                <div class="ribbon-item">
+                    <strong>Anima&ccedil;&otilde;es</strong>
+                    <span>Efeitos nos elementos dentro de um slide: entrar, sair, enfatizar ou mover objetos.</span>
+                </div>
+                <div class="ribbon-item">
+                    <strong>Apresenta&ccedil;&atilde;o de Slides</strong>
+                    <span>Iniciar a apresenta&ccedil;&atilde;o, configurar modo apresentador, cronometrar e ensaiar.</span>
+                </div>
+                <div class="ribbon-item">
+                    <strong>Revis&atilde;o</strong>
+                    <span>Verificar ortografia, adicionar coment&aacute;rios e controlar altera&ccedil;&otilde;es (colabora&ccedil;&atilde;o).</span>
+                </div>
+                <div class="ribbon-item">
+                    <strong>Exibir</strong>
+                    <span>Alternar entre modos de exibi&ccedil;&atilde;o, mostrar r&eacute;gua e grade, e gerenciar janelas.</span>
+                </div>
+            </div>
+
+            <h3>&#x1F4BB; Modos de Exibi&ccedil;&atilde;o</h3>
+            <ul>
+                <li><strong>Normal</strong> &mdash; modo de edi&ccedil;&atilde;o padr&atilde;o com painel de slides e &aacute;rea de edi&ccedil;&atilde;o.</li>
+                <li><strong>Classifica&ccedil;&atilde;o de Slides</strong> &mdash; exibe todos os slides em grade; ideal para reorganizar a ordem.</li>
+                <li><strong>Modo de Leitura</strong> &mdash; visualiza a apresenta&ccedil;&atilde;o em tela cheia sem sair do PowerPoint.</li>
+                <li><strong>Apresenta&ccedil;&atilde;o de Slides (F5)</strong> &mdash; inicia do primeiro slide. <strong>Shift+F5</strong> inicia do slide atual.</li>
+                <li><strong>Modo Apresentador</strong> &mdash; exibe o slide atual, o pr&oacute;ximo e as notas apenas para o apresentador.</li>
+            </ul>
+        </div>
+
+        <!-- CARD 4 — Layouts -->
+        <div class="content-card">
+            <h2>&#x1F5C2;&#xFE0F; Layouts de Slide</h2>
+            <p>Um <strong>layout</strong> define a disposi&ccedil;&atilde;o dos elementos no slide: onde fica o t&iacute;tulo, o conte&uacute;do, colunas, etc. Escolher o layout certo economiza tempo e garante consist&ecirc;ncia visual. Para acessar: <strong>P&aacute;gina Inicial &rarr; Layout</strong> ou clique com o bot&atilde;o direito no slide e escolha <em>Layout</em>.</p>
+
+            <div class="layouts-grid">
+                <div class="layout-thumb">
+                    <div class="lt-canvas">
+                        <div class="lt-title-bar big"></div>
+                        <div class="lt-body-bar" style="width:70%;margin:auto;"></div>
+                    </div>
+                    <div class="lt-name">Slide de T&iacute;tulo</div>
+                </div>
+                <div class="layout-thumb">
+                    <div class="lt-canvas">
+                        <div class="lt-title-bar"></div>
+                        <div class="lt-body-bar"></div>
+                        <div class="lt-body-bar"></div>
+                        <div class="lt-body-bar" style="width:80%;"></div>
+                    </div>
+                    <div class="lt-name">T&iacute;tulo e Conte&uacute;do</div>
+                </div>
+                <div class="layout-thumb">
+                    <div class="lt-canvas">
+                        <div class="lt-title-bar"></div>
+                        <div class="lt-two-col" style="flex:1;">
+                            <div class="lt-col-block"></div>
+                            <div class="lt-col-block"></div>
+                        </div>
+                    </div>
+                    <div class="lt-name">Duas Colunas</div>
+                </div>
+                <div class="layout-thumb">
+                    <div class="lt-canvas" style="justify-content:flex-start;">
+                        <div class="lt-title-bar"></div>
+                    </div>
+                    <div class="lt-name">Somente T&iacute;tulo</div>
+                </div>
+                <div class="layout-thumb">
+                    <div class="lt-canvas"></div>
+                    <div class="lt-name">Em Branco</div>
+                </div>
+                <div class="layout-thumb">
+                    <div class="lt-canvas">
+                        <div class="lt-title-bar"></div>
+                        <div class="lt-two-col" style="flex:1;">
+                            <div style="display:flex;flex-direction:column;gap:3px;">
+                                <div class="lt-body-bar" style="height:8px;"></div>
+                                <div class="lt-col-block" style="flex:1;"></div>
+                            </div>
+                            <div style="display:flex;flex-direction:column;gap:3px;">
+                                <div class="lt-body-bar" style="height:8px;"></div>
+                                <div class="lt-col-block" style="flex:1;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lt-name">Compara&ccedil;&atilde;o</div>
+                </div>
+            </div>
+
+            <div class="alert-box">
+                <p>&#x26A0;&#xFE0F; <strong>Dica importante:</strong> Nunca apague as caixas de texto padr&atilde;o do layout e recrie-as do zero &mdash; isso quebra a consist&ecirc;ncia do tema. Clique dentro da caixa existente e edite o conte&uacute;do.</p>
+            </div>
+        </div>
+
+        <!-- CARD 5 — Temas e Cores -->
+        <div class="content-card">
+            <h2>&#x1F3A8; Temas, Cores e Fontes</h2>
+            <p>Um <strong>tema</strong> no PowerPoint &eacute; um conjunto coordenado de cores, fontes e efeitos que d&aacute; identidade visual &agrave; apresenta&ccedil;&atilde;o. &Eacute; acessado pela aba <strong>Design</strong>. Usar um tema garante que todos os slides tenham apar&ecirc;ncia coerente.</p>
+
+            <div class="themes-grid">
+                <div class="theme-swatch">
+                    <div class="theme-colors">
+                        <span style="background:#1565c0;"></span>
+                        <span style="background:#1976d2;"></span>
+                        <span style="background:#42a5f5;"></span>
+                        <span style="background:#e3f2fd;"></span>
+                    </div>
+                    <div class="theme-name">Azul Corporativo</div>
+                </div>
+                <div class="theme-swatch">
+                    <div class="theme-colors">
+                        <span style="background:#2e7d32;"></span>
+                        <span style="background:#388e3c;"></span>
+                        <span style="background:#81c784;"></span>
+                        <span style="background:#e8f5e9;"></span>
+                    </div>
+                    <div class="theme-name">Verde Natural</div>
+                </div>
+                <div class="theme-swatch">
+                    <div class="theme-colors">
+                        <span style="background:#4a148c;"></span>
+                        <span style="background:#7b1fa2;"></span>
+                        <span style="background:#ce93d8;"></span>
+                        <span style="background:#f3e5f5;"></span>
+                    </div>
+                    <div class="theme-name">Roxo Criativo</div>
+                </div>
+                <div class="theme-swatch">
+                    <div class="theme-colors">
+                        <span style="background:#212121;"></span>
+                        <span style="background:#424242;"></span>
+                        <span style="background:#757575;"></span>
+                        <span style="background:#f5f5f5;"></span>
+                    </div>
+                    <div class="theme-name">Escuro Minimalista</div>
+                </div>
+            </div>
+
+            <h3>&#x1F58C;&#xFE0F; Como personalizar</h3>
+            <ul>
+                <li><strong>Variantes:</strong> Cada tema tem variantes de cor (aba Design &rarr; Variantes). Experimente antes de personalizar manualmente.</li>
+                <li><strong>Cores do tema:</strong> Design &rarr; Variantes &rarr; Cores &rarr; Personalizar Cores. Defina as cores de texto, fundo, destaque e hiperlink.</li>
+                <li><strong>Fontes do tema:</strong> Design &rarr; Variantes &rarr; Fontes. Escolha uma fonte para t&iacute;tulos e outra para o corpo &mdash; elas ser&atilde;o aplicadas a todos os slides.</li>
+                <li><strong>Fundo:</strong> Design &rarr; Formatar Fundo. Use cor s&oacute;lida, gradiente, textura ou imagem com transpar&ecirc;ncia.</li>
+            </ul>
+
+            <div class="highlight-box">
+                <p>&#x1F4A1; <strong>Regra de ouro:</strong> use no m&aacute;ximo <strong>2 fontes diferentes</strong> (uma para t&iacute;tulos, outra para o corpo) e <strong>3 a 4 cores</strong> ao longo de toda a apresenta&ccedil;&atilde;o. Mais do que isso cria visual&mente confuso.</p>
+            </div>
+        </div>
+
+        <!-- CARD 6 — Princípios de Design -->
+        <div class="content-card">
+            <h2>&#x1F4D0; Princ&iacute;pios de Design de Slides</h2>
+            <p>Um slide bem projetado n&atilde;o &eacute; o mais colorido nem o mais cheio de informa&ccedil;&atilde;o &mdash; &eacute; o que <strong>comunica a ideia com clareza</strong>. Estes princ&iacute;pios s&atilde;o usados por designers profissionais e podem ser aplicados por qualquer pessoa:</p>
+
+            <div class="design-grid">
+                <div class="design-principle dp-a">
+                    <div class="dp-icon">&#x2728;</div>
+                    <div class="dp-text">
+                        <strong>Simplicidade</strong>
+                        <span>Um slide, uma ideia. Retire tudo que n&atilde;o contribui diretamente para a mensagem principal.</span>
+                    </div>
+                </div>
+                <div class="design-principle dp-b">
+                    <div class="dp-icon">&#x1F4CF;</div>
+                    <div class="dp-text">
+                        <strong>Hierarquia Visual</strong>
+                        <span>T&iacute;tulo maior que subitem; subitem maior que detalhe. O olho do leitor deve seguir um caminho natural.</span>
+                    </div>
+                </div>
+                <div class="design-principle dp-c">
+                    <div class="dp-icon">&#x26AB;&#x26AA;</div>
+                    <div class="dp-text">
+                        <strong>Contraste</strong>
+                        <span>Texto claro em fundo escuro (ou vice-versa). Evite cinza sobre cinza ou amarelo sobre branco.</span>
+                    </div>
+                </div>
+                <div class="design-principle dp-d">
+                    <div class="dp-icon">&#x1F4D0;</div>
+                    <div class="dp-text">
+                        <strong>Alinhamento</strong>
+                        <span>Elementos alinhados criam ordem e profissionalismo. Use a grade (Exibir &rarr; Grade) para ajudar.</span>
+                    </div>
+                </div>
+                <div class="design-principle dp-e">
+                    <div class="dp-icon">&#x1F501;</div>
+                    <div class="dp-text">
+                        <strong>Consist&ecirc;ncia</strong>
+                        <span>Mesmas fontes, cores e estilo em todos os slides. O tema do PowerPoint automatiza isso.</span>
+                    </div>
+                </div>
+                <div class="design-principle dp-f">
+                    <div class="dp-icon">&#x25FB;&#xFE0F;</div>
+                    <div class="dp-text">
+                        <strong>Espa&ccedil;o em Branco</strong>
+                        <span>&ldquo;Respira&ccedil;&atilde;o visual&rdquo;. Espa&ccedil;os vazios orientam o olhar e reduzem a sensa&ccedil;&atilde;o de excesso.</span>
+                    </div>
+                </div>
+            </div>
+
+            <h3>&#x1F522; A Regra 6&times;6</h3>
+            <p>Uma das diretrizes mais usadas em treinamentos e apresenta&ccedil;&otilde;es acad&ecirc;micas:</p>
+
+            <div class="rule66-demo">
+                <div class="demo-slide">
+                    <div class="demo-slide-header bad">&#x274C; Slide sobrecarregado</div>
+                    <div class="demo-slide-body">
+                        <strong>Sistemas Operacionais</strong><br>
+                        Um sistema operacional &eacute; um software fundamental que gerencia os recursos de hardware e software de um computador. Ele age como intermedi&aacute;rio entre o usu&aacute;rio e o hardware da m&aacute;quina. Os principais sistemas s&atilde;o Windows, Linux e macOS, cada um com suas pr&oacute;prias caracter&iacute;sticas, vantagens e desvantagens. O Windows &eacute; o mais usado no mundo. O Linux &eacute; open source. O macOS &eacute; exclusivo da Apple. Todos gerenciam mem&oacute;ria, processos e arquivos...
+                    </div>
+                </div>
+                <div class="demo-slide">
+                    <div class="demo-slide-header good">&#x2705; Slide com Regra 6&times;6</div>
+                    <div class="demo-slide-body">
+                        <strong>Sistemas Operacionais</strong><br><br>
+                        &bull; Gerencia hardware e software<br>
+                        &bull; Windows: mais usado no mundo<br>
+                        &bull; Linux: open source e gratuito<br>
+                        &bull; macOS: exclusivo Apple<br>
+                        &bull; Todos: mem&oacute;ria, processos, arquivos
+                    </div>
+                </div>
+            </div>
+
+            <p style="font-size:0.88em;color:#475569;">A <strong>Regra 6&times;6</strong> recomenda no m&aacute;ximo <strong>6 linhas de texto por slide</strong>, com at&eacute; <strong>6 palavras por linha</strong>. Slides s&atilde;o suporte visual para a fala do apresentador &mdash; n&atilde;o devem ser lidos pelo p&uacute;blico enquanto voc&ecirc; ainda est&aacute; falando.</p>
+        </div>
+
+        <!-- CARD 7 — Erros comuns -->
+        <div class="content-card">
+            <h2>&#x26A0;&#xFE0F; Erros Comuns a Evitar</h2>
+            <div class="erros-grid">
+                <div class="erro-item">
+                    <div class="erro-icon">&#x1F4DC;</div>
+                    <div class="erro-text">
+                        <strong>Excesso de texto</strong>
+                        <span>Copiar partes inteiras de trabalho ou relat&oacute;rio para o slide. O p&uacute;blico l&ecirc; ou ouve; raramente faz os dois.</span>
+                    </div>
+                </div>
+                <div class="erro-item">
+                    <div class="erro-icon">&#x1F521;</div>
+                    <div class="erro-text">
+                        <strong>Fonte pequena demais</strong>
+                        <span>Texto abaixo de 18pt raramente &eacute; leg&iacute;vel em projetor. Prefira 24pt ou mais para o corpo.</span>
+                    </div>
+                </div>
+                <div class="erro-item">
+                    <div class="erro-icon">&#x1F308;</div>
+                    <div class="erro-text">
+                        <strong>Muitas cores e fontes</strong>
+                        <span>Misturar 5+ cores e 3+ fontes passa impress&atilde;o de amadorismo. Atenha-se ao tema escolhido.</span>
+                    </div>
+                </div>
+                <div class="erro-item">
+                    <div class="erro-icon">&#x1F305;</div>
+                    <div class="erro-text">
+                        <strong>Fundo poluído</strong>
+                        <span>Imagem de fundo com muito detalhe compete com o texto. Se usar imagem, reduza a opacidade.</span>
+                    </div>
+                </div>
+                <div class="erro-item">
+                    <div class="erro-icon">&#x1F4A5;</div>
+                    <div class="erro-text">
+                        <strong>Anima&ccedil;&otilde;es excessivas</strong>
+                        <span>Cada elemento voando de dire&ccedil;&atilde;o diferente distrai o p&uacute;blico. Reserve para destaques importantes.</span>
+                    </div>
+                </div>
+                <div class="erro-item">
+                    <div class="erro-icon">&#x1F4D0;</div>
+                    <div class="erro-text">
+                        <strong>Falta de alinhamento</strong>
+                        <span>Caixas de texto espalhadas sem padr&atilde;o criam visual ca&oacute;tico. Ative a grade e use o recurso <em>Alinhar</em>.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 8 — Atalhos e Boas Práticas -->
+        <div class="content-card">
+            <h2>&#x2705; Atalhos e Boas Pr&aacute;ticas</h2>
+
+            <h3>&#x2328;&#xFE0F; Atalhos essenciais do PowerPoint</h3>
+            <div class="atalhos-grid">
+                <div class="atalho-item">
+                    <span class="kbd">F5</span>
+                    <span class="atalho-desc">Iniciar apresenta&ccedil;&atilde;o do in&iacute;cio</span>
+                </div>
+                <div class="atalho-item">
+                    <span class="kbd">Shift+F5</span>
+                    <span class="atalho-desc">Iniciar a partir do slide atual</span>
+                </div>
+                <div class="atalho-item">
+                    <span class="kbd">Ctrl+M</span>
+                    <span class="atalho-desc">Inserir novo slide</span>
+                </div>
+                <div class="atalho-item">
+                    <span class="kbd">Ctrl+D</span>
+                    <span class="atalho-desc">Duplicar slide selecionado</span>
+                </div>
+                <div class="atalho-item">
+                    <span class="kbd">Ctrl+G</span>
+                    <span class="atalho-desc">Agrupar objetos selecionados</span>
+                </div>
+                <div class="atalho-item">
+                    <span class="kbd">Ctrl+Shift+G</span>
+                    <span class="atalho-desc">Desagrupar objetos</span>
+                </div>
+                <div class="atalho-item">
+                    <span class="kbd">Esc</span>
+                    <span class="atalho-desc">Encerrar apresenta&ccedil;&atilde;o</span>
+                </div>
+                <div class="atalho-item">
+                    <span class="kbd">B / W</span>
+                    <span class="atalho-desc">Tela preta / branca durante a apresenta&ccedil;&atilde;o</span>
+                </div>
+                <div class="atalho-item">
+                    <span class="kbd">Ctrl+Z</span>
+                    <span class="atalho-desc">Desfazer &uacute;ltima a&ccedil;&atilde;o</span>
+                </div>
+                <div class="atalho-item">
+                    <span class="kbd">Ctrl+S</span>
+                    <span class="atalho-desc">Salvar arquivo</span>
+                </div>
+            </div>
+
+            <h3>&#x1F4CC; Boas pr&aacute;ticas gerais</h3>
+            <div class="boas-grid">
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F3AF;</div>
+                    <div class="boa-text">
+                        <strong>Defina o p&uacute;blico antes de come&ccedil;ar</strong>
+                        <span>Uma apresenta&ccedil;&atilde;o para colegas de classe &eacute; diferente de uma para professores ou para empresa. O design e o vocabul&aacute;rio devem se adaptar.</span>
+                    </div>
+                </div>
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F4BE;</div>
+                    <div class="boa-text">
+                        <strong>Salve com frequ&ecirc;ncia</strong>
+                        <span>Ative o salvamento autom&aacute;tico (Auto-recupera&ccedil;&atilde;o) em Arquivo &rarr; Op&ccedil;&otilde;es &rarr; Salvar, ou use o OneDrive para sincroniza&ccedil;&atilde;o autom&aacute;tica.</span>
+                    </div>
+                </div>
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F4F7;</div>
+                    <div class="boa-text">
+                        <strong>Use imagens de qualidade</strong>
+                        <span>Prefira imagens com resolu&ccedil;&atilde;o alta (m&iacute;nimo 1280px de largura). Imagens desfocadas passam impress&atilde;o de descuido.</span>
+                    </div>
+                </div>
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F5C3;&#xFE0F;</div>
+                    <div class="boa-text">
+                        <strong>Ensaie com o Modo Apresentador</strong>
+                        <span>Conecte um monitor externo ou use a op&ccedil;&atilde;o &ldquo;Exibir somente na tela do apresentador&rdquo; para ver as notas enquanto apresenta.</span>
+                    </div>
+                </div>
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F4E4;</div>
+                    <div class="boa-text">
+                        <strong>Leve um backup em PDF</strong>
+                        <span>Exporte sempre como PDF antes de apresentar em computador alheio. Evita problemas com fontes n&atilde;o instaladas ou vers&otilde;es diferentes do Office.</span>
+                    </div>
+                </div>
+                <div class="boa-item">
+                    <div class="boa-icon">&#x23F1;</div>
+                    <div class="boa-text">
+                        <strong>Controle o tempo</strong>
+                        <span>Use Apresenta&ccedil;&atilde;o de Slides &rarr; Ensaiar Intervalos para cronometrar cada slide e n&atilde;o ultrapassar o tempo dispon&iacute;vel.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXERCÍCIO -->
+        <div class="content-card exercise-card">
+            <h2>&#x1F3AF; Exerc&iacute;cio &mdash; Arraste e Conecte</h2>
+            <p style="color:#475569;font-size:0.9em;margin-bottom:4px;">Arraste cada descri&ccedil;&atilde;o para o conceito ou elemento correto do PowerPoint. Em dispositivos m&oacute;veis, toque na descri&ccedil;&atilde;o e depois na zona de destino.</p>
+
+            <div class="ex-drag-root" data-ex="ex42">
+                <div class="ex-drag">
+                    <div>
+                        <div class="ex-col-title">Descri&ccedil;&atilde;o</div>
+                        <div class="ex-pool" data-pool="ex42">
+                            <div class="drag-chip" data-id="c1">Atalho de teclado para iniciar a apresenta&ccedil;&atilde;o do prim&eacute;iro slide</div>
+                            <div class="drag-chip" data-id="c2">&Aacute;rea que exibe miniaturas dos slides &agrave; esquerda da tela para navegar e reorganizar</div>
+                            <div class="drag-chip" data-id="c3">Aba do Ribbon onde se escolhem temas, paleta de cores e formata&ccedil;&atilde;o do fundo</div>
+                            <div class="drag-chip" data-id="c4">Conjunto coordenado de cores, fontes e efeitos que d&aacute; identidade visual &agrave; apresenta&ccedil;&atilde;o</div>
+                            <div class="drag-chip" data-id="c5">Princ&iacute;pio que recomenda no m&aacute;ximo 6 linhas por slide com at&eacute; 6 palavras cada</div>
+                            <div class="drag-chip" data-id="c6">Espa&ccedil;o abaixo do slide para o apresentador escrever anota&ccedil;&otilde;es que o p&uacute;blico n&atilde;o v&ecirc;</div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="ex-col-title">Conceito / Elemento</div>
+                        <div class="ex-zones" data-zones="ex42">
+                            <div class="drop-zone" data-zone="ex42-z1" data-accept="c1">
+                                <span class="zone-name">Tecla F5</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex42-z2" data-accept="c2">
+                                <span class="zone-name">Painel de Slides</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex42-z3" data-accept="c3">
+                                <span class="zone-name">Aba Design</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex42-z4" data-accept="c4">
+                                <span class="zone-name">Tema</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex42-z5" data-accept="c5">
+                                <span class="zone-name">Regra 6&times;6</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex42-z6" data-accept="c6">
+                                <span class="zone-name">Painel de Notas</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ex-actions">
+                <button class="btn-verificar" onclick="dragVerify('ex42')">Verificar</button>
+                <button class="btn-refazer"  onclick="dragReset('ex42')">Refazer</button>
+            </div>
+            <div class="ex-result" id="ex42-result"></div>
+        </div>
+
+        <!-- ATIVIDADE PRÁTICA 4.2 -->
+        <div class="content-card practical-card" id="prat-42">
+            <h2>&#x1F6E0;&#xFE0F; Atividade Pr&aacute;tica &mdash; Minha Primeira Apresenta&ccedil;&atilde;o</h2>
+            <div class="prat-meta">
+                <span class="prat-tag">&#x23F1; ~40 min</span>
+                <span class="prat-tag">&#x1F4BB; Microsoft PowerPoint</span>
+                <span class="prat-tag">&#x1F4BE; Salvar como .pptx</span>
+            </div>
+
+            <div class="prat-steps">
+                <div class="prat-step">
+                    <div class="step-num">1</div>
+                    <div class="step-body">
+                        <div class="step-label">Abra o PowerPoint e crie um novo arquivo</div>
+                        <div class="step-desc">Abra o PowerPoint (instalado ou em <strong>office.com</strong>). Escolha <strong>Novo &rarr; Apresenta&ccedil;&atilde;o em Branco</strong>. Salve imediatamente com o nome <strong>Apresentacao_SeuNome.pptx</strong> em uma pasta organizada (ex: Documentos &rarr; Escola &rarr; Inform&aacute;tica).</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">2</div>
+                    <div class="step-body">
+                        <div class="step-label">Escolha um tema e configure as cores</div>
+                        <div class="step-desc">V&aacute; &agrave; aba <strong>Design</strong> e escolha um tema que combine com o assunto: algo relacionado a tecnologia, natureza, minimalista etc. Depois, explore as <strong>Variantes</strong> do tema para ajustar a paleta de cores. N&atilde;o personalize cores manualmente nesta etapa &mdash; confie no tema.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">3</div>
+                    <div class="step-body">
+                        <div class="step-label">Crie o Slide 1 &mdash; T&iacute;tulo</div>
+                        <div class="step-desc">No slide inicial (layout <em>Slide de T&iacute;tulo</em>), digite como t&iacute;tulo: <strong>"Por que eu escolhi o curso de Inform&aacute;tica?"</strong>. No subt&iacute;tulo, coloque seu nome, turma e a data. Ajuste o tamanho da fonte se necess&aacute;rio, mas n&atilde;o mude a fonte do tema.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">4</div>
+                    <div class="step-body">
+                        <div class="step-label">Adicione 3 slides de conte&uacute;do</div>
+                        <div class="step-desc">Use <strong>Ctrl+M</strong> para inserir tr&ecirc;s slides com o layout <em>T&iacute;tulo e Conte&uacute;do</em>. Os temas de cada slide devem ser: <strong>(a)</strong> Minhas expectativas para o curso; <strong>(b)</strong> Uma &aacute;rea de TI que me interessa; <strong>(c)</strong> Uma ferramenta digital que j&aacute; uso no dia a dia. Aplique a <strong>Regra 6&times;6</strong>: no m&aacute;ximo 6 t&oacute;picos por slide.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">5</div>
+                    <div class="step-body">
+                        <div class="step-label">Adicione uma imagem e verifique o alinhamento</div>
+                        <div class="step-desc">Em um dos slides de conte&uacute;do, insira uma imagem relacionada ao assunto (<strong>Inserir &rarr; Imagens &rarr; Imagens da Stock</strong> para usar o banco do PowerPoint, ou <strong>Imagens Online</strong>). Redimensione a imagem segurando <strong>Shift</strong> para manter a propor&ccedil;&atilde;o. Use <strong>Formatar &rarr; Alinhar</strong> para centraliz&aacute;-la no espa&ccedil;o dispon&iacute;vel.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">6</div>
+                    <div class="step-body">
+                        <div class="step-label">Apresente e exporte em PDF</div>
+                        <div class="step-desc">Pressione <strong>F5</strong> para visualizar a apresenta&ccedil;&atilde;o completa. Verifique se tudo est&aacute; leg&iacute;vel e coerente. Depois, v&aacute; em <strong>Arquivo &rarr; Exportar &rarr; Criar PDF/XPS</strong> e salve uma c&oacute;pia em PDF. Compare o .pptx com o .pdf: o layout foi preservado?</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="prat-observe">
+                <strong>&#x1F4CC; Para refletir:</strong> Uma boa apresenta&ccedil;&atilde;o &eacute; suporte &agrave; fala, n&atilde;o um documento escrito. Se o p&uacute;blico consegue ler todos os slides sem que voc&ecirc; fale nada, h&aacute; texto demais. O objetivo &eacute; que <strong>os slides refor&ccedil;em o que voc&ecirc; diz</strong>, n&atilde;o que substituam sua fala.
+            </div>
+
+            <div class="ex-actions">
+                <button class="btn-print" onclick="printPractical('prat-42', 'Aula 4.2 \u2014 Apresenta\u00e7\u00f5es: Vis\u00e3o Geral e Design')">&#x1F5A8;&#xFE0F; Imprimir roteiro</button>
+            </div>
+        </div>
+
+        <div class="nav-footer">
+            <a href="uni4-01-intro-suite.html" class="nav-link">&#x2B05; Anterior: Introdu&ccedil;&atilde;o &agrave; Su&iacute;te</a>
+            <a href="uni4-03-apresentacoes-conteudo.html" class="nav-link">Pr&oacute;xima: Apresenta&ccedil;&otilde;es &mdash; Conte&uacute;do &#x27A1;</a>
+        </div>
+
+    </div>
+
+    <script src="slide-mode.js"></script>
+    <script src="exercise-drag.js"></script>
+    <script src="exercise-print.js"></script>
+</body>
+</html>
