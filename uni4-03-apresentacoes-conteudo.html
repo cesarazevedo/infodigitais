@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 4.3 - Apresenta&ccedil;&otilde;es: Conte&uacute;do e Elementos</title>
+    <link rel="stylesheet" href="slide-mode.css">
+    <link rel="stylesheet" href="exercise.css">
+    <style>
+        :root {
+            --primary: #bf360c;
+            --secondary: #870000;
+            --bg-light: #f0f4f8;
+            --text-dark: #1a202c;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        .top-bar {
+            background: white;
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .back-btn {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+        .back-btn:hover { background: rgba(191,54,12,0.08); }
+
+        .page-badge {
+            font-size: 0.8em;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: rgba(191,54,12,0.12);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .content-wrapper {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 30px;
+        }
+
+        .lesson-hero {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            border-top: 4px solid var(--primary);
+        }
+        .lesson-hero h1 { font-size: 2em; margin-bottom: 10px; color: var(--primary); }
+        .lesson-hero .subtitle { font-size: 1.05em; color: #718096; }
+
+        .content-card {
+            background: white;
+            border-radius: 16px;
+            padding: 35px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+        .content-card h2 {
+            font-size: 1.4em;
+            color: var(--primary);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .content-card h3 { font-size: 1.05em; color: var(--secondary); margin: 20px 0 10px; }
+        .content-card p  { margin-bottom: 15px; text-align: justify; }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(191,54,12,0.05), rgba(135,0,0,0.06));
+            border-left: 4px solid var(--primary);
+            padding: 20px 25px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+        }
+        .highlight-box p { margin-bottom: 0; font-style: italic; }
+
+        .alert-box {
+            background: #fff8e1;
+            border-left: 4px solid #f59e0b;
+            padding: 18px 22px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+        }
+        .alert-box p { margin: 0; color: #78350f; font-size: 0.93em; }
+
+        .tip-box {
+            background: #f0fdf4;
+            border-left: 4px solid #16a34a;
+            padding: 18px 22px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+        }
+        .tip-box p { margin: 0; color: #14532d; font-size: 0.93em; }
+
+        ul, ol { margin: 10px 0 15px 25px; }
+        li { margin-bottom: 8px; }
+
+        /* ── Caminho de menu ── */
+        .menu-path {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: #1e293b;
+            color: #e2e8f0;
+            border-radius: 6px;
+            padding: 3px 10px;
+            font-family: 'Consolas', monospace;
+            font-size: 0.82em;
+            margin: 4px 0;
+        }
+        .menu-path .arr { color: #94a3b8; }
+
+        /* ── Grid de elementos (visão geral) ── */
+        .elements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .element-item {
+            border-radius: 12px;
+            padding: 18px 14px;
+            text-align: center;
+            border-top: 3px solid;
+        }
+        .el-a { background: #eff6ff; border-color: #2563eb; }
+        .el-b { background: #fff7ed; border-color: #ea580c; }
+        .el-c { background: #f0fdf4; border-color: #16a34a; }
+        .el-d { background: #fdf4ff; border-color: #9333ea; }
+        .el-e { background: #fef3c7; border-color: #d97706; }
+        .el-f { background: #fff1f2; border-color: #e11d48; }
+        .el-g { background: #f0fdfa; border-color: #0d9488; }
+        .el-icon { font-size: 2em; margin-bottom: 6px; }
+        .el-name { font-size: 0.88em; font-weight: 700; color: #1e293b; margin-bottom: 3px; }
+        .el-path { font-size: 0.72em; color: #64748b; }
+
+        /* ── Passo a passo inserção ── */
+        .steps-inline {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 16px 0;
+        }
+        .step-inline {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 12px 14px;
+        }
+        .si-num {
+            background: var(--primary);
+            color: white;
+            min-width: 26px; height: 26px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.78em;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .si-text { font-size: 0.88em; color: #334155; }
+        .si-text strong { color: var(--secondary); }
+
+        /* ── Comparação de abordagens ── */
+        .compare-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .cmp-col {
+            border-radius: 10px;
+            padding: 14px;
+        }
+        .cmp-col.good { background: #f0fdf4; border-left: 4px solid #16a34a; }
+        .cmp-col.bad  { background: #fef2f2; border-left: 4px solid #ef4444; }
+        .cmp-col h4 { font-size: 0.82em; font-weight: 700; margin-bottom: 8px; }
+        .cmp-col.good h4 { color: #15803d; }
+        .cmp-col.bad  h4 { color: #dc2626; }
+        .cmp-col ul { margin: 0; padding-left: 16px; }
+        .cmp-col li { font-size: 0.8em; color: #334155; margin-bottom: 4px; }
+
+        /* ── SmartArt tipos ── */
+        .smartart-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .smartart-item {
+            border-radius: 10px;
+            padding: 14px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+        }
+        .sa-icon { font-size: 1.5em; margin-bottom: 6px; }
+        .sa-name { font-size: 0.86em; font-weight: 700; color: var(--secondary); margin-bottom: 4px; }
+        .sa-desc { font-size: 0.76em; color: #475569; }
+        .sa-ex   { font-size: 0.72em; color: #94a3b8; margin-top: 4px; font-style: italic; }
+
+        /* ── Tipos de gráfico ── */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 10px;
+            margin: 16px 0;
+        }
+        .chart-item {
+            border-radius: 10px;
+            padding: 14px;
+            border-left: 4px solid var(--primary);
+            background: #fff5f2;
+        }
+        .ch-icon { font-size: 1.4em; margin-bottom: 4px; }
+        .ch-name { font-size: 0.84em; font-weight: 700; color: var(--secondary); margin-bottom: 3px; }
+        .ch-use  { font-size: 0.75em; color: #475569; }
+
+        /* ── Formatos de imagem ── */
+        .img-formats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin: 14px 0;
+        }
+        .img-fmt {
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+        }
+        .fmt-ext { font-family: 'Consolas', monospace; font-size: 1.1em; font-weight: 800; color: var(--primary); }
+        .fmt-name { font-size: 0.76em; font-weight: 600; color: #475569; margin: 3px 0; }
+        .fmt-rec  { font-size: 0.7em; color: #94a3b8; }
+        .fmt-badge {
+            display: inline-block;
+            font-size: 0.65em;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-weight: 700;
+            margin-top: 4px;
+        }
+        .fmt-badge.ok  { background: #dcfce7; color: #15803d; }
+        .fmt-badge.atc { background: #fef3c7; color: #b45309; }
+        .fmt-badge.no  { background: #fee2e2; color: #dc2626; }
+
+        /* ── Boas práticas ── */
+        .boas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .boa-item {
+            background: #fff7ed;
+            border-radius: 10px;
+            padding: 16px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+        .boa-icon { font-size: 1.6em; flex-shrink: 0; }
+        .boa-text strong { display: block; font-size: 0.88em; color: var(--primary); margin-bottom: 3px; }
+        .boa-text span   { font-size: 0.8em; color: #475569; }
+
+        /* ── Atalhos ── */
+        .atalhos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 8px;
+            margin: 14px 0;
+        }
+        .atalho-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            background: #f8fafc;
+            border-radius: 8px;
+        }
+        .kbd {
+            background: #1e293b;
+            color: #e2e8f0;
+            border-radius: 5px;
+            padding: 3px 8px;
+            font-family: 'Consolas', monospace;
+            font-size: 0.78em;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .atalho-desc { font-size: 0.82em; color: #475569; }
+
+        /* ── nav ── */
+        .nav-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-bottom: 40px;
+        }
+        .nav-link {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+        .nav-link:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+
+        @media (max-width: 768px) {
+            .content-wrapper { padding: 0 15px; }
+            .lesson-hero, .content-card { padding: 25px; }
+            .lesson-hero h1 { font-size: 1.5em; }
+            .compare-box { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <a href="index.html" class="back-btn">&#x2B05; Voltar ao Dashboard</a>
+        <span class="page-badge">Unidade 4 &mdash; Su&iacute;te de Escrit&oacute;rio</span>
+        <button class="slide-toggle" id="slideToggleBtn">&#x1F4FA; Modo Slide</button>
+    </div>
+
+    <div class="content-wrapper">
+
+        <div class="lesson-hero">
+            <h1>&#x1F5BC;&#xFE0F; Apresenta&ccedil;&otilde;es: Conte&uacute;do e Elementos</h1>
+            <p class="subtitle">Aula 4.3 &mdash; Inser&ccedil;&atilde;o e formata&ccedil;&atilde;o de texto, imagens, formas, SmartArt, gr&aacute;ficos, tabelas e v&iacute;deos no PowerPoint</p>
+        </div>
+
+        <!-- CARD 1 — Visão geral dos elementos -->
+        <div class="content-card">
+            <h2>&#x1F9E9; Os Elementos de um Slide</h2>
+            <p>Slides profissionais s&atilde;o constru&iacute;dos com diferentes tipos de elementos visuais. O PowerPoint oferece todos eles na aba <strong>Inserir</strong> do Ribbon. Cada tipo tem uma fun&ccedil;&atilde;o espec&iacute;fica &mdash; conhecer quando usar cada um &eacute; t&atilde;o importante quanto saber inserir:</p>
+
+            <div class="elements-grid">
+                <div class="element-item el-a">
+                    <div class="el-icon">&#x1F524;</div>
+                    <div class="el-name">Texto</div>
+                    <div class="el-path">Inserir &rarr; Caixa de Texto</div>
+                </div>
+                <div class="element-item el-b">
+                    <div class="el-icon">&#x1F5BC;&#xFE0F;</div>
+                    <div class="el-name">Imagens</div>
+                    <div class="el-path">Inserir &rarr; Imagens</div>
+                </div>
+                <div class="element-item el-c">
+                    <div class="el-icon">&#x25B2;</div>
+                    <div class="el-name">Formas</div>
+                    <div class="el-path">Inserir &rarr; Formas</div>
+                </div>
+                <div class="element-item el-d">
+                    <div class="el-icon">&#x1F4CA;</div>
+                    <div class="el-name">Gr&aacute;ficos</div>
+                    <div class="el-path">Inserir &rarr; Gr&aacute;fico</div>
+                </div>
+                <div class="element-item el-e">
+                    <div class="el-icon">&#x1F4CB;</div>
+                    <div class="el-name">Tabelas</div>
+                    <div class="el-path">Inserir &rarr; Tabela</div>
+                </div>
+                <div class="element-item el-f">
+                    <div class="el-icon">&#x1F4F9;</div>
+                    <div class="el-name">V&iacute;deo</div>
+                    <div class="el-path">Inserir &rarr; V&iacute;deo</div>
+                </div>
+                <div class="element-item el-g">
+                    <div class="el-icon">&#x1F4C8;</div>
+                    <div class="el-name">SmartArt</div>
+                    <div class="el-path">Inserir &rarr; SmartArt</div>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <p>&#x1F4A1; <strong>Regra pr&aacute;tica:</strong> Use texto para explicar, imagem para ilustrar, gr&aacute;fico para comparar dados e SmartArt para mostrar processos ou hierarquias. Misturar todos em um mesmo slide gera polu&ccedil;&atilde;o visual.</p>
+            </div>
+        </div>
+
+        <!-- CARD 2 — Texto -->
+        <div class="content-card">
+            <h2>&#x1F524; Texto: Caixas e Formata&ccedil;&atilde;o</h2>
+            <p>No PowerPoint, todo texto fica dentro de uma <strong>caixa de texto</strong>. H&aacute; dois tipos: os <strong>marcadores de posi&ccedil;&atilde;o</strong> (j&aacute; vem no layout, clique para editar) e as <strong>caixas criadas manualmente</strong> (Inserir &rarr; Caixa de Texto).</p>
+
+            <div class="compare-box">
+                <div class="cmp-col good">
+                    <h4>&#x2705; Use os marcadores do layout</h4>
+                    <ul>
+                        <li>Mant&eacute;m a consist&ecirc;ncia do tema</li>
+                        <li>Fonte e cor j&aacute; configuradas</li>
+                        <li>Alinhamento autom&aacute;tico</li>
+                        <li>Funciona com SmartArt e gr&aacute;ficos do tema</li>
+                    </ul>
+                </div>
+                <div class="cmp-col bad">
+                    <h4>&#x26A0;&#xFE0F; Evite criar caixas avulsas</h4>
+                    <ul>
+                        <li>Quebram a consist&ecirc;ncia visual</li>
+                        <li>Font e cor precisam ser ajustadas manualmente</li>
+                        <li>Ficam "flutuando" sem alinhamento</li>
+                        <li>Dif&iacute;ceis de mover depois</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>&#x1F4DD; Formata&ccedil;&atilde;o de texto</h3>
+            <ul>
+                <li><strong>Fonte e tamanho:</strong> aba P&aacute;gina Inicial. Para slides, use no m&iacute;nimo <strong>18pt</strong> no corpo e <strong>28pt ou mais</strong> no t&iacute;tulo.</li>
+                <li><strong>Negrito / It&aacute;lico / Sublinhado:</strong> <span style="font-family:monospace;background:#f1f5f9;padding:1px 5px;border-radius:3px;">Ctrl+N</span> / <span style="font-family:monospace;background:#f1f5f9;padding:1px 5px;border-radius:3px;">Ctrl+I</span> / <span style="font-family:monospace;background:#f1f5f9;padding:1px 5px;border-radius:3px;">Ctrl+U</span>. Use com modera&ccedil;&atilde;o &mdash; tudo em negrito equivale a nada em negrito.</li>
+                <li><strong>Cor do texto:</strong> P&aacute;gina Inicial &rarr; Cor da Fonte. Prefira sempre as cores do tema para manter consist&ecirc;ncia.</li>
+                <li><strong>Espa&ccedil;amento entre linhas:</strong> P&aacute;gina Inicial &rarr; Espa&ccedil;amento de Linha. 1,2 ou 1,5 melhora a legibilidade em telas grandes.</li>
+                <li><strong>WordArt:</strong> Inserir &rarr; WordArt. Cria t&iacute;tulos com efeitos visuais. Use apenas no slide de abertura, nunca em slides de conte&uacute;do.</li>
+            </ul>
+
+            <div class="alert-box">
+                <p>&#x26A0;&#xFE0F; <strong>Nunca use justificado</strong> em slides. O texto justificado cria espa&ccedil;amentos irregulares entre palavras que ficam not&oacute;rios em letras grandes. Prefira <strong>alinhado &agrave; esquerda</strong> para listas e <strong>centralizado</strong> apenas em t&iacute;tulos.</p>
+            </div>
+        </div>
+
+        <!-- CARD 3 — Imagens -->
+        <div class="content-card">
+            <h2>&#x1F5BC;&#xFE0F; Imagens</h2>
+            <p>Imagens bem escolhidas e bem posicionadas transformam um slide comum em algo profissional. O PowerPoint oferece tr&ecirc;s formas de inserir imagens:</p>
+
+            <div class="steps-inline">
+                <div class="step-inline">
+                    <div class="si-num">1</div>
+                    <div class="si-text"><strong>Do computador:</strong> Inserir &rarr; Imagens &rarr; Este Dispositivo. Selecione um arquivo .jpg, .png ou .svg salvo localmente.</div>
+                </div>
+                <div class="step-inline">
+                    <div class="si-num">2</div>
+                    <div class="si-text"><strong>Imagens Stock (Office 365):</strong> Inserir &rarr; Imagens &rarr; Imagens de Banco de Imagens. Acervo gratuito e livre de direitos autorais integrado ao Office.</div>
+                </div>
+                <div class="step-inline">
+                    <div class="si-num">3</div>
+                    <div class="si-text"><strong>Imagens Online:</strong> Inserir &rarr; Imagens &rarr; Imagens Online. Busca na web pelo Bing. Filtre por &ldquo;licen&ccedil;a Creative Commons&rdquo; para uso legal.</div>
+                </div>
+            </div>
+
+            <h3>&#x1F6E0;&#xFE0F; Ferramentas de Formato de Imagem</h3>
+            <p>Ao selecionar uma imagem, a aba contextual <strong>Formato da Imagem</strong> aparece no Ribbon com recursos exclusivos:</p>
+            <ul>
+                <li><strong>Cortar:</strong> elimina partes indesejadas da imagem sem apag&aacute;-las permanentemente. Clique novamente em Cortar para ajustar depois.</li>
+                <li><strong>Remover Fundo:</strong> PowerPoint detecta automaticamente o fundo e permite marcas de remo&ccedil;&atilde;o manual. &Oacute;timo para recortar objetos de fotos.</li>
+                <li><strong>Corre&ccedil;&otilde;es:</strong> ajusta brilho, contraste e nitidez &mdash; &uacute;til quando a foto est&aacute; escura ou lavada.</li>
+                <li><strong>Cor:</strong> aplica filtros de cor (escala de cinza, duplo tom, etc.) para harmonizar a imagem com o tema da apresenta&ccedil;&atilde;o.</li>
+                <li><strong>Estilos de Imagem:</strong> aplica bordas, sombras e molduras prontas com um clique.</li>
+                <li><strong>Comprimir Imagens:</strong> reduz o tamanho do arquivo .pptx. Use antes de enviar por e-mail.</li>
+            </ul>
+
+            <h3>&#x1F4C1; Formatos recomendados</h3>
+            <div class="img-formats">
+                <div class="img-fmt">
+                    <div class="fmt-ext">.PNG</div>
+                    <div class="fmt-name">Portable Network Graphics</div>
+                    <div class="fmt-rec">Suporta transpar&ecirc;ncia (fundo transparente)</div>
+                    <span class="fmt-badge ok">Recomendado</span>
+                </div>
+                <div class="img-fmt">
+                    <div class="fmt-ext">.JPG</div>
+                    <div class="fmt-name">Joint Photographic Experts</div>
+                    <div class="fmt-rec">Fotos e imagens com muitas cores</div>
+                    <span class="fmt-badge ok">Recomendado</span>
+                </div>
+                <div class="img-fmt">
+                    <div class="fmt-ext">.SVG</div>
+                    <div class="fmt-name">Scalable Vector Graphics</div>
+                    <div class="fmt-rec">Ícones e logos; n&atilde;o perde qualidade ao ampliar</div>
+                    <span class="fmt-badge ok">Ideal para &iacute;cones</span>
+                </div>
+                <div class="img-fmt">
+                    <div class="fmt-ext">.GIF</div>
+                    <div class="fmt-name">Graphics Interchange Format</div>
+                    <div class="fmt-rec">Anima&ccedil;&otilde;es simples; qualidade limitada</div>
+                    <span class="fmt-badge atc">Com cuidado</span>
+                </div>
+                <div class="img-fmt">
+                    <div class="fmt-ext">.BMP</div>
+                    <div class="fmt-name">Bitmap</div>
+                    <div class="fmt-rec">Arquivo muito grande, sem compress&atilde;o</div>
+                    <span class="fmt-badge no">Evite</span>
+                </div>
+            </div>
+
+            <div class="tip-box">
+                <p>&#x1F4A1; <strong>Dica:</strong> Para manter as propor&ccedil;&otilde;es ao redimensionar uma imagem, segure <strong>Shift</strong> enquanto arrasta um dos cantos. Arrastar pelas laterais distorce a imagem.</p>
+            </div>
+        </div>
+
+        <!-- CARD 4 — Formas e Ícones -->
+        <div class="content-card">
+            <h2>&#x25B2; Formas e &Iacute;cones</h2>
+            <p>Formas geom&eacute;tricas e &iacute;cones s&atilde;o elementos vetoriais &mdash; n&atilde;o perdem qualidade em nenhum tamanho &mdash; e permitem criar diagramas, setas, destaques e ilustra&ccedil;&otilde;es sem precisar de imagens externas.</p>
+
+            <h3>&#x1F7E5; Formas (Inserir &rarr; Formas)</h3>
+            <p>O PowerPoint oferece mais de 150 formas organizadas em categorias: linhas, ret&acirc;ngulos, figuras b&aacute;sicas, setas, equa&ccedil;&otilde;es, fluxogramas, callouts (bal&otilde;es) e estrelas/faixas.</p>
+            <ul>
+                <li><strong>Inserir:</strong> clique na forma e arraste no slide para definir o tamanho.</li>
+                <li><strong>Manter propor&ccedil;&atilde;o:</strong> segure <strong>Shift</strong> ao desenhar para criar c&iacute;rculos ou quadrados perfeitos.</li>
+                <li><strong>Adicionar texto:</strong> clique com o bot&atilde;o direito na forma &rarr; <em>Editar Texto</em>. O texto fica dentro da forma.</li>
+                <li><strong>Formatar:</strong> aba <strong>Formato da Forma</strong> (contextual) &rarr; Preenchimento, Contorno e Efeitos de Forma.</li>
+                <li><strong>Agrupar:</strong> selecione v&aacute;rias formas com <strong>Ctrl+clique</strong> e pressione <strong>Ctrl+G</strong> para mover e redimensionar juntas.</li>
+            </ul>
+
+            <h3>&#x1F516; &Iacute;cones (Inserir &rarr; &Iacute;cones)</h3>
+            <p>O Office 365 inclui uma biblioteca com milhares de &iacute;cones <strong>SVG gratuitos e sem direitos autorais</strong>. Por serem vetoriais, s&atilde;o redimension&aacute;veis sem perda de qualidade e podem ter sua cor alterada livremente.</p>
+
+            <div class="steps-inline">
+                <div class="step-inline">
+                    <div class="si-num">1</div>
+                    <div class="si-text">V&aacute; em <strong>Inserir &rarr; &Iacute;cones</strong>. A janela de pesquisa abre com categorias (tecnologia, educa&ccedil;&atilde;o, neg&oacute;cios, etc.).</div>
+                </div>
+                <div class="step-inline">
+                    <div class="si-num">2</div>
+                    <div class="si-text">Selecione um ou mais &iacute;cones e clique em <strong>Inserir</strong>. O &iacute;cone aparece como objeto gr&aacute;fico no slide.</div>
+                </div>
+                <div class="step-inline">
+                    <div class="si-num">3</div>
+                    <div class="si-text">Com o &iacute;cone selecionado, use <strong>Formato de Gr&aacute;fico &rarr; Preenchimento de Gr&aacute;fico</strong> para mudar a cor e harmonizar com o tema.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 5 — SmartArt -->
+        <div class="content-card">
+            <h2>&#x1F4C8; SmartArt &mdash; Diagramas Profissionais</h2>
+            <p>O <strong>SmartArt</strong> cria diagramas visualmente elaborados a partir de texto simples. Em vez de desenhar formas manualmente, voc&ecirc; escolhe um layout e digita os itens &mdash; o PowerPoint monta o diagrama automaticamente.</p>
+            <p><strong>Como inserir:</strong> Inserir &rarr; SmartArt &rarr; escolha a categoria e o layout &rarr; OK. Depois edite o texto no painel &ldquo;Digite o texto aqui&rdquo; ou diretamente nas formas.</p>
+
+            <div class="smartart-grid">
+                <div class="smartart-item">
+                    <div class="sa-icon">&#x2022; &#x2022; &#x2022;</div>
+                    <div class="sa-name">Lista</div>
+                    <div class="sa-desc">Exibe itens n&atilde;o sequenciais de forma visual.</div>
+                    <div class="sa-ex">Ex: vantagens de um produto</div>
+                </div>
+                <div class="smartart-item">
+                    <div class="sa-icon">&#x2192; &#x2192; &#x2192;</div>
+                    <div class="sa-name">Processo</div>
+                    <div class="sa-desc">Mostra etapas sequenciais com setas.</div>
+                    <div class="sa-ex">Ex: etapas de um projeto</div>
+                </div>
+                <div class="smartart-item">
+                    <div class="sa-icon">&#x21BB;</div>
+                    <div class="sa-name">Ciclo</div>
+                    <div class="sa-desc">Representa processos cont&iacute;nuos e c&iacute;clicos.</div>
+                    <div class="sa-ex">Ex: ciclo de vida de um software</div>
+                </div>
+                <div class="smartart-item">
+                    <div class="sa-icon">&#x1F3DB;&#xFE0F;</div>
+                    <div class="sa-name">Hierarquia</div>
+                    <div class="sa-desc">Estruturas organizacionais em &aacute;rvore.</div>
+                    <div class="sa-ex">Ex: organograma de empresa</div>
+                </div>
+                <div class="smartart-item">
+                    <div class="sa-icon">&#x25CE;</div>
+                    <div class="sa-name">Relacionamento</div>
+                    <div class="sa-desc">Mostra conex&otilde;es entre elementos.</div>
+                    <div class="sa-ex">Ex: diagrama de Venn</div>
+                </div>
+                <div class="smartart-item">
+                    <div class="sa-icon">&#x25B2;</div>
+                    <div class="sa-name">Pir&acirc;mide</div>
+                    <div class="sa-desc">Representa propor&ccedil;&otilde;es ou n&iacute;veis hier&aacute;rquicos.</div>
+                    <div class="sa-ex">Ex: pir&acirc;mide alimentar</div>
+                </div>
+            </div>
+
+            <h3>&#x1F58C;&#xFE0F; Personalizando o SmartArt</h3>
+            <ul>
+                <li><strong>Alterar layout:</strong> aba <strong>Design do SmartArt</strong> &rarr; Layouts. Mude sem perder o conte&uacute;do digitado.</li>
+                <li><strong>Alterar cores:</strong> Design do SmartArt &rarr; Alterar Cores. Escolha combina&ccedil;&otilde;es baseadas nas cores do tema.</li>
+                <li><strong>Estilos SmartArt:</strong> efeitos 3D, sombra, gradiente &mdash; use com modera&ccedil;&atilde;o para n&atilde;o distrair.</li>
+                <li><strong>Converter em formas:</strong> Design do SmartArt &rarr; Converter &rarr; Converter em Formas. Permite editar cada elemento individualmente.</li>
+            </ul>
+        </div>
+
+        <!-- CARD 6 — Gráficos -->
+        <div class="content-card">
+            <h2>&#x1F4CA; Gr&aacute;ficos</h2>
+            <p>Gr&aacute;ficos transformam n&uacute;meros em informa&ccedil;&atilde;o visual. No PowerPoint, os gr&aacute;ficos s&atilde;o criados com uma planilha embutida do Excel &mdash; sem precisar abrir o Excel separadamente.</p>
+
+            <p><strong>Como inserir:</strong> Inserir &rarr; Gr&aacute;fico &rarr; escolha o tipo &rarr; OK. Uma planilha abre para voc&ecirc; digitar os dados. Feche a planilha quando terminar.</p>
+
+            <div class="charts-grid">
+                <div class="chart-item">
+                    <div class="ch-icon">&#x1F4CA;</div>
+                    <div class="ch-name">Colunas / Barras</div>
+                    <div class="ch-use">Comparar valores entre categorias. O mais utilizado.</div>
+                </div>
+                <div class="chart-item">
+                    <div class="ch-icon">&#x1F4C8;</div>
+                    <div class="ch-name">Linhas</div>
+                    <div class="ch-use">Mostrar tend&ecirc;ncias ao longo do tempo.</div>
+                </div>
+                <div class="chart-item">
+                    <div class="ch-icon">&#x1F967;</div>
+                    <div class="ch-name">Pizza / Rosca</div>
+                    <div class="ch-use">Mostrar propor&ccedil;&otilde;es de um todo (use at&eacute; 6 fatias).</div>
+                </div>
+                <div class="chart-item">
+                    <div class="ch-icon">&#x1F4C9;</div>
+                    <div class="ch-name">&Aacute;rea</div>
+                    <div class="ch-use">Comparar volumes acumulados ao longo do tempo.</div>
+                </div>
+                <div class="chart-item">
+                    <div class="ch-icon">&#x2B55;</div>
+                    <div class="ch-name">Dispers&atilde;o (XY)</div>
+                    <div class="ch-use">Rela&ccedil;&atilde;o entre duas vari&aacute;veis num&eacute;ricas.</div>
+                </div>
+                <div class="chart-item">
+                    <div class="ch-icon">&#x1F4CC;</div>
+                    <div class="ch-name">Mapa de &Aacute;rvore</div>
+                    <div class="ch-use">Hierarquia e propor&ccedil;&otilde;es de dados complexos.</div>
+                </div>
+            </div>
+
+            <h3>&#x1F6E0;&#xFE0F; Editando o gr&aacute;fico</h3>
+            <ul>
+                <li><strong>Editar dados:</strong> clique com o bot&atilde;o direito no gr&aacute;fico &rarr; <em>Editar Dados</em>. A planilha do Excel abre novamente.</li>
+                <li><strong>Alterar tipo de gr&aacute;fico:</strong> clique com o bot&atilde;o direito &rarr; <em>Alterar Tipo de Gr&aacute;fico</em>. Os dados s&atilde;o preservados.</li>
+                <li><strong>Formatar elementos:</strong> clique em qualquer parte do gr&aacute;fico (barra, linha, legenda) para selecion&aacute;-la individualmente e formatar.</li>
+                <li><strong>R&oacute;tulos de dados:</strong> aba <strong>Design do Gr&aacute;fico</strong> &rarr; Adicionar Elemento de Gr&aacute;fico &rarr; R&oacute;tulos de Dados. Exibe os valores diretamente nas barras.</li>
+                <li><strong>Importar do Excel:</strong> abra o Excel, selecione o gr&aacute;fico pronto, copie (<strong>Ctrl+C</strong>) e cole no PowerPoint. Escolha &ldquo;Vincular dados&rdquo; para atualizar automaticamente.</li>
+            </ul>
+
+            <div class="alert-box">
+                <p>&#x26A0;&#xFE0F; <strong>Evite gr&aacute;ficos 3D</strong> em apresenta&ccedil;&otilde;es acad&ecirc;micas e profissionais. A profundidade distorce a percep&ccedil;&atilde;o das propor&ccedil;&otilde;es e dificulta a leitura dos valores. Prefira sempre o gr&aacute;fico plano (2D).</p>
+            </div>
+        </div>
+
+        <!-- CARD 7 — Tabelas e Vídeo -->
+        <div class="content-card">
+            <h2>&#x1F4CB; Tabelas e &#x1F4F9; V&iacute;deo</h2>
+
+            <h3>&#x1F4CB; Tabelas</h3>
+            <p>Tabelas organizam dados em linhas e colunas. S&atilde;o ideais quando o p&uacute;blico precisa comparar m&uacute;ltiplos atributos de m&uacute;ltiplos itens ao mesmo tempo.</p>
+            <p><strong>Como inserir:</strong> Inserir &rarr; Tabela &rarr; arraste para definir o n&uacute;mero de linhas e colunas.</p>
+            <ul>
+                <li><strong>Estilos de tabela:</strong> aba <strong>Design da Tabela</strong> (contextual) &rarr; escolha um estilo que combine com o tema. Evite tabelas cinza sem estilo &mdash; parecem rascunho.</li>
+                <li><strong>Mesclar c&eacute;lulas:</strong> selecione as c&eacute;lulas desejadas &rarr; Layout da Tabela &rarr; Mesclar C&eacute;lulas. &Uacute;til para cabe&ccedil;alhos em grupo.</li>
+                <li><strong>Ajustar largura:</strong> arraste as bordas das colunas ou use Layout da Tabela &rarr; largura de coluna.</li>
+                <li><strong>Dica de uso:</strong> se a tabela tiver mais de 6 linhas, ela provavelmente tem informa&ccedil;&atilde;o demais para um &uacute;nico slide. Divida ou use um gr&aacute;fico.</li>
+            </ul>
+
+            <h3>&#x1F4F9; V&iacute;deo</h3>
+            <p>O PowerPoint permite incorporar v&iacute;deos diretamente no slide. O v&iacute;deo pode ser reproduzido durante a apresenta&ccedil;&atilde;o sem sair do PowerPoint.</p>
+
+            <div class="steps-inline">
+                <div class="step-inline">
+                    <div class="si-num">1</div>
+                    <div class="si-text"><strong>V&iacute;deo do computador:</strong> Inserir &rarr; V&iacute;deo &rarr; Este Dispositivo. O arquivo &eacute; embutido no .pptx (aumenta o tamanho do arquivo). Formatos suportados: .mp4, .wmv, .avi, .mov.</div>
+                </div>
+                <div class="step-inline">
+                    <div class="si-num">2</div>
+                    <div class="si-text"><strong>V&iacute;deo Online (YouTube):</strong> Inserir &rarr; V&iacute;deo &rarr; V&iacute;deo Online. Cole o link do YouTube. <strong>Requer internet</strong> durante a apresenta&ccedil;&atilde;o.</div>
+                </div>
+                <div class="step-inline">
+                    <div class="si-num">3</div>
+                    <div class="si-text"><strong>Configura&ccedil;&atilde;o de reprodu&ccedil;&atilde;o:</strong> com o v&iacute;deo selecionado, aba <strong>Reprodu&ccedil;&atilde;o</strong> &rarr; defina se inicia <em>Automaticamente</em> ou <em>Ao Clicar</em>; ative <em>Loop</em> se necess&aacute;rio.</div>
+                </div>
+            </div>
+
+            <div class="alert-box">
+                <p>&#x26A0;&#xFE0F; <strong>Aten&ccedil;&atilde;o ao apresentar em outro computador:</strong> v&iacute;deos incorporados (.mp4 embutido) funcionam em qualquer m&aacute;quina. J&aacute; v&iacute;deos vinculados (link externo) exigem internet. Sempre teste antes da apresenta&ccedil;&atilde;o.</p>
+            </div>
+        </div>
+
+        <!-- CARD 8 — Atalhos e Boas Práticas -->
+        <div class="content-card">
+            <h2>&#x2705; Atalhos e Boas Pr&aacute;ticas com Elementos</h2>
+
+            <h3>&#x2328;&#xFE0F; Atalhos para trabalhar com objetos</h3>
+            <div class="atalhos-grid">
+                <div class="atalho-item">
+                    <span class="kbd">Ctrl+C / Ctrl+V</span>
+                    <span class="atalho-desc">Copiar e colar objeto</span>
+                </div>
+                <div class="atalho-item">
+                    <span class="kbd">Ctrl+D</span>
+                    <span class="atalho-desc">Duplicar objeto selecionado</span>
+                </div>
+                <div class="atalho-item">
+                    <span class="kbd">Ctrl+G</span>
+                    <span class="atalho-desc">Agrupar objetos selecionados</span>
+                </div>
+                <div class="atalho-item">
+                    <span class="kbd">Ctrl+Shift+G</span>
+                    <span class="atalho-desc">Desagrupar objetos</span>
+                </div>
+                <div class="atalho-item">
+                    <span class="kbd">Shift + arrastar</span>
+                    <span class="atalho-desc">Manter propor&ccedil;&atilde;o ao redimensionar</span>
+                </div>
+                <div class="atalho-item">
+                    <span class="kbd">Ctrl + arrastar</span>
+                    <span class="atalho-desc">Duplicar movendo (copia no lugar)</span>
+                </div>
+                <div class="atalho-item">
+                    <span class="kbd">Tab</span>
+                    <span class="atalho-desc">Selecionar pr&oacute;ximo objeto no slide</span>
+                </div>
+                <div class="atalho-item">
+                    <span class="kbd">Setas &#x2191;&#x2193;&#x2190;&#x2192;</span>
+                    <span class="atalho-desc">Mover objeto selecionado com precis&atilde;o</span>
+                </div>
+            </div>
+
+            <h3>&#x1F4CC; Boas pr&aacute;ticas com elementos visuais</h3>
+            <div class="boas-grid">
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F4D0;</div>
+                    <div class="boa-text">
+                        <strong>Use Alinhar e Distribuir</strong>
+                        <span>Selecione m&uacute;ltiplos objetos &rarr; Formatar &rarr; Alinhar. Distribua uniformemente para evitar espa&ccedil;amentos irregulares.</span>
+                    </div>
+                </div>
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F4F7;</div>
+                    <div class="boa-text">
+                        <strong>Imagens de alta resolu&ccedil;&atilde;o</strong>
+                        <span>Use imagens com pelo menos 1280px de largura. Imagens pequenas amplificadas ficam pixeladas na proje&ccedil;&atilde;o.</span>
+                    </div>
+                </div>
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F3A8;</div>
+                    <div class="boa-text">
+                        <strong>Consist&ecirc;ncia de estilo</strong>
+                        <span>Se um &iacute;cone tem cor azul, todos os &iacute;cones devem ser azuis. Misturar estilos de imagem (algumas com moldura, outras sem) descaracteriza a apresenta&ccedil;&atilde;o.</span>
+                    </div>
+                </div>
+                <div class="boa-item">
+                    <div class="boa-icon">&#x2696;&#xFE0F;</div>
+                    <div class="boa-text">
+                        <strong>Direitos autorais</strong>
+                        <span>Use o banco de imagens Stock do Office, imagens Creative Commons ou suas pr&oacute;prias fotos. Nunca copie imagens da web sem verificar a licen&ccedil;a.</span>
+                    </div>
+                </div>
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F4BE;</div>
+                    <div class="boa-text">
+                        <strong>Comprima antes de enviar</strong>
+                        <span>Arquivo &rarr; Informa&ccedil;&otilde;es &rarr; Comprimir M&iacute;dia. Reduz v&iacute;deos e imagens sem sacrificar qualidade visual perceptiva.</span>
+                    </div>
+                </div>
+                <div class="boa-item">
+                    <div class="boa-icon">&#x1F9EA;</div>
+                    <div class="boa-text">
+                        <strong>Teste em modo apresenta&ccedil;&atilde;o</strong>
+                        <span>Sempre pressione F5 e navegue por todos os slides antes de entregar. Verifica se v&iacute;deos, anima&ccedil;&otilde;es e links funcionam corretamente.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXERCÍCIO -->
+        <div class="content-card exercise-card">
+            <h2>&#x1F3AF; Exerc&iacute;cio &mdash; Arraste e Conecte</h2>
+            <p style="color:#475569;font-size:0.9em;margin-bottom:4px;">Arraste cada descri&ccedil;&atilde;o para o elemento ou recurso correto do PowerPoint. Em dispositivos m&oacute;veis, toque na descri&ccedil;&atilde;o e depois na zona de destino.</p>
+
+            <div class="ex-drag-root" data-ex="ex43">
+                <div class="ex-drag">
+                    <div>
+                        <div class="ex-col-title">Descri&ccedil;&atilde;o</div>
+                        <div class="ex-pool" data-pool="ex43">
+                            <div class="drag-chip" data-id="c1">Diagrama que organiza informa&ccedil;&otilde;es visualmente em layouts prontos como listas, processos e ciclos</div>
+                            <div class="drag-chip" data-id="c2">Recurso que remove automaticamente o fundo de uma fotografia no PowerPoint</div>
+                            <div class="drag-chip" data-id="c3">Biblioteca gratuita de vetores escalon&aacute;veis integrada ao Office 365, sem direitos autorais</div>
+                            <div class="drag-chip" data-id="c4">Representa&ccedil;&atilde;o visual de dados num&eacute;ricos criada com planilha embutida; tipos incluem colunas, linhas e pizza</div>
+                            <div class="drag-chip" data-id="c5">Formato de imagem que suporta transpar&ecirc;ncia no fundo, ideal para logos e elementos sem fundo branco</div>
+                            <div class="drag-chip" data-id="c6">Atalho de teclado para agrupar m&uacute;ltiplos objetos selecionados em um &uacute;nico elemento</div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="ex-col-title">Elemento / Recurso</div>
+                        <div class="ex-zones" data-zones="ex43">
+                            <div class="drop-zone" data-zone="ex43-z1" data-accept="c1">
+                                <span class="zone-name">SmartArt</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex43-z2" data-accept="c2">
+                                <span class="zone-name">Remover Fundo</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex43-z3" data-accept="c3">
+                                <span class="zone-name">&Iacute;cones do Office</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex43-z4" data-accept="c4">
+                                <span class="zone-name">Gr&aacute;fico</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex43-z5" data-accept="c5">
+                                <span class="zone-name">Formato .PNG</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex43-z6" data-accept="c6">
+                                <span class="zone-name">Ctrl+G</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ex-actions">
+                <button class="btn-verificar" onclick="dragVerify('ex43')">Verificar</button>
+                <button class="btn-refazer"  onclick="dragReset('ex43')">Refazer</button>
+            </div>
+            <div class="ex-result" id="ex43-result"></div>
+        </div>
+
+        <!-- ATIVIDADE PRÁTICA 4.3 -->
+        <div class="content-card practical-card" id="prat-43">
+            <h2>&#x1F6E0;&#xFE0F; Atividade Pr&aacute;tica &mdash; Apresenta&ccedil;&atilde;o Multim&iacute;dia</h2>
+            <div class="prat-meta">
+                <span class="prat-tag">&#x23F1; ~50 min</span>
+                <span class="prat-tag">&#x1F4BB; Microsoft PowerPoint</span>
+                <span class="prat-tag">&#x1F4BE; Salvar como .pptx</span>
+            </div>
+
+            <div class="prat-steps">
+                <div class="prat-step">
+                    <div class="step-num">1</div>
+                    <div class="step-body">
+                        <div class="step-label">Abra a apresenta&ccedil;&atilde;o da aula anterior ou crie uma nova</div>
+                        <div class="step-desc">Abra o arquivo <strong>Apresentacao_SeuNome.pptx</strong> criado na Aula 4.2, ou crie uma nova apresenta&ccedil;&atilde;o sobre um tema de sua escolha (ex: uma profiss&atilde;o de TI, um software que voc&ecirc; usa, uma tend&ecirc;ncia tecnol&oacute;gica). Defina um tema visual na aba Design.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">2</div>
+                    <div class="step-body">
+                        <div class="step-label">Insira uma imagem do banco Stock e aplique formata&ccedil;&atilde;o</div>
+                        <div class="step-desc">Em um slide, v&aacute; em <strong>Inserir &rarr; Imagens &rarr; Imagens de Banco de Imagens</strong>. Escolha uma imagem relacionada ao seu tema. Ap&oacute;s inserir: <strong>corte</strong> a imagem para destacar o que importa, ajuste o <strong>brilho/contraste</strong> e aplique um <strong>estilo de imagem</strong> (com sombra, por exemplo). Posicione &agrave; direita do texto usando o layout do slide.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">3</div>
+                    <div class="step-body">
+                        <div class="step-label">Crie um diagrama SmartArt</div>
+                        <div class="step-desc">Adicione um novo slide. V&aacute; em <strong>Inserir &rarr; SmartArt</strong> e escolha um layout do tipo <em>Processo</em> ou <em>Lista</em>. Preencha com pelo menos 4 itens relacionados ao seu tema (ex: etapas para aprender programa&ccedil;&atilde;o, componentes de um computador, etc.). Altere as cores do SmartArt usando <strong>Design do SmartArt &rarr; Alterar Cores</strong>.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">4</div>
+                    <div class="step-body">
+                        <div class="step-label">Insira um gr&aacute;fico com dados</div>
+                        <div class="step-desc">Adicione um novo slide e insira um <strong>gr&aacute;fico de colunas</strong> com dados fict&iacute;cios ou reais relacionados ao seu tema (ex: popularidade de linguagens de programa&ccedil;&atilde;o, sal&aacute;rios por &aacute;rea de TI, uso de sistemas operacionais). Edite os dados na planilha embutida, adicione um t&iacute;tulo ao gr&aacute;fico e ative os r&oacute;tulos de dados.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">5</div>
+                    <div class="step-body">
+                        <div class="step-label">Adicione &iacute;cones e formas decorativas</div>
+                        <div class="step-desc">Em qualquer slide, use <strong>Inserir &rarr; &Iacute;cones</strong> para adicionar pelo menos 2 &iacute;cones relevantes. Altere a cor dos &iacute;cones para combinar com o tema. Crie uma forma (ret&acirc;ngulo ou seta) usando <strong>Inserir &rarr; Formas</strong>, adicione texto dentro dela e formate com preenchimento colorido e sem contorno. Agrupe os &iacute;cones com <strong>Ctrl+G</strong> se necess&aacute;rio.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">6</div>
+                    <div class="step-body">
+                        <div class="step-label">Revise, comprima e exporte</div>
+                        <div class="step-desc">Pressione <strong>F5</strong> para revisar a apresenta&ccedil;&atilde;o completa. Verifique se todos os elementos est&atilde;o alinhados e se o texto &eacute; leg&iacute;vel. Acesse <strong>Arquivo &rarr; Informa&ccedil;&otilde;es &rarr; Comprimir M&iacute;dia</strong> para reduzir o tamanho. Exporte uma c&oacute;pia em <strong>PDF</strong> para envio ao professor.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="prat-observe">
+                <strong>&#x1F4CC; Para refletir:</strong> Cada elemento visual &mdash; imagem, SmartArt, gr&aacute;fico, &iacute;cone &mdash; deve ter um <strong>prop&oacute;sito claro</strong>. Antes de inserir qualquer elemento, pergunte: &ldquo;Isso ajuda o p&uacute;blico a entender melhor a ideia do slide?&rdquo; Se a resposta for n&atilde;o, remova. <strong>Menos elementos bem escolhidos valem mais do que muitos elementos aleat&oacute;rios.</strong>
+            </div>
+
+            <div class="ex-actions">
+                <button class="btn-print" onclick="printPractical('prat-43', 'Aula 4.3 \u2014 Apresenta\u00e7\u00f5es: Conte\u00fado e Elementos')">&#x1F5A8;&#xFE0F; Imprimir roteiro</button>
+            </div>
+        </div>
+
+        <div class="nav-footer">
+            <a href="uni4-02-apresentacoes-design.html" class="nav-link">&#x2B05; Anterior: Apresenta&ccedil;&otilde;es &mdash; Design</a>
+            <a href="uni4-04-apresentacoes-avancado.html" class="nav-link">Pr&oacute;xima: Apresenta&ccedil;&otilde;es &mdash; Recursos Avan&ccedil;ados &#x27A1;</a>
+        </div>
+
+    </div>
+
+    <script src="slide-mode.js"></script>
+    <script src="exercise-drag.js"></script>
+    <script src="exercise-print.js"></script>
+</body>
+</html>
