@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 4.6 - Texto: Estrutura e Elementos Visuais</title>
+    <link rel="stylesheet" href="slide-mode.css">
+    <link rel="stylesheet" href="exercise.css">
+    <style>
+        :root {
+            --primary: #bf360c;
+            --secondary: #870000;
+            --bg-light: #f0f4f8;
+            --text-dark: #1a202c;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        .top-bar {
+            background: white;
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .back-btn {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+        .back-btn:hover { background: rgba(191,54,12,0.08); }
+        .page-badge {
+            font-size: 0.8em;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: rgba(191,54,12,0.12);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .content-wrapper { max-width: 800px; margin: 40px auto; padding: 0 30px; }
+
+        .lesson-hero {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            border-top: 4px solid var(--primary);
+        }
+        .lesson-hero h1 { font-size: 2em; margin-bottom: 10px; color: var(--primary); }
+        .lesson-hero .subtitle { font-size: 1.05em; color: #718096; }
+
+        .content-card {
+            background: white;
+            border-radius: 16px;
+            padding: 35px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+        .content-card h2 { font-size: 1.4em; color: var(--primary); margin-bottom: 18px; display: flex; align-items: center; gap: 10px; }
+        .content-card h3 { font-size: 1.05em; color: var(--secondary); margin: 20px 0 10px; }
+        .content-card p  { margin-bottom: 15px; text-align: justify; }
+
+        .highlight-box { background: linear-gradient(135deg,rgba(191,54,12,.05),rgba(135,0,0,.06)); border-left: 4px solid var(--primary); padding: 20px 25px; border-radius: 0 12px 12px 0; margin: 20px 0; }
+        .highlight-box p { margin-bottom: 0; font-style: italic; }
+        .alert-box { background: #fff8e1; border-left: 4px solid #f59e0b; padding: 18px 22px; border-radius: 0 12px 12px 0; margin: 20px 0; }
+        .alert-box p { margin: 0; color: #78350f; font-size: .93em; }
+        .tip-box { background: #f0fdf4; border-left: 4px solid #16a34a; padding: 18px 22px; border-radius: 0 12px 12px 0; margin: 20px 0; }
+        .tip-box p { margin: 0; color: #14532d; font-size: .93em; }
+
+        ul, ol { margin: 10px 0 15px 25px; }
+        li { margin-bottom: 8px; }
+
+        .kbd-sm { background: #1e293b; color: #e2e8f0; border-radius: 4px; padding: 2px 6px; font-family: 'Consolas',monospace; font-size: .82em; white-space: nowrap; }
+
+        /* ── Página demo ── */
+        .page-demo {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin: 16px 0;
+        }
+        .pg-card {
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+        }
+        .pg-label { padding: 6px 10px; font-size: .74em; font-weight: 700; text-align: center; background: #f8fafc; color: #475569; }
+        .pg-canvas {
+            background: white;
+            margin: 8px;
+            border: 1px solid #cbd5e0;
+            border-radius: 3px;
+            aspect-ratio: .7;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .pg-header-band { background: #bfdbfe; height: 14px; width: 100%; font-size: .5em; color: #1e40af; display: flex; align-items: center; padding: 0 4px; flex-shrink: 0; }
+        .pg-body { flex: 1; padding: 6px; display: flex; flex-direction: column; gap: 4px; }
+        .pg-line { height: 5px; background: #e2e8f0; border-radius: 2px; }
+        .pg-footer-band { background: #bfdbfe; height: 14px; width: 100%; font-size: .5em; color: #1e40af; display: flex; align-items: center; justify-content: flex-end; padding: 0 4px; flex-shrink: 0; }
+        .pg-margin-top    { height: 18px; background: #fef9c3; flex-shrink: 0; }
+        .pg-margin-bottom { height: 18px; background: #fef9c3; flex-shrink: 0; }
+        .pg-margin-sides  { display: flex; flex: 1; }
+        .pg-margin-left   { width: 18px; background: #fef9c3; flex-shrink: 0; }
+        .pg-margin-right  { width: 12px; background: #fef9c3; flex-shrink: 0; }
+        .pg-content-area  { flex: 1; padding: 4px; display: flex; flex-direction: column; gap: 3px; }
+
+        /* ── Margens ABNT ── */
+        .abnt-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px;
+            margin: 14px 0;
+        }
+        .abnt-item { border-radius: 10px; padding: 14px; text-align: center; }
+        .abnt-item.g { background: #fef3c7; border-top: 3px solid #d97706; }
+        .abnt-item.p { background: #f0fdf4; border-top: 3px solid #16a34a; }
+        .abnt-val { font-size: 1.4em; font-weight: 800; color: #1e293b; }
+        .abnt-name { font-size: .78em; color: #475569; margin-top: 4px; }
+        .abnt-badge { display: inline-block; font-size: .68em; padding: 2px 7px; border-radius: 10px; font-weight: 700; margin-top: 5px; }
+        .abnt-item.g .abnt-badge { background: #fde68a; color: #92400e; }
+        .abnt-item.p .abnt-badge { background: #bbf7d0; color: #166534; }
+
+        /* ── Cabeçalho/rodapé opções ── */
+        .hf-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin: 14px 0;
+        }
+        .hf-item { border-radius: 10px; padding: 14px; border-left: 4px solid var(--primary); background: #fff5f2; }
+        .hf-item strong { display: block; font-size: .88em; color: var(--primary); margin-bottom: 4px; }
+        .hf-item span   { font-size: .78em; color: #475569; }
+
+        /* ── Colunas demo ── */
+        .cols-demo {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin: 14px 0;
+        }
+        .col-card { border-radius: 10px; overflow: hidden; border: 1px solid #e2e8f0; }
+        .col-label { padding: 5px 8px; font-size: .72em; font-weight: 700; text-align: center; background: #f8fafc; color: #475569; }
+        .col-canvas { padding: 8px; background: white; }
+        .col-1 { display: flex; flex-direction: column; gap: 3px; }
+        .col-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+        .col-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3px; }
+        .col-line { height: 5px; background: #e2e8f0; border-radius: 2px; margin-bottom: 3px; }
+
+        /* ── Disposição de imagem ── */
+        .disp-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 12px;
+            margin: 14px 0;
+        }
+        .disp-item { border-radius: 10px; overflow: hidden; border: 1px solid #e2e8f0; }
+        .disp-label { padding: 6px 8px; font-size: .72em; font-weight: 700; text-align: center; }
+        .disp-label.inline   { background: #eff6ff; color: #1d4ed8; }
+        .disp-label.quadrado { background: #f0fdf4; color: #15803d; }
+        .disp-label.atras    { background: #fdf4ff; color: #7e22ce; }
+        .disp-label.frente   { background: #fff7ed; color: #b45309; }
+        .disp-canvas {
+            padding: 8px;
+            background: white;
+            min-height: 70px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+        .disp-img {
+            width: 32px; height: 32px;
+            background: linear-gradient(135deg,#93c5fd,#60a5fa);
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+        .disp-line { height: 5px; background: #e2e8f0; border-radius: 2px; }
+        .inline-layout   { display: block; }
+        .quadrado-layout { display: flex; gap: 6px; align-items: flex-start; }
+        .atras-layout    { position: relative; }
+        .atras-img       { position: absolute; top: 4px; right: 6px; opacity: .4; }
+
+        /* ── Tabela demo ── */
+        .table-demo {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 14px 0;
+            font-size: .86em;
+        }
+        .table-demo th { background: var(--primary); color: white; padding: 9px 12px; text-align: left; }
+        .table-demo th:first-child { border-radius: 8px 0 0 0; }
+        .table-demo th:last-child  { border-radius: 0 8px 0 0; }
+        .table-demo td { padding: 8px 12px; border-bottom: 1px solid #e2e8f0; }
+        .table-demo tr:nth-child(even) td { background: #f8fafc; }
+        .table-demo tr:last-child td { border-bottom: none; }
+        .table-feature { font-weight: 600; color: #475569; }
+
+        /* ── Boas práticas ── */
+        .boas-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(200px,1fr)); gap: 12px; margin: 16px 0; }
+        .boa-item { background: #fff7ed; border-radius: 10px; padding: 16px; display: flex; gap: 12px; align-items: flex-start; }
+        .boa-icon { font-size: 1.6em; flex-shrink: 0; }
+        .boa-text strong { display: block; font-size: .88em; color: var(--primary); margin-bottom: 3px; }
+        .boa-text span   { font-size: .8em; color: #475569; }
+
+        /* ── nav ── */
+        .nav-footer { display: flex; justify-content: space-between; margin-top: 40px; padding-bottom: 40px; }
+        .nav-link { text-decoration: none; color: var(--primary); font-weight: 600; padding: 12px 24px; border-radius: 10px; background: white; box-shadow: 0 2px 8px rgba(0,0,0,.05); transition: all .3s; }
+        .nav-link:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,.1); }
+
+        @media (max-width: 768px) {
+            .content-wrapper { padding: 0 15px; }
+            .lesson-hero, .content-card { padding: 25px; }
+            .lesson-hero h1 { font-size: 1.5em; }
+            .page-demo { grid-template-columns: 1fr; }
+            .cols-demo { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="top-bar">
+    <a href="index.html" class="back-btn">&#x2B05; Voltar ao Dashboard</a>
+    <span class="page-badge">Unidade 4 &mdash; Su&iacute;te de Escrit&oacute;rio</span>
+    <button class="slide-toggle" id="slideToggleBtn">&#x1F4FA; Modo Slide</button>
+</div>
+
+<div class="content-wrapper">
+
+    <div class="lesson-hero">
+        <h1>&#x1F5CF;&#xFE0F; Texto: Estrutura e Elementos Visuais</h1>
+        <p class="subtitle">Aula 4.6 &mdash; Configura&ccedil;&atilde;o de p&aacute;gina, cabe&ccedil;alho e rodap&eacute;, colunas, imagens, tabelas e gr&aacute;ficos no Microsoft Word</p>
+    </div>
+
+    <!-- CARD 1 — Configurando a Página -->
+    <div class="content-card">
+        <h2>&#x1F4C4; Configurando a P&aacute;gina</h2>
+        <p>Antes de digitar qualquer conte&uacute;do, configure a p&aacute;gina corretamente. As op&ccedil;&otilde;es ficam na aba <strong>Layout</strong> do Ribbon. Em trabalhos acad&ecirc;micos do IFRN, as configura&ccedil;&otilde;es seguem a norma <strong>ABNT NBR 14724</strong>.</p>
+
+        <h3>&#x1F4D0; Margens (Layout &rarr; Margens)</h3>
+        <div class="abnt-grid">
+            <div class="abnt-item g">
+                <div class="abnt-val">3 cm</div>
+                <div class="abnt-name">Margem Superior</div>
+                <span class="abnt-badge">ABNT obrigat&oacute;rio</span>
+            </div>
+            <div class="abnt-item g">
+                <div class="abnt-val">3 cm</div>
+                <div class="abnt-name">Margem Esquerda</div>
+                <span class="abnt-badge">ABNT obrigat&oacute;rio</span>
+            </div>
+            <div class="abnt-item p">
+                <div class="abnt-val">2 cm</div>
+                <div class="abnt-name">Margem Inferior</div>
+                <span class="abnt-badge">ABNT obrigat&oacute;rio</span>
+            </div>
+            <div class="abnt-item p">
+                <div class="abnt-val">2 cm</div>
+                <div class="abnt-name">Margem Direita</div>
+                <span class="abnt-badge">ABNT obrigat&oacute;rio</span>
+            </div>
+        </div>
+
+        <h3>&#x1F4C0; Outras configura&ccedil;&otilde;es de p&aacute;gina</h3>
+        <ul>
+            <li><strong>Orienta&ccedil;&atilde;o:</strong> Layout &rarr; Orienta&ccedil;&atilde;o &rarr; <em>Retrato</em> (vertical, padr&atilde;o) ou <em>Paisagem</em> (horizontal, para tabelas largas). Aplica-se a todo o documento ou apenas a uma se&ccedil;&atilde;o.</li>
+            <li><strong>Tamanho do papel:</strong> Layout &rarr; Tamanho &rarr; <em>A4</em> (21 &times; 29,7 cm) &eacute; o padr&atilde;o acad&ecirc;mico e profissional no Brasil.</li>
+            <li><strong>Colunas:</strong> Layout &rarr; Colunas. Divide o texto em 2 ou 3 colunas (usado em boletins, revistas e artigos cient&iacute;ficos).</li>
+            <li><strong>Quebra de p&aacute;gina:</strong> <span class="kbd-sm">Ctrl+Enter</span>. For&ccedil;a o cursor para a pr&oacute;xima p&aacute;gina. Use em vez de v&aacute;rios Enters para separar cap&iacute;tulos.</li>
+            <li><strong>Quebra de se&ccedil;&atilde;o:</strong> Layout &rarr; Quebras &rarr; <em>Pr&oacute;xima P&aacute;gina</em>. Permite configura&ccedil;&otilde;es diferentes de p&aacute;gina dentro do mesmo documento (ex: uma se&ccedil;&atilde;o em paisagem, outra em retrato).</li>
+        </ul>
+
+        <div class="alert-box">
+            <p>&#x26A0;&#xFE0F; <strong>Nunca use Enters para pular para a pr&oacute;ximo p&aacute;gina</strong> &mdash; pressionar Enter 30 vezes cria uma depend&ecirc;ncia fr&aacute;gil: ao adicionar texto anterior, todo o conte&uacute;do se desalinha. Use sempre <span class="kbd-sm">Ctrl+Enter</span>.</p>
+        </div>
+    </div>
+
+    <!-- CARD 2 — Cabeçalho e Rodapé -->
+    <div class="content-card">
+        <h2>&#x1F4CC; Cabe&ccedil;alho e Rodap&eacute;</h2>
+        <p>O <strong>cabe&ccedil;alho</strong> aparece no topo de todas as p&aacute;ginas; o <strong>rodap&eacute;</strong>, na parte inferior. Ambos s&atilde;o &aacute;reas independentes do corpo do texto e se repetem automaticamente em todo o documento.</p>
+        <p><strong>Como acessar:</strong> Inserir &rarr; Cabe&ccedil;alho ou Rodap&eacute; &rarr; escolha um modelo (Em Branco, Austin, Faceta etc.) ou <strong>clique duplo</strong> diretamente na &aacute;rea superior ou inferior da p&aacute;gina.</p>
+
+        <div class="page-demo">
+            <div class="pg-card">
+                <div class="pg-label">Com cabe&ccedil;alho e rodap&eacute;</div>
+                <div class="pg-canvas">
+                    <div class="pg-header-band">Nome do Autor | T&iacute;tulo do Trabalho</div>
+                    <div class="pg-body">
+                        <div class="pg-line" style="width:90%"></div>
+                        <div class="pg-line" style="width:80%"></div>
+                        <div class="pg-line" style="width:95%"></div>
+                        <div class="pg-line" style="width:70%"></div>
+                        <div class="pg-line" style="width:85%"></div>
+                    </div>
+                    <div class="pg-footer-band">P&aacute;g. 3</div>
+                </div>
+            </div>
+            <div class="pg-card">
+                <div class="pg-label">Margens ABNT (destaque)</div>
+                <div class="pg-canvas" style="padding:0;">
+                    <div class="pg-margin-top" style="display:flex;align-items:center;justify-content:center;"><span style="font-size:.55em;color:#92400e;">Superior 3 cm</span></div>
+                    <div class="pg-margin-sides">
+                        <div class="pg-margin-left" style="display:flex;align-items:center;justify-content:center;writing-mode:vertical-rl;font-size:.5em;color:#92400e;">Esq. 3 cm</div>
+                        <div class="pg-content-area">
+                            <div class="pg-line" style="width:90%"></div>
+                            <div class="pg-line" style="width:80%"></div>
+                            <div class="pg-line" style="width:95%"></div>
+                        </div>
+                        <div class="pg-margin-right" style="display:flex;align-items:center;justify-content:center;writing-mode:vertical-rl;font-size:.45em;color:#166534;">Dir. 2 cm</div>
+                    </div>
+                    <div class="pg-margin-bottom" style="display:flex;align-items:center;justify-content:center;"><span style="font-size:.55em;color:#166534;">Inferior 2 cm</span></div>
+                </div>
+            </div>
+        </div>
+
+        <h3>&#x2699;&#xFE0F; Op&ccedil;&otilde;es importantes do cabe&ccedil;alho/rodap&eacute;</h3>
+        <div class="hf-options">
+            <div class="hf-item">
+                <strong>Primeira p&aacute;gina diferente</strong>
+                <span>Marque na aba <em>Design do Cabe&ccedil;alho</em>. Permite ocultar o cabe&ccedil;alho na capa (necess&aacute;rio pela ABNT).</span>
+            </div>
+            <div class="hf-item">
+                <strong>P&aacute;ginas &iacute;mpares/pares diferentes</strong>
+                <span>Para documentos com frente e verso: cabe&ccedil;alho da esquerda diferente do da direita.</span>
+            </div>
+            <div class="hf-item">
+                <strong>Inserir n&uacute;mero de p&aacute;gina</strong>
+                <span>Design do Cabe&ccedil;alho &rarr; N&uacute;mero de P&aacute;gina. Tamb&eacute;m acess&iacute;vel em Inserir &rarr; N&uacute;mero de P&aacute;gina.</span>
+            </div>
+            <div class="hf-item">
+                <strong>Data e hora autom&aacute;tica</strong>
+                <span>Design do Cabe&ccedil;alho &rarr; Data e Hora. Insere um campo que se atualiza sempre ao abrir o documento.</span>
+            </div>
+        </div>
+
+        <div class="tip-box">
+            <p>&#x1F4A1; <strong>Sair do cabe&ccedil;alho/rodap&eacute;:</strong> d&ecirc; duplo clique no corpo do texto, pressione <span class="kbd-sm">Esc</span> ou clique em <em>Fechar Cabe&ccedil;alho e Rodap&eacute;</em> na aba contextual.</p>
+        </div>
+    </div>
+
+    <!-- CARD 3 — Numeração de Páginas -->
+    <div class="content-card">
+        <h2>&#x1F522; Numera&ccedil;&atilde;o de P&aacute;ginas</h2>
+        <p>A numera&ccedil;&atilde;o de p&aacute;ginas &eacute; inserida automaticamente pelo Word &mdash; nunca digite o n&uacute;mero manualmente. Acesse por <strong>Inserir &rarr; N&uacute;mero de P&aacute;gina</strong>.</p>
+
+        <ul>
+            <li><strong>Posi&ccedil;&atilde;o:</strong> topo (cabe&ccedil;alho) ou base (rodap&eacute;) da p&aacute;gina. A ABNT especifica no canto superior direito para trabalhos acad&ecirc;micos.</li>
+            <li><strong>Formato:</strong> Inserir &rarr; N&uacute;mero de P&aacute;gina &rarr; <em>Formatar N&uacute;mero de P&aacute;gina</em>. Permite usar 1, 2, 3... ou i, ii, iii... (algarismos romanos para p&aacute;ginas pr&eacute;-textuais).</li>
+            <li><strong>Come&ccedil;ar de um n&uacute;mero diferente:</strong> no mesmo di&aacute;logo &rarr; <em>Iniciar em</em>. &Uacute;til quando um documento &eacute; continuidade de outro.</li>
+            <li><strong>Ocultar na capa:</strong> v&aacute; ao cabe&ccedil;alho &rarr; marque <em>Primeira P&aacute;gina Diferente</em> &rarr; o n&uacute;mero n&atilde;o aparecer&aacute; na p&aacute;gina 1.</li>
+            <li><strong>Remover numera&ccedil;&atilde;o:</strong> Inserir &rarr; N&uacute;mero de P&aacute;gina &rarr; <em>Remover N&uacute;meros de P&aacute;gina</em>.</li>
+        </ul>
+
+        <div class="alert-box">
+            <p>&#x26A0;&#xFE0F; Segundo a ABNT, as p&aacute;ginas pr&eacute;-textuais (capa, folha de rosto, sum&aacute;rio) s&atilde;o <strong>contadas mas n&atilde;o numeradas</strong>. Use quebras de se&ccedil;&atilde;o para iniciar a numera&ccedil;&atilde;o vis&iacute;vel a partir da Introdu&ccedil;&atilde;o.</p>
+        </div>
+    </div>
+
+    <!-- CARD 4 — Colunas -->
+    <div class="content-card">
+        <h2>&#x1F4F0; Colunas e Quebras</h2>
+        <p>O recurso de <strong>Colunas</strong> (Layout &rarr; Colunas) divide o texto em blocos verticais lado a lado, como em jornais, boletins informativos e artigos cient&iacute;ficos. Por padr&atilde;o, o Word usa uma &uacute;nica coluna.</p>
+
+        <div class="cols-demo">
+            <div class="col-card">
+                <div class="col-label">1 Coluna (padr&atilde;o)</div>
+                <div class="col-canvas">
+                    <div class="col-1">
+                        <div class="col-line" style="width:95%"></div>
+                        <div class="col-line" style="width:80%"></div>
+                        <div class="col-line" style="width:90%"></div>
+                        <div class="col-line" style="width:70%"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-card">
+                <div class="col-label">2 Colunas</div>
+                <div class="col-canvas">
+                    <div class="col-2">
+                        <div>
+                            <div class="col-line"></div>
+                            <div class="col-line" style="width:80%"></div>
+                            <div class="col-line"></div>
+                            <div class="col-line" style="width:60%"></div>
+                        </div>
+                        <div>
+                            <div class="col-line"></div>
+                            <div class="col-line" style="width:75%"></div>
+                            <div class="col-line"></div>
+                            <div class="col-line" style="width:90%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-card">
+                <div class="col-label">3 Colunas</div>
+                <div class="col-canvas">
+                    <div class="col-3">
+                        <div>
+                            <div class="col-line"></div>
+                            <div class="col-line" style="width:80%"></div>
+                            <div class="col-line"></div>
+                        </div>
+                        <div>
+                            <div class="col-line"></div>
+                            <div class="col-line" style="width:70%"></div>
+                            <div class="col-line"></div>
+                        </div>
+                        <div>
+                            <div class="col-line"></div>
+                            <div class="col-line" style="width:90%"></div>
+                            <div class="col-line"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <ul>
+            <li><strong>Aplicar a todo o documento:</strong> Layout &rarr; Colunas &rarr; escolha o n&uacute;mero. O texto flui automaticamente de uma coluna para outra.</li>
+            <li><strong>Aplicar a uma se&ccedil;&atilde;o:</strong> selecione o trecho &rarr; Layout &rarr; Colunas &rarr; <em>Mais Colunas</em> &rarr; <em>Aplicar a: Texto Selecionado</em>.</li>
+            <li><strong>Quebra de coluna:</strong> Layout &rarr; Quebras &rarr; <em>Coluna</em>. For&ccedil;a o texto a passar para a pr&oacute;xima coluna, como o <span class="kbd-sm">Ctrl+Enter</span> faz com p&aacute;ginas.</li>
+            <li><strong>Linha separadora:</strong> em Mais Colunas, marque <em>Linha entre colunas</em> para exibir uma linha vertical entre elas.</li>
+        </ul>
+    </div>
+
+    <!-- CARD 5 — Imagens -->
+    <div class="content-card">
+        <h2>&#x1F5BC;&#xFE0F; Imagens no Word</h2>
+        <p>Inserir imagens no Word segue o mesmo caminho do PowerPoint: <strong>Inserir &rarr; Imagens</strong> (do dispositivo, banco Stock ou online). Mas no Word, a <strong>disposi&ccedil;&atilde;o do texto</strong> em rela&ccedil;&atilde;o &agrave; imagem &eacute; um conceito fundamental:</p>
+
+        <div class="disp-grid">
+            <div class="disp-item">
+                <div class="disp-label inline">Na linha (Inline)</div>
+                <div class="disp-canvas inline-layout">
+                    <div class="disp-line" style="width:90%"></div>
+                    <div style="display:flex;gap:4px;align-items:center;"><div class="disp-img" style="width:24px;height:24px;display:inline-block;"></div><div class="disp-line" style="flex:1;"></div></div>
+                    <div class="disp-line" style="width:80%"></div>
+                </div>
+                <div style="font-size:.72em;color:#475569;text-align:center;padding:4px 6px;">Tratada como caractere. Texto n&atilde;o flui ao redor.</div>
+            </div>
+            <div class="disp-item">
+                <div class="disp-label quadrado">Quadrado</div>
+                <div class="disp-canvas quadrado-layout">
+                    <div class="disp-img"></div>
+                    <div style="flex:1;display:flex;flex-direction:column;gap:3px;">
+                        <div class="disp-line"></div>
+                        <div class="disp-line"></div>
+                        <div class="disp-line" style="width:80%"></div>
+                    </div>
+                </div>
+                <div style="font-size:.72em;color:#475569;text-align:center;padding:4px 6px;">Texto flui ao redor da caixa da imagem.</div>
+            </div>
+            <div class="disp-item">
+                <div class="disp-label atras">Atr&aacute;s do texto</div>
+                <div class="disp-canvas atras-layout">
+                    <div class="disp-img atras-img"></div>
+                    <div class="disp-line" style="width:90%"></div>
+                    <div class="disp-line" style="width:80%"></div>
+                    <div class="disp-line" style="width:85%"></div>
+                </div>
+                <div style="font-size:.72em;color:#475569;text-align:center;padding:4px 6px;">Imagem fica sob o texto (marca d&aacute;gua manual).</div>
+            </div>
+            <div class="disp-item">
+                <div class="disp-label frente">Bem pr&oacute;ximo</div>
+                <div class="disp-canvas">
+                    <div style="display:flex;gap:3px;align-items:flex-start;">
+                        <div class="disp-img" style="width:28px;height:28px;"></div>
+                        <div style="flex:1;display:flex;flex-direction:column;gap:3px;">
+                            <div class="disp-line"></div>
+                            <div class="disp-line" style="width:70%"></div>
+                        </div>
+                    </div>
+                    <div class="disp-line" style="width:90%;margin-top:3px;"></div>
+                </div>
+                <div style="font-size:.72em;color:#475569;text-align:center;padding:4px 6px;">Texto flui ao redor do contorno real da imagem.</div>
+            </div>
+        </div>
+
+        <h3>&#x2699;&#xFE0F; Ferramentas de Formato de Imagem no Word</h3>
+        <ul>
+            <li><strong>Cortar:</strong> Formato da Imagem &rarr; Cortar. Elimina &aacute;reas indesejadas sem apag&aacute;-las permanentemente.</li>
+            <li><strong>Tamanho exato:</strong> aba Formato da Imagem &rarr; campos Altura e Largura. Marque <em>Bloquear propor&ccedil;&atilde;o</em> para n&atilde;o distorcer.</li>
+            <li><strong>Posicionar:</strong> Formato da Imagem &rarr; Posi&ccedil;&atilde;o. Define posi&ccedil;&atilde;o precisa (ex: 5 cm da margem esquerda).</li>
+            <li><strong>Comprimir:</strong> Formato da Imagem &rarr; Comprimir Imagens. Reduz o tamanho do arquivo .docx.</li>
+            <li><strong>Texto Alternativo:</strong> clique com o bot&atilde;o direito &rarr; <em>Editar Texto Alternativo</em>. Essencial para acessibilidade em documentos digitais.</li>
+        </ul>
+
+        <div class="alert-box">
+            <p>&#x26A0;&#xFE0F; <strong>ABNT e imagens:</strong> figuras em trabalhos acad&ecirc;micos devem ter <strong>legenda abaixo</strong> (Figura 1 &mdash; Descri&ccedil;&atilde;o) e <strong>fonte abaixo da legenda</strong>. A disposi&ccedil;&atilde;o deve ser <em>Na linha</em> para facilitar a numera&ccedil;&atilde;o autom&aacute;tica via Legendas.</p>
+        </div>
+    </div>
+
+    <!-- CARD 6 — Tabelas -->
+    <div class="content-card">
+        <h2>&#x1F4CB; Tabelas no Word</h2>
+        <p>Tabelas organizam dados em linhas e colunas dentro do documento. <strong>Como inserir:</strong> Inserir &rarr; Tabela &rarr; arraste para definir as dimens&otilde;es, ou escolha <em>Inserir Tabela</em> para definir o n&uacute;mero exato de linhas e colunas.</p>
+
+        <table class="table-demo">
+            <tr>
+                <th>Recurso</th>
+                <th>Como acessar</th>
+                <th>Para qu&ecirc;</th>
+            </tr>
+            <tr>
+                <td class="table-feature">Estilos de tabela</td>
+                <td>Design da Tabela &rarr; galeria</td>
+                <td>Aplicar cores e bordas com um clique</td>
+            </tr>
+            <tr>
+                <td class="table-feature">Mesclar c&eacute;lulas</td>
+                <td>Layout da Tabela &rarr; Mesclar</td>
+                <td>Criar cabe&ccedil;alhos que abranjam v&aacute;rias colunas</td>
+            </tr>
+            <tr>
+                <td class="table-feature">Dividir c&eacute;lulas</td>
+                <td>Layout da Tabela &rarr; Dividir</td>
+                <td>Subdividir uma c&eacute;lula em v&aacute;rias</td>
+            </tr>
+            <tr>
+                <td class="table-feature">Classificar dados</td>
+                <td>Layout da Tabela &rarr; Classificar</td>
+                <td>Ordenar linhas em ordem alfab&eacute;tica ou num&eacute;rica</td>
+            </tr>
+            <tr>
+                <td class="table-feature">Converter texto</td>
+                <td>Inserir &rarr; Tabela &rarr; Converter texto</td>
+                <td>Transforma texto separado por tabs/v&iacute;rgulas em tabela</td>
+            </tr>
+            <tr>
+                <td class="table-feature">Repetir linha de cabe&ccedil;alho</td>
+                <td>Layout da Tabela &rarr; Repetir Linhas de T&iacute;tulo</td>
+                <td>Repete a primeira linha em todas as p&aacute;ginas</td>
+            </tr>
+        </table>
+
+        <div class="tip-box">
+            <p>&#x1F4A1; <strong>Navegar na tabela:</strong> pressione <span class="kbd-sm">Tab</span> para mover para a pr&oacute;xima c&eacute;lula. Na &uacute;ltima c&eacute;lula, Tab adiciona uma nova linha automaticamente. Use <span class="kbd-sm">Shift+Tab</span> para voltar.</p>
+        </div>
+    </div>
+
+    <!-- CARD 7 — Gráficos -->
+    <div class="content-card">
+        <h2>&#x1F4CA; Gr&aacute;ficos no Word</h2>
+        <p>O Word permite inserir gr&aacute;ficos diretamente no documento, com a mesma interface do PowerPoint. Acesse por <strong>Inserir &rarr; Gr&aacute;fico</strong>. Uma planilha do Excel &eacute; aberta para inserir os dados, e o gr&aacute;fico &eacute; gerado automaticamente.</p>
+
+        <ul>
+            <li><strong>Tipos mais usados em documentos:</strong> Colunas (compara&ccedil;&atilde;o), Linhas (tend&ecirc;ncias), Pizza (propor&ccedil;&otilde;es), Barras (categorias longas).</li>
+            <li><strong>Editar dados:</strong> clique com o bot&atilde;o direito no gr&aacute;fico &rarr; <em>Editar Dados</em>. A planilha reabre para altera&ccedil;&otilde;es.</li>
+            <li><strong>Mover gr&aacute;fico:</strong> clique na borda do gr&aacute;fico e arraste. Para definir disposi&ccedil;&atilde;o do texto ao redor, use as op&ccedil;&otilde;es que aparecem ao lado do gr&aacute;fico (iguais &agrave;s de imagens).</li>
+            <li><strong>Importar do Excel:</strong> copie o gr&aacute;fico do Excel &rarr; cole no Word &rarr; escolha <em>Vincular e Manter Formata&ccedil;&atilde;o de Origem</em> para que atualize automaticamente quando a planilha mudar.</li>
+            <li><strong>Legenda ABNT:</strong> assim como imagens, gr&aacute;ficos em trabalhos acad&ecirc;micos precisam de legenda acima (Gr&aacute;fico 1 &mdash; T&iacute;tulo) e fonte abaixo.</li>
+        </ul>
+
+        <div class="highlight-box">
+            <p>&#x1F4A1; Para documentos acad&ecirc;micos formais, prefira <strong>gr&aacute;ficos simples, sem efeitos 3D e com cores s&oacute;brias</strong>. Gr&aacute;ficos devem comunicar dados com clareza, n&atilde;o impressionar visualmente.</p>
+        </div>
+    </div>
+
+    <!-- CARD 8 — Boas Práticas -->
+    <div class="content-card">
+        <h2>&#x2705; Boas Pr&aacute;ticas de Estrutura</h2>
+        <div class="boas-grid">
+            <div class="boa-item">
+                <div class="boa-icon">&#x1F4D0;</div>
+                <div class="boa-text">
+                    <strong>Configure a p&aacute;gina antes de digitar</strong>
+                    <span>Definir margens, tamanho e orienta&ccedil;&atilde;o ao in&iacute;cio evita reajustes dolorosos depois que o texto j&aacute; foi escrito.</span>
+                </div>
+            </div>
+            <div class="boa-item">
+                <div class="boa-icon">&#x23CE;</div>
+                <div class="boa-text">
+                    <strong>Use Ctrl+Enter para mudar de p&aacute;gina</strong>
+                    <span>Jamais use Enters repetidos para pular p&aacute;ginas. Quebras de p&aacute;gina s&atilde;o est&aacute;veis e f&aacute;ceis de remover.</span>
+                </div>
+            </div>
+            <div class="boa-item">
+                <div class="boa-icon">&#x1F4CA;</div>
+                <div class="boa-text">
+                    <strong>Tabelas vs. listas</strong>
+                    <span>Use tabelas quando precisa comparar m&uacute;ltiplos atributos de m&uacute;ltiplos itens. Para simples enumera&ccedil;&otilde;es, prefer listas com marcadores.</span>
+                </div>
+            </div>
+            <div class="boa-item">
+                <div class="boa-icon">&#x1F5BC;&#xFE0F;</div>
+                <div class="boa-text">
+                    <strong>Imagens: disposi&ccedil;&atilde;o &ldquo;Na linha&rdquo; para ABNT</strong>
+                    <span>Trabalhos acad&ecirc;micos pedem imagens &ldquo;Na linha&rdquo; para que as legendas autom&aacute;ticas funcionem corretamente.</span>
+                </div>
+            </div>
+            <div class="boa-item">
+                <div class="boa-icon">&#x1F522;</div>
+                <div class="boa-text">
+                    <strong>Numera&ccedil;&atilde;o autom&aacute;tica sempre</strong>
+                    <span>Nunca digite o n&uacute;mero de p&aacute;gina manualmente. Use Inserir &rarr; N&uacute;mero de P&aacute;gina para que atualize automaticamente.</span>
+                </div>
+            </div>
+            <div class="boa-item">
+                <div class="boa-icon">&#x1F5D6;&#xFE0F;</div>
+                <div class="boa-text">
+                    <strong>Cabe&ccedil;alho diferente na primeira p&aacute;gina</strong>
+                    <span>Marque &ldquo;Primeira p&aacute;gina diferente&rdquo; para que a capa do trabalho fique sem cabe&ccedil;alho e sem n&uacute;mero de p&aacute;gina.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- EXERCÍCIO -->
+    <div class="content-card exercise-card">
+        <h2>&#x1F3AF; Exerc&iacute;cio &mdash; Arraste e Conecte</h2>
+        <p style="color:#475569;font-size:.9em;margin-bottom:4px;">Arraste cada descri&ccedil;&atilde;o para o elemento ou recurso correto do Word.</p>
+
+        <div class="ex-drag-root" data-ex="ex46">
+            <div class="ex-drag">
+                <div>
+                    <div class="ex-col-title">Descri&ccedil;&atilde;o</div>
+                    <div class="ex-pool" data-pool="ex46">
+                        <div class="drag-chip" data-id="c1">&Aacute;rea que aparece no topo de todas as p&aacute;ginas e pode conter o t&iacute;tulo do trabalho ou nome do autor</div>
+                        <div class="drag-chip" data-id="c2">Configura&ccedil;&atilde;o que define a dist&acirc;ncia entre o texto e as bordas da folha; exigida pela ABNT em 3 cm (superior e esquerdo)</div>
+                        <div class="drag-chip" data-id="c3">Atalho de teclado que for&ccedil;a o cursor para a p&aacute;gina seguinte sem usar Enters repetidos</div>
+                        <div class="drag-chip" data-id="c4">Op&ccedil;&atilde;o de disposi&ccedil;&atilde;o de imagem que permite o texto fluir ao redor da figura dentro do documento</div>
+                        <div class="drag-chip" data-id="c5">Ferramenta que transforma texto separado por tabula&ccedil;&otilde;es ou v&iacute;rgulas em uma tabela formatada</div>
+                        <div class="drag-chip" data-id="c6">&Aacute;rea na parte inferior de todas as p&aacute;ginas usada para exibir n&uacute;mero de p&aacute;gina, data ou informa&ccedil;&otilde;es fixas</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="ex-col-title">Elemento / Recurso</div>
+                    <div class="ex-zones" data-zones="ex46">
+                        <div class="drop-zone" data-zone="ex46-z1" data-accept="c1">
+                            <span class="zone-name">Cabe&ccedil;alho</span>
+                            <div class="zone-slot"></div>
+                            <div class="zone-feedback"></div>
+                        </div>
+                        <div class="drop-zone" data-zone="ex46-z2" data-accept="c2">
+                            <span class="zone-name">Margens</span>
+                            <div class="zone-slot"></div>
+                            <div class="zone-feedback"></div>
+                        </div>
+                        <div class="drop-zone" data-zone="ex46-z3" data-accept="c3">
+                            <span class="zone-name">Ctrl+Enter</span>
+                            <div class="zone-slot"></div>
+                            <div class="zone-feedback"></div>
+                        </div>
+                        <div class="drop-zone" data-zone="ex46-z4" data-accept="c4">
+                            <span class="zone-name">Disposi&ccedil;&atilde;o: Quadrado</span>
+                            <div class="zone-slot"></div>
+                            <div class="zone-feedback"></div>
+                        </div>
+                        <div class="drop-zone" data-zone="ex46-z5" data-accept="c5">
+                            <span class="zone-name">Converter Texto em Tabela</span>
+                            <div class="zone-slot"></div>
+                            <div class="zone-feedback"></div>
+                        </div>
+                        <div class="drop-zone" data-zone="ex46-z6" data-accept="c6">
+                            <span class="zone-name">Rodap&eacute;</span>
+                            <div class="zone-slot"></div>
+                            <div class="zone-feedback"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ex-actions">
+            <button class="btn-verificar" onclick="dragVerify('ex46')">Verificar</button>
+            <button class="btn-refazer"  onclick="dragReset('ex46')">Refazer</button>
+        </div>
+        <div class="ex-result" id="ex46-result"></div>
+    </div>
+
+    <!-- ATIVIDADE PRÁTICA 4.6 -->
+    <div class="content-card practical-card" id="prat-46">
+        <h2>&#x1F6E0;&#xFE0F; Atividade Pr&aacute;tica &mdash; Estruturando um Documento ABNT</h2>
+        <div class="prat-meta">
+            <span class="prat-tag">&#x23F1; ~50 min</span>
+            <span class="prat-tag">&#x1F4BB; Microsoft Word</span>
+            <span class="prat-tag">&#x1F4BE; Salvar como .docx e .pdf</span>
+        </div>
+
+        <div class="prat-steps">
+            <div class="prat-step">
+                <div class="step-num">1</div>
+                <div class="step-body">
+                    <div class="step-label">Configure as margens e o tamanho de papel</div>
+                    <div class="step-desc">Abra o documento da aula anterior ou crie um novo. V&aacute; em <strong>Layout &rarr; Margens &rarr; Margens Personalizadas</strong>. Defina: Superior 3 cm, Esquerda 3 cm, Inferior 2 cm, Direita 2 cm. Verifique que o tamanho de papel &eacute; <strong>A4</strong> (Layout &rarr; Tamanho). Salve como <strong>Trabalho_SeuNome.docx</strong>.</div>
+                </div>
+            </div>
+            <div class="prat-step">
+                <div class="step-num">2</div>
+                <div class="step-body">
+                    <div class="step-label">Insira cabe&ccedil;alho e numera&ccedil;&atilde;o de p&aacute;gina</div>
+                    <div class="step-desc">Clique duas vezes na margem superior para abrir o cabe&ccedil;alho. Digite seu <strong>nome completo e turma</strong>. Marque <strong>Primeira p&aacute;gina diferente</strong> na aba Design. Acesse <strong>Inserir &rarr; N&uacute;mero de P&aacute;gina &rarr; Topo da P&aacute;gina &rarr; N&uacute;mero simples 3</strong> (canto superior direito). Feche o cabe&ccedil;alho com <strong>Esc</strong>.</div>
+                </div>
+            </div>
+            <div class="prat-step">
+                <div class="step-num">3</div>
+                <div class="step-body">
+                    <div class="step-label">Crie a estrutura com Estilos e quebras de p&aacute;gina</div>
+                    <div class="step-desc">Escreva um documento com: uma p&aacute;gina de t&iacute;tulo (sem cabe&ccedil;alho), depois <strong>Ctrl+Enter</strong> para pular de p&aacute;gina. Na segunda p&aacute;gina, crie dois t&iacute;tulos de se&ccedil;&atilde;o com estilo <em>T&iacute;tulo 2</em> e par&aacute;grafos com estilo <em>Normal</em>. Entre as se&ccedil;&otilde;es, insira <strong>Ctrl+Enter</strong>. Observe que o cabe&ccedil;alho aparece a partir da segunda p&aacute;gina.</div>
+                </div>
+            </div>
+            <div class="prat-step">
+                <div class="step-num">4</div>
+                <div class="step-body">
+                    <div class="step-label">Insira uma tabela com estilo</div>
+                    <div class="step-desc">Em uma das se&ccedil;&otilde;es, insira uma tabela com <strong>3 colunas &times; 4 linhas</strong> (Inserir &rarr; Tabela). Preencha a primeira linha com cabe&ccedil;alhos (<em>Item</em>, <em>Descri&ccedil;&atilde;o</em>, <em>Valor</em>). Nas demais linhas, adicione dados fict&iacute;cios. Aplique um estilo de tabela colorido na aba <strong>Design da Tabela</strong>. Ative <strong>Repetir Linhas de T&iacute;tulo</strong> em Layout da Tabela.</div>
+                </div>
+            </div>
+            <div class="prat-step">
+                <div class="step-num">5</div>
+                <div class="step-body">
+                    <div class="step-label">Insira uma imagem com disposi&ccedil;&atilde;o correta</div>
+                    <div class="step-desc">Insira uma imagem do banco Stock (Inserir &rarr; Imagens &rarr; Imagens de Banco de Imagens). Defina a disposi&ccedil;&atilde;o como <strong>Na linha</strong> (clique no &iacute;cone ao lado da imagem &rarr; Na linha com o texto). Redimensione mantendo <strong>Shift</strong> pressionado. Abaixo da imagem, escreva uma legenda manual: <em>Figura 1 &mdash; Descri&ccedil;&atilde;o da imagem</em> em fonte menor.</div>
+                </div>
+            </div>
+            <div class="prat-step">
+                <div class="step-num">6</div>
+                <div class="step-body">
+                    <div class="step-label">Exporte o documento finalizado</div>
+                    <div class="step-desc">Salve o arquivo .docx. Em seguida, v&aacute; em <strong>Arquivo &rarr; Exportar &rarr; Criar PDF/XPS</strong>. Abra o PDF e verifique: as margens est&atilde;o corretas? O cabe&ccedil;alho aparece a partir da p&aacute;gina 2? A tabela est&aacute; formatada corretamente? Se algum elemento estiver errado, corrija no .docx e re-exporte.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="prat-observe">
+            <strong>&#x1F4CC; Para refletir:</strong> A estrutura correta de um documento &mdash; margens, cabe&ccedil;alho, numera&ccedil;&atilde;o, estilos e quebras de p&aacute;gina &mdash; precisa ser configurada <em>antes</em> do conte&uacute;do, n&atilde;o depois. Reorganizar um documento mal estruturado ap&oacute;s escrev&ecirc;-lo inteiro &eacute; muito mais trabalhoso do que configurar corretamente desde o in&iacute;cio.
+        </div>
+
+        <div class="ex-actions">
+            <button class="btn-print" onclick="printPractical('prat-46', 'Aula 4.6 \u2014 Texto: Estrutura e Elementos Visuais')">&#x1F5A8;&#xFE0F; Imprimir roteiro</button>
+        </div>
+    </div>
+
+    <div class="nav-footer">
+        <a href="uni4-05-texto-visao-geral.html" class="nav-link">&#x2B05; Anterior: Texto &mdash; Vis&atilde;o Geral</a>
+        <a href="uni4-07-texto-automacao.html" class="nav-link">Pr&oacute;xima: Texto &mdash; Automatiza&ccedil;&atilde;o &#x27A1;</a>
+    </div>
+
+</div>
+
+<script src="slide-mode.js"></script>
+<script src="exercise-drag.js"></script>
+<script src="exercise-print.js"></script>
+</body>
+</html>
