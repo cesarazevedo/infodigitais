@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 4.10 - Planilhas: Gráficos e Colaboração</title>
+    <link rel="stylesheet" href="slide-mode.css">
+    <link rel="stylesheet" href="exercise.css">
+    <style>
+        :root {
+            --primary: #bf360c;
+            --secondary: #870000;
+            --bg-light: #f0f4f8;
+            --text-dark: #1a202c;
+            --excel-green: #217346;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        .top-bar { background: white; padding: 15px 30px; display: flex; align-items: center; gap: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 10; }
+        .back-btn { text-decoration: none; color: var(--primary); font-weight: 600; display: flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 8px; transition: background 0.3s; }
+        .back-btn:hover { background: rgba(191,54,12,0.08); }
+        .page-badge { font-size: 0.8em; padding: 4px 12px; border-radius: 20px; background: rgba(191,54,12,0.12); color: var(--primary); font-weight: 600; }
+
+        .content-wrapper { max-width: 800px; margin: 40px auto; padding: 0 30px; }
+
+        .lesson-hero { background: white; border-radius: 16px; padding: 40px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin-bottom: 30px; border-top: 4px solid var(--primary); }
+        .lesson-hero h1 { font-size: 2em; margin-bottom: 10px; color: var(--primary); }
+        .lesson-hero .subtitle { font-size: 1.05em; color: #718096; }
+
+        .content-card { background: white; border-radius: 16px; padding: 35px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin-bottom: 25px; }
+        .content-card h2 { font-size: 1.4em; color: var(--primary); margin-bottom: 18px; display: flex; align-items: center; gap: 10px; }
+        .content-card h3 { font-size: 1.05em; color: var(--secondary); margin: 20px 0 10px; }
+        .content-card p  { margin-bottom: 15px; text-align: justify; }
+
+        .highlight-box { background: linear-gradient(135deg,rgba(191,54,12,.05),rgba(135,0,0,.06)); border-left: 4px solid var(--primary); padding: 20px 25px; border-radius: 0 12px 12px 0; margin: 20px 0; }
+        .highlight-box p { margin-bottom: 0; font-style: italic; }
+        .alert-box { background: #fff8e1; border-left: 4px solid #f59e0b; padding: 18px 22px; border-radius: 0 12px 12px 0; margin: 20px 0; }
+        .alert-box p { margin: 0; color: #78350f; font-size: .93em; }
+        .tip-box { background: #f0fdf4; border-left: 4px solid #16a34a; padding: 18px 22px; border-radius: 0 12px 12px 0; margin: 20px 0; }
+        .tip-box p { margin: 0; color: #14532d; font-size: .93em; }
+
+        ul, ol { margin: 10px 0 15px 25px; }
+        li { margin-bottom: 8px; }
+
+        .kbd-sm { background: #1e293b; color: #e2e8f0; border-radius: 4px; padding: 2px 6px; font-family: 'Consolas',monospace; font-size: .82em; white-space: nowrap; }
+
+        /* ── Tipos de gráfico ── */
+        .chart-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+        .chart-type {
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+        }
+        .chart-preview {
+            height: 80px;
+            background: white;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 8px 12px 0;
+            gap: 4px;
+        }
+        .chart-info {
+            background: #f8fafc;
+            padding: 10px 12px;
+            border-top: 1px solid #e2e8f0;
+        }
+        .chart-info strong { display: block; font-size: .85em; color: #1e293b; margin-bottom: 2px; }
+        .chart-info span   { font-size: .75em; color: #64748b; }
+
+        /* colunas */
+        .bar-v { border-radius: 3px 3px 0 0; width: 18px; }
+        /* barras h */
+        .bar-h { border-radius: 0 3px 3px 0; height: 12px; margin-bottom: 4px; }
+        /* linhas */
+        .line-chart { width: 100%; height: 64px; }
+        /* pizza */
+        .pie-chart { width: 64px; height: 64px; border-radius: 50%; margin: 8px auto 0; }
+        /* dispersão */
+        .scatter-dot { border-radius: 50%; position: absolute; }
+        /* área */
+        .area-chart { width: 100%; height: 64px; }
+
+        /* ── Gráfico demo completo ── */
+        .chart-demo-wrap {
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 16px 0;
+            background: white;
+        }
+        .chart-demo-title {
+            text-align: center;
+            font-size: .82em;
+            font-weight: 700;
+            color: #374151;
+            padding: 10px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .chart-demo-body {
+            padding: 12px 16px;
+            display: flex;
+            gap: 10px;
+            align-items: flex-end;
+        }
+        .chart-y-axis {
+            display: flex;
+            flex-direction: column-reverse;
+            justify-content: space-between;
+            height: 120px;
+            padding-right: 4px;
+        }
+        .y-tick { font-size: .65em; color: #94a3b8; text-align: right; }
+        .chart-bars-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+        .chart-gridlines {
+            position: relative;
+            height: 120px;
+            border-left: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .chart-grid-h {
+            position: absolute;
+            width: 100%;
+            border-top: 1px dashed #f1f5f9;
+        }
+        .chart-col-group {
+            position: absolute;
+            bottom: 0;
+            display: flex;
+            gap: 2px;
+            align-items: flex-end;
+        }
+        .chart-col-bar {
+            width: 14px;
+            border-radius: 2px 2px 0 0;
+        }
+        .chart-x-labels {
+            display: flex;
+            padding-left: 0;
+            margin-top: 4px;
+        }
+        .x-label { flex: 1; text-align: center; font-size: .63em; color: #94a3b8; }
+        .chart-legend {
+            display: flex;
+            gap: 12px;
+            padding: 8px 16px;
+            border-top: 1px solid #f1f5f9;
+            flex-wrap: wrap;
+        }
+        .legend-item { display: flex; align-items: center; gap: 5px; font-size: .72em; color: #475569; }
+        .legend-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+
+        /* ── Elementos do gráfico ── */
+        .elem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin: 14px 0;
+        }
+        .elem-item {
+            border-radius: 10px;
+            padding: 12px 14px;
+            background: #f8fafc;
+            border-left: 4px solid var(--excel-green);
+        }
+        .elem-item strong { display: block; font-size: .88em; color: #1e293b; margin-bottom: 3px; }
+        .elem-item span   { font-size: .78em; color: #475569; }
+
+        /* ── Sparklines ── */
+        .sparkline-demo {
+            overflow-x: auto;
+            margin: 14px 0;
+        }
+        .spark-table { border-collapse: collapse; width: 100%; font-size: .84em; }
+        .spark-table th { background: var(--excel-green); color: white; padding: 8px 12px; text-align: left; }
+        .spark-table th:first-child { border-radius: 6px 0 0 0; }
+        .spark-table th:last-child  { border-radius: 0 6px 0 0; }
+        .spark-table td { padding: 7px 12px; border-bottom: 1px solid #e5e7eb; font-size: .85em; }
+        .spark-table tr:nth-child(even) td { background: #f0fdf4; }
+        .spark-table td.num { text-align: right; font-family: 'Consolas', monospace; }
+        .spark-cell { padding: 4px 12px; }
+        .sparkline { display: inline-flex; align-items: flex-end; gap: 2px; height: 22px; }
+        .sp-bar { width: 7px; border-radius: 1px 1px 0 0; }
+
+        /* ── Colaboração ── */
+        .colab-steps { display: flex; flex-direction: column; gap: 10px; margin: 14px 0; }
+        .colab-step { display: flex; align-items: flex-start; gap: 12px; background: #f8fafc; border-radius: 10px; padding: 12px 16px; }
+        .colab-num { background: var(--primary); color: white; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; font-size: .8em; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+        .colab-text strong { display: block; font-size: .9em; color: #1e293b; margin-bottom: 2px; }
+        .colab-text span   { font-size: .8em; color: #64748b; }
+
+        /* ── Proteger planilha ── */
+        .protect-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin: 14px 0;
+        }
+        .protect-item {
+            border-radius: 10px;
+            padding: 14px;
+            border-left: 4px solid var(--primary);
+            background: #fff5f2;
+        }
+        .protect-item strong { display: block; font-size: .88em; color: var(--primary); margin-bottom: 4px; }
+        .protect-item span   { font-size: .78em; color: #475569; }
+
+        /* ── Boas práticas ── */
+        .boas-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(200px,1fr)); gap: 12px; margin: 16px 0; }
+        .boa-item { background: #fff7ed; border-radius: 10px; padding: 16px; display: flex; gap: 12px; align-items: flex-start; }
+        .boa-icon { font-size: 1.6em; flex-shrink: 0; }
+        .boa-text strong { display: block; font-size: .88em; color: var(--primary); margin-bottom: 3px; }
+        .boa-text span   { font-size: .8em; color: #475569; }
+
+        /* ── nav ── */
+        .nav-footer { display: flex; justify-content: space-between; margin-top: 40px; padding-bottom: 40px; }
+        .nav-link { text-decoration: none; color: var(--primary); font-weight: 600; padding: 12px 24px; border-radius: 10px; background: white; box-shadow: 0 2px 8px rgba(0,0,0,.05); transition: all .3s; }
+        .nav-link:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,.1); }
+        .nav-link.home { background: linear-gradient(135deg,rgba(191,54,12,.08),rgba(135,0,0,.1)); border: 1px solid rgba(191,54,12,.2); }
+
+        @media (max-width: 768px) {
+            .content-wrapper { padding: 0 15px; }
+            .lesson-hero, .content-card { padding: 25px; }
+            .lesson-hero h1 { font-size: 1.5em; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="top-bar">
+    <a href="index.html" class="back-btn">&#x2B05; Voltar ao Dashboard</a>
+    <span class="page-badge">Unidade 4 &mdash; Su&iacute;te de Escrit&oacute;rio</span>
+    <button class="slide-toggle" id="slideToggleBtn">&#x1F4FA; Modo Slide</button>
+</div>
+
+<div class="content-wrapper">
+
+    <div class="lesson-hero">
+        <h1>&#x1F4CA; Planilhas: Gr&aacute;ficos e Colabora&ccedil;&atilde;o</h1>
+        <p class="subtitle">Aula 4.10 &mdash; Tipos de gr&aacute;ficos, cria&ccedil;&atilde;o, personaliza&ccedil;&atilde;o, minigr&aacute;ficos, compartilhamento no OneDrive e prote&ccedil;&atilde;o de planilhas no Microsoft Excel</p>
+    </div>
+
+    <!-- CARD 1 — Tipos de Gráfico -->
+    <div class="content-card">
+        <h2>&#x1F4CA; Tipos de Gr&aacute;fico</h2>
+        <p>O Excel oferece dezenas de tipos de gr&aacute;fico, mas na pr&aacute;tica a maioria dos casos &eacute; atendida por seis tipos principais. A escolha correta do tipo depende da <strong>natureza dos dados</strong> e da <strong>mensagem que voc&ecirc; quer transmitir</strong>.</p>
+
+        <div class="chart-types">
+            <div class="chart-type">
+                <div class="chart-preview" style="align-items:flex-end;gap:6px;">
+                    <div class="bar-v" style="height:55px;background:#3b82f6;"></div>
+                    <div class="bar-v" style="height:70px;background:#3b82f6;"></div>
+                    <div class="bar-v" style="height:40px;background:#3b82f6;"></div>
+                    <div class="bar-v" style="height:65px;background:#3b82f6;"></div>
+                    <div class="bar-v" style="height:50px;background:#3b82f6;"></div>
+                </div>
+                <div class="chart-info">
+                    <strong>Colunas</strong>
+                    <span>Comparar valores entre categorias (ex.: vendas por produto, notas por disciplina).</span>
+                </div>
+            </div>
+            <div class="chart-type">
+                <div class="chart-preview" style="flex-direction:column;align-items:flex-start;justify-content:center;padding:8px;">
+                    <div class="bar-h" style="width:70%;background:#10b981;"></div>
+                    <div class="bar-h" style="width:45%;background:#10b981;"></div>
+                    <div class="bar-h" style="width:85%;background:#10b981;"></div>
+                    <div class="bar-h" style="width:55%;background:#10b981;"></div>
+                </div>
+                <div class="chart-info">
+                    <strong>Barras</strong>
+                    <span>Igual a colunas, mas horizontal. Melhor quando os nomes das categorias s&atilde;o longos.</span>
+                </div>
+            </div>
+            <div class="chart-type">
+                <div class="chart-preview" style="align-items:center;padding:8px;">
+                    <svg class="line-chart" viewBox="0 0 120 60" preserveAspectRatio="none">
+                        <polyline points="0,50 24,35 48,42 72,20 96,28 120,10" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-linejoin="round"/>
+                        <circle cx="0"   cy="50" r="3" fill="#f59e0b"/>
+                        <circle cx="24"  cy="35" r="3" fill="#f59e0b"/>
+                        <circle cx="48"  cy="42" r="3" fill="#f59e0b"/>
+                        <circle cx="72"  cy="20" r="3" fill="#f59e0b"/>
+                        <circle cx="96"  cy="28" r="3" fill="#f59e0b"/>
+                        <circle cx="120" cy="10" r="3" fill="#f59e0b"/>
+                    </svg>
+                </div>
+                <div class="chart-info">
+                    <strong>Linhas</strong>
+                    <span>Mostrar tend&ecirc;ncias ao longo do tempo (ex.: faturamento mensal, temperatura di&aacute;ria).</span>
+                </div>
+            </div>
+            <div class="chart-type">
+                <div class="chart-preview" style="justify-content:center;align-items:center;">
+                    <svg width="64" height="64" viewBox="0 0 64 64">
+                        <circle cx="32" cy="32" r="30" fill="#e2e8f0"/>
+                        <path d="M32,32 L32,2 A30,30 0 0,1 58,47 Z" fill="#ef4444"/>
+                        <path d="M32,32 L58,47 A30,30 0 0,1 10,55 Z" fill="#3b82f6"/>
+                        <path d="M32,32 L10,55 A30,30 0 0,1 32,2 Z" fill="#22c55e"/>
+                    </svg>
+                </div>
+                <div class="chart-info">
+                    <strong>Pizza</strong>
+                    <span>Mostrar propor&ccedil;&otilde;es de um todo. Use apenas com at&eacute; 5&ndash;6 fatias para manter a clareza.</span>
+                </div>
+            </div>
+            <div class="chart-type">
+                <div class="chart-preview" style="position:relative;height:80px;">
+                    <svg width="100%" height="100%" viewBox="0 0 120 70">
+                        <circle cx="20" cy="50" r="4" fill="#a855f7"/>
+                        <circle cx="40" cy="30" r="4" fill="#a855f7"/>
+                        <circle cx="60" cy="45" r="4" fill="#a855f7"/>
+                        <circle cx="75" cy="20" r="4" fill="#a855f7"/>
+                        <circle cx="95" cy="35" r="4" fill="#a855f7"/>
+                        <circle cx="110" cy="15" r="4" fill="#a855f7"/>
+                        <circle cx="30" cy="55" r="4" fill="#a855f7"/>
+                        <circle cx="85" cy="50" r="4" fill="#a855f7"/>
+                    </svg>
+                </div>
+                <div class="chart-info">
+                    <strong>Dispers&atilde;o (XY)</strong>
+                    <span>Identificar correla&ccedil;&otilde;es entre duas vari&aacute;veis num&eacute;ricas (ex.: altura &times; peso).</span>
+                </div>
+            </div>
+            <div class="chart-type">
+                <div class="chart-preview" style="align-items:center;padding:8px;">
+                    <svg class="area-chart" viewBox="0 0 120 60" preserveAspectRatio="none">
+                        <polygon points="0,60 0,45 30,30 60,38 90,15 120,25 120,60" fill="#bfdbfe"/>
+                        <polyline points="0,45 30,30 60,38 90,15 120,25" fill="none" stroke="#3b82f6" stroke-width="2"/>
+                    </svg>
+                </div>
+                <div class="chart-info">
+                    <strong>&Aacute;rea</strong>
+                    <span>Como o de linhas, mas com a &aacute;rea preenchida. Enfatiza o volume acumulado ao longo do tempo.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CARD 2 — Inserindo e Editando Gráficos -->
+    <div class="content-card">
+        <h2>&#x2795; Inserindo e Editando Gr&aacute;ficos</h2>
+        <p>Para criar um gr&aacute;fico no Excel, selecione os dados (incluindo cabe&ccedil;alhos) e acesse <strong>Inserir &rarr; Gr&aacute;ficos Recomendados</strong>. O Excel sugere o tipo mais adequado para os dados selecionados &mdash; &eacute; um bom ponto de partida antes de explorar outros tipos.</p>
+
+        <div class="chart-demo-wrap">
+            <div class="chart-demo-title">Vendas Trimestrais por Produto &mdash; 2025</div>
+            <div class="chart-demo-body">
+                <div class="chart-y-axis">
+                    <div class="y-tick">0</div>
+                    <div class="y-tick">25</div>
+                    <div class="y-tick">50</div>
+                    <div class="y-tick">75</div>
+                    <div class="y-tick">100</div>
+                </div>
+                <div class="chart-bars-area">
+                    <div class="chart-gridlines">
+                        <div class="chart-grid-h" style="bottom:25%;"></div>
+                        <div class="chart-grid-h" style="bottom:50%;"></div>
+                        <div class="chart-grid-h" style="bottom:75%;"></div>
+                        <!-- Q1 -->
+                        <div class="chart-col-group" style="left:4%;width:22%;">
+                            <div class="chart-col-bar" style="height:72%;background:#3b82f6;flex:1;"></div>
+                            <div class="chart-col-bar" style="height:55%;background:#10b981;flex:1;"></div>
+                            <div class="chart-col-bar" style="height:40%;background:#f59e0b;flex:1;"></div>
+                        </div>
+                        <!-- Q2 -->
+                        <div class="chart-col-group" style="left:28%;width:22%;">
+                            <div class="chart-col-bar" style="height:80%;background:#3b82f6;flex:1;"></div>
+                            <div class="chart-col-bar" style="height:62%;background:#10b981;flex:1;"></div>
+                            <div class="chart-col-bar" style="height:48%;background:#f59e0b;flex:1;"></div>
+                        </div>
+                        <!-- Q3 -->
+                        <div class="chart-col-group" style="left:52%;width:22%;">
+                            <div class="chart-col-bar" style="height:65%;background:#3b82f6;flex:1;"></div>
+                            <div class="chart-col-bar" style="height:78%;background:#10b981;flex:1;"></div>
+                            <div class="chart-col-bar" style="height:55%;background:#f59e0b;flex:1;"></div>
+                        </div>
+                        <!-- Q4 -->
+                        <div class="chart-col-group" style="left:76%;width:22%;">
+                            <div class="chart-col-bar" style="height:90%;background:#3b82f6;flex:1;"></div>
+                            <div class="chart-col-bar" style="height:85%;background:#10b981;flex:1;"></div>
+                            <div class="chart-col-bar" style="height:70%;background:#f59e0b;flex:1;"></div>
+                        </div>
+                    </div>
+                    <div class="chart-x-labels">
+                        <span class="x-label">1&ordm; Tri</span>
+                        <span class="x-label">2&ordm; Tri</span>
+                        <span class="x-label">3&ordm; Tri</span>
+                        <span class="x-label">4&ordm; Tri</span>
+                    </div>
+                </div>
+            </div>
+            <div class="chart-legend">
+                <div class="legend-item"><div class="legend-dot" style="background:#3b82f6;"></div> Produto A</div>
+                <div class="legend-item"><div class="legend-dot" style="background:#10b981;"></div> Produto B</div>
+                <div class="legend-item"><div class="legend-dot" style="background:#f59e0b;"></div> Produto C</div>
+            </div>
+        </div>
+
+        <h3>&#x1F449; Passo a passo</h3>
+        <ol>
+            <li>Selecione os dados incluindo os <strong>cabe&ccedil;alhos</strong> de linha e coluna.</li>
+            <li>Acesse <strong>Inserir &rarr; Gr&aacute;ficos Recomendados</strong> ou escolha diretamente o tipo no Ribbon.</li>
+            <li>O gr&aacute;fico &eacute; inserido na mesma planilha. Clique e arraste para reposicion&aacute;-lo.</li>
+            <li>Use as al&ccedil;as nos cantos para redimensionar.</li>
+            <li>Clique com o bot&atilde;o direito no gr&aacute;fico &rarr; <em>Mover Gr&aacute;fico</em> para envi&aacute;-lo a uma planilha dedicada.</li>
+        </ol>
+
+        <div class="tip-box">
+            <p>&#x1F4A1; <strong>Atalho r&aacute;pido:</strong> selecione os dados e pressione <span class="kbd-sm">Alt+F1</span> para inserir um gr&aacute;fico de colunas imediatamente na planilha atual. Pressione <span class="kbd-sm">F11</span> para criar o gr&aacute;fico em uma planilha separada.</p>
+        </div>
+    </div>
+
+    <!-- CARD 3 — Elementos e Personalização -->
+    <div class="content-card">
+        <h2>&#x1F3A8; Elementos e Personaliza&ccedil;&atilde;o</h2>
+        <p>Ao clicar em um gr&aacute;fico, surgem duas abas no Ribbon: <strong>Design do Gr&aacute;fico</strong> e <strong>Formato</strong>. Tamb&eacute;m aparecem tr&ecirc;s bot&otilde;es flutuantes ao lado direito do gr&aacute;fico para gest&atilde;o r&aacute;pida de elementos, estilos e filtros.</p>
+
+        <div class="elem-grid">
+            <div class="elem-item">
+                <strong>T&iacute;tulo do gr&aacute;fico</strong>
+                <span>Clique no t&iacute;tulo para edit&aacute;-lo. Pode ser vinculado a uma c&eacute;lula digitando <span style="font-family:monospace;font-size:.85em;">=A1</span> na barra de f&oacute;rmulas.</span>
+            </div>
+            <div class="elem-item">
+                <strong>Eixos</strong>
+                <span>Eixo horizontal (categorias) e vertical (valores). Formato, escala e t&iacute;tulo de cada eixo s&atilde;o personaliz&aacute;veis.</span>
+            </div>
+            <div class="elem-item">
+                <strong>Legenda</strong>
+                <span>Identifica as s&eacute;ries de dados. Pode ser posicionada acima, abaixo, &agrave; direita ou &agrave; esquerda do gr&aacute;fico.</span>
+            </div>
+            <div class="elem-item">
+                <strong>R&oacute;tulos de Dados</strong>
+                <span>Exibe os valores diretamente sobre as barras ou pontos. Essencial para gr&aacute;ficos de pizza e quando o eixo n&atilde;o &eacute; exibido.</span>
+            </div>
+            <div class="elem-item">
+                <strong>Linhas de Grade</strong>
+                <span>Linhas horizontais ou verticais que facilitam a leitura dos valores. Mantenha apenas as principais para n&atilde;o poluir o gr&aacute;fico.</span>
+            </div>
+            <div class="elem-item">
+                <strong>Linha de Tend&ecirc;ncia</strong>
+                <span>Bot&atilde;o direito em uma s&eacute;rie &rarr; Adicionar Linha de Tend&ecirc;ncia. Mostra a dire&ccedil;&atilde;o geral dos dados (linear, exponencial etc.).</span>
+            </div>
+        </div>
+
+        <h3>&#x1F3AD; Estilos e cores</h3>
+        <ul>
+            <li><strong>Design do Gr&aacute;fico &rarr; Estilos de Gr&aacute;fico:</strong> galeria de estilos pr&eacute;-definidos (com e sem fundo preenchido).</li>
+            <li><strong>Design do Gr&aacute;fico &rarr; Alterar Cores:</strong> paletas de cores monocrom&aacute;ticas ou coloridas para todas as s&eacute;ries.</li>
+            <li><strong>Formatar s&eacute;rie individualmente:</strong> clique duas vezes em uma barra ou linha espec&iacute;fica para abrir as op&ccedil;&otilde;es de cor, borda e efeito daquela s&eacute;rie.</li>
+            <li><strong>Alterar tipo:</strong> Design do Gr&aacute;fico &rarr; Alterar Tipo de Gr&aacute;fico &mdash; testa outros tipos sem recriar o gr&aacute;fico do zero.</li>
+        </ul>
+
+        <div class="alert-box">
+            <p>&#x26A0;&#xFE0F; <strong>Aten&ccedil;&atilde;o:</strong> ao exportar o gr&aacute;fico para o Word ou PowerPoint, prefer&ecirc;ncia <em>Vincular dados</em> &rarr; se a planilha mudar, o gr&aacute;fico no outro documento &eacute; atualizado. J&aacute; <em>Colar como figura</em> cria uma imagem est&aacute;tica que n&atilde;o atualiza.</p>
+        </div>
+    </div>
+
+    <!-- CARD 4 — Minigráficos (Sparklines) -->
+    <div class="content-card">
+        <h2>&#x26A1; Minigr&aacute;ficos (Sparklines)</h2>
+        <p>Minigr&aacute;ficos s&atilde;o gr&aacute;ficos em miniatura inseridos <em>dentro de uma &uacute;nica c&eacute;lula</em>, sem precisar de uma &aacute;rea separada. S&atilde;o perfeitos para exibir tend&ecirc;ncias ao lado dos dados em tabelas de resumo.</p>
+
+        <div class="sparkline-demo">
+            <table class="spark-table">
+                <thead>
+                    <tr>
+                        <th>Vendedor</th>
+                        <th>Jan</th><th>Fev</th><th>Mar</th><th>Abr</th><th>Mai</th><th>Jun</th>
+                        <th>Tend&ecirc;ncia</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Ana Lima</td>
+                        <td class="num">42</td><td class="num">55</td><td class="num">48</td>
+                        <td class="num">67</td><td class="num">72</td><td class="num">80</td>
+                        <td class="spark-cell">
+                            <div class="sparkline">
+                                <div class="sp-bar" style="height:53%;background:#22c55e;"></div>
+                                <div class="sp-bar" style="height:69%;background:#22c55e;"></div>
+                                <div class="sp-bar" style="height:60%;background:#22c55e;"></div>
+                                <div class="sp-bar" style="height:84%;background:#22c55e;"></div>
+                                <div class="sp-bar" style="height:90%;background:#22c55e;"></div>
+                                <div class="sp-bar" style="height:100%;background:#16a34a;"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Carlos Melo</td>
+                        <td class="num">70</td><td class="num">60</td><td class="num">55</td>
+                        <td class="num">48</td><td class="num">52</td><td class="num">40</td>
+                        <td class="spark-cell">
+                            <div class="sparkline">
+                                <div class="sp-bar" style="height:100%;background:#ef4444;"></div>
+                                <div class="sp-bar" style="height:86%;background:#ef4444;"></div>
+                                <div class="sp-bar" style="height:79%;background:#ef4444;"></div>
+                                <div class="sp-bar" style="height:69%;background:#ef4444;"></div>
+                                <div class="sp-bar" style="height:74%;background:#ef4444;"></div>
+                                <div class="sp-bar" style="height:57%;background:#b91c1c;"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Beatriz Souza</td>
+                        <td class="num">50</td><td class="num">53</td><td class="num">60</td>
+                        <td class="num">55</td><td class="num">62</td><td class="num">65</td>
+                        <td class="spark-cell">
+                            <div class="sparkline">
+                                <div class="sp-bar" style="height:63%;background:#3b82f6;"></div>
+                                <div class="sp-bar" style="height:67%;background:#3b82f6;"></div>
+                                <div class="sp-bar" style="height:75%;background:#3b82f6;"></div>
+                                <div class="sp-bar" style="height:69%;background:#3b82f6;"></div>
+                                <div class="sp-bar" style="height:78%;background:#3b82f6;"></div>
+                                <div class="sp-bar" style="height:82%;background:#1d4ed8;"></div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>&#x1F449; Como inserir</h3>
+        <ol>
+            <li>Selecione a c&eacute;lula onde o minigr&aacute;fico deve aparecer (ex.: G2).</li>
+            <li>Acesse <strong>Inserir &rarr; Minigr&aacute;ficos &rarr; Linha</strong> (ou Coluna ou Ganhos/Perdas).</li>
+            <li>No campo <em>Intervalo de dados</em>, selecione as c&eacute;lulas com os valores do per&iacute;odo (ex.: B2:F2).</li>
+            <li>Arraste a al&ccedil;a de preenchimento para criar minigr&aacute;ficos para as linhas seguintes.</li>
+        </ol>
+    </div>
+
+    <!-- CARD 5 — Colaboração OneDrive -->
+    <div class="content-card">
+        <h2>&#x2601;&#xFE0F; Colabora&ccedil;&atilde;o e Compartilhamento</h2>
+        <p>Assim como no Word, o Excel integrado ao <strong>OneDrive</strong> permite que m&uacute;ltiplas pessoas editem a mesma planilha simultaneamente. O Excel Online (vers&atilde;o no navegador) oferece a maioria dos recursos para colabora&ccedil;&atilde;o em tempo real.</p>
+
+        <div class="colab-steps">
+            <div class="colab-step">
+                <div class="colab-num">1</div>
+                <div class="colab-text">
+                    <strong>Salve no OneDrive</strong>
+                    <span>Arquivo &rarr; Salvar como &rarr; OneDrive. A planilha passa a ter uma URL pr&oacute;pria e fica sincronizada automaticamente.</span>
+                </div>
+            </div>
+            <div class="colab-step">
+                <div class="colab-num">2</div>
+                <div class="colab-text">
+                    <strong>Compartilhe com permiss&otilde;es</strong>
+                    <span>Bot&atilde;o <strong>Compartilhar</strong> (canto superior direito). Insira e-mails ou gere um link. Escolha: <em>Pode editar</em> para colaboradores, <em>Pode exibir</em> para leitores.</span>
+                </div>
+            </div>
+            <div class="colab-step">
+                <div class="colab-num">3</div>
+                <div class="colab-text">
+                    <strong>Edite em tempo real</strong>
+                    <span>Cada colaborador v&ecirc; os cursores dos outros em cores distintas. Altera&ccedil;&otilde;es aparecem automaticamente sem precisar salvar manualmente.</span>
+                </div>
+            </div>
+            <div class="colab-step">
+                <div class="colab-num">4</div>
+                <div class="colab-text">
+                    <strong>Hist&oacute;rico de vers&otilde;es</strong>
+                    <span>Arquivo &rarr; Informa&ccedil;&otilde;es &rarr; Hist&oacute;rico de Vers&otilde;es. O Excel salva snapshots autom&aacute;ticos. Clique em qualquer vers&atilde;o para visualiz&aacute;-la ou restaur&aacute;-la.</span>
+                </div>
+            </div>
+        </div>
+
+        <h3>&#x1F512; Proteger a planilha</h3>
+        <p>Quando a planilha &eacute; compartilhada, &eacute; importante proteger c&eacute;lulas cr&iacute;ticas (f&oacute;rmulas, cabe&ccedil;alhos) contra edi&ccedil;&atilde;o acidental.</p>
+
+        <div class="protect-grid">
+            <div class="protect-item">
+                <strong>Proteger Planilha</strong>
+                <span>Revis&atilde;o &rarr; Proteger Planilha. Define senha e permite escolher o que os usu&aacute;rios podem fazer (selecionar c&eacute;lulas, formatar, inserir linhas etc.).</span>
+            </div>
+            <div class="protect-item">
+                <strong>Bloquear c&eacute;lulas espec&iacute;ficas</strong>
+                <span>Selecione as c&eacute;lulas edit&aacute;veis &rarr; Ctrl+1 &rarr; Prote&ccedil;&atilde;o &rarr; desmarque &ldquo;Bloqueada&rdquo;. Ative a prote&ccedil;&atilde;o da planilha. Apenas as c&eacute;lulas desbloqueadas ficar&atilde;o edit&aacute;veis.</span>
+            </div>
+            <div class="protect-item">
+                <strong>Proteger Pasta de Trabalho</strong>
+                <span>Revis&atilde;o &rarr; Proteger Pasta de Trabalho. Impede que abas sejam adicionadas, exclu&iacute;das, renomeadas ou movidas.</span>
+            </div>
+            <div class="protect-item">
+                <strong>Criptografar com senha</strong>
+                <span>Arquivo &rarr; Informa&ccedil;&otilde;es &rarr; Proteger Pasta de Trabalho &rarr; Criptografar com Senha. Exige senha para <em>abrir</em> o arquivo.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- CARD 6 — Exportação e Integração -->
+    <div class="content-card">
+        <h2>&#x1F4E4; Exporta&ccedil;&atilde;o e Integra&ccedil;&atilde;o</h2>
+        <p>O Excel se integra facilmente com outros programas da su&iacute;te Microsoft e com outros aplicativos. Conhecer as op&ccedil;&otilde;es de exporta&ccedil;&atilde;o e integra&ccedil;&atilde;o economiza retrabalho.</p>
+
+        <ul>
+            <li><strong>Exportar como PDF:</strong> Arquivo &rarr; Exportar &rarr; Criar PDF/XPS. Configure a &aacute;rea de impress&atilde;o antes (Layout &rarr; &Aacute;rea de Impress&atilde;o) para incluir apenas os dados desejados.</li>
+            <li><strong>Exportar como CSV:</strong> Arquivo &rarr; Salvar Como &rarr; CSV. Gera um arquivo de texto simples compat&iacute;vel com qualquer sistema. Aten&ccedil;&atilde;o: o CSV n&atilde;o preserva formata&ccedil;&atilde;o, f&oacute;rmulas nem m&uacute;ltiplas planilhas.</li>
+            <li><strong>Copiar tabela para o Word:</strong> selecione o intervalo no Excel &rarr; Ctrl+C &rarr; no Word, use <em>Colar Especial &rarr; Vincular e Manter Formata&ccedil;&atilde;o de Origem</em> para que a tabela atualize quando a planilha mudar.</li>
+            <li><strong>Copiar gr&aacute;fico para o PowerPoint:</strong> clique no gr&aacute;fico &rarr; Ctrl+C &rarr; no PowerPoint, escolha <em>Usar Tema de Destino e Vincular Dados</em>.</li>
+            <li><strong>Importar dados externos:</strong> Dados &rarr; Obter Dados permite importar de arquivos CSV, bancos de dados, p&aacute;ginas web e outros formatos, com atualiza&ccedil;&atilde;o autom&aacute;tica.</li>
+        </ul>
+    </div>
+
+    <!-- CARD 7 — Atalhos Essenciais -->
+    <div class="content-card">
+        <h2>&#x2328;&#xFE0F; Atalhos Essenciais do Excel</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:8px;margin:14px 0;">
+            <div style="display:flex;align-items:center;gap:12px;background:#f8fafc;border-radius:8px;padding:10px 14px;">
+                <span class="kbd-sm">Ctrl+T</span>
+                <span style="font-size:.83em;color:#374151;">Converter intervalo em Tabela Formatada</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;background:#f8fafc;border-radius:8px;padding:10px 14px;">
+                <span class="kbd-sm">Alt+F1</span>
+                <span style="font-size:.83em;color:#374151;">Criar gr&aacute;fico de colunas na planilha atual</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;background:#f8fafc;border-radius:8px;padding:10px 14px;">
+                <span class="kbd-sm">F11</span>
+                <span style="font-size:.83em;color:#374151;">Criar gr&aacute;fico em planilha separada</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;background:#f8fafc;border-radius:8px;padding:10px 14px;">
+                <span class="kbd-sm">Ctrl+1</span>
+                <span style="font-size:.83em;color:#374151;">Formatar c&eacute;lulas (janela completa)</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;background:#f8fafc;border-radius:8px;padding:10px 14px;">
+                <span class="kbd-sm">Ctrl+Shift+L</span>
+                <span style="font-size:.83em;color:#374151;">Ativar/desativar filtros</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;background:#f8fafc;border-radius:8px;padding:10px 14px;">
+                <span class="kbd-sm">F4</span>
+                <span style="font-size:.83em;color:#374151;">Alternar entre tipos de refer&ecirc;ncia (A1 / $A$1)</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;background:#f8fafc;border-radius:8px;padding:10px 14px;">
+                <span class="kbd-sm">Ctrl+Home</span>
+                <span style="font-size:.83em;color:#374151;">Ir para a c&eacute;lula A1</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;background:#f8fafc;border-radius:8px;padding:10px 14px;">
+                <span class="kbd-sm">Ctrl+End</span>
+                <span style="font-size:.83em;color:#374151;">Ir para a &uacute;ltima c&eacute;lula com dados</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- CARD 8 — Boas Práticas de Visualização -->
+    <div class="content-card">
+        <h2>&#x2705; Boas Pr&aacute;ticas de Visualiza&ccedil;&atilde;o</h2>
+        <div class="boas-grid">
+            <div class="boa-item">
+                <div class="boa-icon">&#x1F3AF;</div>
+                <div class="boa-text">
+                    <strong>Escolha o gr&aacute;fico certo para os dados</strong>
+                    <span>Compara&ccedil;&atilde;o &rarr; Colunas. Tend&ecirc;ncia &rarr; Linhas. Propor&ccedil;&atilde;o &rarr; Pizza. Correla&ccedil;&atilde;o &rarr; Dispers&atilde;o. Nunca use pizza para mais de 6 categorias.</span>
+                </div>
+            </div>
+            <div class="boa-item">
+                <div class="boa-icon">&#x1F4DD;</div>
+                <div class="boa-text">
+                    <strong>T&iacute;tulo descritivo e unidade no eixo</strong>
+                    <span>O t&iacute;tulo deve dizer <em>o qu&ecirc;</em>, <em>de quem</em> e <em>quando</em>. O eixo vertical deve sempre indicar a unidade (R$, %, unidades etc.).</span>
+                </div>
+            </div>
+            <div class="boa-item">
+                <div class="boa-icon">&#x1F3A8;</div>
+                <div class="boa-text">
+                    <strong>Menos &eacute; mais nas cores</strong>
+                    <span>Use uma cor por s&eacute;rie, sem gradientes, sombras ou efeitos 3D. Gr&aacute;ficos 3D distorcem as propor&ccedil;&otilde;es e dificultam a leitura correta.</span>
+                </div>
+            </div>
+            <div class="boa-item">
+                <div class="boa-icon">&#x26A1;</div>
+                <div class="boa-text">
+                    <strong>Minigr&aacute;ficos para tend&ecirc;ncias r&aacute;pidas</strong>
+                    <span>Em dashboards e resumos, prefira Sparklines a gr&aacute;ficos completos quando o objetivo &eacute; mostrar a dire&ccedil;&atilde;o (sobe/desce), n&atilde;o o valor exato.</span>
+                </div>
+            </div>
+            <div class="boa-item">
+                <div class="boa-icon">&#x1F512;</div>
+                <div class="boa-text">
+                    <strong>Proteja as f&oacute;rmulas antes de compartilhar</strong>
+                    <span>Antes de enviar a planilha para colaboradores, trave as c&eacute;lulas com f&oacute;rmulas e cabe&ccedil;alhos. Deixe desbloqueadas apenas as &aacute;reas de entrada de dados.</span>
+                </div>
+            </div>
+            <div class="boa-item">
+                <div class="boa-icon">&#x1F4BE;</div>
+                <div class="boa-text">
+                    <strong>Vincule gr&aacute;ficos ao exportar</strong>
+                    <span>Ao inserir gr&aacute;ficos do Excel no Word ou PowerPoint, prefira <em>Vincular</em> em vez de <em>Colar como figura</em>. Assim os gr&aacute;ficos se atualizam automaticamente.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- EXERCÍCIO -->
+    <div class="content-card exercise-card">
+        <h2>&#x1F3AF; Exerc&iacute;cio &mdash; Arraste e Conecte</h2>
+        <p style="color:#475569;font-size:.9em;margin-bottom:4px;">Arraste cada descri&ccedil;&atilde;o para o tipo de gr&aacute;fico ou recurso correto.</p>
+
+        <div class="ex-drag-root" data-ex="ex410">
+            <div class="ex-drag">
+                <div>
+                    <div class="ex-col-title">Descri&ccedil;&atilde;o</div>
+                    <div class="ex-pool" data-pool="ex410">
+                        <div class="drag-chip" data-id="c1">Gr&aacute;fico inserido dentro de uma &uacute;nica c&eacute;lula que mostra a tend&ecirc;ncia de um conjunto de valores sem ocupar &aacute;rea separada</div>
+                        <div class="drag-chip" data-id="c2">Tipo ideal para mostrar a evolu&ccedil;&atilde;o de um indicador ao longo de meses ou anos, com pontos conectados por uma linha</div>
+                        <div class="drag-chip" data-id="c3">Mostra a propor&ccedil;&atilde;o de cada parte em rela&ccedil;&atilde;o a um todo; perde efici&ecirc;ncia com mais de 6 categorias</div>
+                        <div class="drag-chip" data-id="c4">Recurso de segurança que impede edi&ccedil;&atilde;o de c&eacute;lulas espec&iacute;ficas, protegendo f&oacute;rmulas contra altera&ccedil;&atilde;o acidental</div>
+                        <div class="drag-chip" data-id="c5">Tipo de gr&aacute;fico que identifica correla&ccedil;&atilde;o entre duas vari&aacute;veis num&eacute;ricas, exibindo pontos distribu&iacute;dos em dois eixos</div>
+                        <div class="drag-chip" data-id="c6">Op&ccedil;&atilde;o ao colar gr&aacute;fico do Excel no Word ou PowerPoint que atualiza automaticamente quando os dados da planilha mudam</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="ex-col-title">Recurso / Tipo</div>
+                    <div class="ex-zones" data-zones="ex410">
+                        <div class="drop-zone" data-zone="ex410-z1" data-accept="c1">
+                            <span class="zone-name">Minigr&aacute;fico (Sparkline)</span>
+                            <div class="zone-slot"></div>
+                            <div class="zone-feedback"></div>
+                        </div>
+                        <div class="drop-zone" data-zone="ex410-z2" data-accept="c2">
+                            <span class="zone-name">Gr&aacute;fico de Linhas</span>
+                            <div class="zone-slot"></div>
+                            <div class="zone-feedback"></div>
+                        </div>
+                        <div class="drop-zone" data-zone="ex410-z3" data-accept="c3">
+                            <span class="zone-name">Gr&aacute;fico de Pizza</span>
+                            <div class="zone-slot"></div>
+                            <div class="zone-feedback"></div>
+                        </div>
+                        <div class="drop-zone" data-zone="ex410-z4" data-accept="c4">
+                            <span class="zone-name">Proteger Planilha</span>
+                            <div class="zone-slot"></div>
+                            <div class="zone-feedback"></div>
+                        </div>
+                        <div class="drop-zone" data-zone="ex410-z5" data-accept="c5">
+                            <span class="zone-name">Gr&aacute;fico de Dispers&atilde;o</span>
+                            <div class="zone-slot"></div>
+                            <div class="zone-feedback"></div>
+                        </div>
+                        <div class="drop-zone" data-zone="ex410-z6" data-accept="c6">
+                            <span class="zone-name">Vincular Dados ao Colar</span>
+                            <div class="zone-slot"></div>
+                            <div class="zone-feedback"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ex-actions">
+            <button class="btn-verificar" onclick="dragVerify('ex410')">Verificar</button>
+            <button class="btn-refazer"  onclick="dragReset('ex410')">Refazer</button>
+        </div>
+        <div class="ex-result" id="ex410-result"></div>
+    </div>
+
+    <!-- ATIVIDADE PRÁTICA 4.10 -->
+    <div class="content-card practical-card" id="prat-410">
+        <h2>&#x1F6E0;&#xFE0F; Atividade Pr&aacute;tica &mdash; Dashboard de Vendas</h2>
+        <div class="prat-meta">
+            <span class="prat-tag">&#x23F1; ~55 min</span>
+            <span class="prat-tag">&#x1F4BB; Microsoft Excel + OneDrive</span>
+            <span class="prat-tag">&#x1F4BE; Salvar como Dashboard_SeuNome.xlsx</span>
+        </div>
+
+        <div class="prat-steps">
+            <div class="prat-step">
+                <div class="step-num">1</div>
+                <div class="step-body">
+                    <div class="step-label">Monte a base de dados</div>
+                    <div class="step-desc">Crie uma planilha chamada <strong>Dados</strong>. Monte uma tabela com os cabe&ccedil;alhos: <em>M&ecirc;s</em>, <em>Produto A</em>, <em>Produto B</em>, <em>Produto C</em>, <em>Total</em>. Preencha os dados de Janeiro a Dezembro com valores fict&iacute;cios (ex.: entre R$ 2.000 e R$ 8.000). Na coluna Total, use <span style="font-family:monospace;background:#f1f5f9;padding:1px 5px;border-radius:3px;">=SOMA(B2:D2)</span> e arraste. Converta em Tabela Formatada (Ctrl+T).</div>
+                </div>
+            </div>
+            <div class="prat-step">
+                <div class="step-num">2</div>
+                <div class="step-body">
+                    <div class="step-label">Crie um gr&aacute;fico de colunas agrupadas</div>
+                    <div class="step-desc">Selecione as colunas <em>M&ecirc;s</em>, <em>Produto A</em>, <em>Produto B</em> e <em>Produto C</em> (segure Ctrl para selecionar colunas n&atilde;o adjacentes). Acesse <strong>Inserir &rarr; Gr&aacute;fico de Colunas Agrupadas</strong>. D&ecirc; o t&iacute;tulo <em>Vendas por Produto &mdash; 2025</em>. Posicione o gr&aacute;fico em uma nova planilha chamada <strong>Dashboard</strong> (clique com bot&atilde;o direito no gr&aacute;fico &rarr; Mover Gr&aacute;fico).</div>
+                </div>
+            </div>
+            <div class="prat-step">
+                <div class="step-num">3</div>
+                <div class="step-body">
+                    <div class="step-label">Crie um gr&aacute;fico de linhas para o total mensal</div>
+                    <div class="step-desc">Volte &agrave; planilha <strong>Dados</strong>. Selecione as colunas <em>M&ecirc;s</em> e <em>Total</em>. Crie um <strong>Gr&aacute;fico de Linhas com Marcadores</strong>. Adicione r&oacute;tulos de dados (bot&atilde;o + ao lado do gr&aacute;fico &rarr; R&oacute;tulos de Dados). D&ecirc; o t&iacute;tulo <em>Evolu&ccedil;&atilde;o do Total Mensal</em>. Mova tamb&eacute;m para a planilha <strong>Dashboard</strong>.</div>
+                </div>
+            </div>
+            <div class="prat-step">
+                <div class="step-num">4</div>
+                <div class="step-body">
+                    <div class="step-label">Adicione minigr&aacute;ficos na tabela</div>
+                    <div class="step-desc">Volte &agrave; planilha <strong>Dados</strong>. Insira uma nova coluna ap&oacute;s Total chamada <em>Tend&ecirc;ncia</em>. Selecione a c&eacute;lula F2, acesse <strong>Inserir &rarr; Minigr&aacute;ficos &rarr; Linha</strong> e selecione o intervalo B2:D2 como dados. Arraste a al&ccedil;a de preenchimento para F3:F13. Ative o ponto de destaque nas cores (Design de Minigr&aacute;fico &rarr; Marcar Pontos &rarr; Ponto Alto).</div>
+                </div>
+            </div>
+            <div class="prat-step">
+                <div class="step-num">5</div>
+                <div class="step-body">
+                    <div class="step-label">Proteja a planilha de dados</div>
+                    <div class="step-desc">Na planilha <strong>Dados</strong>, selecione apenas as c&eacute;lulas de valores (B2:D13). Acesse <strong>Ctrl+1 &rarr; Prote&ccedil;&atilde;o</strong> e <em>desmarque</em> &ldquo;Bloqueada&rdquo;. Agora acesse <strong>Revis&atilde;o &rarr; Proteger Planilha</strong>. Marque apenas &ldquo;Selecionar c&eacute;lulas desbloqueadas&rdquo;. Tente clicar em uma c&eacute;lula de cabe&ccedil;alho &mdash; o Excel n&atilde;o permitir&aacute; editar. Tente editar um valor de dados &mdash; deve funcionar normalmente.</div>
+                </div>
+            </div>
+            <div class="prat-step">
+                <div class="step-num">6</div>
+                <div class="step-body">
+                    <div class="step-label">Salve no OneDrive e compartilhe</div>
+                    <div class="step-desc">Salve o arquivo no <strong>OneDrive</strong> (Arquivo &rarr; Salvar Como &rarr; OneDrive). Clique em <strong>Compartilhar</strong> e gere um link com permiss&atilde;o <em>Pode exibir</em>. Copie o link e cole no campo de tarefa no AVA da disciplina. Verifique que os dois gr&aacute;ficos aparecem corretamente na planilha <strong>Dashboard</strong> antes de enviar.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="prat-observe">
+            <strong>&#x1F4CC; Para refletir:</strong> Um dashboard bem constru&iacute;do no Excel &mdash; com dados organizados em uma planilha, gr&aacute;ficos em outra e prote&ccedil;&atilde;o nas f&oacute;rmulas &mdash; comunica informa&ccedil;&otilde;es complexas de forma visual e imediata. As habilidades desenvolvidas ao longo das aulas 4.8, 4.9 e 4.10 formam a base para an&aacute;lise de dados no ambiente profissional.
+        </div>
+
+        <div class="ex-actions">
+            <button class="btn-print" onclick="printPractical('prat-410', 'Aula 4.10 \u2014 Planilhas: Gr\u00e1ficos e Colabora\u00e7\u00e3o')">&#x1F5A8;&#xFE0F; Imprimir roteiro</button>
+        </div>
+    </div>
+
+    <div class="nav-footer">
+        <a href="uni4-09-planilhas-formulas.html" class="nav-link">&#x2B05; Anterior: Planilhas &mdash; F&oacute;rmulas</a>
+        <a href="index.html" class="nav-link home">&#x1F3E0; Voltar ao In&iacute;cio</a>
+    </div>
+
+</div>
+
+<script src="slide-mode.js"></script>
+<script src="exercise-drag.js"></script>
+<script src="exercise-print.js"></script>
+</body>
+</html>
