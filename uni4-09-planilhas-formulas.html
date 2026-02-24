@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 4.9 - Planilhas: Fórmulas e Funções</title>
+    <link rel="stylesheet" href="slide-mode.css">
+    <link rel="stylesheet" href="exercise.css">
+    <style>
+        :root {
+            --primary: #bf360c;
+            --secondary: #870000;
+            --bg-light: #f0f4f8;
+            --text-dark: #1a202c;
+            --excel-green: #217346;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        .top-bar {
+            background: white;
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .back-btn { text-decoration: none; color: var(--primary); font-weight: 600; display: flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 8px; transition: background 0.3s; }
+        .back-btn:hover { background: rgba(191,54,12,0.08); }
+        .page-badge { font-size: 0.8em; padding: 4px 12px; border-radius: 20px; background: rgba(191,54,12,0.12); color: var(--primary); font-weight: 600; }
+
+        .content-wrapper { max-width: 800px; margin: 40px auto; padding: 0 30px; }
+
+        .lesson-hero { background: white; border-radius: 16px; padding: 40px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin-bottom: 30px; border-top: 4px solid var(--primary); }
+        .lesson-hero h1 { font-size: 2em; margin-bottom: 10px; color: var(--primary); }
+        .lesson-hero .subtitle { font-size: 1.05em; color: #718096; }
+
+        .content-card { background: white; border-radius: 16px; padding: 35px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin-bottom: 25px; }
+        .content-card h2 { font-size: 1.4em; color: var(--primary); margin-bottom: 18px; display: flex; align-items: center; gap: 10px; }
+        .content-card h3 { font-size: 1.05em; color: var(--secondary); margin: 20px 0 10px; }
+        .content-card p  { margin-bottom: 15px; text-align: justify; }
+
+        .highlight-box { background: linear-gradient(135deg,rgba(191,54,12,.05),rgba(135,0,0,.06)); border-left: 4px solid var(--primary); padding: 20px 25px; border-radius: 0 12px 12px 0; margin: 20px 0; }
+        .highlight-box p { margin-bottom: 0; font-style: italic; }
+        .alert-box { background: #fff8e1; border-left: 4px solid #f59e0b; padding: 18px 22px; border-radius: 0 12px 12px 0; margin: 20px 0; }
+        .alert-box p { margin: 0; color: #78350f; font-size: .93em; }
+        .tip-box { background: #f0fdf4; border-left: 4px solid #16a34a; padding: 18px 22px; border-radius: 0 12px 12px 0; margin: 20px 0; }
+        .tip-box p { margin: 0; color: #14532d; font-size: .93em; }
+
+        ul, ol { margin: 10px 0 15px 25px; }
+        li { margin-bottom: 8px; }
+
+        .kbd-sm { background: #1e293b; color: #e2e8f0; border-radius: 4px; padding: 2px 6px; font-family: 'Consolas',monospace; font-size: .82em; white-space: nowrap; }
+        .fn { font-family: 'Consolas', monospace; background: #f1f5f9; padding: 1px 6px; border-radius: 4px; font-size: .88em; color: #1e293b; }
+
+        /* ── Operadores ── */
+        .op-table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: .86em; }
+        .op-table th { background: var(--primary); color: white; padding: 9px 12px; text-align: left; }
+        .op-table th:first-child { border-radius: 8px 0 0 0; }
+        .op-table th:last-child  { border-radius: 0 8px 0 0; }
+        .op-table td { padding: 8px 12px; border-bottom: 1px solid #e2e8f0; }
+        .op-table tr:nth-child(even) td { background: #f8fafc; }
+        .op-table tr:last-child td { border-bottom: none; }
+        .op-sym { font-family: 'Consolas', monospace; font-size: 1.1em; font-weight: 700; color: var(--excel-green); }
+
+        /* ── Referências ── */
+        .ref-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; margin: 14px 0; }
+        .ref-item { border-radius: 10px; padding: 14px; text-align: center; }
+        .ref-item.rel  { background: #eff6ff; border-top: 3px solid #3b82f6; }
+        .ref-item.abs  { background: #f0fdf4; border-top: 3px solid #22c55e; }
+        .ref-item.mix1 { background: #fef3c7; border-top: 3px solid #f59e0b; }
+        .ref-item.mix2 { background: #fdf4ff; border-top: 3px solid #a855f7; }
+        .ref-code { font-family: 'Consolas', monospace; font-size: 1.3em; font-weight: 800; display: block; margin-bottom: 5px; }
+        .ref-item.rel  .ref-code { color: #1d4ed8; }
+        .ref-item.abs  .ref-code { color: #15803d; }
+        .ref-item.mix1 .ref-code { color: #92400e; }
+        .ref-item.mix2 .ref-code { color: #7e22ce; }
+        .ref-name { font-weight: 700; font-size: .82em; margin-bottom: 4px; }
+        .ref-desc { font-size: .76em; color: #475569; }
+
+        /* ── Funções grid ── */
+        .fn-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin: 14px 0; }
+        .fn-item { background: #f8fafc; border-radius: 10px; padding: 14px; border-left: 4px solid var(--excel-green); }
+        .fn-item .fn-name { font-family: 'Consolas', monospace; font-weight: 700; font-size: .9em; color: var(--excel-green); display: block; margin-bottom: 3px; }
+        .fn-item .fn-syntax { font-family: 'Consolas', monospace; font-size: .78em; color: #475569; display: block; margin-bottom: 4px; }
+        .fn-item .fn-desc { font-size: .79em; color: #374151; }
+
+        /* ── SE demo ── */
+        .se-demo {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 16px 20px;
+            margin: 14px 0;
+            font-size: .86em;
+        }
+        .se-formula {
+            font-family: 'Consolas', monospace;
+            font-size: 1em;
+            background: #1e293b;
+            color: #86efac;
+            padding: 10px 14px;
+            border-radius: 6px;
+            margin-bottom: 12px;
+            word-break: break-all;
+        }
+        .se-parts { display: flex; flex-direction: column; gap: 6px; }
+        .se-part { display: flex; gap: 10px; align-items: flex-start; }
+        .se-badge { min-width: 80px; text-align: center; border-radius: 5px; padding: 3px 6px; font-size: .75em; font-weight: 700; flex-shrink: 0; }
+        .se-badge.teste   { background: #dbeafe; color: #1d4ed8; }
+        .se-badge.verdade { background: #dcfce7; color: #15803d; }
+        .se-badge.falso   { background: #fee2e2; color: #b91c1c; }
+        .se-text { font-size: .82em; color: #374151; }
+
+        /* ── Filtro e Classificação demo ── */
+        .filter-demo {
+            overflow-x: auto;
+            margin: 14px 0;
+        }
+        .filter-table { border-collapse: collapse; width: 100%; font-size: .84em; }
+        .filter-table th { background: var(--excel-green); color: white; padding: 8px 12px; text-align: left; position: relative; }
+        .filter-table th:first-child { border-radius: 6px 0 0 0; }
+        .filter-table th:last-child  { border-radius: 0 6px 0 0; }
+        .filter-btn { display: inline-block; background: rgba(255,255,255,.25); border-radius: 3px; padding: 0 4px; font-size: .75em; margin-left: 4px; }
+        .filter-table td { padding: 7px 12px; border-bottom: 1px solid #e5e7eb; }
+        .filter-table tr:nth-child(even) td { background: #f0fdf4; }
+        .filter-table .hidden-row td { opacity: .3; text-decoration: line-through; }
+        .filter-table td.num { text-align: right; font-family: 'Consolas', monospace; }
+        .filter-active th:nth-child(3) { background: #15803d; }
+
+        /* ── Formatação Condicional ── */
+        .fc-demo {
+            overflow-x: auto;
+            margin: 14px 0;
+        }
+        .fc-table { border-collapse: collapse; width: 100%; font-size: .84em; }
+        .fc-table th { background: var(--primary); color: white; padding: 8px 12px; text-align: left; }
+        .fc-table th:first-child { border-radius: 6px 0 0 0; }
+        .fc-table th:last-child  { border-radius: 0 6px 0 0; }
+        .fc-table td { padding: 7px 12px; border-bottom: 1px solid #e5e7eb; text-align: right; font-family: 'Consolas', monospace; }
+        .fc-table td.label { text-align: left; font-family: inherit; }
+        .fc-alto  { background: #dcfce7; color: #15803d; font-weight: 700; }
+        .fc-medio { background: #fef9c3; color: #92400e; }
+        .fc-baixo { background: #fee2e2; color: #b91c1c; font-weight: 700; }
+        .fc-bar-cell { padding: 5px 12px; }
+        .fc-bar { height: 14px; border-radius: 3px; background: linear-gradient(90deg, #3b82f6, #93c5fd); display: inline-block; vertical-align: middle; }
+
+        /* ── Boas práticas ── */
+        .boas-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(200px,1fr)); gap: 12px; margin: 16px 0; }
+        .boa-item { background: #fff7ed; border-radius: 10px; padding: 16px; display: flex; gap: 12px; align-items: flex-start; }
+        .boa-icon { font-size: 1.6em; flex-shrink: 0; }
+        .boa-text strong { display: block; font-size: .88em; color: var(--primary); margin-bottom: 3px; }
+        .boa-text span   { font-size: .8em; color: #475569; }
+
+        /* ── nav ── */
+        .nav-footer { display: flex; justify-content: space-between; margin-top: 40px; padding-bottom: 40px; }
+        .nav-link { text-decoration: none; color: var(--primary); font-weight: 600; padding: 12px 24px; border-radius: 10px; background: white; box-shadow: 0 2px 8px rgba(0,0,0,.05); transition: all .3s; }
+        .nav-link:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,.1); }
+
+        @media (max-width: 768px) {
+            .content-wrapper { padding: 0 15px; }
+            .lesson-hero, .content-card { padding: 25px; }
+            .lesson-hero h1 { font-size: 1.5em; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="top-bar">
+    <a href="index.html" class="back-btn">&#x2B05; Voltar ao Dashboard</a>
+    <span class="page-badge">Unidade 4 &mdash; Su&iacute;te de Escrit&oacute;rio</span>
+    <button class="slide-toggle" id="slideToggleBtn">&#x1F4FA; Modo Slide</button>
+</div>
+
+<div class="content-wrapper">
+
+    <div class="lesson-hero">
+        <h1>&#x2211; Planilhas: F&oacute;rmulas e Fun&ccedil;&otilde;es</h1>
+        <p class="subtitle">Aula 4.9 &mdash; Operadores, refer&ecirc;ncias, fun&ccedil;&otilde;es matem&aacute;ticas e estat&iacute;sticas, fun&ccedil;&atilde;o SE, filtros, classifica&ccedil;&atilde;o e formata&ccedil;&atilde;o condicional no Microsoft Excel</p>
+    </div>
+
+    <!-- CARD 1 — Operadores e Fórmulas Básicas -->
+    <div class="content-card">
+        <h2>&#x2795; Operadores e F&oacute;rmulas B&aacute;sicas</h2>
+        <p>No Excel, toda f&oacute;rmula come&ccedil;a com o sinal de igual (<span class="fn">=</span>). A partir da&iacute;, voc&ecirc; combina <strong>operadores</strong>, <strong>refer&ecirc;ncias de c&eacute;lulas</strong>, <strong>valores</strong> e <strong>fun&ccedil;&otilde;es</strong>. O Excel segue a ordem matem&aacute;tica das opera&ccedil;&otilde;es (par&ecirc;nteses primeiro, depois pot&ecirc;ncia, multiplica&ccedil;&atilde;o/divis&atilde;o, soma/subtra&ccedil;&atilde;o).</p>
+
+        <table class="op-table">
+            <thead>
+                <tr><th>Operador</th><th>Significado</th><th>Exemplo</th><th>Resultado</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><span class="op-sym">+</span></td><td>Adi&ccedil;&atilde;o</td><td><span class="fn">=A1+B1</span></td><td>Soma A1 e B1</td></tr>
+                <tr><td><span class="op-sym">-</span></td><td>Subtra&ccedil;&atilde;o</td><td><span class="fn">=A1-B1</span></td><td>Subtrai B1 de A1</td></tr>
+                <tr><td><span class="op-sym">*</span></td><td>Multiplica&ccedil;&atilde;o</td><td><span class="fn">=C2*D2</span></td><td>Multiplica C2 por D2</td></tr>
+                <tr><td><span class="op-sym">/</span></td><td>Divis&atilde;o</td><td><span class="fn">=E5/F5</span></td><td>Divide E5 por F5</td></tr>
+                <tr><td><span class="op-sym">^</span></td><td>Pot&ecirc;ncia</td><td><span class="fn">=A1^2</span></td><td>A1 elevado ao quadrado</td></tr>
+                <tr><td><span class="op-sym">&amp;</span></td><td>Concatena&ccedil;&atilde;o de texto</td><td><span class="fn">=A1&amp;" "&amp;B1</span></td><td>Une texto de A1 e B1</td></tr>
+                <tr><td><span class="op-sym">%</span></td><td>Porcentagem</td><td><span class="fn">=A1*10%</span></td><td>10% do valor de A1</td></tr>
+            </tbody>
+        </table>
+
+        <div class="tip-box">
+            <p>&#x1F4A1; <strong>Ordem das opera&ccedil;&otilde;es:</strong> use par&ecirc;nteses para controlar a ordem. <span class="fn">=2+3*4</span> retorna 14, mas <span class="fn">=(2+3)*4</span> retorna 20. Sempre que houver d&uacute;vida, use par&ecirc;nteses expl&iacute;citos.</p>
+        </div>
+    </div>
+
+    <!-- CARD 2 — Referências Relativas e Absolutas -->
+    <div class="content-card">
+        <h2>&#x1F4CC; Refer&ecirc;ncias: Relativa, Absoluta e Mista</h2>
+        <p>Quando uma f&oacute;rmula &eacute; copiada para outra c&eacute;lula, o Excel ajusta os endere&ccedil;os automaticamente &mdash; mas nem sempre isso &eacute; o que queremos. O cifrão (<strong>$</strong>) trava partes do endere&ccedil;o para que n&atilde;o mudem ao copiar.</p>
+
+        <div class="ref-grid">
+            <div class="ref-item rel">
+                <span class="ref-code">A1</span>
+                <div class="ref-name">Relativa</div>
+                <div class="ref-desc">Ajusta coluna e linha ao copiar. Uso mais comum em f&oacute;rmulas que se repetem por linhas ou colunas.</div>
+            </div>
+            <div class="ref-item abs">
+                <span class="ref-code">$A$1</span>
+                <div class="ref-name">Absoluta</div>
+                <div class="ref-desc">N&atilde;o ajusta nada ao copiar. Use quando a f&oacute;rmula sempre deve apontar para a mesma c&eacute;lula (ex.: taxa de imposto).</div>
+            </div>
+            <div class="ref-item mix1">
+                <span class="ref-code">$A1</span>
+                <div class="ref-name">Mista &mdash; coluna fixa</div>
+                <div class="ref-desc">Coluna A travada; linha ajusta ao copiar para baixo. &Uacute;til em tabelas bidimensionais.</div>
+            </div>
+            <div class="ref-item mix2">
+                <span class="ref-code">A$1</span>
+                <div class="ref-name">Mista &mdash; linha fixa</div>
+                <div class="ref-desc">Linha 1 travada; coluna ajusta ao copiar para o lado. &Uacute;til para cabe&ccedil;alhos fixos em f&oacute;rmulas horizontais.</div>
+            </div>
+        </div>
+
+        <div class="highlight-box">
+            <p>&#x2328;&#xFE0F; <strong>Atalho:</strong> ao digitar ou editar uma refer&ecirc;ncia na barra de f&oacute;rmulas, pressione <span class="kbd-sm">F4</span> para alternar entre os quatro tipos de refer&ecirc;ncia (A1 &rarr; $A$1 &rarr; A$1 &rarr; $A1 &rarr; A1).</p>
+        </div>
+    </div>
+
+    <!-- CARD 3 — Funções Matemáticas e Estatísticas -->
+    <div class="content-card">
+        <h2>&#x1F4D0; Fun&ccedil;&otilde;es Matem&aacute;ticas e Estat&iacute;sticas</h2>
+        <p>Fun&ccedil;&otilde;es s&atilde;o f&oacute;rmulas pr&eacute;-definidas que realizam c&aacute;lculos complexos com uma sintaxe simples. No Excel, toda fun&ccedil;&atilde;o tem o formato: <span class="fn">=NOME_DA_FUNÇÃO(argumentos)</span>. O Excel sugere as fun&ccedil;&otilde;es enquanto voc&ecirc; digita &mdash; pressione <span class="kbd-sm">Tab</span> para autocompletar.</p>
+
+        <div class="fn-grid">
+            <div class="fn-item">
+                <span class="fn-name">SOMA</span>
+                <span class="fn-syntax">=SOMA(A1:A10)</span>
+                <span class="fn-desc">Soma todos os valores no intervalo. Tamb&eacute;m aceita m&uacute;ltiplos intervalos separados por ponto e v&iacute;rgula.</span>
+            </div>
+            <div class="fn-item">
+                <span class="fn-name">MÉDIA</span>
+                <span class="fn-syntax">=MÉDIA(B1:B10)</span>
+                <span class="fn-desc">Calcula a m&eacute;dia aritm&eacute;tica. C&eacute;lulas vazias s&atilde;o ignoradas; zeros s&atilde;o inclu&iacute;dos.</span>
+            </div>
+            <div class="fn-item">
+                <span class="fn-name">MÁXIMO</span>
+                <span class="fn-syntax">=MÁXIMO(C1:C10)</span>
+                <span class="fn-desc">Retorna o maior valor do intervalo. Use MÍNIMO para o menor valor.</span>
+            </div>
+            <div class="fn-item">
+                <span class="fn-name">MÍNIMO</span>
+                <span class="fn-syntax">=MÍNIMO(C1:C10)</span>
+                <span class="fn-desc">Retorna o menor valor. &Uacute;til para identificar o pior resultado ou o m&ecirc;s com menor venda.</span>
+            </div>
+            <div class="fn-item">
+                <span class="fn-name">CONT.NÚM</span>
+                <span class="fn-syntax">=CONT.NÚM(A1:A20)</span>
+                <span class="fn-desc">Conta quantas c&eacute;lulas cont&ecirc;m n&uacute;meros. CONT.VALORES conta c&eacute;lulas n&atilde;o vazias (qualquer tipo).</span>
+            </div>
+            <div class="fn-item">
+                <span class="fn-name">ARRED</span>
+                <span class="fn-syntax">=ARRED(A1;2)</span>
+                <span class="fn-desc">Arredonda o valor ao n&uacute;mero de casas decimais especificado. ARRED(3,14159;2) retorna 3,14.</span>
+            </div>
+            <div class="fn-item">
+                <span class="fn-name">SOMASE</span>
+                <span class="fn-syntax">=SOMASE(A:A;"Papelaria";B:B)</span>
+                <span class="fn-desc">Soma apenas as c&eacute;lulas em B onde a c&eacute;lula correspondente em A &eacute; igual ao crit&eacute;rio.</span>
+            </div>
+            <div class="fn-item">
+                <span class="fn-name">CONT.SE</span>
+                <span class="fn-syntax">=CONT.SE(C:C;"&gt;100")</span>
+                <span class="fn-desc">Conta c&eacute;lulas que atendem a um crit&eacute;rio. Aceita operadores como &gt;, &lt;, &lt;&gt;, =.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- CARD 4 — Funções de Texto -->
+    <div class="content-card">
+        <h2>&#x1F524; Fun&ccedil;&otilde;es de Texto</h2>
+        <p>O Excel tamb&eacute;m possui fun&ccedil;&otilde;es para manipular e transformar texto. S&atilde;o especialmente &uacute;teis para limpar dados importados de outros sistemas, onde nomes podem vir em caixa alta ou com formatos inconsistentes.</p>
+
+        <div class="fn-grid">
+            <div class="fn-item">
+                <span class="fn-name">MAIÚSCULA</span>
+                <span class="fn-syntax">=MAIÚSCULA(A1)</span>
+                <span class="fn-desc">Converte todo o texto para letras mai&uacute;sculas. &ldquo;produto a&rdquo; &rarr; &ldquo;PRODUTO A&rdquo;.</span>
+            </div>
+            <div class="fn-item">
+                <span class="fn-name">MINÚSCULA</span>
+                <span class="fn-syntax">=MINÚSCULA(A1)</span>
+                <span class="fn-desc">Converte todo o texto para letras min&uacute;sculas. &ldquo;PRODUTO A&rdquo; &rarr; &ldquo;produto a&rdquo;.</span>
+            </div>
+            <div class="fn-item">
+                <span class="fn-name">PRI.MAIÚSCULA</span>
+                <span class="fn-syntax">=PRI.MAIÚSCULA(A1)</span>
+                <span class="fn-desc">Coloca em mai&uacute;scula a primeira letra de cada palavra. &ldquo;jo&atilde;o silva&rdquo; &rarr; &ldquo;Jo&atilde;o Silva&rdquo;.</span>
+            </div>
+            <div class="fn-item">
+                <span class="fn-name">NÚM.CARACT</span>
+                <span class="fn-syntax">=NÚM.CARACT(A1)</span>
+                <span class="fn-desc">Retorna o n&uacute;mero de caracteres de um texto, incluindo espa&ccedil;os.</span>
+            </div>
+            <div class="fn-item">
+                <span class="fn-name">ARRUMAR</span>
+                <span class="fn-syntax">=ARRUMAR(A1)</span>
+                <span class="fn-desc">Remove espa&ccedil;os extras no in&iacute;cio, fim e entre palavras. Essencial para limpar dados importados.</span>
+            </div>
+            <div class="fn-item">
+                <span class="fn-name">TEXTO</span>
+                <span class="fn-syntax">=TEXTO(A1;"R$ #.##0,00")</span>
+                <span class="fn-desc">Converte um n&uacute;mero em texto formatado. &Uacute;til para combinar valores com textos em uma c&eacute;lula.</span>
+            </div>
+        </div>
+
+        <div class="alert-box">
+            <p>&#x26A0;&#xFE0F; <strong>Separa&ccedil;&atilde;o de argumentos:</strong> no Excel em portugu&ecirc;s (Brasil), os argumentos de uma fun&ccedil;&atilde;o s&atilde;o separados por <strong>ponto e v&iacute;rgula (;)</strong>, n&atilde;o por v&iacute;rgula. Ex.: <span class="fn">=SE(A1&gt;10;"Alto";"Baixo")</span>.</p>
+        </div>
+    </div>
+
+    <!-- CARD 5 — Função SE -->
+    <div class="content-card">
+        <h2>&#x2753; Fun&ccedil;&atilde;o SE &mdash; L&oacute;gica Condicional</h2>
+        <p>A fun&ccedil;&atilde;o <span class="fn">SE</span> &eacute; uma das mais poderosas e usadas do Excel. Ela testa uma condi&ccedil;&atilde;o e retorna um valor caso a condi&ccedil;&atilde;o seja <em>verdadeira</em> e outro caso seja <em>falsa</em>. Pode ser combinada com as fun&ccedil;&otilde;es <span class="fn">E</span> e <span class="fn">OU</span> para testar m&uacute;ltiplas condi&ccedil;&otilde;es simultaneamente.</p>
+
+        <div class="se-demo">
+            <div class="se-formula">=SE(D2&gt;=7; "Aprovado"; "Reprovado")</div>
+            <div class="se-parts">
+                <div class="se-part">
+                    <span class="se-badge teste">Teste</span>
+                    <span class="se-text"><span class="fn">D2&gt;=7</span> &mdash; verifica se a nota em D2 &eacute; maior ou igual a 7.</span>
+                </div>
+                <div class="se-part">
+                    <span class="se-badge verdade">Verdade</span>
+                    <span class="se-text"><span class="fn">"Aprovado"</span> &mdash; se o teste for verdadeiro, a c&eacute;lula exibe &ldquo;Aprovado&rdquo;.</span>
+                </div>
+                <div class="se-part">
+                    <span class="se-badge falso">Falso</span>
+                    <span class="se-text"><span class="fn">"Reprovado"</span> &mdash; se o teste for falso, a c&eacute;lula exibe &ldquo;Reprovado&rdquo;.</span>
+                </div>
+            </div>
+        </div>
+
+        <h3>&#x1F9EE; SE com m&uacute;ltiplas condi&ccedil;&otilde;es</h3>
+        <ul>
+            <li><strong>SE aninhado:</strong> <span class="fn">=SE(D2&gt;=9;"&Oacute;timo";SE(D2&gt;=7;"Bom";"Insuficiente"))</span> &mdash; testa em cascata.</li>
+            <li><strong>Com E:</strong> <span class="fn">=SE(E(D2&gt;=7;E2="Entregue");"Aprovado";"Pendente")</span> &mdash; ambas as condi&ccedil;&otilde;es precisam ser verdadeiras.</li>
+            <li><strong>Com OU:</strong> <span class="fn">=SE(OU(D2&lt;5;E2="Falta");"Reprovado";"Em avalia&ccedil;&atilde;o")</span> &mdash; basta uma ser verdadeira.</li>
+        </ul>
+
+        <div class="tip-box">
+            <p>&#x1F4A1; No Excel 365, a fun&ccedil;&atilde;o <span class="fn">SES</span> simplifica SE aninhados: <span class="fn">=SES(D2&gt;=9;"&Oacute;timo";D2&gt;=7;"Bom";D2&gt;=5;"Regular";VERDADEIRO;"Insuficiente")</span>. Muito mais leg&iacute;vel para m&uacute;ltiplos crit&eacute;rios.</p>
+        </div>
+    </div>
+
+    <!-- CARD 6 — Filtros e Classificação -->
+    <div class="content-card">
+        <h2>&#x1F50D; Filtros e Classifica&ccedil;&atilde;o</h2>
+        <p>Com filtros e classifica&ccedil;&atilde;o (<strong>Dados</strong> no Ribbon), &eacute; poss&iacute;vel <strong>visualizar apenas os dados relevantes</strong> de uma tabela grande sem excluir nada. Os dados filtrados ficam ocultos tempor&agrave;riamente; os dados originais permanecem intactos.</p>
+
+        <div class="filter-demo">
+            <table class="filter-table filter-active">
+                <thead>
+                    <tr>
+                        <th>Produto <span class="filter-btn">&#x25BE;</span></th>
+                        <th>Categoria <span class="filter-btn">&#x25BE;</span></th>
+                        <th style="background:#15803d;">Qtd. &nbsp;<span class="filter-btn">&#x25B2;</span> &#x1F50D;</th>
+                        <th>Total <span class="filter-btn">&#x25BE;</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Toner HP</td><td>Inform&aacute;tica</td><td class="num">10</td><td class="num">R$ 1.200,00</td></tr>
+                    <tr><td>Mouse sem fio</td><td>Inform&aacute;tica</td><td class="num">15</td><td class="num">R$ 637,50</td></tr>
+                    <tr class="hidden-row"><td>Caderno A4</td><td>Papelaria</td><td class="num">50</td><td class="num">R$ 375,00</td></tr>
+                    <tr class="hidden-row"><td>Caneta Azul</td><td>Papelaria</td><td class="num">200</td><td class="num">R$ 180,00</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <p style="font-size:.8em;color:#64748b;margin-top:-6px;">&#x2191; Filtro ativo na coluna Categoria: exibindo apenas &ldquo;Inform&aacute;tica&rdquo;. Linhas tachadas est&atilde;o ocultas.</p>
+
+        <h3>&#x1F449; Como usar filtros</h3>
+        <ul>
+            <li>Clique em qualquer c&eacute;lula da tabela e acesse <strong>Dados &rarr; Filtrar</strong> (ou <span class="kbd-sm">Ctrl+Shift+L</span>).</li>
+            <li>Clique no bot&atilde;o &#x25BE; no cabe&ccedil;alho da coluna desejada e selecione os valores a exibir.</li>
+            <li>Para filtrar por n&uacute;mero: escolha <em>Filtros de N&uacute;mero</em> &rarr; &ldquo;&eacute; maior que&rdquo;, &ldquo;entre&rdquo;, etc.</li>
+            <li>Para remover todos os filtros: <strong>Dados &rarr; Limpar</strong>.</li>
+        </ul>
+
+        <h3>&#x1F504; Classifica&ccedil;&atilde;o</h3>
+        <ul>
+            <li><strong>R&aacute;pida:</strong> clique na coluna e use <strong>Dados &rarr; Classificar de A a Z</strong> (ou Z a A para decrescente).</li>
+            <li><strong>M&uacute;ltiplos n&iacute;veis:</strong> <strong>Dados &rarr; Classificar</strong> &rarr; adicione n&iacute;veis de ordena&ccedil;&atilde;o. Ex.: primeiro por Categoria (A&rarr;Z), depois por Valor (maior para menor).</li>
+        </ul>
+    </div>
+
+    <!-- CARD 7 — Formatação Condicional -->
+    <div class="content-card">
+        <h2>&#x1F3A8; Formata&ccedil;&atilde;o Condicional</h2>
+        <p>A <strong>Formata&ccedil;&atilde;o Condicional</strong> (P&aacute;gina Inicial &rarr; Formata&ccedil;&atilde;o Condicional) aplica cores, &iacute;cones ou barras automaticamente conforme o valor da c&eacute;lula. Permite identificar padr&otilde;es e outliers de forma visual, sem precisar ler cada n&uacute;mero individualmente.</p>
+
+        <div class="fc-demo">
+            <table class="fc-table">
+                <thead>
+                    <tr><th>Vendedor</th><th>Meta</th><th>Resultado</th><th>Barra</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="label">Ana Lima</td>
+                        <td class="num">R$ 5.000</td>
+                        <td class="num fc-alto">R$ 7.200</td>
+                        <td class="fc-bar-cell"><span class="fc-bar" style="width:90%;"></span></td>
+                    </tr>
+                    <tr>
+                        <td class="label">Carlos Melo</td>
+                        <td class="num">R$ 5.000</td>
+                        <td class="num fc-medio">R$ 5.100</td>
+                        <td class="fc-bar-cell"><span class="fc-bar" style="width:64%;"></span></td>
+                    </tr>
+                    <tr>
+                        <td class="label">Beatriz Souza</td>
+                        <td class="num">R$ 5.000</td>
+                        <td class="num fc-alto">R$ 6.800</td>
+                        <td class="fc-bar-cell"><span class="fc-bar" style="width:85%;"></span></td>
+                    </tr>
+                    <tr>
+                        <td class="label">Diego Faria</td>
+                        <td class="num">R$ 5.000</td>
+                        <td class="num fc-baixo">R$ 2.300</td>
+                        <td class="fc-bar-cell"><span class="fc-bar" style="width:29%;"></span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>&#x1F449; Tipos de regra</h3>
+        <ul>
+            <li><strong>Realçar Regras de C&eacute;lulas:</strong> &ldquo;&eacute; maior que&rdquo;, &ldquo;entre&rdquo;, &ldquo;texto que cont&eacute;m&rdquo; &mdash; aplica uma cor de fundo ou fonte quando a condi&ccedil;&atilde;o &eacute; satisfeita.</li>
+            <li><strong>Regras de Primeiros/&Uacute;ltimos:</strong> destaca os 10 maiores valores, os 10% inferiores, acima/abaixo da m&eacute;dia.</li>
+            <li><strong>Barras de Dados:</strong> insere uma barra proporcional ao valor dentro da pr&oacute;pria c&eacute;lula (como no exemplo acima).</li>
+            <li><strong>Escalas de Cor:</strong> aplica um degradê de cor do menor ao maior valor (ex.: vermelho &rarr; amarelo &rarr; verde).</li>
+            <li><strong>Conjuntos de &Iacute;cones:</strong> adiciona s&iacute;mbolos (setas, sem&aacute;foros, estrelas) conforme faixas de valor.</li>
+        </ul>
+    </div>
+
+    <!-- CARD 8 — Boas Práticas -->
+    <div class="content-card">
+        <h2>&#x2705; Boas Pr&aacute;ticas com F&oacute;rmulas</h2>
+        <div class="boas-grid">
+            <div class="boa-item">
+                <div class="boa-icon">&#x1F4CC;</div>
+                <div class="boa-text">
+                    <strong>Use refer&ecirc;ncias, n&atilde;o valores fixos</strong>
+                    <span>Escreva <span class="fn">=A1*B1</span> em vez de <span class="fn">=15*8,5</span>. Se o valor mudar, a f&oacute;rmula atualiza; com n&uacute;mero fixo, &eacute; preciso editar cada c&eacute;lula manualmente.</span>
+                </div>
+            </div>
+            <div class="boa-item">
+                <div class="boa-icon">&#x1F512;</div>
+                <div class="boa-text">
+                    <strong>Trave vari&aacute;veis com $</strong>
+                    <span>Taxas, percentuais e par&acirc;metros fixos devem ser colocados em c&eacute;lulas dedicadas e referenciados com $A$1 nas f&oacute;rmulas.</span>
+                </div>
+            </div>
+            <div class="boa-item">
+                <div class="boa-icon">&#x26A0;&#xFE0F;</div>
+                <div class="boa-text">
+                    <strong>Evite f&oacute;rmulas circulares</strong>
+                    <span>Uma f&oacute;rmula circular &eacute; aquela que referencia a pr&oacute;pria c&eacute;lula direta ou indiretamente. O Excel alerta sobre isso &mdash; corrija imediatamente.</span>
+                </div>
+            </div>
+            <div class="boa-item">
+                <div class="boa-icon">&#x1F9EA;</div>
+                <div class="boa-text">
+                    <strong>Teste f&oacute;rmulas com dados conhecidos</strong>
+                    <span>Antes de aplicar a f&oacute;rmula a centenas de linhas, teste-a com dois ou tr&ecirc;s valores cujo resultado voc&ecirc; j&aacute; conhece para confirmar que est&aacute; correta.</span>
+                </div>
+            </div>
+            <div class="boa-item">
+                <div class="boa-icon">&#x1F50D;</div>
+                <div class="boa-text">
+                    <strong>Filtre antes de copiar</strong>
+                    <span>Ao copiar c&eacute;lulas de uma lista filtrada, o Excel pode copiar linhas ocultas. Use <span class="fn">Ctrl+G &rarr; Especial &rarr; Somente c&eacute;lulas vis&iacute;veis</span> para evitar isso.</span>
+                </div>
+            </div>
+            <div class="boa-item">
+                <div class="boa-icon">&#x1F3A8;</div>
+                <div class="boa-text">
+                    <strong>Formatação condicional com crit&eacute;rio claro</strong>
+                    <span>Use cores com significado coerente: vermelho = ruim, verde = bom. Evite excesso de regras que tornem a planilha confusa.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- EXERCÍCIO -->
+    <div class="content-card exercise-card">
+        <h2>&#x1F3AF; Exerc&iacute;cio &mdash; Arraste e Conecte</h2>
+        <p style="color:#475569;font-size:.9em;margin-bottom:4px;">Arraste cada descri&ccedil;&atilde;o para a fun&ccedil;&atilde;o ou recurso correto do Excel.</p>
+
+        <div class="ex-drag-root" data-ex="ex49">
+            <div class="ex-drag">
+                <div>
+                    <div class="ex-col-title">Descri&ccedil;&atilde;o</div>
+                    <div class="ex-pool" data-pool="ex49">
+                        <div class="drag-chip" data-id="c1">Trava coluna e linha de uma refer&ecirc;ncia com cifrão para que n&atilde;o se ajuste ao copiar a f&oacute;rmula para outras c&eacute;lulas</div>
+                        <div class="drag-chip" data-id="c2">Testa uma condi&ccedil;&atilde;o e retorna um valor se verdadeira e outro se falsa, como a f&oacute;rmula =SE(D2>=7;"Aprovado";"Reprovado")</div>
+                        <div class="drag-chip" data-id="c3">Soma apenas c&eacute;lulas que atendem a um crit&eacute;rio espec&iacute;fico, como somar somente os valores da categoria &ldquo;Inform&aacute;tica&rdquo;</div>
+                        <div class="drag-chip" data-id="c4">Aplica cores, barras ou &iacute;cones automaticamente nas c&eacute;lulas conforme o valor, permitindo identificar padr&otilde;es visualmente</div>
+                        <div class="drag-chip" data-id="c5">Remove espa&ccedil;os extras no in&iacute;cio, fim e entre palavras de um texto, essencial para limpar dados importados de sistemas externos</div>
+                        <div class="drag-chip" data-id="c6">Oculta tempor&agrave;riamente linhas que n&atilde;o atendem a um crit&eacute;rio, sem excluir os dados; ativado com Ctrl+Shift+L</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="ex-col-title">Fun&ccedil;&atilde;o / Recurso</div>
+                    <div class="ex-zones" data-zones="ex49">
+                        <div class="drop-zone" data-zone="ex49-z1" data-accept="c1">
+                            <span class="zone-name">Refer&ecirc;ncia Absoluta ($A$1)</span>
+                            <div class="zone-slot"></div>
+                            <div class="zone-feedback"></div>
+                        </div>
+                        <div class="drop-zone" data-zone="ex49-z2" data-accept="c2">
+                            <span class="zone-name">Fun&ccedil;&atilde;o SE</span>
+                            <div class="zone-slot"></div>
+                            <div class="zone-feedback"></div>
+                        </div>
+                        <div class="drop-zone" data-zone="ex49-z3" data-accept="c3">
+                            <span class="zone-name">SOMASE</span>
+                            <div class="zone-slot"></div>
+                            <div class="zone-feedback"></div>
+                        </div>
+                        <div class="drop-zone" data-zone="ex49-z4" data-accept="c4">
+                            <span class="zone-name">Formata&ccedil;&atilde;o Condicional</span>
+                            <div class="zone-slot"></div>
+                            <div class="zone-feedback"></div>
+                        </div>
+                        <div class="drop-zone" data-zone="ex49-z5" data-accept="c5">
+                            <span class="zone-name">Fun&ccedil;&atilde;o ARRUMAR</span>
+                            <div class="zone-slot"></div>
+                            <div class="zone-feedback"></div>
+                        </div>
+                        <div class="drop-zone" data-zone="ex49-z6" data-accept="c6">
+                            <span class="zone-name">Filtro (Dados &rarr; Filtrar)</span>
+                            <div class="zone-slot"></div>
+                            <div class="zone-feedback"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ex-actions">
+            <button class="btn-verificar" onclick="dragVerify('ex49')">Verificar</button>
+            <button class="btn-refazer"  onclick="dragReset('ex49')">Refazer</button>
+        </div>
+        <div class="ex-result" id="ex49-result"></div>
+    </div>
+
+    <!-- ATIVIDADE PRÁTICA 4.9 -->
+    <div class="content-card practical-card" id="prat-49">
+        <h2>&#x1F6E0;&#xFE0F; Atividade Pr&aacute;tica &mdash; Boletim Escolar com F&oacute;rmulas</h2>
+        <div class="prat-meta">
+            <span class="prat-tag">&#x23F1; ~50 min</span>
+            <span class="prat-tag">&#x1F4BB; Microsoft Excel</span>
+            <span class="prat-tag">&#x1F4BE; Salvar como Boletim_SeuNome.xlsx</span>
+        </div>
+
+        <div class="prat-steps">
+            <div class="prat-step">
+                <div class="step-num">1</div>
+                <div class="step-body">
+                    <div class="step-label">Monte a estrutura do boletim</div>
+                    <div class="step-desc">Crie uma nova planilha chamada <strong>Boletim</strong>. Monte os cabe&ccedil;alhos na linha 1: <em>N&ordm;</em> (A), <em>Nome</em> (B), <em>Portugu&ecirc;s</em> (C), <em>Matem&aacute;tica</em> (D), <em>Ci&ecirc;ncias</em> (E), <em>M&eacute;dia</em> (F), <em>Situa&ccedil;&atilde;o</em> (G). Preencha dados de <strong>10 alunos fict&iacute;cios</strong> nas linhas 2 a 11, com notas variadas (algumas abaixo de 5 para testar a f&oacute;rmula SE).</div>
+                </div>
+            </div>
+            <div class="prat-step">
+                <div class="step-num">2</div>
+                <div class="step-body">
+                    <div class="step-label">Calcule a m&eacute;dia e a situa&ccedil;&atilde;o de cada aluno</div>
+                    <div class="step-desc">Na coluna F (M&eacute;dia), use a fun&ccedil;&atilde;o <span style="font-family:monospace;background:#f1f5f9;padding:1px 5px;border-radius:3px;">=MÉDIA(C2:E2)</span> e arraste a al&ccedil;a de preenchimento para os demais alunos. Na coluna G (Situa&ccedil;&atilde;o), use <span style="font-family:monospace;background:#f1f5f9;padding:1px 5px;border-radius:3px;">=SE(F2&gt;=7;"Aprovado";"Reprovado")</span> e arraste. Formate a coluna M&eacute;dia com 1 casa decimal (Ctrl+1).</div>
+                </div>
+            </div>
+            <div class="prat-step">
+                <div class="step-num">3</div>
+                <div class="step-body">
+                    <div class="step-label">Adicione estat&iacute;sticas da turma</div>
+                    <div class="step-desc">Ap&oacute;s a &uacute;ltima linha de aluno (linha 12 ou 13), adicione um bloco de estat&iacute;sticas:<br>
+                    &bull; <em>M&eacute;dia da turma:</em> <span style="font-family:monospace;background:#f1f5f9;padding:1px 5px;border-radius:3px;">=MÉDIA(F2:F11)</span><br>
+                    &bull; <em>Maior nota m&eacute;dia:</em> <span style="font-family:monospace;background:#f1f5f9;padding:1px 5px;border-radius:3px;">=MÁXIMO(F2:F11)</span><br>
+                    &bull; <em>Menor nota m&eacute;dia:</em> <span style="font-family:monospace;background:#f1f5f9;padding:1px 5px;border-radius:3px;">=MÍNIMO(F2:F11)</span><br>
+                    &bull; <em>N&ordm; aprovados:</em> <span style="font-family:monospace;background:#f1f5f9;padding:1px 5px;border-radius:3px;">=CONT.SE(G2:G11;"Aprovado")</span></div>
+                </div>
+            </div>
+            <div class="prat-step">
+                <div class="step-num">4</div>
+                <div class="step-body">
+                    <div class="step-label">Aplique formata&ccedil;&atilde;o condicional na coluna M&eacute;dia</div>
+                    <div class="step-desc">Selecione o intervalo F2:F11. Acesse <strong>P&aacute;gina Inicial &rarr; Formata&ccedil;&atilde;o Condicional &rarr; Escalas de Cor</strong> e aplique o esquema Verde&ndash;Amarelo&ndash;Vermelho (maiores notas em verde, menores em vermelho). Depois adicione uma segunda regra: <strong>Realçar C&eacute;lulas &rarr; &Eacute; menor que&hellip;</strong> &rarr; 5 &rarr; preenchimento vermelho intenso. Observe como as reprovações se destacam.</div>
+                </div>
+            </div>
+            <div class="prat-step">
+                <div class="step-num">5</div>
+                <div class="step-body">
+                    <div class="step-label">Converta em Tabela e use o filtro</div>
+                    <div class="step-desc">Selecione o intervalo A1:G11 e pressione <strong>Ctrl+T</strong> para converter em Tabela Formatada. Aplique um estilo de tabela. Use o filtro na coluna <em>Situa&ccedil;&atilde;o</em> para exibir apenas os alunos &ldquo;Reprovado&rdquo;. Anote quantos s&atilde;o. Depois remova o filtro (Dados &rarr; Limpar) para ver todos novamente.</div>
+                </div>
+            </div>
+            <div class="prat-step">
+                <div class="step-num">6</div>
+                <div class="step-body">
+                    <div class="step-label">Classifique e finalize</div>
+                    <div class="step-desc">Classifique a tabela pela coluna <em>M&eacute;dia</em> do maior para o menor (<strong>Dados &rarr; Classificar Z a A</strong>). Observe como a coluna N&ordm; se desordena &mdash; a classifica&ccedil;&atilde;o move as linhas inteiras. Converta a coluna <em>Situa&ccedil;&atilde;o</em> (G) com <strong>PRI.MAI&Uacute;SCULA</strong> na coluna H como exerc&iacute;cio extra: <span style="font-family:monospace;background:#f1f5f9;padding:1px 5px;border-radius:3px;">=PRI.MAIÚSCULA(G2)</span>. Salve o arquivo.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="prat-observe">
+            <strong>&#x1F4CC; Para refletir:</strong> F&oacute;rmulas e fun&ccedil;&otilde;es n&atilde;o s&atilde;o apenas atalhos para c&aacute;lculos &mdash; elas tornam a planilha <em>inteligente</em>. Quando um dado muda, todas as c&eacute;lulas que dependem dele se atualizam automaticamente. Isso elimina erros de redigitação e garante consist&ecirc;ncia nos resultados.
+        </div>
+
+        <div class="ex-actions">
+            <button class="btn-print" onclick="printPractical('prat-49', 'Aula 4.9 \u2014 Planilhas: F\u00f3rmulas e Fun\u00e7\u00f5es')">&#x1F5A8;&#xFE0F; Imprimir roteiro</button>
+        </div>
+    </div>
+
+    <div class="nav-footer">
+        <a href="uni4-08-planilhas-dados.html" class="nav-link">&#x2B05; Anterior: Planilhas &mdash; Interface e Dados</a>
+        <a href="uni4-10-planilhas-graficos.html" class="nav-link">Pr&oacute;xima: Planilhas &mdash; Gr&aacute;ficos &#x27A1;</a>
+    </div>
+
+</div>
+
+<script src="slide-mode.js"></script>
+<script src="exercise-drag.js"></script>
+<script src="exercise-print.js"></script>
+</body>
+</html>
