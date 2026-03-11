@@ -968,25 +968,31 @@
 
     <script>
         // ─── CONFIGURAÇÃO (Google Sheets) ────────────────────────────────
-        // Crie uma planilha Google com:
-        //   Aba 1 (padrão): 4 linhas, coluna B = TRUE/FALSE para cada unidade
-        //   Aba "aulas":    coluna A = nome do arquivo da aula, coluna B = TRUE/FALSE
-        const SHEET_ID = '1uqwXdBgTZwuS1WJFSpFZr9d6qmoiuxvdDWZys8BZoRM';
-        const SHEET_URL  = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID
-                         + '/gviz/tq?tqx=out:csv&t=' + Date.now();
-        const AULAS_URL  = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID
-                         + '/gviz/tq?tqx=out:csv&sheet=aulas&t=' + Date.now();
+        // Aba "aulas": coluna A = nome do arquivo da aula, coluna B = TRUE/FALSE
+        const SHEET_ID  = '1uqwXdBgTZwuS1WJFSpFZr9d6qmoiuxvdDWZys8BZoRM';
+        const AULAS_URL = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID
+                        + '/gviz/tq?tqx=out:csv&sheet=aulas&t=' + Date.now();
         // ─────────────────────────────────────────────────────────────────
 
         function updateProgress() {
-            const boxes   = document.querySelectorAll('.chapter-check');
-            const total   = boxes.length;
-            const checked = Array.from(boxes).filter(cb => cb.checked).length;
-            const pct     = Math.round(checked / total * 100);
+            const total   = document.querySelectorAll('a.lesson-card').length;
+            const checked = document.querySelectorAll('a.lesson-card.done').length;
+            const pct     = total > 0 ? Math.round(checked / total * 100) : 0;
 
             document.getElementById('progressCircle').style.setProperty('--prog', pct + '%');
             document.getElementById('progText').textContent  = pct + '%';
-            document.getElementById('progLabel').textContent = checked + ' de ' + total + ' unidades';
+            document.getElementById('progLabel').textContent = checked + ' de ' + total + ' aulas';
+        }
+
+        function updateUnidadeChecks() {
+            ['uni1', 'uni2', 'uni3', 'uni4'].forEach(function(uni, i) {
+                const tab  = document.getElementById(uni);
+                const cb   = document.getElementById('ch' + (i + 1));
+                if (!tab || !cb) return;
+                const cards = tab.querySelectorAll('a.lesson-card:not(.coming-soon)');
+                const done  = tab.querySelectorAll('a.lesson-card.done');
+                cb.checked  = (cards.length > 0 && done.length === cards.length);
+            });
         }
 
         function updateLessonCards(csv) {
@@ -1003,37 +1009,23 @@
                     card.classList.add('done');
                     card.classList.remove('coming-soon');
                     const statusEl = card.querySelector('.lesson-status');
-                    if (statusEl) statusEl.textContent = '\u2705';
+                    if (statusEl) statusEl.textContent = '✅';
                 }
             });
+            updateUnidadeChecks();
+            updateProgress();
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            // Checkboxes somente leitura
             document.querySelectorAll('.chapter-check').forEach(cb => cb.disabled = true);
 
-            // Busca status das unidades
-            fetch(SHEET_URL)
+            fetch(AULAS_URL)
                 .then(r => r.text())
-                .then(csv => {
-                    const linhas = csv.trim().split('\n').slice(1);
-                    const boxes  = document.querySelectorAll('.chapter-check');
-                    linhas.forEach((linha, i) => {
-                        if (i >= boxes.length) return;
-                        boxes[i].checked = linha.toUpperCase().includes('TRUE');
-                    });
-                    updateProgress();
-                })
+                .then(csv => updateLessonCards(csv))
                 .catch(() => {
                     console.warn('Planilha não configurada. Progresso zerado.');
                     updateProgress();
                 });
-
-            // Busca status das aulas
-            fetch(AULAS_URL)
-                .then(r => r.text())
-                .then(csv => updateLessonCards(csv))
-                .catch(() => {});
         });
 
         // ─── NAVEGAÇÃO POR ABAS + URL HASH ──────────────────────────────
