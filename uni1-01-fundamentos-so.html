@@ -554,14 +554,27 @@
                 <div class="prat-step">
                     <div class="step-num">5</div>
                     <div class="step-body">
-                        <div class="step-label">Listando processos pelo terminal</div>
-                        <div class="step-desc">No mesmo cmd, digite <kbd>tasklist | more</kbd> e pressione <kbd>Enter</kbd>. Veja a lista de processos ativos. Pressione <kbd>Espa&ccedil;o</kbd> para avan&ccedil;ar p&aacute;ginas e <kbd>Ctrl</kbd>+<kbd>C</kbd> para sair. Identifique pelo menos um processo do pr&oacute;prio S.O. (ex.: <em>svchost.exe</em>, <em>csrss.exe</em>).</div>
+                        <div class="step-label">Identifique e pesquise processos do S.O.</div>
+                        <div class="step-desc">
+                            No mesmo cmd, digite <kbd>tasklist | findstr /i "lsass svchost csrss"</kbd> e pressione <kbd>Enter</kbd>. Voc&ecirc; ver&aacute; apenas as linhas dos tr&ecirc;s processos do pr&oacute;prio Windows abaixo:
+                            <ul style="margin:10px 0 10px 20px;">
+                                <li><strong>lsass.exe</strong> &mdash; Local Security Authority Subsystem Service</li>
+                                <li><strong>svchost.exe</strong> &mdash; Service Host (pode aparecer v&aacute;rias vezes)</li>
+                                <li><strong>csrss.exe</strong> &mdash; Client Server Runtime Process</li>
+                            </ul>
+                            Agora <strong>pesquise no navegador</strong> o que cada um desses processos faz e anote com suas palavras:
+                            <ol style="margin:8px 0 0 20px;">
+                                <li>Qual &eacute; a fun&ccedil;&atilde;o do <em>lsass.exe</em> no Windows?</li>
+                                <li>Por que o <em>svchost.exe</em> aparece v&aacute;rias vezes na lista?</li>
+                                <li>O que aconteceria se o <em>csrss.exe</em> fosse encerrado?</li>
+                            </ol>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="prat-observe">
-                <strong>&#x1F4CC; Para saber:</strong> Os processos do sistema (<em>System</em>, <em>csrss.exe</em>, <em>winlogon.exe</em>) s&atilde;o parte do kernel e dos subsistemas do S.O. rodando continuamente. Os seus programas abertos (Chrome, Word&hellip;) s&atilde;o processos de aplicativo, gerenciados pelo S.O. por cima desses.
+                <strong>&#x1F4CC; Para saber:</strong> <em>lsass.exe</em> gerencia autentica&ccedil;&atilde;o e login de usu&aacute;rios; <em>svchost.exe</em> &eacute; um processo hospedeiro que carrega v&aacute;rios servi&ccedil;os do Windows ao mesmo tempo (por isso aparece m&uacute;ltiplas vezes); <em>csrss.exe</em> &eacute; respons&aacute;vel pelo subsistema de interface do usu&aacute;rio &mdash; encerrá-lo causa tela azul. Os tr&ecirc;s s&atilde;o processos cr&iacute;ticos do S.O. e n&atilde;o devem ser finalizados manualmente.
             </div>
 
             <div class="ex-actions">
