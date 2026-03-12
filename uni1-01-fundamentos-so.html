@@ -556,18 +556,13 @@
                     <div class="step-body">
                         <div class="step-label">Identifique e pesquise processos do S.O.</div>
                         <div class="step-desc">
-                            No mesmo cmd, digite <kbd>tasklist | findstr /i "lsass svchost csrss"</kbd> e pressione <kbd>Enter</kbd>. Voc&ecirc; ver&aacute; apenas as linhas dos tr&ecirc;s processos do pr&oacute;prio Windows abaixo:
+                            No mesmo cmd, digite <kbd>tasklist | more</kbd> e pressione <kbd>Enter</kbd>. Role a lista com <kbd>Espa&ccedil;o</kbd> e localize os tr&ecirc;s processos abaixo (use <kbd>Ctrl</kbd>+<kbd>C</kbd> para sair quando quiser):
                             <ul style="margin:10px 0 10px 20px;">
-                                <li><strong>lsass.exe</strong> &mdash; Local Security Authority Subsystem Service</li>
-                                <li><strong>svchost.exe</strong> &mdash; Service Host (pode aparecer v&aacute;rias vezes)</li>
-                                <li><strong>csrss.exe</strong> &mdash; Client Server Runtime Process</li>
+                                <li><strong>lsass.exe</strong></li>
+                                <li><strong>svchost.exe</strong></li>
+                                <li><strong>csrss.exe</strong></li>
                             </ul>
-                            Agora <strong>pesquise no navegador</strong> o que cada um desses processos faz e anote com suas palavras:
-                            <ol style="margin:8px 0 0 20px;">
-                                <li>Qual &eacute; a fun&ccedil;&atilde;o do <em>lsass.exe</em> no Windows?</li>
-                                <li>Por que o <em>svchost.exe</em> aparece v&aacute;rias vezes na lista?</li>
-                                <li>O que aconteceria se o <em>csrss.exe</em> fosse encerrado?</li>
-                            </ol>
+                            Ap&oacute;s localiz&aacute;-los, <strong>pesquise no navegador</strong> para que serve cada um e anote com suas palavras.
                         </div>
                     </div>
                 </div>
