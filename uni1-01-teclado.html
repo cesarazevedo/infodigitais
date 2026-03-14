@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 1.5 - Conhecendo o Teclado</title>
+    <link rel="stylesheet" href="slide-mode.css">
+    <link rel="stylesheet" href="exercise.css">
+    <style>
+        :root {
+            --primary: #1565c0;
+            --secondary: #00897b;
+            --bg-light: #f0f4f8;
+            --text-dark: #1a202c;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        .top-bar {
+            background: white;
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .back-btn {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+
+        .back-btn:hover { background: rgba(21,101,192,0.08); }
+
+        .page-badge {
+            font-size: 0.8em;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: rgba(21, 101, 192, 0.12);
+            color: #1565c0;
+            font-weight: 600;
+        }
+
+        .content-wrapper {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 30px;
+        }
+
+        .lesson-hero {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            border-top: 4px solid var(--primary);
+        }
+
+        .lesson-hero h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .lesson-hero .subtitle {
+            font-size: 1.05em;
+            color: #718096;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 16px;
+            padding: 35px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+
+        .content-card h2 {
+            font-size: 1.4em;
+            color: var(--primary);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .content-card h3 {
+            font-size: 1.05em;
+            color: #2d5a9e;
+            margin: 20px 0 10px;
+        }
+
+        .content-card p { margin-bottom: 15px; text-align: justify; }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(21,101,192,0.05), rgba(0,137,123,0.06));
+            border-left: 4px solid var(--primary);
+            padding: 20px 25px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+        }
+
+        .highlight-box p { margin-bottom: 0; font-style: italic; }
+
+        .alert-box {
+            background: #fff8e1;
+            border-left: 4px solid #f59e0b;
+            padding: 18px 22px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+        }
+
+        .alert-box p { margin: 0; color: #78350f; font-size: 0.93em; }
+
+        /* Grid de grupos de teclas */
+        .grupos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+            gap: 14px;
+            margin: 20px 0;
+        }
+
+        .grupo-item {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px 16px;
+            text-align: center;
+            border-top: 3px solid var(--primary);
+            transition: transform 0.2s;
+        }
+
+        .grupo-item:hover { transform: translateY(-3px); }
+        .grupo-icon { font-size: 2em; margin-bottom: 8px; }
+        .grupo-item strong { display: block; color: var(--primary); font-size: 0.9em; margin-bottom: 4px; }
+        .grupo-item span { font-size: 0.8em; color: #718096; }
+
+        /* Cards de tecla */
+        .key-cards {
+            display: grid;
+            gap: 16px;
+            margin: 10px 0;
+        }
+
+        .key-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 18px;
+            background: #f8fafc;
+            border-radius: 14px;
+            padding: 20px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .key-visual {
+            flex-shrink: 0;
+            min-width: 70px;
+            text-align: center;
+        }
+
+        .key-btn {
+            display: inline-block;
+            background: linear-gradient(180deg, #f0f4f8 0%, #dce3ee 100%);
+            border: 2px solid #94a3b8;
+            border-bottom: 4px solid #64748b;
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-family: 'Segoe UI', monospace;
+            font-size: 0.85em;
+            font-weight: 700;
+            color: #1a202c;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+            white-space: nowrap;
+        }
+
+        .key-info strong {
+            display: block;
+            font-size: 1.05em;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .key-info p {
+            font-size: 0.92em;
+            color: #4a5568;
+            margin-bottom: 8px;
+            text-align: left;
+        }
+
+        .key-info p:last-child { margin-bottom: 0; }
+
+        .key-example {
+            display: inline-block;
+            background: rgba(21,101,192,0.08);
+            color: #1565c0;
+            font-size: 0.8em;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 20px;
+            margin-top: 2px;
+        }
+
+        /* Tabela de atalhos */
+        .atalho-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 0.9em;
+        }
+
+        .atalho-table th {
+            background: var(--primary);
+            color: white;
+            padding: 11px 14px;
+            text-align: left;
+        }
+
+        .atalho-table th:first-child { border-radius: 8px 0 0 0; }
+        .atalho-table th:last-child  { border-radius: 0 8px 0 0; }
+
+        .atalho-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: middle;
+        }
+
+        .atalho-table tr:nth-child(even) td { background: #f8fafc; }
+        .atalho-table tr:last-child td { border-bottom: none; }
+
+        .atalho-table kbd {
+            background: #f0f4f8;
+            border: 1px solid #94a3b8;
+            border-bottom: 3px solid #64748b;
+            border-radius: 5px;
+            padding: 2px 8px;
+            font-size: 0.85em;
+            font-family: monospace;
+            font-weight: 700;
+            color: #1a202c;
+        }
+
+        /* Mini teclado ilustrativo */
+        .teclado-mapa {
+            background: #1e293b;
+            border-radius: 16px;
+            padding: 20px;
+            margin: 20px 0;
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            align-items: flex-start;
+            overflow-x: auto;
+        }
+
+        .teclado-secao {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .teclado-sep {
+            width: 2px;
+            background: #334155;
+            align-self: stretch;
+            border-radius: 2px;
+            margin: 0 4px;
+        }
+
+        .teclado-linha {
+            display: flex;
+            gap: 4px;
+        }
+
+        .tmapa-key {
+            background: #334155;
+            border: 1px solid #475569;
+            border-bottom: 3px solid #1e293b;
+            border-radius: 6px;
+            padding: 6px 8px;
+            font-size: 0.65em;
+            font-weight: 700;
+            color: #e2e8f0;
+            font-family: monospace;
+            min-width: 32px;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .tmapa-key.destaque {
+            background: #1d4ed8;
+            border-color: #3b82f6;
+            color: white;
+        }
+
+        /* Seção principal: cada linha preenche 100% e as teclas usam flex proporcional */
+        .secao-main { flex: 1; min-width: 400px; }
+        .secao-main .teclado-linha { width: 100%; }
+        .secao-main .tmapa-key {
+            flex: 10 0 0;
+            min-width: 0;
+            overflow: hidden;
+            padding: 5px 3px;
+            font-size: 0.62em;
+        }
+
+        /* Larguras proporcionais das teclas especiais */
+        .secao-main .k-esc    { flex: 15 0 0; }
+        .secao-main .k-bksp   { flex: 20 0 0; }
+        .secao-main .k-tab    { flex: 15 0 0; }
+        .secao-main .k-enter  { flex: 15 0 0; }
+        .secao-main .k-caps   { flex: 20 0 0; }
+        .secao-main .k-til    { flex: 20 0 0; }
+        .secao-main .k-lshift { flex: 20 0 0; }
+        .secao-main .k-rshift { flex: 20 0 0; }
+        .secao-main .k-mod    { flex: 14 0 0; }
+        .secao-main .k-space  { flex: 80 0 0; }
+
+        /* Teclas com dois caracteres (global: funciona no teclado principal e no cluster de nav) */
+        .tmapa-key.dk {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 3px 2px;
+            gap: 0;
+        }
+        .dk-top { font-size: 0.85em; color: #93c5fd; line-height: 1.2; }
+        .dk-bot { line-height: 1.3; }
+
+        /* Teclas com três caracteres (normal + Shift + AltGr) */
+        .tmapa-key.dk3 { display: flex; flex-direction: column; align-items: stretch; padding: 3px 2px; gap: 0; }
+        .dk3 .dk-top-row { display: flex; justify-content: space-between; line-height: 1.2; }
+        .dk3 .dk-shift { font-size: 0.78em; color: #93c5fd; }
+        .dk3 .dk-altgr  { font-size: 0.72em; color: #86efac; }
+        .dk3 .dk-bot { line-height: 1.3; text-align: left; padding-left: 1px; }
+
+        /* Espaçador invisível (separa grupos de F-keys) */
+        .tmapa-spacer { flex: 5 0 0; display: block; }
+
+        /* Teclado numérico: CSS Grid com + e Enter ocupando 2 linhas */
+        .teclado-numpad {
+            display: grid;
+            grid-template-columns: repeat(4, 32px);
+            gap: 4px;
+        }
+        .teclado-numpad .k-numplus {
+            grid-column: 4;
+            grid-row: 2 / 4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .teclado-numpad .k-numenter {
+            grid-column: 4;
+            grid-row: 4 / 6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .teclado-numpad .k-num0 { grid-column: 1 / 3; }
+
+        /* Cluster de setas: grid 3×2 com ↑ fixo na coluna do meio */
+        .teclado-arrows {
+            display: grid;
+            grid-template-columns: repeat(3, 32px);
+            gap: 4px;
+            margin-top: 14px;
+        }
+        .teclado-arrows .k-arrow-up    { grid-column: 2; grid-row: 1; }
+        .teclado-arrows .k-arrow-left  { grid-column: 1; grid-row: 2; }
+        .teclado-arrows .k-arrow-down  { grid-column: 2; grid-row: 2; }
+        .teclado-arrows .k-arrow-right { grid-column: 3; grid-row: 2; }
+
+        ul, ol { margin: 10px 0 15px 25px; }
+        li { margin-bottom: 8px; }
+
+        .nav-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-bottom: 40px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+
+        .nav-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        @media (max-width: 768px) {
+            .content-wrapper { padding: 0 15px; }
+            .lesson-hero, .content-card { padding: 25px; }
+            .lesson-hero h1 { font-size: 1.5em; }
+            .grupos-grid { grid-template-columns: repeat(2, 1fr); }
+            .key-card { flex-direction: column; gap: 10px; }
+            .teclado-mapa { display: none; }
+            .secao-main { min-width: unset; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <a href="index.html" class="back-btn">&#x2B05; Voltar ao Dashboard</a>
+        <span class="page-badge">Unidade 1 &mdash; S.O. e Utilit&aacute;rios</span>
+        <button class="slide-toggle" id="slideToggleBtn">&#x1F4FA; Modo Slide</button>
+    </div>
+
+    <div class="content-wrapper">
+
+        <div class="lesson-hero">
+            <h1>&#x2328;&#xFE0F; Conhecendo o Teclado</h1>
+            <p class="subtitle">Aula 1.5 &mdash; Aprenda a identificar e usar as principais teclas do computador</p>
+        </div>
+
+        <!-- CARD 1 — O que é o teclado -->
+        <div class="content-card">
+            <h2>&#x1F4AC; O que &eacute; o teclado e por que importa?</h2>
+            <p>O <strong>teclado</strong> &eacute; o principal dispositivo de entrada de texto no computador. Por meio dele, digitamos palavras, n&uacute;meros e comandos que fazem o computador executar a&ccedil;&otilde;es. Conhecer bem as teclas torna o trabalho mais r&aacute;pido, preciso e confort&aacute;vel.</p>
+            <p>Um teclado padr&atilde;o possui entre <strong>100 e 110 teclas</strong>, divididas em grupos com finalidades diferentes. Aprender para que serve cada grupo &eacute; o primeiro passo para usar o computador com confian&ccedil;a.</p>
+
+            <!-- Mini mapa visual do teclado (layout ABNT2) -->
+            <div class="teclado-mapa" aria-label="Mapa ilustrativo do teclado ABNT2">
+
+                <!-- Teclado principal ABNT2 — linhas alinhadas via flex proporcional -->
+                <div class="teclado-secao secao-main">
+
+                    <!-- Linha de função -->
+                    <div class="teclado-linha">
+                        <span class="tmapa-key destaque k-esc">Esc</span>
+                        <span class="tmapa-spacer"></span>
+                        <span class="tmapa-key">F1</span><span class="tmapa-key">F2</span><span class="tmapa-key">F3</span><span class="tmapa-key">F4</span>
+                        <span class="tmapa-spacer"></span>
+                        <span class="tmapa-key">F5</span><span class="tmapa-key">F6</span><span class="tmapa-key">F7</span><span class="tmapa-key">F8</span>
+                        <span class="tmapa-spacer"></span>
+                        <span class="tmapa-key">F9</span><span class="tmapa-key">F10</span><span class="tmapa-key">F11</span><span class="tmapa-key">F12</span>
+                    </div>
+
+                    <!-- Linha de números (caractere superior = com Shift) -->
+                    <div class="teclado-linha">
+                        <span class="tmapa-key dk"><span class="dk-top">"</span><span class="dk-bot">'</span></span>
+                        <span class="tmapa-key dk3"><span class="dk-top-row"><span class="dk-shift">!</span><span class="dk-altgr">&#xB9;</span></span><span class="dk-bot">1</span></span>
+                        <span class="tmapa-key dk3"><span class="dk-top-row"><span class="dk-shift">@</span><span class="dk-altgr">&#xB2;</span></span><span class="dk-bot">2</span></span>
+                        <span class="tmapa-key dk3"><span class="dk-top-row"><span class="dk-shift">#</span><span class="dk-altgr">&#xB3;</span></span><span class="dk-bot">3</span></span>
+                        <span class="tmapa-key dk3"><span class="dk-top-row"><span class="dk-shift">$</span><span class="dk-altgr">&#xA3;</span></span><span class="dk-bot">4</span></span>
+                        <span class="tmapa-key dk3"><span class="dk-top-row"><span class="dk-shift">%</span><span class="dk-altgr">&#xA2;</span></span><span class="dk-bot">5</span></span>
+                        <span class="tmapa-key dk3"><span class="dk-top-row"><span class="dk-shift">&uml;</span><span class="dk-altgr">&#xAC;</span></span><span class="dk-bot">6</span></span>
+                        <span class="tmapa-key dk"><span class="dk-top">&amp;</span><span class="dk-bot">7</span></span>
+                        <span class="tmapa-key dk"><span class="dk-top">*</span><span class="dk-bot">8</span></span>
+                        <span class="tmapa-key dk"><span class="dk-top">(</span><span class="dk-bot">9</span></span>
+                        <span class="tmapa-key dk"><span class="dk-top">)</span><span class="dk-bot">0</span></span>
+                        <span class="tmapa-key dk"><span class="dk-top">_</span><span class="dk-bot">-</span></span>
+                        <span class="tmapa-key dk"><span class="dk-top">+</span><span class="dk-bot">=</span></span>
+                        <span class="tmapa-key destaque k-bksp">&#x232B;</span>
+                    </div>
+
+                    <!-- Linha QWERTY -->
+                    <div class="teclado-linha">
+                        <span class="tmapa-key destaque k-tab">&#x21E5; Tab</span>
+                        <span class="tmapa-key">Q</span><span class="tmapa-key">W</span><span class="tmapa-key">E</span><span class="tmapa-key">R</span><span class="tmapa-key">T</span><span class="tmapa-key">Y</span><span class="tmapa-key">U</span><span class="tmapa-key">I</span><span class="tmapa-key">O</span><span class="tmapa-key">P</span>
+                        <span class="tmapa-key dk"><span class="dk-top">`</span><span class="dk-bot">´</span></span>
+                        <span class="tmapa-key dk3"><span class="dk-top-row"><span class="dk-shift">{</span><span class="dk-altgr">&#xAA;</span></span><span class="dk-bot">[</span></span>
+                        <span class="tmapa-key destaque k-enter">&#x21B5; Enter</span>
+                    </div>
+
+                    <!-- Linha base / Home row (ABNT2: tem Ç) -->
+                    <div class="teclado-linha">
+                        <span class="tmapa-key destaque k-caps">&#x21EA; Caps</span>
+                        <span class="tmapa-key">A</span><span class="tmapa-key">S</span><span class="tmapa-key">D</span><span class="tmapa-key">F</span><span class="tmapa-key">G</span><span class="tmapa-key">H</span><span class="tmapa-key">J</span><span class="tmapa-key">K</span><span class="tmapa-key">L</span>
+                        <span class="tmapa-key">Ç</span>
+                        <span class="tmapa-key dk"><span class="dk-top">~</span><span class="dk-bot">^</span></span>
+                        <span class="tmapa-key k-til dk3"><span class="dk-top-row"><span class="dk-shift">}</span><span class="dk-altgr">&#xBA;</span></span><span class="dk-bot">]</span></span>
+                    </div>
+
+                    <!-- Linha ZXCV (ABNT2: tecla extra entre Shift e Z) -->
+                    <div class="teclado-linha">
+                        <span class="tmapa-key destaque k-lshift">&#x21E7;</span>
+                        <span class="tmapa-key dk"><span class="dk-top">|</span><span class="dk-bot">\</span></span>
+                        <span class="tmapa-key">Z</span><span class="tmapa-key">X</span><span class="tmapa-key">C</span><span class="tmapa-key">V</span><span class="tmapa-key">B</span><span class="tmapa-key">N</span><span class="tmapa-key">M</span>
+                        <span class="tmapa-key dk"><span class="dk-top">&lt;</span><span class="dk-bot">,</span></span>
+                        <span class="tmapa-key dk"><span class="dk-top">&gt;</span><span class="dk-bot">.</span></span>
+                        <span class="tmapa-key dk"><span class="dk-top">:</span><span class="dk-bot">;</span></span>
+                        <span class="tmapa-key dk3"><span class="dk-top-row"><span class="dk-shift">?</span><span class="dk-altgr">&#xB0;</span></span><span class="dk-bot">/</span></span>
+                        <span class="tmapa-key destaque k-rshift">&#x21E7;</span>
+                    </div>
+
+                    <!-- Linha de espaço -->
+                    <div class="teclado-linha">
+                        <span class="tmapa-key destaque k-mod">Ctrl</span>
+                        <span class="tmapa-key destaque k-mod">Fn</span>
+                        <span class="tmapa-key destaque k-mod">Win</span>
+                        <span class="tmapa-key destaque k-mod">Alt</span>
+                        <span class="tmapa-key destaque k-space">Espa&ccedil;o</span>
+                        <span class="tmapa-key destaque k-mod">AltGr</span>
+                        <span class="tmapa-key destaque k-mod">Ctrl</span>
+                    </div>
+
+                </div>
+
+                <div class="teclado-sep"></div>
+
+                <!-- Cluster de navegação -->
+                <div class="teclado-secao">
+                    <div class="teclado-linha">
+                        <span class="tmapa-key dk"><span class="dk-top">PrtSc</span><span class="dk-bot">Ins</span></span>
+                        <span class="tmapa-key dk"><span class="dk-top">ScrlLk</span><span class="dk-bot">Home</span></span>
+                        <span class="tmapa-key dk"><span class="dk-top">Pause</span><span class="dk-bot">PgUp</span></span>
+                    </div>
+                    <div class="teclado-linha">
+                        <span class="tmapa-key destaque">Del</span><span class="tmapa-key">End</span><span class="tmapa-key">PgDn</span>
+                    </div>
+                    <div class="teclado-arrows">
+                        <span class="tmapa-key k-arrow-up">&#x2191;</span>
+                        <span class="tmapa-key k-arrow-left">&#x2190;</span>
+                        <span class="tmapa-key k-arrow-down">&#x2193;</span>
+                        <span class="tmapa-key k-arrow-right">&#x2192;</span>
+                    </div>
+                </div>
+
+                <div class="teclado-sep"></div>
+
+                <!-- Teclado numérico — grid com + e Enter altos -->
+                <div class="teclado-secao">
+                    <div class="teclado-numpad">
+                        <span class="tmapa-key destaque">Num</span>
+                        <span class="tmapa-key">/</span>
+                        <span class="tmapa-key">*</span>
+                        <span class="tmapa-key">-</span>
+                        <span class="tmapa-key">7</span>
+                        <span class="tmapa-key">8</span>
+                        <span class="tmapa-key">9</span>
+                        <span class="tmapa-key destaque k-numplus">+</span>
+                        <span class="tmapa-key">4</span>
+                        <span class="tmapa-key">5</span>
+                        <span class="tmapa-key">6</span>
+                        <span class="tmapa-key">1</span>
+                        <span class="tmapa-key">2</span>
+                        <span class="tmapa-key">3</span>
+                        <span class="tmapa-key destaque k-numenter">&#x21B5;</span>
+                        <span class="tmapa-key k-num0">0</span>
+                        <span class="tmapa-key">.</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="highlight-box">
+                <p>&#x1F4A1; As teclas destacadas em <strong>azul</strong> no mapa acima s&atilde;o as <strong>teclas especiais</strong> que voc&ecirc; vai aprender nesta aula. Elas n&atilde;o digitam letras &mdash; elas controlam o que as outras teclas fazem.</p>
+            </div>
+        </div>
+
+        <!-- CARD 2 — Grupos de teclas -->
+        <div class="content-card">
+            <h2>&#x1F5C2;&#xFE0F; Grupos de Teclas</h2>
+            <p>O teclado &eacute; organizado em cinco grandes grupos, cada um com uma fun&ccedil;&atilde;o espec&iacute;fica:</p>
+
+            <div class="grupos-grid">
+                <div class="grupo-item">
+                    <div class="grupo-icon">&#x1F524;</div>
+                    <strong>Alfanum&eacute;ricas</strong>
+                    <span>Letras (A&ndash;Z) e n&uacute;meros (0&ndash;9) usados para digitar texto</span>
+                </div>
+                <div class="grupo-item">
+                    <div class="grupo-icon">&#x2728;</div>
+                    <strong>Teclas Especiais</strong>
+                    <span>Shift, Ctrl, Alt, Win &mdash; modificam o comportamento das demais</span>
+                </div>
+                <div class="grupo-item">
+                    <div class="grupo-icon">&#x1F199;</div>
+                    <strong>Fun&ccedil;&atilde;o (F1&ndash;F12)</strong>
+                    <span>Comandos r&aacute;pidos que variam conforme o programa aberto</span>
+                </div>
+                <div class="grupo-item">
+                    <div class="grupo-icon">&#x1F5F3;&#xFE0F;</div>
+                    <strong>Navega&ccedil;&atilde;o</strong>
+                    <span>Setas, Home, End, Page Up/Down &mdash; movem o cursor pelo texto</span>
+                </div>
+                <div class="grupo-item">
+                    <div class="grupo-icon">&#x1F522;</div>
+                    <strong>Teclado Num&eacute;rico</strong>
+                    <span>Bloco de n&uacute;meros &agrave; direita, &uacute;til para digitar muitos n&uacute;meros</span>
+                </div>
+            </div>
+
+            <p>Nesta aula vamos focar nas <strong>teclas especiais</strong> e nas teclas de <strong>edi&ccedil;&atilde;o</strong>, que s&atilde;o as que mais causam d&uacute;vidas para quem est&aacute; come&ccedil;ando.</p>
+        </div>
+
+        <!-- CARD 3 — Layouts de teclado -->
+        <div class="content-card">
+            <h2>&#x1F30E; Layouts de Teclado</h2>
+            <p>Nem todos os teclados t&ecirc;m as teclas na mesma posi&ccedil;&atilde;o. A <strong>disposi&ccedil;&atilde;o f&iacute;sica das teclas</strong> &eacute; chamada de <em>layout</em>. Diferentes pa&iacute;ses e idiomas adotam layouts distintos, e o computador precisa saber qual layout est&aacute; sendo usado para interpretar corretamente cada tecla pressionada.</p>
+
+            <h3>Principais layouts usados no Brasil</h3>
+
+            <table class="atalho-table">
+                <tr>
+                    <th>Layout</th>
+                    <th>Teclas</th>
+                    <th>Caracter&iacute;stica principal</th>
+                    <th>Onde &eacute; usado</th>
+                </tr>
+                <tr>
+                    <td><strong>ABNT2</strong></td>
+                    <td>105</td>
+                    <td>Possui tecla extra entre o Shift esquerdo e o Z (para <strong>&ccedil;</strong> e outros caracteres). &Eacute; o padr&atilde;o brasileiro oficial.</td>
+                    <td>Maioria dos teclados vendidos no Brasil</td>
+                </tr>
+                <tr>
+                    <td><strong>ABNT</strong></td>
+                    <td>104</td>
+                    <td>Vers&atilde;o anterior do padr&atilde;o brasileiro, sem a tecla extra. Hoje &eacute; raro.</td>
+                    <td>Teclados mais antigos no Brasil</td>
+                </tr>
+                <tr>
+                    <td><strong>US QWERTY</strong></td>
+                    <td>104</td>
+                    <td>Layout americano. N&atilde;o possui tecla dedicada para <strong>&ccedil;</strong> ou acentos. Muito comum em teclados gamer e importados.</td>
+                    <td>Teclados importados, gamer, notebooks internacionais</td>
+                </tr>
+                <tr>
+                    <td><strong>US Internacional</strong></td>
+                    <td>104</td>
+                    <td>Baseado no US QWERTY, mas permite digitar acentos usando combina&ccedil;&otilde;es de teclas (ex: <kbd>'</kbd> + <kbd>a</kbd> = &aacute;).</td>
+                    <td>Configura&ccedil;&atilde;o de software para teclados US no Brasil</td>
+                </tr>
+            </table>
+
+            <div class="highlight-box">
+                <p>&#x1F4A1; <strong>ABNT2 &eacute; o mais comum no Brasil.</strong> Se o seu teclado tem uma tecla entre o Shift esquerdo e o Z (geralmente com <strong>&ccedil;</strong> ou <strong>\</strong>), ele &eacute; ABNT2. Se n&atilde;o tem essa tecla extra, provavelmente &eacute; US QWERTY.</p>
+            </div>
+
+            <h3>E os outros layouts do mundo?</h3>
+            <p>Cada pa&iacute;s tem seu padr&atilde;o. Os mais conhecidos s&atilde;o:</p>
+            <ul>
+                <li><strong>AZERTY</strong> &mdash; usado na Fran&ccedil;a e B&eacute;lgica. As letras A e Q, Z e W trocam de lugar em rela&ccedil;&atilde;o ao QWERTY.</li>
+                <li><strong>QWERTZ</strong> &mdash; padr&atilde;o na Alemanha e pa&iacute;ses da Europa Central. As letras Y e Z s&atilde;o trocadas.</li>
+                <li><strong>Dvorak</strong> &mdash; layout alternativo projetado para maior efici&ecirc;ncia, com as letras mais usadas na fileira central. Usado por poucos, mas tem adeptos fieis.</li>
+            </ul>
+
+            <div class="alert-box">
+                <p>&#x26A0;&#xFE0F; <strong>Layout f&iacute;sico x layout de software:</strong> o Windows precisa estar configurado com o mesmo layout do teclado f&iacute;sico. Se estiver errado, pressionar uma tecla pode digitar um caractere diferente do impresso nela. Para verificar, acesse <strong>Configura&ccedil;&otilde;es &rarr; Hora e idioma &rarr; Idioma e regi&atilde;o</strong>.</p>
+            </div>
+        </div>
+
+        <!-- CARD 5 — Teclas modificadoras -->
+        <div class="content-card">
+            <h2>&#x2728; Teclas Modificadoras</h2>
+            <p>Teclas modificadoras <strong>n&atilde;o fazem nada sozinhas</strong> &mdash; elas mudam o que acontece quando voc&ecirc; pressiona outra tecla junto com elas. S&atilde;o a base dos atalhos de teclado.</p>
+
+            <div class="key-cards">
+
+                <div class="key-card">
+                    <div class="key-visual">
+                        <span class="key-btn">&#x21E7; Shift</span>
+                    </div>
+                    <div class="key-info">
+                        <strong>Shift &mdash; Mai&uacute;sculas tempor&aacute;rias</strong>
+                        <p>Enquanto voc&ecirc; <strong>segura Shift</strong> e pressiona uma letra, ela sai em mai&uacute;scula. Ao soltar, volta ao normal. Tamb&eacute;m acessa os s&iacute;mbolos da parte <em>superior</em> das teclas que t&ecirc;m dois caracteres (ex: Shift + <kbd>3</kbd> = #).</p>
+                        <span class="key-example">Segurar Shift + A = A mai&uacute;sculo</span>
+                        <span class="key-example" style="margin-left:6px">Soltar Shift + A = a min&uacute;sculo</span>
+                    </div>
+                </div>
+
+                <div class="key-card">
+                    <div class="key-visual">
+                        <span class="key-btn">Caps Lock</span>
+                    </div>
+                    <div class="key-info">
+                        <strong>Caps Lock &mdash; Mai&uacute;sculas permanentes</strong>
+                        <p>Ao pressionar Caps Lock uma vez, um <strong>indicador luminoso</strong> acende no teclado e todas as letras passam a sair em mai&uacute;sculo automaticamente, sem precisar segurar Shift. Para desativar, pressione Caps Lock novamente.</p>
+                        <p>Aten&ccedil;&atilde;o: quando o Caps Lock est&aacute; ativo, o Shift faz o <em>contr&aacute;rio</em> &mdash; ou seja, produz letras min&uacute;sculas.</p>
+                        <span class="key-example">&#x26A0;&#xFE0F; Verifique o indicador antes de digitar senhas!</span>
+                    </div>
+                </div>
+
+                <div class="key-card">
+                    <div class="key-visual">
+                        <span class="key-btn">Ctrl</span>
+                    </div>
+                    <div class="key-info">
+                        <strong>Ctrl (Control) &mdash; Atalhos de sistema</strong>
+                        <p>A tecla Ctrl &eacute; usada em combina&ccedil;&atilde;o com outras teclas para executar <strong>comandos r&aacute;pidos</strong> nos programas. &Eacute; a base dos atalhos mais usados no dia a dia do computador.</p>
+                        <span class="key-example">Ctrl + C = Copiar</span>
+                        <span class="key-example" style="margin-left:6px">Ctrl + V = Colar</span>
+                        <span class="key-example" style="margin-left:6px">Ctrl + Z = Desfazer</span>
+                    </div>
+                </div>
+
+                <div class="key-card">
+                    <div class="key-visual">
+                        <span class="key-btn">Alt</span>
+                    </div>
+                    <div class="key-info">
+                        <strong>Alt (Alternate) &mdash; Op&ccedil;&otilde;es alternativas</strong>
+                        <p>O Alt acessa fun&ccedil;&otilde;es alternativas das teclas e abre menus de programas. Combinado com outras teclas, executa a&ccedil;&otilde;es espec&iacute;ficas de cada programa.</p>
+                        <span class="key-example">Alt + F4 = Fechar janela</span>
+                        <span class="key-example" style="margin-left:6px">Alt + Tab = Alternar janelas</span>
+                    </div>
+                </div>
+
+                <div class="key-card">
+                    <div class="key-visual">
+                        <span class="key-btn">&#x229E; Win</span>
+                    </div>
+                    <div class="key-info">
+                        <strong>Win (Windows) &mdash; Menu Iniciar</strong>
+                        <p>A tecla com o logotipo do Windows abre o <strong>Menu Iniciar</strong> quando pressionada sozinha. Combinada com outras teclas, acessa fun&ccedil;&otilde;es do sistema, como a &aacute;rea de trabalho, pesquisa e configura&ccedil;&otilde;es.</p>
+                        <span class="key-example">Win = Abrir Menu Iniciar</span>
+                        <span class="key-example" style="margin-left:6px">Win + D = Mostrar &aacute;rea de trabalho</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- CARD 6 — Teclas de edição -->
+        <div class="content-card">
+            <h2>&#x270F;&#xFE0F; Teclas de Edi&ccedil;&atilde;o</h2>
+            <p>As teclas de edi&ccedil;&atilde;o s&atilde;o usadas para <strong>corrigir e formatar textos</strong>. Conhec&ecirc;-las bem economiza muito tempo na hora de digitar.</p>
+
+            <div class="key-cards">
+
+                <div class="key-card">
+                    <div class="key-visual">
+                        <span class="key-btn">&#x232B; Backspace</span>
+                    </div>
+                    <div class="key-info">
+                        <strong>Backspace &mdash; Apagar para tr&aacute;s</strong>
+                        <p>Apaga o caractere imediatamente <strong>&agrave; esquerda</strong> do cursor (o que voc&ecirc; acabou de digitar). &Eacute; a tecla de corre&ccedil;&atilde;o mais usada durante a digita&ccedil;&atilde;o.</p>
+                        <span class="key-example">Posicionada no canto superior direito do teclado alfanum&eacute;rico</span>
+                    </div>
+                </div>
+
+                <div class="key-card">
+                    <div class="key-visual">
+                        <span class="key-btn">Delete</span>
+                    </div>
+                    <div class="key-info">
+                        <strong>Delete (Del) &mdash; Apagar para frente</strong>
+                        <p>Apaga o caractere imediatamente <strong>&agrave; direita</strong> do cursor. Tamb&eacute;m &eacute; usada para excluir arquivos selecionados no Windows (enviando-os para a lixeira).</p>
+                        <span class="key-example">Backspace apaga atr&aacute;s | Delete apaga &agrave; frente</span>
+                    </div>
+                </div>
+
+                <div class="key-card">
+                    <div class="key-visual">
+                        <span class="key-btn">&#x23CE; Enter</span>
+                    </div>
+                    <div class="key-info">
+                        <strong>Enter &mdash; Confirmar / Nova linha</strong>
+                        <p>Em textos, o Enter cria uma <strong>nova linha</strong> (par&aacute;grafo). Em caixas de di&aacute;logo, confirma a a&ccedil;&atilde;o selecionada (equivale a clicar em &ldquo;OK&rdquo;). Em navegadores, executa a pesquisa digitada.</p>
+                        <span class="key-example">Existe nas duas laterais do teclado</span>
+                    </div>
+                </div>
+
+                <div class="key-card">
+                    <div class="key-visual">
+                        <span class="key-btn">&#x21E5; Tab</span>
+                    </div>
+                    <div class="key-info">
+                        <strong>Tab &mdash; Avan&ccedil;ar / Recuar</strong>
+                        <p>Em textos, o Tab insere um <strong>recuo</strong> (espa&ccedil;o maior). Em formul&aacute;rios e programas, move o foco para o pr&oacute;ximo campo. Shift + Tab volta ao campo anterior.</p>
+                        <span class="key-example">Tab = pr&oacute;ximo campo</span>
+                        <span class="key-example" style="margin-left:6px">Shift + Tab = campo anterior</span>
+                    </div>
+                </div>
+
+                <div class="key-card">
+                    <div class="key-visual">
+                        <span class="key-btn">Esc</span>
+                    </div>
+                    <div class="key-info">
+                        <strong>Esc (Escape) &mdash; Cancelar / Fechar</strong>
+                        <p>O Esc cancela a a&ccedil;&atilde;o em andamento, fecha menus abertos ou sai de modos especiais (como tela cheia). &Eacute; uma tecla de &ldquo;sa&iacute;da de emerg&ecirc;ncia&rdquo; muito &uacute;til.</p>
+                        <span class="key-example">Localizada no canto superior esquerdo do teclado</span>
+                    </div>
+                </div>
+
+                <div class="key-card">
+                    <div class="key-visual">
+                        <span class="key-btn">&#x2423; Espa&ccedil;o</span>
+                    </div>
+                    <div class="key-info">
+                        <strong>Barra de Espa&ccedil;o</strong>
+                        <p>A maior tecla do teclado insere um <strong>espa&ccedil;o em branco</strong> entre palavras. &Eacute; a tecla mais usada durante a digita&ccedil;&atilde;o e fica posicionada na parte inferior central para f&aacute;cil acesso com os polegares.</p>
+                        <span class="key-example">A tecla mais larga do teclado</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="highlight-box">
+                <p>&#x1F4A1; <strong>Dica de digita&ccedil;&atilde;o:</strong> Coloque os polegares sobre a Barra de Espa&ccedil;o e os demais dedos sobre as teclas <kbd>A</kbd>, <kbd>S</kbd>, <kbd>D</kbd>, <kbd>F</kbd> (m&atilde;o esquerda) e <kbd>J</kbd>, <kbd>K</kbd>, <kbd>L</kbd>, <kbd>;</kbd> (m&atilde;o direita). Essa &eacute; a <strong>posi&ccedil;&atilde;o base</strong> da digita&ccedil;&atilde;o profissional.</p>
+            </div>
+        </div>
+
+        <!-- CARD 5 — Teclas de Função -->
+        <div class="content-card">
+            <h2>&#x1F199; Teclas de Fun&ccedil;&atilde;o (F1&ndash;F12)</h2>
+            <p>As teclas F1 a F12 ficam na fileira superior do teclado. Cada programa pode definir um uso diferente para elas, mas existem fun&ccedil;&otilde;es universais que funcionam em quase todo lugar:</p>
+
+            <table class="atalho-table">
+                <tr>
+                    <th>Tecla</th>
+                    <th>Fun&ccedil;&atilde;o mais comum</th>
+                </tr>
+                <tr>
+                    <td><kbd>F1</kbd></td>
+                    <td>Abrir a ajuda (<em>Help</em>) do programa aberto</td>
+                </tr>
+                <tr>
+                    <td><kbd>F2</kbd></td>
+                    <td>Renomear arquivo selecionado no Windows Explorer</td>
+                </tr>
+                <tr>
+                    <td><kbd>F5</kbd></td>
+                    <td>Atualizar (recarregar) a p&aacute;gina no navegador</td>
+                </tr>
+                <tr>
+                    <td><kbd>F11</kbd></td>
+                    <td>Entrar ou sair do modo tela cheia no navegador</td>
+                </tr>
+                <tr>
+                    <td><kbd>F12</kbd></td>
+                    <td>Abrir as ferramentas de desenvolvedor no navegador</td>
+                </tr>
+            </table>
+
+            <div class="alert-box">
+                <p>&#x26A0;&#xFE0F; Em alguns notebooks, as teclas F1&ndash;F12 controlam fun&ccedil;&otilde;es do hardware (brilho, volume, Wi-Fi) por padr&atilde;o. Para us&aacute;-las como F1&ndash;F12 normais, &eacute; preciso segurar a tecla <strong>Fn</strong> ao mesmo tempo.</p>
+            </div>
+        </div>
+
+        <!-- CARD 6 — Atalhos essenciais -->
+        <div class="content-card">
+            <h2>&#x26A1; Atalhos Essenciais do Teclado</h2>
+            <p>Atalhos de teclado s&atilde;o combina&ccedil;&otilde;es de teclas que executam a&ccedil;&otilde;es rapidamente, sem precisar usar o mouse. Aprender os principais economiza muito tempo no dia a dia.</p>
+
+            <h3>Atalhos universais (funcionam em quase todos os programas)</h3>
+            <table class="atalho-table">
+                <tr>
+                    <th>Atalho</th>
+                    <th>A&ccedil;&atilde;o</th>
+                </tr>
+                <tr>
+                    <td><kbd>Ctrl</kbd> + <kbd>C</kbd></td>
+                    <td>Copiar o texto ou arquivo selecionado</td>
+                </tr>
+                <tr>
+                    <td><kbd>Ctrl</kbd> + <kbd>X</kbd></td>
+                    <td>Recortar (mover) o texto ou arquivo selecionado</td>
+                </tr>
+                <tr>
+                    <td><kbd>Ctrl</kbd> + <kbd>V</kbd></td>
+                    <td>Colar o que foi copiado ou recortado</td>
+                </tr>
+                <tr>
+                    <td><kbd>Ctrl</kbd> + <kbd>Z</kbd></td>
+                    <td>Desfazer a &uacute;ltima a&ccedil;&atilde;o</td>
+                </tr>
+                <tr>
+                    <td><kbd>Ctrl</kbd> + <kbd>A</kbd></td>
+                    <td>Selecionar tudo</td>
+                </tr>
+                <tr>
+                    <td><kbd>Ctrl</kbd> + <kbd>S</kbd></td>
+                    <td>Salvar o documento ou arquivo</td>
+                </tr>
+                <tr>
+                    <td><kbd>Ctrl</kbd> + <kbd>P</kbd></td>
+                    <td>Imprimir</td>
+                </tr>
+                <tr>
+                    <td><kbd>Ctrl</kbd> + <kbd>F</kbd></td>
+                    <td>Localizar (buscar texto no documento ou p&aacute;gina)</td>
+                </tr>
+                <tr>
+                    <td><kbd>Alt</kbd> + <kbd>F4</kbd></td>
+                    <td>Fechar a janela ativa</td>
+                </tr>
+                <tr>
+                    <td><kbd>Alt</kbd> + <kbd>Tab</kbd></td>
+                    <td>Alternar entre as janelas abertas</td>
+                </tr>
+            </table>
+
+            <div class="highlight-box">
+                <p>&#x1F4A1; Para usar um atalho: pressione a <strong>primeira tecla e mantenha pressionada</strong>, depois pressione a segunda tecla e solte as duas. Nunca pressione as duas ao mesmo tempo.</p>
+            </div>
+        </div>
+
+        <!-- CARD 7 — Recapitulando -->
+        <div class="content-card">
+            <h2>&#x1F4CB; Recapitulando</h2>
+            <ul>
+                <li>O teclado possui <strong>grupos de teclas</strong>: alfanum&eacute;ricas, especiais, fun&ccedil;&atilde;o, navega&ccedil;&atilde;o e num&eacute;rico</li>
+                <li>O layout <strong>ABNT2</strong> &eacute; o padr&atilde;o no Brasil (105 teclas, com <strong>&ccedil;</strong> dedicado); teclados importados geralmente usam <strong>US QWERTY</strong> (104 teclas)</li>
+                <li><strong>Shift</strong> produz mai&uacute;sculas enquanto &eacute; segurado; <strong>Caps Lock</strong> mant&eacute;m as mai&uacute;sculas ativas permanentemente</li>
+                <li><strong>Ctrl</strong> e <strong>Alt</strong> s&atilde;o modificadores usados em atalhos; sozinhos n&atilde;o fazem nada</li>
+                <li><strong>Backspace</strong> apaga o caractere &agrave; esquerda; <strong>Delete</strong> apaga o caractere &agrave; direita</li>
+                <li><strong>Enter</strong> confirma a&ccedil;&otilde;es ou cria nova linha; <strong>Esc</strong> cancela ou fecha; <strong>Tab</strong> avan&ccedil;a campos</li>
+                <li>Os atalhos <strong>Ctrl+C</strong>, <strong>Ctrl+V</strong> e <strong>Ctrl+Z</strong> s&atilde;o os mais usados no dia a dia</li>
+            </ul>
+
+            <div class="highlight-box">
+                <p>&#x1F4DA; Na pr&oacute;xima aula vamos explorar os <strong>Softwares Utilit&aacute;rios</strong> &mdash; programas como antiv&iacute;rus, compactadores e ferramentas de manuten&ccedil;&atilde;o do sistema.</p>
+            </div>
+        </div>
+
+        <!-- EXERCÍCIO: Arrastar e Conectar -->
+        <div class="content-card exercise-card">
+            <h2>&#x1F3AF; Exerc&iacute;cio &mdash; Arraste e Conecte</h2>
+            <p style="color:#475569;font-size:0.9em;margin-bottom:16px;">Arraste cada descri&ccedil;&atilde;o para a tecla correspondente.</p>
+
+            <div class="ex-drag-root" data-ex="ex15">
+                <div class="ex-drag">
+                    <div>
+                        <div class="ex-col-title">Descri&ccedil;&otilde;es</div>
+                        <div class="ex-pool" data-pool="ex15">
+                            <div class="drag-chip" data-id="shift">Produz letras mai&uacute;sculas enquanto &eacute; segurada</div>
+                            <div class="drag-chip" data-id="ctrl">Usada em combina&ccedil;&atilde;o com outras teclas para atalhos (copiar, colar...)</div>
+                            <div class="drag-chip" data-id="backspace">Apaga o caractere &agrave; esquerda do cursor</div>
+                            <div class="drag-chip" data-id="capslock">Mant&eacute;m todas as letras mai&uacute;sculas ativas de forma permanente</div>
+                            <div class="drag-chip" data-id="esc">Cancela uma a&ccedil;&atilde;o ou fecha um menu</div>
+                            <div class="drag-chip" data-id="tab">Avan&ccedil;a para o pr&oacute;ximo campo em formul&aacute;rios</div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="ex-col-title">Tecla</div>
+                        <div class="ex-zones" data-zones="ex15">
+                            <div class="drop-zone" data-zone="ex15-z1" data-accept="shift">
+                                <span class="zone-name">Shift</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex15-z2" data-accept="ctrl">
+                                <span class="zone-name">Ctrl</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex15-z3" data-accept="backspace">
+                                <span class="zone-name">Backspace</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex15-z4" data-accept="capslock">
+                                <span class="zone-name">Caps Lock</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex15-z5" data-accept="esc">
+                                <span class="zone-name">Esc</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex15-z6" data-accept="tab">
+                                <span class="zone-name">Tab</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ex-actions">
+                <button class="btn-verificar" onclick="dragVerify('ex15')">Verificar</button>
+                <button class="btn-refazer"  onclick="dragReset('ex15')">Refazer</button>
+            </div>
+            <div class="ex-result" id="ex15-result"></div>
+        </div>
+
+        <!-- EXERCÍCIO: Múltipla Escolha -->
+        <div class="content-card exercise-card">
+            <h2>&#x1F4DD; Exerc&iacute;cio &mdash; M&uacute;ltipla Escolha</h2>
+            <p style="color:#475569;font-size:0.9em;margin-bottom:16px;">Leia cada situa&ccedil;&atilde;o e escolha a tecla ou atalho correto.</p>
+
+            <div class="mc-root" data-ex="mc15">
+
+                <div class="mc-question" data-q="q1" data-correct="b">
+                    <p class="mc-q-text">1. Voc&ecirc; est&aacute; digitando um texto e quer escrever apenas uma letra mai&uacute;scula no meio de uma palavra. Qual &eacute; a forma correta?</p>
+                    <div class="mc-options">
+                        <div class="mc-option" data-opt="a"><span class="mc-letter">A</span><span>Ativar o Caps Lock, digitar a letra e deixar o Caps Lock ativo</span></div>
+                        <div class="mc-option" data-opt="b"><span class="mc-letter">B</span><span>Segurar Shift, digitar a letra e soltar o Shift</span></div>
+                        <div class="mc-option" data-opt="c"><span class="mc-letter">C</span><span>Pressionar Alt + a letra desejada</span></div>
+                        <div class="mc-option" data-opt="d"><span class="mc-letter">D</span><span>Pressionar Ctrl + a letra desejada</span></div>
+                    </div>
+                    <div class="mc-explanation ok">&#x2714; Correto! O Shift &eacute; ideal para mai&uacute;sculas pontual. O Caps Lock &eacute; para quando voc&ecirc; precisa digitar muitas letras mai&uacute;sculas seguidas.</div>
+                    <div class="mc-explanation err">&#x2716; Para uma &uacute;nica mai&uacute;scula, o mais pr&aacute;tico &eacute; segurar Shift e pressionar a letra. O Caps Lock deixa todas as letras em mai&uacute;sculo at&eacute; ser desativado.</div>
+                </div>
+
+                <hr class="mc-sep">
+
+                <div class="mc-question" data-q="q2" data-correct="a">
+                    <p class="mc-q-text">2. Voc&ecirc; digitou uma palavra errada e o cursor est&aacute; logo ap&oacute;s ela. Qual tecla apaga os caracteres da palavra?</p>
+                    <div class="mc-options">
+                        <div class="mc-option" data-opt="a"><span class="mc-letter">A</span><span>Backspace &mdash; apaga os caracteres &agrave; esquerda do cursor</span></div>
+                        <div class="mc-option" data-opt="b"><span class="mc-letter">B</span><span>Delete &mdash; apaga os caracteres &agrave; direita do cursor</span></div>
+                        <div class="mc-option" data-opt="c"><span class="mc-letter">C</span><span>Esc &mdash; cancela a digita&ccedil;&atilde;o</span></div>
+                        <div class="mc-option" data-opt="d"><span class="mc-letter">D</span><span>Ctrl + Z &mdash; desfaz a &uacute;ltima a&ccedil;&atilde;o</span></div>
+                    </div>
+                    <div class="mc-explanation ok">&#x2714; Correto! O Backspace apaga para tr&aacute;s (caractere &agrave; esquerda do cursor), que &eacute; exatamente o que precisamos nessa situa&ccedil;&atilde;o.</div>
+                    <div class="mc-explanation err" data-for="b">&#x2716; O Delete apaga o caractere &agrave; frente do cursor (lado direito). Como o cursor est&aacute; depois da palavra, o Backspace &eacute; o correto.</div>
+                    <div class="mc-explanation err" data-for="c">&#x2716; O Esc cancela a&ccedil;&otilde;es, mas n&atilde;o apaga texto j&aacute; digitado.</div>
+                    <div class="mc-explanation err" data-for="d">&#x2716; Ctrl+Z desfaz a&ccedil;&otilde;es, mas apagar letra por letra com Backspace &eacute; mais preciso para corrigir uma palavra.</div>
+                </div>
+
+                <hr class="mc-sep">
+
+                <div class="mc-question" data-q="q3" data-correct="c">
+                    <p class="mc-q-text">3. Voc&ecirc; copiou um texto com Ctrl+C mas agora quer <strong>desfazer</strong> a &uacute;ltima altera&ccedil;&atilde;o que fez no documento. Qual atalho usar?</p>
+                    <div class="mc-options">
+                        <div class="mc-option" data-opt="a"><span class="mc-letter">A</span><span>Ctrl + C</span></div>
+                        <div class="mc-option" data-opt="b"><span class="mc-letter">B</span><span>Ctrl + V</span></div>
+                        <div class="mc-option" data-opt="c"><span class="mc-letter">C</span><span>Ctrl + Z</span></div>
+                        <div class="mc-option" data-opt="d"><span class="mc-letter">D</span><span>Ctrl + S</span></div>
+                    </div>
+                    <div class="mc-explanation ok">&#x2714; Correto! Ctrl+Z &eacute; o atalho universal para desfazer a &uacute;ltima a&ccedil;&atilde;o. Voc&ecirc; pode pressionado v&aacute;rias vezes para desfazer m&uacute;ltiplas a&ccedil;&otilde;es.</div>
+                    <div class="mc-explanation err" data-for="a">&#x2716; Ctrl+C copia o conte&uacute;do selecionado para a &aacute;rea de transfer&ecirc;ncia.</div>
+                    <div class="mc-explanation err" data-for="b">&#x2716; Ctrl+V cola o conte&uacute;do da &aacute;rea de transfer&ecirc;ncia.</div>
+                    <div class="mc-explanation err" data-for="d">&#x2716; Ctrl+S salva o arquivo. Para desfazer, o atalho &eacute; Ctrl+Z.</div>
+                </div>
+
+                <hr class="mc-sep">
+
+                <div class="mc-question" data-q="q4" data-correct="d">
+                    <p class="mc-q-text">4. Voc&ecirc; estava digitando e percebeu que todas as letras est&atilde;o saindo em MAI&Uacute;SCULAS sem voc&ecirc; segurar nenhuma tecla. O que provavelmente aconteceu?</p>
+                    <div class="mc-options">
+                        <div class="mc-option" data-opt="a"><span class="mc-letter">A</span><span>O Ctrl ficou travado</span></div>
+                        <div class="mc-option" data-opt="b"><span class="mc-letter">B</span><span>O Alt ficou preso</span></div>
+                        <div class="mc-option" data-opt="c"><span class="mc-letter">C</span><span>O Enter foi pressionado acidentalmente</span></div>
+                        <div class="mc-option" data-opt="d"><span class="mc-letter">D</span><span>O Caps Lock foi ativado acidentalmente</span></div>
+                    </div>
+                    <div class="mc-explanation ok">&#x2714; Correto! O Caps Lock ativa as mai&uacute;sculas permanentes. Para resolver, basta pressionar Caps Lock novamente para desativar.</div>
+                    <div class="mc-explanation err">&#x2716; O Ctrl e o Alt n&atilde;o afetam as letras por si s&oacute;s, e o Enter apenas muda de linha. Quando todas as letras saem mai&uacute;sculas, o Caps Lock foi ativado.</div>
+                </div>
+
+                <hr class="mc-sep">
+
+                <div class="mc-question" data-q="q5" data-correct="b">
+                    <p class="mc-q-text">5. Voc&ecirc; precisa fechar rapidamente a janela do programa que est&aacute; usando. Qual atalho de teclado faz isso?</p>
+                    <div class="mc-options">
+                        <div class="mc-option" data-opt="a"><span class="mc-letter">A</span><span>Ctrl + C</span></div>
+                        <div class="mc-option" data-opt="b"><span class="mc-letter">B</span><span>Alt + F4</span></div>
+                        <div class="mc-option" data-opt="c"><span class="mc-letter">C</span><span>Ctrl + Z</span></div>
+                        <div class="mc-option" data-opt="d"><span class="mc-letter">D</span><span>Win + D</span></div>
+                    </div>
+                    <div class="mc-explanation ok">&#x2714; Correto! Alt+F4 fecha a janela ou programa ativo. Se usado na &Aacute;rea de Trabalho, abre o menu para desligar o computador.</div>
+                    <div class="mc-explanation err" data-for="a">&#x2716; Ctrl+C copia o conte&uacute;do selecionado, n&atilde;o fecha a janela.</div>
+                    <div class="mc-explanation err" data-for="c">&#x2716; Ctrl+Z desfaz a &uacute;ltima a&ccedil;&atilde;o, n&atilde;o fecha a janela.</div>
+                    <div class="mc-explanation err" data-for="d">&#x2716; Win+D minimiza todas as janelas e mostra a &Aacute;rea de Trabalho, mas n&atilde;o fecha o programa.</div>
+                </div>
+
+            </div>
+
+            <div class="ex-actions">
+                <button class="btn-verificar" onclick="mcVerify('mc15')">Verificar</button>
+                <button class="btn-refazer"  onclick="mcReset('mc15')">Refazer</button>
+            </div>
+            <div class="ex-result" id="mc15-result"></div>
+        </div>
+
+        <!-- ATIVIDADE PRÁTICA 1.5 -->
+        <div class="content-card practical-card" id="prat-15">
+            <h2>&#x1F4BB; Atividade Pr&aacute;tica &mdash; Explorando o Teclado</h2>
+            <div class="prat-meta">
+                <span class="prat-tag">&#x23F1; ~20 min</span>
+                <span class="prat-tag">&#x270D;&#xFE0F; Bloco de Notas</span>
+                <span class="prat-tag">&#x1F4CD; Windows nativo</span>
+            </div>
+
+            <div class="prat-steps">
+                <div class="prat-step">
+                    <div class="step-num">1</div>
+                    <div class="step-body">
+                        <div class="step-label">Abra o Bloco de Notas</div>
+                        <div class="step-desc">Pressione <kbd>Win</kbd>+<kbd>R</kbd>, digite <strong>notepad</strong> e pressione <kbd>Enter</kbd>. O Bloco de Notas &eacute; o programa ideal para praticar digita&ccedil;&atilde;o sem formata&ccedil;&atilde;o.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">2</div>
+                    <div class="step-body">
+                        <div class="step-label">Pratique Shift e Caps Lock</div>
+                        <div class="step-desc">Digite seu nome completo duas vezes: uma vez usando <kbd>Shift</kbd> para as iniciais mai&uacute;sculas, e outra vez ativando o <kbd>Caps Lock</kbd> para escrever tudo em mai&uacute;sculo. Observe o indicador luminoso do teclado ao ativar e desativar o Caps Lock.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">3</div>
+                    <div class="step-body">
+                        <div class="step-label">Pratique Backspace e Delete</div>
+                        <div class="step-desc">Digite a frase: <strong>"O computador &eacute; uma ferramenta poderosa"</strong>. Em seguida, use o <kbd>Backspace</kbd> para apagar as &uacute;ltimas 3 palavras. Depois, mova o cursor com as setas para o meio da frase e use o <kbd>Delete</kbd> para apagar caracteres &agrave; frente. Perceba a diferen&ccedil;a entre os dois.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">4</div>
+                    <div class="step-body">
+                        <div class="step-label">Teste os atalhos essenciais</div>
+                        <div class="step-desc">Pressione <kbd>Ctrl</kbd>+<kbd>A</kbd> para selecionar todo o texto. Depois <kbd>Ctrl</kbd>+<kbd>C</kbd> para copiar. Clique no final do texto e pressione <kbd>Enter</kbd> duas vezes. Em seguida, <kbd>Ctrl</kbd>+<kbd>V</kbd> para colar. Finalmente, <kbd>Ctrl</kbd>+<kbd>Z</kbd> v&aacute;rias vezes para desfazer cada a&ccedil;&atilde;o.</div>
+                    </div>
+                </div>
+                <div class="prat-step">
+                    <div class="step-num">5</div>
+                    <div class="step-body">
+                        <div class="step-label">Explore o Tab e o Esc</div>
+                        <div class="step-desc">Abra o navegador e acesse um site de busca. Clique na barra de endere&ccedil;o e pressione <kbd>Tab</kbd> para navegar entre os elementos da p&aacute;gina. Depois, pressione <kbd>Esc</kbd> para cancelar uma busca ou fechar uma sugest&atilde;o. Experimente tamb&eacute;m <kbd>F11</kbd> para ver a p&aacute;gina em tela cheia.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ex-actions">
+                <button class="btn-print" onclick="printPractical('prat-15', 'Aula 1.5 \u2014 Conhecendo o Teclado')">&#x1F5A8;&#xFE0F; Imprimir roteiro</button>
+            </div>
+        </div>
+
+        <div class="nav-footer">
+            <a href="index.html" class="nav-link">&#x2B05; Dashboard</a>
+            <a href="uni1-02-fundamentos-so.html" class="nav-link">Pr&oacute;xima: Fundamentos do S.O. &#x27A1;</a>
+        </div>
+
+    </div>
+
+    <script src="slide-mode.js"></script>
+    <script src="exercise-drag.js"></script>
+    <script src="exercise-mc.js"></script>
+    <script src="exercise-print.js"></script>
+</body>
+</html>
