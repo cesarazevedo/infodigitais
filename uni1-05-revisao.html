@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revisão — Unidade 1: S.O. e Noções de Computador</title>
+    <link rel="stylesheet" href="slide-mode.css">
+    <link rel="stylesheet" href="exercise.css">
+    <style>
+        :root {
+            --primary: #1565c0;
+            --secondary: #00897b;
+            --bg-light: #f0f4f8;
+            --text-dark: #1a202c;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        .top-bar {
+            background: white;
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .back-btn {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+
+        .back-btn:hover { background: rgba(21,101,192,0.08); }
+
+        .page-badge {
+            font-size: 0.8em;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: rgba(21, 101, 192, 0.12);
+            color: #1565c0;
+            font-weight: 600;
+        }
+
+        .content-wrapper {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 30px;
+        }
+
+        .lesson-hero {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            border-top: 4px solid var(--secondary);
+        }
+
+        .lesson-hero h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+            color: var(--secondary);
+        }
+
+        .lesson-hero .subtitle {
+            font-size: 1.05em;
+            color: #718096;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 16px;
+            padding: 35px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+
+        .content-card h2 {
+            font-size: 1.4em;
+            color: var(--primary);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .content-card h3 {
+            font-size: 1.05em;
+            color: #2d5a9e;
+            margin: 20px 0 10px;
+        }
+
+        .content-card p { margin-bottom: 15px; text-align: justify; }
+
+        ul, ol { margin: 10px 0 15px 25px; }
+        li { margin-bottom: 8px; }
+
+        /* Tópicos cobertos */
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 14px;
+            margin: 20px 0;
+        }
+
+        .topic-chip {
+            background: linear-gradient(135deg, rgba(21,101,192,0.07), rgba(0,137,123,0.08));
+            border-radius: 12px;
+            padding: 16px 18px;
+            border-left: 4px solid var(--primary);
+            font-size: 0.9em;
+        }
+
+        .topic-chip .topic-num {
+            font-size: 0.75em;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .topic-chip strong { display: block; color: #1a202c; font-size: 0.95em; }
+        .topic-chip span { display: block; font-size: 0.82em; color: #718096; margin-top: 4px; }
+
+        /* Nav footer */
+        .nav-footer {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-bottom: 40px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+
+        .nav-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        @media (max-width: 768px) {
+            .content-wrapper { padding: 0 15px; }
+            .lesson-hero, .content-card { padding: 25px; }
+            .lesson-hero h1 { font-size: 1.5em; }
+            .topics-grid { grid-template-columns: 1fr 1fr; }
+            .nav-footer { flex-direction: column; gap: 12px; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <a href="index.html" class="back-btn">&#x2B05; Dashboard</a>
+        <span class="page-badge">Unidade 1 &mdash; S.O. e Utilit&aacute;rios</span>
+    </div>
+
+    <div class="content-wrapper">
+
+        <!-- HERO -->
+        <div class="lesson-hero">
+            <h1>&#x1F4DA; Revis&atilde;o &mdash; Unidade 1</h1>
+            <p class="subtitle">Consolide o que aprendeu sobre teclado, sistemas operacionais e gerenciamento de arquivos antes de avan&ccedil;ar.</p>
+        </div>
+
+        <!-- CARD 1 — Tópicos -->
+        <div class="content-card">
+            <h2>&#x1F4CB; O que ser&aacute; revisado</h2>
+            <p>Esta revis&atilde;o cobre os temas das quatro primeiras aulas da Unidade 1. Use-a para identificar os pontos que precisam de refor&ccedil;o antes de continuar.</p>
+
+            <div class="topics-grid">
+                <div class="topic-chip">
+                    <div class="topic-num">Aula 1.5</div>
+                    <strong>Conhecendo o Teclado</strong>
+                    <span>Grupos de teclas, layouts ABNT2, teclas modificadoras e atalhos essenciais</span>
+                </div>
+                <div class="topic-chip">
+                    <div class="topic-num">Aula 1.1</div>
+                    <strong>Fundamentos do S.O.</strong>
+                    <span>Defini&ccedil;&atilde;o, fun&ccedil;&otilde;es (processos, mem&oacute;ria, arquivos), kernel e interfaces</span>
+                </div>
+                <div class="topic-chip">
+                    <div class="topic-num">Aula 1.2</div>
+                    <strong>Principais S.O.</strong>
+                    <span>Windows, Linux, macOS, Android e iOS &mdash; caracter&iacute;sticas e usos</span>
+                </div>
+                <div class="topic-chip">
+                    <div class="topic-num">Aula 1.3</div>
+                    <strong>Gerenciamento de Arquivos</strong>
+                    <span>Arquivos, pastas, caminhos, extens&otilde;es e opera&ccedil;&otilde;es essenciais</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXERCÍCIO 1: Múltipla Escolha -->
+        <div class="content-card exercise-card">
+            <h2>&#x1F4DD; Exerc&iacute;cio 1 &mdash; M&uacute;ltipla Escolha</h2>
+            <p style="color:#475569;font-size:0.9em;margin-bottom:16px;">Dez quest&otilde;es cobrindo os quatro temas da unidade. Selecione a alternativa correta e clique em <strong>Verificar</strong>.</p>
+
+            <div class="mc-root" data-ex="mc-rev1">
+
+                <!-- Q1 — Teclado -->
+                <div class="mc-question" data-q="q1" data-correct="b">
+                    <p class="mc-q-text">1. Qual tecla apaga o caractere imediatamente &agrave; <strong>esquerda</strong> do cursor?</p>
+                    <div class="mc-options">
+                        <div class="mc-option" data-opt="a"><span class="mc-letter">A</span><span>Delete</span></div>
+                        <div class="mc-option" data-opt="b"><span class="mc-letter">B</span><span>Backspace</span></div>
+                        <div class="mc-option" data-opt="c"><span class="mc-letter">C</span><span>Esc</span></div>
+                        <div class="mc-option" data-opt="d"><span class="mc-letter">D</span><span>Tab</span></div>
+                    </div>
+                    <div class="mc-explanation ok">&#x2714; Correto! O <strong>Backspace</strong> apaga o caractere &agrave; esquerda do cursor. J&aacute; o <strong>Delete</strong> apaga o caractere &agrave; <em>direita</em>.</div>
+                    <div class="mc-explanation err" data-for="a">&#x2716; O <strong>Delete</strong> apaga o caractere &agrave; <em>direita</em> do cursor, n&atilde;o &agrave; esquerda.</div>
+                    <div class="mc-explanation err" data-for="c">&#x2716; O <strong>Esc</strong> cancela ou fecha a opera&ccedil;&atilde;o atual, n&atilde;o apaga caracteres.</div>
+                    <div class="mc-explanation err" data-for="d">&#x2716; O <strong>Tab</strong> insere uma tabula&ccedil;&atilde;o ou move o foco para o pr&oacute;ximo campo.</div>
+                </div>
+
+                <hr class="mc-sep">
+
+                <!-- Q2 — Teclado -->
+                <div class="mc-question" data-q="q2" data-correct="c">
+                    <p class="mc-q-text">2. O atalho <kbd>Ctrl</kbd> + <kbd>Z</kbd> realiza qual opera&ccedil;&atilde;o?</p>
+                    <div class="mc-options">
+                        <div class="mc-option" data-opt="a"><span class="mc-letter">A</span><span>Copiar o texto selecionado</span></div>
+                        <div class="mc-option" data-opt="b"><span class="mc-letter">B</span><span>Fechar a janela ativa</span></div>
+                        <div class="mc-option" data-opt="c"><span class="mc-letter">C</span><span>Desfazer a &uacute;ltima a&ccedil;&atilde;o</span></div>
+                        <div class="mc-option" data-opt="d"><span class="mc-letter">D</span><span>Selecionar todo o conte&uacute;do</span></div>
+                    </div>
+                    <div class="mc-explanation ok">&#x2714; Correto! <kbd>Ctrl</kbd>+<kbd>Z</kbd> desfaz a &uacute;ltima a&ccedil;&atilde;o realizada. &Eacute; um dos atalhos mais &uacute;teis do dia a dia.</div>
+                    <div class="mc-explanation err" data-for="a">&#x2716; Copiar &eacute; <kbd>Ctrl</kbd>+<kbd>C</kbd>. O <kbd>Ctrl</kbd>+<kbd>Z</kbd> desfaz a &uacute;ltima a&ccedil;&atilde;o.</div>
+                    <div class="mc-explanation err" data-for="b">&#x2716; Fechar janela &eacute; <kbd>Alt</kbd>+<kbd>F4</kbd>. O <kbd>Ctrl</kbd>+<kbd>Z</kbd> desfaz a &uacute;ltima a&ccedil;&atilde;o.</div>
+                    <div class="mc-explanation err" data-for="d">&#x2716; Selecionar tudo &eacute; <kbd>Ctrl</kbd>+<kbd>A</kbd>. O <kbd>Ctrl</kbd>+<kbd>Z</kbd> desfaz a &uacute;ltima a&ccedil;&atilde;o.</div>
+                </div>
+
+                <hr class="mc-sep">
+
+                <!-- Q3 — Fundamentos S.O. -->
+                <div class="mc-question" data-q="q3" data-correct="a">
+                    <p class="mc-q-text">3. O <strong>kernel</strong> de um sistema operacional &eacute; respons&aacute;vel por:</p>
+                    <div class="mc-options">
+                        <div class="mc-option" data-opt="a"><span class="mc-letter">A</span><span>Gerenciar diretamente o hardware (CPU, mem&oacute;ria, dispositivos)</span></div>
+                        <div class="mc-option" data-opt="b"><span class="mc-letter">B</span><span>Exibir &iacute;cones e janelas na &aacute;rea de trabalho</span></div>
+                        <div class="mc-option" data-opt="c"><span class="mc-letter">C</span><span>Instalar programas no computador</span></div>
+                        <div class="mc-option" data-opt="d"><span class="mc-letter">D</span><span>Organizar arquivos em pastas</span></div>
+                    </div>
+                    <div class="mc-explanation ok">&#x2714; Correto! O kernel &eacute; o n&uacute;cleo do S.O. &mdash; ele se comunica diretamente com o hardware e &eacute; a camada mais profunda do sistema.</div>
+                    <div class="mc-explanation err" data-for="b">&#x2716; A exibi&ccedil;&atilde;o da interface gr&aacute;fica (janelas, &iacute;cones) &eacute; fun&ccedil;&atilde;o da GUI, n&atilde;o do kernel.</div>
+                    <div class="mc-explanation err" data-for="c">&#x2716; Instalar programas &eacute; tarefa do gerenciador de pacotes ou instalador, n&atilde;o do kernel.</div>
+                    <div class="mc-explanation err" data-for="d">&#x2716; A organiza&ccedil;&atilde;o de arquivos &eacute; feita pelo sistema de gerenciamento de arquivos, que &eacute; uma camada acima do kernel.</div>
+                </div>
+
+                <hr class="mc-sep">
+
+                <!-- Q4 — Fundamentos S.O. -->
+                <div class="mc-question" data-q="q4" data-correct="d">
+                    <p class="mc-q-text">4. Qual &eacute; a diferen&ccedil;a entre uma interface <strong>CLI</strong> e uma interface <strong>GUI</strong>?</p>
+                    <div class="mc-options">
+                        <div class="mc-option" data-opt="a"><span class="mc-letter">A</span><span>CLI s&oacute; funciona no Linux; GUI s&oacute; funciona no Windows</span></div>
+                        <div class="mc-option" data-opt="b"><span class="mc-letter">B</span><span>CLI &eacute; mais moderna e f&aacute;cil de usar</span></div>
+                        <div class="mc-option" data-opt="c"><span class="mc-letter">C</span><span>Ambas s&atilde;o id&ecirc;nticas, apenas com visuais diferentes</span></div>
+                        <div class="mc-option" data-opt="d"><span class="mc-letter">D</span><span>CLI usa comandos de texto; GUI usa &iacute;cones, janelas e mouse</span></div>
+                    </div>
+                    <div class="mc-explanation ok">&#x2714; Correto! CLI (Command Line Interface) &eacute; baseada em texto (ex.: Prompt de Comando). GUI (Graphical User Interface) usa elementos visuais como &iacute;cones e janelas.</div>
+                    <div class="mc-explanation err" data-for="a">&#x2716; CLI e GUI existem em todos os S.O. principais. O Windows tem o Prompt de Comando (CLI) e a &Aacute;rea de Trabalho (GUI), por exemplo.</div>
+                    <div class="mc-explanation err" data-for="b">&#x2716; CLI &eacute; mais antiga e requer conhecimento t&eacute;cnico, mas ainda &eacute; amplamente usada por administradores de sistemas.</div>
+                    <div class="mc-explanation err" data-for="c">&#x2716; S&atilde;o formas fundamentalmente diferentes de intera&ccedil;&atilde;o: uma baseada em texto, outra em elementos gr&aacute;ficos.</div>
+                </div>
+
+                <hr class="mc-sep">
+
+                <!-- Q5 — Principais S.O. -->
+                <div class="mc-question" data-q="q5" data-correct="c">
+                    <p class="mc-q-text">5. Qual sistema operacional domina mais de <strong>90%</strong> dos servidores que sustentam a internet?</p>
+                    <div class="mc-options">
+                        <div class="mc-option" data-opt="a"><span class="mc-letter">A</span><span>Windows Server</span></div>
+                        <div class="mc-option" data-opt="b"><span class="mc-letter">B</span><span>macOS Server</span></div>
+                        <div class="mc-option" data-opt="c"><span class="mc-letter">C</span><span>Linux</span></div>
+                        <div class="mc-option" data-opt="d"><span class="mc-letter">D</span><span>Android</span></div>
+                    </div>
+                    <div class="mc-explanation ok">&#x2714; Correto! O Linux domina a infraestrutura de servidores da internet gratuito, est&aacute;vel e altamente configur&aacute;vel. Grandes empresas como Google, Amazon e Meta rodam Linux.</div>
+                    <div class="mc-explanation err" data-for="a">&#x2716; O Windows lidera nos PCs pessoais (~72%), mas nos servidores de internet o Linux &eacute; dominant.</div>
+                    <div class="mc-explanation err" data-for="b">&#x2716; O macOS &eacute; popular entre profissionais criativos, mas sua presen&ccedil;a em servidores &eacute; pequena.</div>
+                    <div class="mc-explanation err" data-for="d">&#x2716; O Android domina os smartphones (~72%), n&atilde;o os servidores de internet.</div>
+                </div>
+
+                <hr class="mc-sep">
+
+                <!-- Q6 — Principais S.O. -->
+                <div class="mc-question" data-q="q6" data-correct="b">
+                    <p class="mc-q-text">6. Uma das principais caracter&iacute;sticas do <strong>Linux</strong> &eacute;:</p>
+                    <div class="mc-options">
+                        <div class="mc-option" data-opt="a"><span class="mc-letter">A</span><span>&Eacute; propriet&aacute;rio e desenvolvido pela Microsoft</span></div>
+                        <div class="mc-option" data-opt="b"><span class="mc-letter">B</span><span>&Eacute; gratuito, open-source e possui v&aacute;rias distribui&ccedil;&otilde;es (distros)</span></div>
+                        <div class="mc-option" data-opt="c"><span class="mc-letter">C</span><span>S&oacute; funciona em computadores da Apple</span></div>
+                        <div class="mc-option" data-opt="d"><span class="mc-letter">D</span><span>N&atilde;o possui interface gr&aacute;fica</span></div>
+                    </div>
+                    <div class="mc-explanation ok">&#x2714; Correto! O Linux &eacute; open-source (c&oacute;digo aberto) e gratuito. Existem diversas distribui&ccedil;&otilde;es como Ubuntu, Debian, Fedora e Mint, cada uma com caracter&iacute;sticas diferentes.</div>
+                    <div class="mc-explanation err" data-for="a">&#x2716; Quem &eacute; desenvolvido pela Microsoft &eacute; o Windows. O Linux foi criado por Linus Torvalds e &eacute; mantido pela comunidade.</div>
+                    <div class="mc-explanation err" data-for="c">&#x2716; O sistema exclusivo da Apple &eacute; o macOS. O Linux roda em praticamente qualquer hardware.</div>
+                    <div class="mc-explanation err" data-for="d">&#x2716; O Linux possui diversas interfaces gr&aacute;ficas (GNOME, KDE, etc.). A CLI &eacute; uma op&ccedil;&atilde;o, n&atilde;o uma obrigatoriedade.</div>
+                </div>
+
+                <hr class="mc-sep">
+
+                <!-- Q7 — Gerenciamento de Arquivos -->
+                <div class="mc-question" data-q="q7" data-correct="d">
+                    <p class="mc-q-text">7. O caminho <code>C:\Usu&aacute;rios\Ana\Documentos\relatorio.pdf</code> indica:</p>
+                    <div class="mc-options">
+                        <div class="mc-option" data-opt="a"><span class="mc-letter">A</span><span>O nome do programa que abre o arquivo</span></div>
+                        <div class="mc-option" data-opt="b"><span class="mc-letter">B</span><span>A data de cria&ccedil;&atilde;o do arquivo</span></div>
+                        <div class="mc-option" data-opt="c"><span class="mc-letter">C</span><span>O tipo de backup utilizado</span></div>
+                        <div class="mc-option" data-opt="d"><span class="mc-letter">D</span><span>A localiza&ccedil;&atilde;o completa do arquivo na &aacute;rvore de diret&oacute;rios</span></div>
+                    </div>
+                    <div class="mc-explanation ok">&#x2714; Correto! Esse &eacute; o <strong>caminho</strong> (path) do arquivo: come&ccedil;a na raiz <code>C:\</code>, passa pelas pastas <em>Usu&aacute;rios &rarr; Ana &rarr; Documentos</em> e termina no arquivo <em>relatorio.pdf</em>.</div>
+                    <div class="mc-explanation err">&#x2716; Esse &eacute; o <strong>caminho</strong> do arquivo &mdash; indica exatamente onde ele est&aacute; na hierarquia de pastas do disco.</div>
+                </div>
+
+                <hr class="mc-sep">
+
+                <!-- Q8 — Gerenciamento de Arquivos -->
+                <div class="mc-question" data-q="q8" data-correct="a">
+                    <p class="mc-q-text">8. Voc&ecirc; deseja enviar 30 fotos por e-mail, mas o tamanho total &eacute; muito grande. Al&eacute;m disso, quer que o destinat&aacute;rio receba um &uacute;nico arquivo. Qual opera&ccedil;&atilde;o &eacute; mais adequada?</p>
+                    <div class="mc-options">
+                        <div class="mc-option" data-opt="a"><span class="mc-letter">A</span><span>Compactar as fotos em um arquivo .zip</span></div>
+                        <div class="mc-option" data-opt="b"><span class="mc-letter">B</span><span>Renomear todos os arquivos antes de enviar</span></div>
+                        <div class="mc-option" data-opt="c"><span class="mc-letter">C</span><span>Mover as fotos para a Lixeira e enviar de l&aacute;</span></div>
+                        <div class="mc-option" data-opt="d"><span class="mc-letter">D</span><span>Alterar a extens&atilde;o de .jpg para .pdf</span></div>
+                    </div>
+                    <div class="mc-explanation ok">&#x2714; Correto! Compactar em .zip reduz o tamanho e agrupa todos os arquivos em um &uacute;nico pacote &mdash; ideal para envio por e-mail.</div>
+                    <div class="mc-explanation err" data-for="b">&#x2716; Renomear os arquivos n&atilde;o reduz o tamanho nem os agrupa em um &uacute;nico arquivo.</div>
+                    <div class="mc-explanation err" data-for="c">&#x2716; A Lixeira n&atilde;o &eacute; um local de envio. Arquivos l&aacute; aguardam exclus&atilde;o definitiva.</div>
+                    <div class="mc-explanation err" data-for="d">&#x2716; Mudar a extens&atilde;o manualmente n&atilde;o converte o arquivo &mdash; o conte&uacute;do continua sendo uma imagem e o arquivo pode se tornar inutiliz&aacute;vel.</div>
+                </div>
+
+                <hr class="mc-sep">
+
+                <!-- Q9 — Gerenciamento de Arquivos -->
+                <div class="mc-question" data-q="q9" data-correct="b">
+                    <p class="mc-q-text">9. Qual exten&ccedil;&atilde;o &eacute; utilizada por planilhas do Microsoft Excel?</p>
+                    <div class="mc-options">
+                        <div class="mc-option" data-opt="a"><span class="mc-letter">A</span><span>.docx</span></div>
+                        <div class="mc-option" data-opt="b"><span class="mc-letter">B</span><span>.xlsx</span></div>
+                        <div class="mc-option" data-opt="c"><span class="mc-letter">C</span><span>.pptx</span></div>
+                        <div class="mc-option" data-opt="d"><span class="mc-letter">D</span><span>.pdf</span></div>
+                    </div>
+                    <div class="mc-explanation ok">&#x2714; Correto! <strong>.xlsx</strong> &eacute; o formato padr&atilde;o do Excel. O .docx &eacute; do Word, o .pptx &eacute; do PowerPoint, e o .pdf &eacute; um formato de leitura universal.</div>
+                    <div class="mc-explanation err" data-for="a">&#x2716; <strong>.docx</strong> &eacute; o formato do Microsoft Word (documentos de texto).</div>
+                    <div class="mc-explanation err" data-for="c">&#x2716; <strong>.pptx</strong> &eacute; o formato do Microsoft PowerPoint (apresenta&ccedil;&otilde;es).</div>
+                    <div class="mc-explanation err" data-for="d">&#x2716; <strong>.pdf</strong> &eacute; um formato de documento port&aacute;til para distribui&ccedil;&atilde;o e leitura, n&atilde;o uma planilha.</div>
+                </div>
+
+                <hr class="mc-sep">
+
+                <!-- Q10 — Teclado -->
+                <div class="mc-question" data-q="q10" data-correct="d">
+                    <p class="mc-q-text">10. O layout de teclado padr&atilde;o no Brasil, com a tecla extra entre o Shift esquerdo e o Z (geralmente com o <strong>&ccedil;</strong>), chama-se:</p>
+                    <div class="mc-options">
+                        <div class="mc-option" data-opt="a"><span class="mc-letter">A</span><span>QWERTY US</span></div>
+                        <div class="mc-option" data-opt="b"><span class="mc-letter">B</span><span>AZERTY</span></div>
+                        <div class="mc-option" data-opt="c"><span class="mc-letter">C</span><span>QWERTZ</span></div>
+                        <div class="mc-option" data-opt="d"><span class="mc-letter">D</span><span>ABNT2</span></div>
+                    </div>
+                    <div class="mc-explanation ok">&#x2714; Correto! O <strong>ABNT2</strong> &eacute; o layout padr&atilde;o brasileiro. Possui uma tecla extra com <strong>&ccedil;</strong> e acentos pr&oacute;prios do portugu&ecirc;s, al&eacute;m da tecla <strong>&cedil;</strong> ao lado do <em>L</em>.</div>
+                    <div class="mc-explanation err" data-for="a">&#x2716; O QWERTY US &eacute; o layout americano &mdash; sem a tecla extra e sem o <strong>&ccedil;</strong> dedicado.</div>
+                    <div class="mc-explanation err" data-for="b">&#x2716; O AZERTY &eacute; o layout usado na Fran&ccedil;a e B&eacute;lgica, com as letras A/Q e Z/W trocadas.</div>
+                    <div class="mc-explanation err" data-for="c">&#x2716; O QWERTZ &eacute; o padr&atilde;o da Alemanha e Europa Central, com Y e Z trocados.</div>
+                </div>
+
+            </div>
+
+            <div class="ex-actions">
+                <button class="btn-verificar" onclick="mcVerify('mc-rev1')">Verificar</button>
+                <button class="btn-refazer"  onclick="mcReset('mc-rev1')">Refazer</button>
+            </div>
+            <div class="ex-result" id="mc-rev1-result"></div>
+        </div>
+
+        <!-- EXERCÍCIO 2: Arrastar e Soltar -->
+        <div class="content-card exercise-card">
+            <h2>&#x1F3AF; Exerc&iacute;cio 2 &mdash; Associe o Sistema Operacional</h2>
+            <p style="color:#475569;font-size:0.9em;margin-bottom:4px;">Arraste cada descri&ccedil;&atilde;o para o sistema operacional correspondente. Em dispositivos m&oacute;veis, toque na descri&ccedil;&atilde;o e depois na zona de destino.</p>
+
+            <div class="ex-drag-root" data-ex="ex-rev2">
+                <div class="ex-drag">
+                    <div>
+                        <div class="ex-col-title">Descri&ccedil;&atilde;o</div>
+                        <div class="ex-pool" data-pool="ex-rev2">
+                            <div class="drag-chip" data-id="windows">Mais de 72% dos PCs pessoais; desenvolvido pela Microsoft</div>
+                            <div class="drag-chip" data-id="linux">Open-source, gratuito, domina &gt;90% dos servidores de internet</div>
+                            <div class="drag-chip" data-id="macos">Exclusivo para hardware Apple; popular entre profissionais criativos</div>
+                            <div class="drag-chip" data-id="android">Sistema m&oacute;vel mais usado no mundo (~72% dos smartphones)</div>
+                            <div class="drag-chip" data-id="ios">Sistema m&oacute;vel exclusivo dos iPhones e iPads da Apple</div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="ex-col-title">Sistema Operacional</div>
+                        <div class="ex-zones" data-zones="ex-rev2">
+                            <div class="drop-zone" data-zone="ex-rev2-z1" data-accept="windows">
+                                <span class="zone-name">Windows</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex-rev2-z2" data-accept="linux">
+                                <span class="zone-name">Linux</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex-rev2-z3" data-accept="macos">
+                                <span class="zone-name">macOS</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex-rev2-z4" data-accept="android">
+                                <span class="zone-name">Android</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex-rev2-z5" data-accept="ios">
+                                <span class="zone-name">iOS</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ex-actions">
+                <button class="btn-verificar" onclick="dragVerify('ex-rev2')">Verificar</button>
+                <button class="btn-refazer"  onclick="dragReset('ex-rev2')">Refazer</button>
+            </div>
+            <div class="ex-result" id="ex-rev2-result"></div>
+        </div>
+
+        <!-- EXERCÍCIO 3: Arrastar e Soltar — Atalhos -->
+        <div class="content-card exercise-card">
+            <h2>&#x2328;&#xFE0F; Exerc&iacute;cio 3 &mdash; Atalhos do Teclado</h2>
+            <p style="color:#475569;font-size:0.9em;margin-bottom:4px;">Associe cada atalho de teclado &agrave; sua fun&ccedil;&atilde;o.</p>
+
+            <div class="ex-drag-root" data-ex="ex-rev3">
+                <div class="ex-drag">
+                    <div>
+                        <div class="ex-col-title">Fun&ccedil;&atilde;o</div>
+                        <div class="ex-pool" data-pool="ex-rev3">
+                            <div class="drag-chip" data-id="ctrlc">Copiar o conte&uacute;do selecionado</div>
+                            <div class="drag-chip" data-id="ctrlv">Colar o conte&uacute;do copiado</div>
+                            <div class="drag-chip" data-id="ctrlz">Desfazer a &uacute;ltima a&ccedil;&atilde;o</div>
+                            <div class="drag-chip" data-id="alttab">Alternar entre janelas abertas</div>
+                            <div class="drag-chip" data-id="wine">Abrir o Explorador de Arquivos</div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="ex-col-title">Atalho</div>
+                        <div class="ex-zones" data-zones="ex-rev3">
+                            <div class="drop-zone" data-zone="ex-rev3-z1" data-accept="ctrlc">
+                                <span class="zone-name">Ctrl + C</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex-rev3-z2" data-accept="ctrlv">
+                                <span class="zone-name">Ctrl + V</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex-rev3-z3" data-accept="ctrlz">
+                                <span class="zone-name">Ctrl + Z</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex-rev3-z4" data-accept="alttab">
+                                <span class="zone-name">Alt + Tab</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                            <div class="drop-zone" data-zone="ex-rev3-z5" data-accept="wine">
+                                <span class="zone-name">Win + E</span>
+                                <div class="zone-slot"></div>
+                                <div class="zone-feedback"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ex-actions">
+                <button class="btn-verificar" onclick="dragVerify('ex-rev3')">Verificar</button>
+                <button class="btn-refazer"  onclick="dragReset('ex-rev3')">Refazer</button>
+            </div>
+            <div class="ex-result" id="ex-rev3-result"></div>
+        </div>
+
+        <!-- GABARITO / RECAPITULANDO -->
+        <div class="content-card">
+            <h2>&#x1F4CB; Pontos-chave da Unidade 1</h2>
+            <ul>
+                <li>O teclado <strong>ABNT2</strong> &eacute; o padr&atilde;o brasileiro, com tecla extra e o <strong>&ccedil;</strong> dedicado</li>
+                <li>Teclas modificadoras (Shift, Ctrl, Alt, Win) <em>por si s&oacute; n&atilde;o fazem nada</em> &mdash; combinam com outras teclas para criar atalhos</li>
+                <li>O <strong>sistema operacional</strong> &eacute; o intermedi&aacute;rio entre o hardware e os programas; o <strong>kernel</strong> &eacute; seu n&uacute;cleo</li>
+                <li>Principais fun&ccedil;&otilde;es do S.O.: gerenciar processos, mem&oacute;ria, arquivos e dispositivos</li>
+                <li>Windows domina <strong>PCs</strong>; Linux domina <strong>servidores</strong>; Android domina <strong>smartphones</strong></li>
+                <li>O <strong>caminho</strong> de um arquivo mostra onde ele est&aacute; na &aacute;rvore de diret&oacute;rios (ex.: <code>C:\Docs\arquivo.pdf</code>)</li>
+                <li>A <strong>extens&atilde;o</strong> (.pdf, .xlsx, .mp4&hellip;) define o tipo do arquivo e qual programa o abre</li>
+                <li>Opera&ccedil;&otilde;es essenciais com arquivos: <strong>criar, renomear, copiar, mover, excluir e pesquisar</strong></li>
+            </ul>
+        </div>
+
+        <div class="nav-footer">
+            <a href="uni1-04-gerenciamento-arquivos.html" class="nav-link">&#x2B05; Anterior: Gerenciamento de Arquivos</a>
+            <a href="uni1-06-softwares-utilitarios.html" class="nav-link">Pr&oacute;xima: Softwares Utilit&aacute;rios &#x27A1;</a>
+        </div>
+
+    </div>
+
+    <script src="slide-mode.js"></script>
+    <script src="exercise-mc.js"></script>
+    <script src="exercise-drag.js"></script>
+</body>
+</html>
