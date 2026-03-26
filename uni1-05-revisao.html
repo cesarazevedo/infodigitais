@@ -140,7 +140,7 @@
         .topic-chip strong { display: block; color: #1a202c; font-size: 0.95em; }
         .topic-chip span { display: block; font-size: 0.82em; color: #718096; margin-top: 4px; }
 
-        /* ── Exercício de Digitação (inline) ── */
+        /* ── Exercício de Digitação ── */
         .typing-tip {
             background: #eff6ff;
             border-left: 4px solid var(--primary);
@@ -148,81 +148,56 @@
             border-radius: 0 8px 8px 0;
             font-size: 0.87em;
             color: #1e40af;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
 
-        .fill-form {
-            font-size: 0.97em;
-            line-height: 1;
+        .typing-block {
+            margin-bottom: 28px;
         }
 
-        .fill-section {
-            font-size: 0.82em;
+        .typing-block-label {
+            font-size: 0.75em;
             font-weight: 700;
             color: white;
-            background: var(--primary);
-            padding: 5px 14px;
-            border-radius: 6px;
-            margin: 22px 0 12px;
+            background: var(--secondary);
+            padding: 3px 12px;
+            border-radius: 6px 6px 0 0;
+            display: inline-block;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            display: inline-block;
         }
 
-        .fill-line {
-            margin-bottom: 14px;
-            line-height: 2.2;
-            color: #334155;
-            text-align: left;
+        .typing-ref {
+            background: #f0f7ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 0 8px 8px 8px;
+            padding: 16px 20px;
+            font-size: 0.93em;
+            line-height: 1.85;
+            color: #1e3a5f;
+            margin-bottom: 8px;
+            user-select: none;
         }
 
-        .fill-input {
-            border: none;
-            border-bottom: 2px solid var(--primary);
-            background: transparent;
-            font-family: inherit;
-            font-size: inherit;
+        .typing-area {
+            width: 100%;
+            border: 2px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 14px 16px;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            font-size: 0.93em;
+            line-height: 1.85;
             color: #1a202c;
-            padding: 0 5px 1px;
-            width: 160px;
-            outline: none;
-            transition: border-color 0.2s, background 0.2s;
-            vertical-align: baseline;
-        }
-
-        .fill-input:focus {
-            border-bottom-color: var(--secondary);
-            background: rgba(0,137,123,0.06);
-            border-radius: 4px 4px 0 0;
-        }
-
-        .fill-input.short  { width: 65px; }
-        .fill-input.medium { width: 220px; }
-        .fill-input.wide   { width: 100%; display: block; margin-top: 4px; }
-
-        .fill-progress {
-            font-size: 0.82em;
-            color: #94a3b8;
-            margin-top: 16px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .fill-progress-bar {
-            flex: 1;
-            height: 6px;
-            background: #e2e8f0;
-            border-radius: 3px;
+            resize: none;
+            transition: border-color 0.2s;
+            background: #fff;
             overflow: hidden;
         }
 
-        .fill-progress-fill {
-            height: 100%;
-            background: var(--secondary);
-            border-radius: 3px;
-            transition: width 0.3s;
-            width: 0%;
+        .typing-area:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(21,101,192,0.1);
         }
 
         /* Nav footer */
@@ -598,157 +573,82 @@
             <div class="ex-result" id="ex-rev3-result"></div>
         </div>
 
-        <!-- EXERCÍCIO 4: Digitação inline -->
+        <!-- EXERCÍCIO 4: Digitação por blocos -->
         <div class="content-card exercise-card">
-            <h2>&#x2328;&#xFE0F; Exerc&iacute;cio 4 &mdash; Quem sou eu na inform&aacute;tica</h2>
+            <h2>&#x2328;&#xFE0F; Exerc&iacute;cio 4 &mdash; Pr&aacute;tica de Digita&ccedil;&atilde;o</h2>
             <p style="color:#475569;font-size:0.9em;margin-bottom:14px;">
-                Clique em cada campo sublinhado e <strong>digite sua resposta diretamente no texto</strong>. N&atilde;o &eacute; preciso rolar a tela &mdash; preencha linha a linha e use <kbd>Tab</kbd> para avan&ccedil;ar ao pr&oacute;ximo campo.
+                Leia o par&aacute;grafo em azul e <strong>reescreva-o na caixa abaixo</strong>, palavra por palavra. Concentre-se na postura e na precis&atilde;o &mdash; n&atilde;o h&aacute; verificac&atilde;o autom&aacute;tica.
             </p>
 
             <div class="typing-tip">
-                &#x1F4A1; <strong>Dica de postura:</strong> Dedos indicadores sobre <kbd>F</kbd> e <kbd>J</kbd>, polegares na barra de espa&ccedil;o. Tente n&atilde;o olhar para o teclado enquanto digita.
+                &#x1F4A1; <strong>Dica:</strong> Dedos indicadores sobre <kbd>F</kbd> e <kbd>J</kbd> (teclas com relevo), polegares na <kbd>Barra de espa&ccedil;o</kbd>. Tente n&atilde;o olhar para o teclado enquanto digita.
             </div>
 
-            <div class="fill-form" id="fill-form-ex4">
-
-                <span class="fill-section">&#x25B6; Apresenta&ccedil;&atilde;o pessoal</span>
-
-                <p class="fill-line">
-                    Ol&aacute;! Meu nome &eacute; <input class="fill-input medium" placeholder="seu nome completo"> e tenho <input class="fill-input short" placeholder="idade"> anos.
-                </p>
-                <p class="fill-line">
-                    Sou aluno(a) do curso de <input class="fill-input medium" placeholder="nome do curso">, na escola <input class="fill-input medium" placeholder="nome da escola">.
-                </p>
-                <p class="fill-line">
-                    Estudo no per&iacute;odo <input class="fill-input" placeholder="manh&atilde; / tarde / noite"> e inicio as aulas &agrave;s <input class="fill-input short" placeholder="hh:mm"> horas.
-                </p>
-                <p class="fill-line">
-                    Moro em <input class="fill-input" placeholder="cidade / bairro"> e me desloco at&eacute; a escola de <input class="fill-input" placeholder="&ocirc;nibus / a p&eacute; / carro...">.
-                </p>
-
-                <span class="fill-section">&#x25B6; Meu contato com a tecnologia</span>
-
-                <p class="fill-line">
-                    Comecei a usar computador com aproximadamente <input class="fill-input short" placeholder="idade"> anos de idade.
-                </p>
-                <p class="fill-line">
-                    Antes desta aula, meu n&iacute;vel com computadores era: <input class="fill-input medium" placeholder="iniciante / intermedi&aacute;rio / avan&ccedil;ado">.
-                </p>
-                <p class="fill-line">
-                    Acesso a internet com mais frequ&ecirc;ncia pelo <input class="fill-input" placeholder="computador / celular / tablet">.
-                </p>
-                <p class="fill-line">
-                    Uso a internet principalmente para: <input class="fill-input" placeholder="atividade 1">, <input class="fill-input" placeholder="atividade 2"> e <input class="fill-input" placeholder="atividade 3">.
-                </p>
-
-                <span class="fill-section">&#x25B6; Meu dispositivo e sistema operacional</span>
-
-                <p class="fill-line">
-                    O sistema operacional do meu computador ou celular &eacute; o <input class="fill-input medium" placeholder="Windows / Android / iOS...">.
-                </p>
-                <p class="fill-line">
-                    A vers&atilde;o que utilizo &eacute; <input class="fill-input medium" placeholder="ex.: Windows 11 / Android 14">.
-                </p>
-                <p class="fill-line">
-                    Meu dispositivo tem aproximadamente <input class="fill-input short" placeholder="GB"> GB de armazenamento e <input class="fill-input short" placeholder="GB"> GB de mem&oacute;ria RAM.
-                </p>
-                <p class="fill-line">
-                    A interface que uso no dia a dia &eacute; a <input class="fill-input medium" placeholder="gr&aacute;fica (GUI) / linha de comando (CLI)">.
-                </p>
-                <p class="fill-line">
-                    Um recurso do meu S.O. que j&aacute; sei usar bem: <input class="fill-input medium" placeholder="ex.: &Aacute;rea de Trabalho, Lixeira...">.
-                </p>
-
-                <span class="fill-section">&#x25B6; Teclado e atalhos</span>
-
-                <p class="fill-line">
-                    O layout do meu teclado &eacute; o <input class="fill-input" placeholder="ABNT2 / US QWERTY / outro">.
-                </p>
-                <p class="fill-line">
-                    A tecla que mais uso no computador &eacute; a <input class="fill-input" placeholder="nome da tecla">.
-                </p>
-                <p class="fill-line">
-                    Um atalho que j&aacute; conhecia antes desta aula: <input class="fill-input" placeholder="ex.: Ctrl+C">.
-                </p>
-                <p class="fill-line">
-                    Um atalho que aprendi nesta unidade e vou usar: <input class="fill-input" placeholder="atalho">, que serve para <input class="fill-input medium" placeholder="fun&ccedil;&atilde;o">.
-                </p>
-                <p class="fill-line">
-                    A tecla modificadora que eu menos conhecia era: <input class="fill-input" placeholder="Shift / Ctrl / Alt / Win">.
-                </p>
-                <p class="fill-line">
-                    O atalho <input class="fill-input short" placeholder="atalho"> me parece &uacute;til porque <input class="fill-input medium" placeholder="motivo">.
-                </p>
-
-                <span class="fill-section">&#x25B6; Gerenciamento de arquivos</span>
-
-                <p class="fill-line">
-                    Minha pasta de Documentos est&aacute; organizada? <input class="fill-input" placeholder="sim / n&atilde;o / mais ou menos">.
-                </p>
-                <p class="fill-line">
-                    O tipo de arquivo que mais crio ou uso &eacute; o <input class="fill-input" placeholder=".docx / .pdf / .jpg / outro">.
-                </p>
-                <p class="fill-line">
-                    Costumo dar nomes descritivos aos meus arquivos? <input class="fill-input" placeholder="sempre / &agrave;s vezes / raramente">.
-                </p>
-                <p class="fill-line">
-                    Fa&ccedil;o backup dos meus arquivos importantes? <input class="fill-input" placeholder="sim / n&atilde;o / pretendo come&ccedil;ar">.
-                </p>
-                <p class="fill-line">
-                    Para encontrar um arquivo rapidamente no Windows, eu usaria: <input class="fill-input medium" placeholder="atalho ou ferramenta">.
-                </p>
-                <p class="fill-line">
-                    O caminho da minha pasta de Documentos no Windows &eacute;: <input class="fill-input medium" placeholder="C:\Usu&aacute;rios\...">.
-                </p>
-
-                <span class="fill-section">&#x25B6; Sistemas operacionais</span>
-
-                <p class="fill-line">
-                    O S.O. que eu conhecia antes desta unidade: <input class="fill-input medium" placeholder="nome do S.O.">.
-                </p>
-                <p class="fill-line">
-                    Uma caracter&iacute;stica do <strong>Windows</strong> que acho &uacute;til: <input class="fill-input medium" placeholder="ex.: interface gr&aacute;fica amig&aacute;vel">.
-                </p>
-                <p class="fill-line">
-                    Uma caracter&iacute;stica do <strong>Linux</strong> que me chamou a aten&ccedil;&atilde;o: <input class="fill-input medium" placeholder="ex.: gratuito e open-source">.
-                </p>
-                <p class="fill-line">
-                    O sistema que eu gostaria de experimentar: <input class="fill-input" placeholder="S.O.">, porque <input class="fill-input medium" placeholder="motivo">.
-                </p>
-                <p class="fill-line">
-                    No meu celular, o sistema operacional &eacute; o <input class="fill-input" placeholder="Android / iOS">, vers&atilde;o <input class="fill-input short" placeholder="n&uacute;m.">.
-                </p>
-
-                <span class="fill-section">&#x25B6; Metas e compromissos</span>
-
-                <p class="fill-line">
-                    O que espero aprender nesta disciplina de inform&aacute;tica:<br>
-                    <input class="fill-input wide" placeholder="descreva sua expectativa principal...">
-                </p>
-                <p class="fill-line">
-                    Uma dificuldade com tecnologia que quero superar:<br>
-                    <input class="fill-input wide" placeholder="descreva a dificuldade...">
-                </p>
-                <p class="fill-line">
-                    Algo que j&aacute; sei fazer bem no computador:<br>
-                    <input class="fill-input wide" placeholder="descreva o que voc&ecirc; j&aacute; domina...">
-                </p>
-                <p class="fill-line">
-                    Ao longo deste curso, vou me esfor&ccedil;ar para <input class="fill-input medium" placeholder="objetivo pessoal">.
-                </p>
-                <p class="fill-line">
-                    Vou praticar digita&ccedil;&atilde;o pelo menos <input class="fill-input short" placeholder="n&uacute;m."> vezes por semana, durante <input class="fill-input short" placeholder="min."> minutos.
-                </p>
-
-            </div><!-- /fill-form -->
-
-            <div class="fill-progress">
-                <span id="fill-count-ex4">0 de 40 campos preenchidos</span>
-                <div class="fill-progress-bar"><div class="fill-progress-fill" id="fill-bar-ex4"></div></div>
+            <!-- Bloco 1 -->
+            <div class="typing-block">
+                <span class="typing-block-label">Bloco 1 &mdash; O teclado</span>
+                <div class="typing-ref">
+                    O teclado &eacute; o principal dispositivo de entrada de dados do computador. O modelo mais comum no Brasil &eacute; o ABNT2, reconhecido pela tecla extra entre o Shift esquerdo e a letra Z. Esse layout possui o &ccedil; dedicado e acentos pr&oacute;prios do portugu&ecirc;s. Al&eacute;m das letras e n&uacute;meros, o teclado &eacute; dividido em grupos: alfanum&eacute;rico, especial, de fun&ccedil;&atilde;o, de navega&ccedil;&atilde;o e num&eacute;rico. Conhecer bem cada grupo ajuda a trabalhar com mais efici&ecirc;ncia no dia a dia.
+                </div>
+                <textarea class="typing-area" rows="5" placeholder="Digite aqui o texto acima..."></textarea>
             </div>
 
-            <div class="ex-actions" style="margin-top:18px;">
-                <button class="btn-print" onclick="printTypingEx()">&#x1F5A8;&#xFE0F; Imprimir resposta</button>
+            <!-- Bloco 2 -->
+            <div class="typing-block">
+                <span class="typing-block-label">Bloco 2 &mdash; Teclas modificadoras e atalhos</span>
+                <div class="typing-ref">
+                    As teclas modificadoras, como Shift, Ctrl, Alt e Win, n&atilde;o fazem nada quando pressionadas sozinhas. Elas mudam o comportamento de outras teclas quando usadas em combina&ccedil;&atilde;o. Por exemplo: Ctrl+C copia o conte&uacute;do selecionado, Ctrl+V cola, Ctrl+Z desfaz a &uacute;ltima a&ccedil;&atilde;o e Ctrl+A seleciona tudo. J&aacute; o Alt+Tab alterna entre as janelas abertas, e Win+E abre o Explorador de Arquivos. Dominar esses atalhos aumenta muito a produtividade.
+                </div>
+                <textarea class="typing-area" rows="5" placeholder="Digite aqui o texto acima..."></textarea>
+            </div>
+
+            <!-- Bloco 3 -->
+            <div class="typing-block">
+                <span class="typing-block-label">Bloco 3 &mdash; O que &eacute; um sistema operacional</span>
+                <div class="typing-ref">
+                    O sistema operacional &eacute; o software fundamental que faz a ponte entre o hardware do computador e os programas que o usu&aacute;rio utiliza. Sem ele, nenhum aplicativo consegue se comunicar com o processador, a mem&oacute;ria ou os dispositivos conectados. Suas principais fun&ccedil;&otilde;es s&atilde;o: gerenciar processos em execu&ccedil;&atilde;o, controlar o uso da mem&oacute;ria RAM, organizar arquivos em disco, gerenciar dispositivos e garantir a seguran&ccedil;a do sistema. O kernel &eacute; o n&uacute;cleo do S.O. e trabalha na camada mais pr&oacute;xima do hardware.
+                </div>
+                <textarea class="typing-area" rows="5" placeholder="Digite aqui o texto acima..."></textarea>
+            </div>
+
+            <!-- Bloco 4 -->
+            <div class="typing-block">
+                <span class="typing-block-label">Bloco 4 &mdash; Principais sistemas operacionais</span>
+                <div class="typing-ref">
+                    Os tr&ecirc;s sistemas operacionais mais usados em computadores pessoais s&atilde;o Windows, Linux e macOS. O Windows, desenvolvido pela Microsoft, est&aacute; presente em cerca de 72% dos PCs do mundo. O Linux &eacute; gratuito, open-source e domina mais de 90% dos servidores que sustentam a internet. J&aacute; o macOS &eacute; exclusivo para equipamentos Apple e &eacute; popular entre profissionais criativos. Nos smartphones, o Android lidera com aproximadamente 72% do mercado, enquanto o iOS, da Apple, ocupa cerca de 27%.
+                </div>
+                <textarea class="typing-area" rows="5" placeholder="Digite aqui o texto acima..."></textarea>
+            </div>
+
+            <!-- Bloco 5 -->
+            <div class="typing-block">
+                <span class="typing-block-label">Bloco 5 &mdash; Arquivos e pastas</span>
+                <div class="typing-ref">
+                    Arquivos s&atilde;o unidades de informa&ccedil;&atilde;o armazenadas no computador. Cada arquivo possui um nome, uma extens&atilde;o e uma localiza&ccedil;&atilde;o no disco. As pastas organizam os arquivos em uma estrutura hier&aacute;rquica chamada &aacute;rvore de diret&oacute;rios. No Windows, essa &aacute;rvore come&ccedil;a pela letra da unidade de disco, por exemplo C:\. O caminho completo de um arquivo indica exatamente onde ele est&aacute; armazenado, como em C:\Usu&aacute;rios\Ana\Documentos\relatorio.pdf. Conhecer o caminho de um arquivo &eacute; essencial para organiz&aacute;-lo e encontr&aacute;-lo rapidamente.
+                </div>
+                <textarea class="typing-area" rows="6" placeholder="Digite aqui o texto acima..."></textarea>
+            </div>
+
+            <!-- Bloco 6 -->
+            <div class="typing-block">
+                <span class="typing-block-label">Bloco 6 &mdash; Extens&otilde;es de arquivo</span>
+                <div class="typing-ref">
+                    A extens&atilde;o de um arquivo fica ap&oacute;s o ponto no nome e indica seu tipo e o programa que o abre. Alguns exemplos comuns: .docx para documentos do Word, .xlsx para planilhas do Excel, .pptx para apresenta&ccedil;&otilde;es do PowerPoint, .pdf para documentos port&aacute;teis, .jpg e .png para imagens, .mp4 para v&iacute;deos, .mp3 para &aacute;udio e .zip para arquivos compactados. Trocar a extens&atilde;o manualmente n&atilde;o converte o arquivo &mdash; apenas pode torn&aacute;-lo inutiliz&aacute;vel. Arquivos com extens&atilde;o .exe s&atilde;o programas execut&aacute;veis e devem ser abertos apenas se vierem de fontes confi&aacute;veis.
+                </div>
+                <textarea class="typing-area" rows="6" placeholder="Digite aqui o texto acima..."></textarea>
+            </div>
+
+            <!-- Bloco 7 -->
+            <div class="typing-block">
+                <span class="typing-block-label">Bloco 7 &mdash; Boas pr&aacute;ticas e metas</span>
+                <div class="typing-ref">
+                    Para manter o computador organizado, &eacute; importante adotar boas pr&aacute;ticas desde o in&iacute;cio. Crie pastas l&oacute;gicas para separar projetos e disciplinas. Use nomes descritivos nos arquivos, evitando espa&ccedil;os e acentos. Quando relevante, inclua a data no formato AAAA-MM-DD no in&iacute;cio do nome, como em 2025-06-10-trabalho-final.docx. Fa&ccedil;a backup regularmente no Google Drive, OneDrive ou em um pendrive. Lembre-se: um arquivo guardado em apenas um lugar &eacute; um arquivo em risco. Com organiza&ccedil;&atilde;o e disciplina, voc&ecirc; ganhar&aacute; muito tempo e evitar&aacute; perder trabalhos importantes.
+                </div>
+                <textarea class="typing-area" rows="6" placeholder="Digite aqui o texto acima..."></textarea>
+            </div>
+
+            <div class="ex-actions" style="margin-top:8px;">
+                <button class="btn-print" onclick="printTypingEx()">&#x1F5A8;&#xFE0F; Imprimir respostas</button>
             </div>
         </div>
 
@@ -778,55 +678,47 @@
     <script src="exercise-mc.js"></script>
     <script src="exercise-drag.js"></script>
     <script>
-        // Progresso dos campos
-        (function() {
-            var form = document.getElementById('fill-form-ex4');
-            if (!form) return;
-            var inputs = form.querySelectorAll('.fill-input');
-            var total = inputs.length;
-            function update() {
-                var filled = 0;
-                inputs.forEach(function(i){ if (i.value.trim()) filled++; });
-                var pct = Math.round(filled / total * 100);
-                document.getElementById('fill-count-ex4').textContent =
-                    filled + ' de ' + total + ' campos preenchidos';
-                document.getElementById('fill-bar-ex4').style.width = pct + '%';
-            }
-            inputs.forEach(function(i){ i.addEventListener('input', update); });
-        })();
+        // Auto-resize das textareas
+        document.querySelectorAll('.typing-area').forEach(function(ta) {
+            ta.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = this.scrollHeight + 'px';
+            });
+        });
 
         function printTypingEx() {
-            var form = document.getElementById('fill-form-ex4');
-            var inputs = form.querySelectorAll('.fill-input');
-            var filled = 0;
-            inputs.forEach(function(i){ if (i.value.trim()) filled++; });
-            if (filled === 0) { alert('Preencha pelo menos alguns campos antes de imprimir.'); return; }
-
-            // Clona o form e substitui inputs pelos valores
-            var clone = form.cloneNode(true);
-            clone.querySelectorAll('.fill-input').forEach(function(inp) {
-                var val = inp.value.trim() || '_______________';
-                var span = document.createElement('span');
-                span.style.cssText = 'border-bottom:1px solid #333;padding:0 4px;min-width:60px;display:inline-block;';
-                span.textContent = val;
-                inp.parentNode.replaceChild(span, inp);
+            var blocks = document.querySelectorAll('.typing-block');
+            var html = '';
+            blocks.forEach(function(block) {
+                var label = block.querySelector('.typing-block-label').textContent;
+                var ref   = block.querySelector('.typing-ref').innerHTML;
+                var typed = block.querySelector('.typing-area').value.trim();
+                html +=
+                    '<div class="block">' +
+                    '<div class="label">' + label + '</div>' +
+                    '<div class="ref">' + ref + '</div>' +
+                    '<div class="typed">' + (typed || '(n&atilde;o preenchido)') + '</div>' +
+                    '</div>';
             });
 
             var w = window.open('', '_blank');
             w.document.write(
                 '<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8">' +
-                '<title>Exerc\u00EDcio 4 \u2014 Revis\u00E3o Unidade 1</title>' +
+                '<title>Exerc\u00EDcio 4 \u2014 Pr\u00E1tica de Digita\u00E7\u00E3o</title>' +
                 '<style>' +
-                'body{font-family:"Segoe UI",Arial,sans-serif;font-size:13px;line-height:1.9;padding:30px 40px;color:#1a202c;}' +
-                '.fill-section{display:inline-block;background:#1565c0;color:white;padding:3px 12px;border-radius:5px;font-size:0.78em;font-weight:700;text-transform:uppercase;margin:16px 0 8px;}' +
-                '.fill-line{margin-bottom:10px;}' +
-                'h2{color:#1565c0;margin-bottom:4px;}' +
-                'p.sub{font-size:11px;color:#718096;margin-bottom:24px;}' +
-                '@media print{@page{margin:20mm}}' +
+                'body{font-family:"Segoe UI",Arial,sans-serif;font-size:12.5px;line-height:1.8;padding:25px 35px;color:#1a202c;}' +
+                'h2{color:#1565c0;margin-bottom:2px;font-size:15px;}' +
+                '.sub{font-size:11px;color:#718096;margin-bottom:20px;}' +
+                '.block{margin-bottom:24px;page-break-inside:avoid;}' +
+                '.label{background:#00897b;color:white;padding:2px 10px;border-radius:4px;font-size:0.75em;font-weight:700;text-transform:uppercase;display:inline-block;margin-bottom:6px;}' +
+                '.ref{background:#f0f7ff;border:1px solid #bfdbfe;border-radius:0 6px 6px 6px;padding:10px 14px;font-size:0.88em;color:#1e3a5f;margin-bottom:6px;}' +
+                '.typed{border:1px solid #e2e8f0;border-radius:6px;padding:10px 14px;font-size:0.88em;color:#1a202c;white-space:pre-wrap;min-height:40px;}' +
+                '.typed-label{font-size:0.75em;color:#94a3b8;margin-bottom:2px;}' +
+                '@media print{@page{margin:15mm}}' +
                 '</style></head><body>' +
-                '<h2>Exerc\u00EDcio 4 \u2014 Quem sou eu na inform\u00E1tica</h2>' +
+                '<h2>Exerc\u00EDcio 4 \u2014 Pr\u00E1tica de Digita\u00E7\u00E3o</h2>' +
                 '<p class="sub">Revis\u00E3o \u2014 Unidade 1 &nbsp;|&nbsp; Inform\u00E1tica Digital</p>' +
-                clone.innerHTML +
+                html +
                 '<script>window.onload=function(){window.print();}<\/script>' +
                 '</body></html>'
             );
