@@ -13,16 +13,13 @@
             --bg-light: #f0f4f8;
             --text-dark: #1a202c;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--bg-light);
             color: var(--text-dark);
             line-height: 1.7;
         }
-
         .top-bar {
             background: white;
             padding: 15px 30px;
@@ -34,7 +31,6 @@
             top: 0;
             z-index: 10;
         }
-
         .back-btn {
             text-decoration: none;
             color: var(--primary);
@@ -46,24 +42,20 @@
             border-radius: 8px;
             transition: background 0.3s;
         }
-
         .back-btn:hover { background: rgba(0,131,143,0.08); }
-
         .page-badge {
             font-size: 0.8em;
             padding: 4px 12px;
             border-radius: 20px;
-            background: rgba(0, 131, 143, 0.12);
+            background: rgba(0,131,143,0.12);
             color: var(--primary);
             font-weight: 600;
         }
-
         .content-wrapper {
             max-width: 800px;
             margin: 40px auto;
             padding: 0 30px;
         }
-
         .lesson-hero {
             background: white;
             border-radius: 16px;
@@ -72,10 +64,8 @@
             margin-bottom: 30px;
             border-top: 4px solid var(--primary);
         }
-
         .lesson-hero h1 { font-size: 2em; margin-bottom: 10px; color: var(--primary); }
         .lesson-hero .subtitle { font-size: 1.05em; color: #718096; }
-
         .content-card {
             background: white;
             border-radius: 16px;
@@ -83,7 +73,6 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             margin-bottom: 25px;
         }
-
         .content-card h2 {
             font-size: 1.4em;
             color: var(--primary);
@@ -92,652 +81,691 @@
             align-items: center;
             gap: 10px;
         }
-
-        .content-card h3 { font-size: 1.05em; color: var(--secondary); margin: 20px 0 10px; }
         .content-card p { margin-bottom: 15px; text-align: justify; }
 
-        .highlight-box {
-            background: linear-gradient(135deg, rgba(0,131,143,0.05), rgba(0,96,100,0.06));
-            border-left: 4px solid var(--primary);
-            padding: 20px 25px;
-            border-radius: 0 12px 12px 0;
-            margin: 20px 0;
-        }
-        .highlight-box p { margin-bottom: 0; font-style: italic; }
+        .svg-wrap { display: flex; justify-content: center; margin: 24px 0; }
+        .svg-wrap svg { max-width: 100%; height: auto; }
 
-        .alert-box {
-            background: #fff8e1;
-            border-left: 4px solid #f59e0b;
-            padding: 18px 22px;
-            border-radius: 0 12px 12px 0;
-            margin: 20px 0;
-        }
-        .alert-box p { margin: 0; color: #78350f; font-size: 0.93em; }
-
-        ul, ol { margin: 10px 0 15px 25px; }
-        li { margin-bottom: 8px; }
-
-        /* ── Grid de navegadores ── */
-        .browser-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 14px;
-            margin: 20px 0;
-        }
-
-        .browser-card {
-            background: #f8fafc;
-            border-radius: 12px;
-            padding: 20px 14px;
-            text-align: center;
-            border-top: 3px solid var(--primary);
-            transition: transform 0.2s;
-        }
-        .browser-card:hover { transform: translateY(-3px); }
-        .browser-icon { font-size: 2em; margin-bottom: 8px; }
-        .browser-card strong { display: block; font-size: 0.88em; color: var(--primary); margin-bottom: 4px; }
-        .browser-card em { font-size: 0.78em; color: #718096; font-style: normal; }
-
-        /* ── Grid de recursos do navegador ── */
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-            gap: 12px;
-            margin: 16px 0;
-        }
-
-        .feature-item {
-            background: #f0fdfa;
-            border-radius: 10px;
-            padding: 16px;
-            border-left: 4px solid var(--primary);
-        }
-        .feature-item .fi-title { font-weight: 700; font-size: 0.9em; color: var(--primary); margin-bottom: 4px; }
-        .feature-item .fi-desc  { font-size: 0.82em; color: #475569; line-height: 1.5; }
-        .feature-item .fi-kbd   { margin-top: 6px; }
-        .fi-kbd kbd {
-            display: inline-block;
-            background: white;
-            border: 1px solid #94a3b8;
-            border-bottom-width: 2px;
-            border-radius: 4px;
-            padding: 1px 6px;
-            font-size: 0.78em;
-            font-family: 'Consolas', monospace;
-            color: #334155;
-        }
-
-        /* ── Anatomia de URL ── */
-        .url-box {
-            background: #0f172a;
-            border-radius: 12px;
-            padding: 20px 24px;
-            margin: 18px 0;
-            font-family: 'Consolas', 'Courier New', monospace;
-            font-size: 1.05em;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0;
-            align-items: center;
-        }
-
-        .url-part { padding: 4px 2px; border-radius: 4px; white-space: nowrap; }
-        .url-proto  { color: #34d399; font-weight: 700; }
-        .url-domain { color: #60a5fa; font-weight: 700; }
-        .url-path   { color: #fbbf24; }
-        .url-query  { color: #f472b6; }
-
-        .url-legend {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-top: 14px;
-        }
-        .url-leg-item {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.84em;
-        }
-        .leg-dot {
-            width: 12px; height: 12px;
-            border-radius: 50%;
-            flex-shrink: 0;
-        }
-
-        /* ── HTTP vs HTTPS ── */
-        .security-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin: 18px 0;
-        }
-        .security-card {
-            border-radius: 12px;
-            padding: 20px;
-            text-align: center;
-        }
-        .security-card.insecure { background: #fef2f2; border: 2px solid #fca5a5; }
-        .security-card.secure   { background: #f0fdf4; border: 2px solid #86efac; }
-        .security-card .sc-icon  { font-size: 2.5em; margin-bottom: 8px; }
-        .security-card .sc-title { font-size: 1.1em; font-weight: 700; margin-bottom: 6px; }
-        .security-card.insecure .sc-title { color: #dc2626; }
-        .security-card.secure   .sc-title { color: #16a34a; }
-        .security-card .sc-desc { font-size: 0.83em; color: #475569; }
-
-        /* ── Anatomia do e-mail ── */
-        .email-anatomy {
-            background: #f8fafc;
-            border-radius: 12px;
-            padding: 22px 26px;
-            margin: 16px 0;
-            font-family: 'Consolas', monospace;
-            font-size: 1.15em;
-            text-align: center;
-        }
-        .em-user   { color: #0891b2; font-weight: 700; }
-        .em-at     { color: #64748b; font-weight: 700; }
-        .em-domain { color: #7c3aed; font-weight: 700; }
-
-        .email-labels {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin-top: 10px;
-            font-size: 0.8em;
-            color: #64748b;
-            font-family: 'Segoe UI', sans-serif;
-        }
-        .email-labels span { display: flex; flex-direction: column; align-items: center; gap: 2px; }
-        .email-labels strong { color: #1a202c; }
-
-        /* ── Tipos de e-mail ── */
-        .email-type-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 14px;
-            margin: 16px 0;
-        }
-        .etype-card {
-            border-radius: 10px;
-            padding: 18px;
-        }
-        .etype-card.webmail { background: #eff6ff; border-top: 3px solid #3b82f6; }
-        .etype-card.client  { background: #f5f3ff; border-top: 3px solid #7c3aed; }
-        .etype-card .et-title { font-weight: 700; margin-bottom: 6px; font-size: 0.92em; }
-        .etype-card.webmail .et-title { color: #1d4ed8; }
-        .etype-card.client  .et-title { color: #6d28d9; }
-        .etype-card .et-desc  { font-size: 0.82em; color: #475569; }
-        .etype-card .et-exemplos { margin-top: 8px; font-size: 0.8em; color: #64748b; }
-
-        /* ── Boas práticas ── */
-        .boas-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 12px;
-            margin: 16px 0;
-        }
-        .boa-item {
-            background: #f0fdfa;
-            border-radius: 10px;
-            padding: 16px;
-            display: flex;
-            gap: 12px;
-            align-items: flex-start;
-        }
-        .boa-icon { font-size: 1.6em; flex-shrink: 0; }
-        .boa-text strong { display: block; font-size: 0.88em; color: var(--primary); margin-bottom: 3px; }
-        .boa-text span   { font-size: 0.8em; color: #475569; }
-
-        /* ── nav ── */
-        .nav-footer {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 40px;
-            padding-bottom: 40px;
-        }
-        .nav-link {
-            text-decoration: none;
-            color: var(--primary);
-            font-weight: 600;
-            padding: 12px 24px;
-            border-radius: 10px;
-            background: white;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            transition: all 0.3s;
-        }
-        .nav-link:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-
-        .compare-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 16px 0;
-            font-size: 0.88em;
-        }
-        .compare-table th {
-            background: var(--primary);
-            color: white;
-            padding: 11px 14px;
-            text-align: left;
-        }
+        /* compare table */
+        .compare-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88em; }
+        .compare-table th { background: var(--primary); color: white; padding: 11px 14px; text-align: left; }
         .compare-table th:first-child { border-radius: 8px 0 0 0; }
         .compare-table th:last-child  { border-radius: 0 8px 0 0; }
-        .compare-table td {
-            padding: 10px 14px;
-            border-bottom: 1px solid #e2e8f0;
-            vertical-align: middle;
-        }
+        .compare-table td { padding: 10px 14px; border-bottom: 1px solid #e2e8f0; vertical-align: middle; }
         .compare-table tr:nth-child(even) td { background: #f8fafc; }
         .compare-table tr:last-child td { border-bottom: none; }
+
+        /* step cards */
+        .step-svg-card {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 16px 18px;
+            margin-bottom: 14px;
+        }
+        .step-svg-card .step-num {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white; font-weight: 700;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        .step-svg-card .step-text strong { display: block; color: var(--primary); margin-bottom: 3px; }
+        .step-svg-card .step-text span  { font-size: 0.88em; color: #4a5568; }
+        .step-svg-card svg { flex-shrink: 0; }
+
+        /* YouTube */
+        .yt-wrap { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px; margin: 20px 0; }
+        .yt-wrap iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; border-radius: 12px; }
+
+        .mat-list { list-style: none; margin: 0 0 20px 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+        .mat-list li { background: #e0f2f1; color: #00695c; border-radius: 20px; padding: 6px 14px; font-size: 0.88em; font-weight: 600; }
+
+        .nav-footer { display: flex; justify-content: space-between; margin-top: 40px; padding-bottom: 40px; }
+        .nav-link {
+            text-decoration: none; color: var(--primary); font-weight: 600;
+            padding: 12px 24px; border-radius: 10px; background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05); transition: all 0.3s;
+        }
+        .nav-link:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
 
         @media (max-width: 768px) {
             .content-wrapper { padding: 0 15px; }
             .lesson-hero, .content-card { padding: 25px; }
             .lesson-hero h1 { font-size: 1.5em; }
-            .security-row  { grid-template-columns: 1fr; }
-            .email-type-grid { grid-template-columns: 1fr; }
-            .email-labels  { gap: 20px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="top-bar">
-        <a href="index.html" class="back-btn">&#x2B05; Voltar ao Dashboard</a>
-        <span class="page-badge">Unidade 2 &mdash; Internet e Seguran&ccedil;a</span>
-        <button class="slide-toggle" id="slideToggleBtn">&#x1F4FA; Modo Slide</button>
+<div class="top-bar">
+    <a href="index.html" class="back-btn">&#x2B05; Voltar ao Dashboard</a>
+    <span class="page-badge">Unidade 2 &mdash; Internet e Seguran&ccedil;a</span>
+    <button class="slide-toggle" id="slideToggleBtn">&#x1F4FA; Modo Slide</button>
+</div>
+
+<div class="content-wrapper">
+
+    <div class="lesson-hero">
+        <h1>&#x1F310; Navegadores Web e E-mail</h1>
+        <p class="subtitle">Aula 2.1 &mdash; Como funciona o acesso &agrave; internet, os principais navegadores e o uso profissional do e-mail</p>
     </div>
 
-    <div class="content-wrapper">
+    <!-- SLIDE 1: Título -->
+    <div class="content-card">
+        <h2>&#x1F4AC; O que &eacute; um navegador web?</h2>
+        <p>Um <strong>navegador web</strong> (<em>browser</em>) &eacute; o programa que permite acessar e visualizar p&aacute;ginas da internet. Ele funciona como um <strong>interpretador</strong>: recebe arquivos em HTML, CSS e JavaScript dos servidores e os transforma na p&aacute;gina que voc&ecirc; v&ecirc; na tela.</p>
 
-        <div class="lesson-hero">
-            <h1>&#x1F310; Navegadores Web e E-mail</h1>
-            <p class="subtitle">Aula 2.1 &mdash; Como funciona o acesso &agrave; internet, os principais navegadores e o uso profissional do e-mail</p>
+        <!-- SVG: ciclo de requisição/resposta -->
+        <div class="svg-wrap">
+            <svg width="520" height="190" viewBox="0 0 520 190" xmlns="http://www.w3.org/2000/svg">
+                <style>
+                    @keyframes req-travel { 0%{stroke-dashoffset:200;opacity:0} 20%{opacity:1} 100%{stroke-dashoffset:0;opacity:1} }
+                    @keyframes res-travel { 0%{stroke-dashoffset:200;opacity:0} 20%{opacity:1} 100%{stroke-dashoffset:0;opacity:1} }
+                    @keyframes pc-glow   { 0%,100%{filter:drop-shadow(0 0 0 #00838f)} 50%{filter:drop-shadow(0 0 8px #00838f88)} }
+                    @keyframes srv-glow  { 0%,100%{filter:drop-shadow(0 0 0 #00838f)} 50%{filter:drop-shadow(0 0 8px #00838f88)} }
+                    @keyframes step-in   { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+                    .req-line { stroke-dasharray:200; animation: req-travel 1.2s 0.5s ease-out both; }
+                    .res-line { stroke-dasharray:200; animation: res-travel 1.2s 1.8s ease-out both; }
+                    .pc-box  { animation: pc-glow 2.5s 3s ease-in-out infinite; }
+                    .srv-box { animation: srv-glow 2.5s 3.3s ease-in-out infinite; }
+                    .s1{animation:step-in 0.4s 0.3s both;}
+                    .s2{animation:step-in 0.4s 1.2s both;}
+                    .s3{animation:step-in 0.4s 1.8s both;}
+                    .s4{animation:step-in 0.4s 2.7s both;}
+                </style>
+
+                <!-- PC (browser) -->
+                <g class="pc-box">
+                    <rect x="20" y="50" width="110" height="80" rx="8" fill="#e0f2f1"/>
+                    <rect x="28" y="58" width="94" height="58" rx="5" fill="#00838f"/>
+                    <rect x="32" y="62" width="86" height="50" rx="3" fill="#004d40"/>
+                    <text x="75" y="91" text-anchor="middle" fill="#4db6ac" font-size="10" font-family="Courier New">https://</text>
+                    <text x="75" y="104" text-anchor="middle" fill="white" font-size="9">ifrn.edu.br</text>
+                    <rect x="55" y="130" width="40" height="6" rx="3" fill="#b2dfdb"/>
+                    <rect x="35" y="136" width="80" height="4" rx="2" fill="#80cbc4"/>
+                    <text x="75" y="152" text-anchor="middle" fill="#475569" font-size="10" font-weight="700">Navegador</text>
+                </g>
+
+                <!-- Servidor -->
+                <g class="srv-box">
+                    <rect x="390" y="50" width="110" height="80" rx="8" fill="#e0f2f1"/>
+                    <rect x="398" y="58" width="94" height="58" rx="5" fill="#00838f"/>
+                    <rect x="406" y="70" width="78" height="8" rx="4" fill="#004d40"/>
+                    <rect x="406" y="82" width="78" height="8" rx="4" fill="#004d40"/>
+                    <rect x="406" y="94" width="78" height="8" rx="4" fill="#004d40"/>
+                    <circle cx="412" cy="74" r="3" fill="#4db6ac"/>
+                    <circle cx="412" cy="86" r="3" fill="#4db6ac"/>
+                    <circle cx="412" cy="98" r="3" fill="#00897b"/>
+                    <text x="445" y="152" text-anchor="middle" fill="#475569" font-size="10" font-weight="700">Servidor Web</text>
+                </g>
+
+                <!-- Linha de requisição (ida) -->
+                <line class="req-line" x1="130" y1="75" x2="390" y2="75" stroke="#00838f" stroke-width="2.5" stroke-dasharray="200"/>
+                <polygon points="384,70 394,75 384,80" fill="#00838f"/>
+
+                <!-- Linha de resposta (volta) -->
+                <line class="res-line" x1="390" y1="105" x2="130" y2="105" stroke="#26a69a" stroke-width="2.5" stroke-dasharray="200"/>
+                <polygon points="136,100 126,105 136,110" fill="#26a69a"/>
+
+                <!-- Labels das setas -->
+                <g class="s1"><text x="260" y="68" text-anchor="middle" fill="#00838f" font-size="9" font-weight="700">1. Você digita a URL</text></g>
+                <g class="s2"><text x="260" y="62" text-anchor="middle" fill="#00695c" font-size="9">2. Navegador envia requisição</text></g>
+                <g class="s3"><text x="260" y="118" text-anchor="middle" fill="#26a69a" font-size="9" font-weight="700">3. Servidor responde com HTML/CSS/JS</text></g>
+                <g class="s4"><text x="260" y="130" text-anchor="middle" fill="#00695c" font-size="9">4. Navegador monta e exibe a página</text></g>
+
+                <!-- Participação de mercado mini -->
+                <rect x="10" y="168" width="500" height="18" rx="5" fill="#f1f5f9"/>
+                <rect x="10" y="168" width="325" height="18" rx="5" fill="#4caf50" opacity="0.7"/>
+                <rect x="335" y="168" width="95" height="18" rx="0" fill="#2196f3" opacity="0.7"/>
+                <rect x="430" y="168" width="65" height="18" rx="0" fill="#9c27b0" opacity="0.7"/>
+                <rect x="495" y="168" width="15" height="18" rx="0 5 5 0" fill="#ff9800" opacity="0.7"/>
+                <text x="170" y="181" text-anchor="middle" fill="white" font-size="9" font-weight="700">Chrome ~65%</text>
+                <text x="383" y="181" text-anchor="middle" fill="white" font-size="9">Safari ~19%</text>
+                <text x="460" y="181" text-anchor="middle" fill="white" font-size="9">Edge ~13%</text>
+            </svg>
         </div>
 
-        <!-- CARD 1 -->
-        <div class="content-card">
-            <h2>&#x1F4AC; O que &eacute; um navegador web?</h2>
-            <p>Um <strong>navegador web</strong> (ou <em>browser</em>) &eacute; o programa que permite acessar e visualizar p&aacute;ginas da internet. Ele funciona como um <strong>interpretador</strong>: recebe arquivos em HTML, CSS e JavaScript dos servidores e os transforma na p&aacute;gina que voc&ecirc; v&ecirc; na tela.</p>
-            <p>O processo acontece assim: voc&ecirc; digita um endere&ccedil;o (URL) &rarr; o navegador envia uma solicita&ccedil;&atilde;o ao servidor &rarr; o servidor responde com os arquivos da p&aacute;gina &rarr; o navegador monta e exibe o conte&uacute;do.</p>
+        <p>O navegador &eacute; a <strong>porta de entrada para a internet</strong>. Conhecer bem seus recursos &eacute; essencial para navegar com efici&ecirc;ncia, seguran&ccedil;a e privacidade.</p>
+    </div>
 
-            <div class="highlight-box">
-                <p>&#x1F4A1; O navegador &eacute; a <strong>porta de entrada para a internet</strong>. Conhecer bem seus recursos &eacute; essencial para navegar com efici&ecirc;ncia, seguran&ccedil;a e privacidade.</p>
-            </div>
+    <!-- SLIDE 2: Principais Navegadores -->
+    <div class="content-card">
+        <h2>&#x1F9E9; Principais Navegadores</h2>
+        <p>Existem v&aacute;rios navegadores dispon&iacute;veis, cada um com caracter&iacute;sticas pr&oacute;prias. Chrome, Edge e Brave usam o mesmo motor (Blink); Firefox usa Gecko e Safari usa WebKit.</p>
 
-            <h3>&#x1F4CA; Participa&ccedil;&atilde;o no mercado (2024)</h3>
-            <table class="compare-table">
-                <tr>
-                    <th>Navegador</th><th>Desenvolvedor</th><th>Market Share</th><th>Engine</th>
-                </tr>
-                <tr><td>&#x1F7E2; Chrome</td><td>Google</td><td>~65%</td><td>Blink</td></tr>
-                <tr><td>&#x1F535; Safari</td><td>Apple</td><td>~19%</td><td>WebKit</td></tr>
-                <tr><td>&#x1F7E6; Edge</td><td>Microsoft</td><td>~13%</td><td>Blink</td></tr>
-                <tr><td>&#x1F7E0; Firefox</td><td>Mozilla</td><td>~3%</td><td>Gecko</td></tr>
-                <tr><td>&#x26AB; Brave</td><td>Brave Software</td><td>~1%</td><td>Blink</td></tr>
-            </table>
+        <!-- SVG: 5 navegadores com barras de market share -->
+        <div class="svg-wrap">
+            <svg width="520" height="210" viewBox="0 0 520 210" xmlns="http://www.w3.org/2000/svg">
+                <style>
+                    @keyframes bar-grow1 { from{width:0} to{width:325px} }
+                    @keyframes bar-grow2 { from{width:0} to{width:95px} }
+                    @keyframes bar-grow3 { from{width:0} to{width:65px} }
+                    @keyframes bar-grow4 { from{width:0} to{width:15px} }
+                    @keyframes bar-grow5 { from{width:0} to{width:5px} }
+                    @keyframes icon-pop  { from{opacity:0;transform:scale(0.5)} to{opacity:1;transform:scale(1)} }
+                    .b1{animation:bar-grow1 0.8s 0.3s ease-out both;}
+                    .b2{animation:bar-grow2 0.8s 0.6s ease-out both;}
+                    .b3{animation:bar-grow3 0.8s 0.9s ease-out both;}
+                    .b4{animation:bar-grow4 0.8s 1.2s ease-out both;}
+                    .b5{animation:bar-grow5 0.8s 1.5s ease-out both;}
+                    .ic1{animation:icon-pop 0.4s 0.3s both;transform-origin:28px 22px;}
+                    .ic2{animation:icon-pop 0.4s 0.6s both;transform-origin:28px 62px;}
+                    .ic3{animation:icon-pop 0.4s 0.9s both;transform-origin:28px 102px;}
+                    .ic4{animation:icon-pop 0.4s 1.2s both;transform-origin:28px 142px;}
+                    .ic5{animation:icon-pop 0.4s 1.5s both;transform-origin:28px 182px;}
+                </style>
+
+                <!-- Chrome -->
+                <text class="ic1" x="10" y="30" font-size="18">🟢</text>
+                <text x="36" y="30" fill="#1b5e20" font-size="11" font-weight="700">Chrome</text>
+                <rect x="130" y="12" width="350" height="24" rx="5" fill="#e8f5e9"/>
+                <rect x="130" y="12" height="24" rx="5" fill="#4caf50" class="b1"/>
+                <text x="460" y="28" fill="#1b5e20" font-size="10" font-weight="700">~65%</text>
+
+                <!-- Safari -->
+                <text class="ic2" x="10" y="70" font-size="18">🔵</text>
+                <text x="36" y="70" fill="#1a237e" font-size="11" font-weight="700">Safari</text>
+                <rect x="130" y="52" width="350" height="24" rx="5" fill="#e3f2fd"/>
+                <rect x="130" y="52" height="24" rx="5" fill="#2196f3" class="b2"/>
+                <text x="232" y="68" fill="white" font-size="10" font-weight="700">~19%</text>
+
+                <!-- Edge -->
+                <text class="ic3" x="10" y="110" font-size="18">🟦</text>
+                <text x="36" y="110" fill="#4a148c" font-size="11" font-weight="700">Edge</text>
+                <rect x="130" y="92" width="350" height="24" rx="5" fill="#f3e5f5"/>
+                <rect x="130" y="92" height="24" rx="5" fill="#9c27b0" class="b3"/>
+                <text x="200" y="108" fill="white" font-size="10" font-weight="700">~13%</text>
+
+                <!-- Firefox -->
+                <text class="ic4" x="10" y="150" font-size="18">🟠</text>
+                <text x="36" y="150" fill="#e65100" font-size="11" font-weight="700">Firefox</text>
+                <rect x="130" y="132" width="350" height="24" rx="5" fill="#fff3e0"/>
+                <rect x="130" y="132" height="24" rx="5" fill="#ff9800" class="b4"/>
+                <text x="152" y="148" fill="#e65100" font-size="10">~3%</text>
+
+                <!-- Brave -->
+                <text class="ic5" x="10" y="190" font-size="18">⚫</text>
+                <text x="36" y="190" fill="#263238" font-size="11" font-weight="700">Brave</text>
+                <rect x="130" y="172" width="350" height="24" rx="5" fill="#eceff1"/>
+                <rect x="130" y="172" height="24" rx="5" fill="#546e7a" class="b5"/>
+                <text x="140" y="188" fill="#546e7a" font-size="10">~1%</text>
+
+                <!-- legenda motor -->
+                <text x="10" y="208" fill="#94a3b8" font-size="9">Chrome/Edge/Brave: motor Blink &nbsp;|&nbsp; Firefox: Gecko &nbsp;|&nbsp; Safari: WebKit</text>
+            </svg>
         </div>
 
-        <!-- CARD 2 -->
-        <div class="content-card">
-            <h2>&#x1F9E9; Principais Navegadores</h2>
+        <p style="background:#fff8e1;border-left:4px solid #f59e0b;padding:14px 18px;border-radius:0 10px 10px 0;color:#78350f;font-size:0.9em;margin:0;">
+            &#x1F4CC; Chrome, Edge e Brave usam o mesmo motor (Blink), por isso p&aacute;ginas se comportam de forma semelhante neles. Firefox e Safari t&ecirc;m motores pr&oacute;prios &mdash; o que pode causar pequenas diferen&ccedil;as visuais em alguns sites.
+        </p>
+    </div>
 
-            <div class="browser-grid">
-                <div class="browser-card">
-                    <div class="browser-icon">&#x1F7E2;</div>
-                    <strong>Google Chrome</strong>
-                    <em>R&aacute;pido, sincroniza com conta Google, maior ecossistema de extens&otilde;es</em>
-                </div>
-                <div class="browser-card">
-                    <div class="browser-icon">&#x1F7E6;</div>
-                    <strong>Microsoft Edge</strong>
-                    <em>Integrado ao Windows 11, leitor de PDF nativo, modo IE compat&iacute;vel</em>
-                </div>
-                <div class="browser-card">
-                    <div class="browser-icon">&#x1F7E0;</div>
-                    <strong>Firefox</strong>
-                    <em>Open source, focado em privacidade, altamente configur&aacute;vel</em>
-                </div>
-                <div class="browser-card">
-                    <div class="browser-icon">&#x1F535;</div>
-                    <strong>Safari</strong>
-                    <em>Exclusivo Apple, muito eficiente em bateria no Mac e iPhone</em>
-                </div>
-                <div class="browser-card">
-                    <div class="browser-icon">&#x26AB;</div>
-                    <strong>Brave</strong>
-                    <em>Bloqueia an&uacute;ncios e rastreadores por padr&atilde;o, foco em privacidade</em>
-                </div>
+    <!-- SLIDE 3: Recursos do Navegador -->
+    <div class="content-card">
+        <h2>&#x2699;&#xFE0F; Recursos Essenciais do Navegador</h2>
+        <p>Conhecer os recursos do navegador aumenta muito sua produtividade ao navegar na internet:</p>
+
+        <!-- SVG: 6 recursos com ícones aparecendo -->
+        <div class="svg-wrap">
+            <svg width="520" height="200" viewBox="0 0 520 200" xmlns="http://www.w3.org/2000/svg">
+                <style>
+                    @keyframes feat-pop { from{opacity:0;transform:scale(0.7)} to{opacity:1;transform:scale(1)} }
+                    .fp1{animation:feat-pop 0.4s 0.2s both;transform-origin:57px 52px;}
+                    .fp2{animation:feat-pop 0.4s 0.5s both;transform-origin:177px 52px;}
+                    .fp3{animation:feat-pop 0.4s 0.8s both;transform-origin:297px 52px;}
+                    .fp4{animation:feat-pop 0.4s 1.1s both;transform-origin:417px 52px;}
+                    .fp5{animation:feat-pop 0.4s 1.4s both;transform-origin:117px 148px;}
+                    .fp6{animation:feat-pop 0.4s 1.7s both;transform-origin:357px 148px;}
+                </style>
+                <!-- Linha 1 -->
+                <g class="fp1">
+                    <rect x="10" y="10" width="94" height="84" rx="10" fill="#e0f2f1" stroke="#80cbc4" stroke-width="1.5"/>
+                    <text x="57" y="42" text-anchor="middle" font-size="22">📂</text>
+                    <text x="57" y="62" text-anchor="middle" fill="#00838f" font-size="10" font-weight="700">Abas (Tabs)</text>
+                    <rect x="20" y="70" width="74" height="16" rx="4" fill="#b2dfdb"/>
+                    <text x="57" y="82" text-anchor="middle" fill="#004d40" font-size="8" font-family="Courier New">Ctrl+T / Ctrl+W</text>
+                </g>
+                <g class="fp2">
+                    <rect x="130" y="10" width="94" height="84" rx="10" fill="#e8f5e9" stroke="#a5d6a7" stroke-width="1.5"/>
+                    <text x="177" y="42" text-anchor="middle" font-size="22">⭐</text>
+                    <text x="177" y="62" text-anchor="middle" fill="#2e7d32" font-size="10" font-weight="700">Favoritos</text>
+                    <rect x="142" y="70" width="70" height="16" rx="4" fill="#c8e6c9"/>
+                    <text x="177" y="82" text-anchor="middle" fill="#1b5e20" font-size="8" font-family="Courier New">Ctrl+D</text>
+                </g>
+                <g class="fp3">
+                    <rect x="250" y="10" width="94" height="84" rx="10" fill="#fff8e1" stroke="#ffe082" stroke-width="1.5"/>
+                    <text x="297" y="42" text-anchor="middle" font-size="22">📜</text>
+                    <text x="297" y="62" text-anchor="middle" fill="#e65100" font-size="10" font-weight="700">Histórico</text>
+                    <rect x="258" y="70" width="78" height="16" rx="4" fill="#fff9c4"/>
+                    <text x="297" y="82" text-anchor="middle" fill="#bf360c" font-size="8" font-family="Courier New">Ctrl+H</text>
+                </g>
+                <g class="fp4">
+                    <rect x="370" y="10" width="94" height="84" rx="10" fill="#f3e5f5" stroke="#ce93d8" stroke-width="1.5"/>
+                    <text x="417" y="42" text-anchor="middle" font-size="22">🕵️</text>
+                    <text x="417" y="60" text-anchor="middle" fill="#6a1b9a" font-size="10" font-weight="700">Modo Anônimo</text>
+                    <rect x="378" y="70" width="78" height="16" rx="4" fill="#e1bee7"/>
+                    <text x="417" y="82" text-anchor="middle" fill="#4a148c" font-size="8" font-family="Courier New">Ctrl+Shift+N</text>
+                </g>
+                <!-- Linha 2 -->
+                <g class="fp5">
+                    <rect x="70" y="106" width="94" height="84" rx="10" fill="#e3f2fd" stroke="#90caf9" stroke-width="1.5"/>
+                    <text x="117" y="138" text-anchor="middle" font-size="22">🧩</text>
+                    <text x="117" y="158" text-anchor="middle" fill="#1565c0" font-size="10" font-weight="700">Extensões</text>
+                    <rect x="80" y="166" width="74" height="16" rx="4" fill="#bbdefb"/>
+                    <text x="117" y="178" text-anchor="middle" fill="#0d47a1" font-size="8">Menu → Extensões</text>
+                </g>
+                <g class="fp6">
+                    <rect x="310" y="106" width="94" height="84" rx="10" fill="#fce4ec" stroke="#f48fb1" stroke-width="1.5"/>
+                    <text x="357" y="138" text-anchor="middle" font-size="22">🔄</text>
+                    <text x="357" y="158" text-anchor="middle" fill="#880e4f" font-size="10" font-weight="700">Atualizar</text>
+                    <rect x="320" y="166" width="74" height="16" rx="4" fill="#f8bbd0"/>
+                    <text x="357" y="178" text-anchor="middle" fill="#880e4f" font-size="8" font-family="Courier New">F5 / Ctrl+R</text>
+                </g>
+            </svg>
+        </div>
+
+        <p style="background:linear-gradient(135deg,rgba(0,131,143,0.05),rgba(0,96,100,0.06));border-left:4px solid var(--primary);padding:16px 20px;border-radius:0 12px 12px 0;font-style:italic;margin:0;">
+            &#x1F4A1; O <strong>Modo An&ocirc;nimo</strong> n&atilde;o salva hist&oacute;rico, cookies ou dados localmente &mdash; mas <strong>n&atilde;o torna voc&ecirc; invis&iacute;vel</strong>. Provedores, redes escolares e sites ainda registram sua atividade.
+        </p>
+    </div>
+
+    <!-- SLIDE 4: URL e HTTP vs HTTPS -->
+    <div class="content-card">
+        <h2>&#x1F517; Anatomia de uma URL e HTTPS</h2>
+        <p>A <strong>URL</strong> (<em>Uniform Resource Locator</em>) &eacute; o endere&ccedil;o completo de um recurso na internet. Cada parte tem uma fun&ccedil;&atilde;o espec&iacute;fica:</p>
+
+        <!-- SVG: URL sendo desmontada + HTTP vs HTTPS -->
+        <div class="svg-wrap">
+            <svg width="520" height="210" viewBox="0 0 520 210" xmlns="http://www.w3.org/2000/svg">
+                <style>
+                    @keyframes underline-grow { from{width:0} to{width:var(--uw)} }
+                    @keyframes label-rise { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+                    @keyframes lock-appear { from{opacity:0;transform:scale(0)} to{opacity:1;transform:scale(1)} }
+                    @keyframes warn-shake  { 0%,100%{transform:rotate(0deg)} 25%{transform:rotate(-4deg)} 75%{transform:rotate(4deg)} }
+                    .ul1{animation:underline-grow 0.5s 0.5s both;width:0;}
+                    .ul2{animation:underline-grow 0.5s 0.9s both;width:0;}
+                    .ul3{animation:underline-grow 0.5s 1.3s both;width:0;}
+                    .ul4{animation:underline-grow 0.5s 1.7s both;width:0;}
+                    .lb1{animation:label-rise 0.4s 0.5s both;}
+                    .lb2{animation:label-rise 0.4s 0.9s both;}
+                    .lb3{animation:label-rise 0.4s 1.3s both;}
+                    .lb4{animation:label-rise 0.4s 1.7s both;}
+                    .lock-ok{animation:lock-appear 0.5s 2.2s both;transform-origin:395px 168px;}
+                    .warn-ico{animation:warn-shake 0.5s 2.2s ease-in-out 3;}
+                </style>
+
+                <!-- URL bar -->
+                <rect x="10" y="12" width="500" height="36" rx="8" fill="#0f172a"/>
+                <text x="30" y="36" fill="#34d399" font-size="13" font-family="Courier New" font-weight="700">https://</text>
+                <text x="107" y="36" fill="#60a5fa" font-size="13" font-family="Courier New" font-weight="700">www.ifrn.edu.br</text>
+                <text x="280" y="36" fill="#fbbf24" font-size="13" font-family="Courier New">/cursos</text>
+                <text x="335" y="36" fill="#f472b6" font-size="13" font-family="Courier New">?turma=2025</text>
+
+                <!-- Sublinhados -->
+                <rect x="30" y="50" height="3" rx="1" fill="#34d399" class="ul1" style="--uw:76px;width:0"/>
+                <rect x="107" y="50" height="3" rx="1" fill="#60a5fa" class="ul2" style="--uw:172px;width:0"/>
+                <rect x="280" y="50" height="3" rx="1" fill="#fbbf24" class="ul3" style="--uw:54px;width:0"/>
+                <rect x="335" y="50" height="3" rx="1" fill="#f472b6" class="ul4" style="--uw:130px;width:0"/>
+
+                <!-- Labels -->
+                <g class="lb1"><text x="68" y="76" text-anchor="middle" fill="#34d399" font-size="10" font-weight="700">Protocolo</text><text x="68" y="88" text-anchor="middle" fill="#94a3b8" font-size="9">como transmite</text></g>
+                <g class="lb2"><text x="193" y="76" text-anchor="middle" fill="#60a5fa" font-size="10" font-weight="700">Domínio</text><text x="193" y="88" text-anchor="middle" fill="#94a3b8" font-size="9">endereço do servidor</text></g>
+                <g class="lb3"><text x="307" y="76" text-anchor="middle" fill="#fbbf24" font-size="10" font-weight="700">Caminho</text><text x="307" y="88" text-anchor="middle" fill="#94a3b8" font-size="9">recurso no servidor</text></g>
+                <g class="lb4"><text x="400" y="76" text-anchor="middle" fill="#f472b6" font-size="10" font-weight="700">Parâmetros</text><text x="400" y="88" text-anchor="middle" fill="#94a3b8" font-size="9">dados extras</text></g>
+
+                <!-- Divisória -->
+                <line x1="10" y1="106" x2="510" y2="106" stroke="#e2e8f0" stroke-width="1"/>
+
+                <!-- HTTP (inseguro) -->
+                <rect x="10" y="114" width="235" height="90" rx="10" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5"/>
+                <g class="warn-ico"><text x="80" y="155" text-anchor="middle" font-size="34">⚠️</text></g>
+                <text x="160" y="148" text-anchor="middle" fill="#dc2626" font-size="14" font-weight="700">HTTP</text>
+                <text x="160" y="163" text-anchor="middle" fill="#991b1b" font-size="9">Dados sem criptografia</text>
+                <text x="160" y="175" text-anchor="middle" fill="#991b1b" font-size="9">Qualquer um na rede pode</text>
+                <text x="160" y="187" text-anchor="middle" fill="#991b1b" font-size="9">interceptar suas informações</text>
+
+                <!-- HTTPS (seguro) -->
+                <rect x="275" y="114" width="235" height="90" rx="10" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+                <g class="lock-ok"><text x="345" y="155" text-anchor="middle" font-size="34">🔒</text></g>
+                <text x="430" y="148" text-anchor="middle" fill="#16a34a" font-size="14" font-weight="700">HTTPS</text>
+                <text x="430" y="163" text-anchor="middle" fill="#166534" font-size="9">Dados criptografados (TLS)</text>
+                <text x="430" y="175" text-anchor="middle" fill="#166534" font-size="9">Cadeado ✓ na barra confirma</text>
+                <text x="430" y="187" text-anchor="middle" fill="#166534" font-size="9">que a conexão é segura</text>
+            </svg>
+        </div>
+
+        <p style="background:#fff8e1;border-left:4px solid #f59e0b;padding:14px 18px;border-radius:0 10px 10px 0;color:#78350f;font-size:0.93em;margin:0;">
+            &#x26A0;&#xFE0F; <strong>Regra pr&aacute;tica:</strong> Nunca insira senhas, n&uacute;meros de cart&atilde;o ou dados pessoais em sites sem o cadeado (HTTPS). Verifique sempre a barra de endere&ccedil;os antes de preencher qualquer formul&aacute;rio.
+        </p>
+    </div>
+
+    <!-- SLIDE 5: E-mail -->
+    <div class="content-card">
+        <h2>&#x1F4E7; E-mail &mdash; Conceitos B&aacute;sicos</h2>
+        <p>O <strong>e-mail</strong> &eacute; um dos servi&ccedil;os mais antigos e ainda mais utilizados da internet. Permite enviar e receber mensagens e arquivos entre pessoas ao redor do mundo.</p>
+
+        <!-- SVG: anatomia do email + protocolos -->
+        <div class="svg-wrap">
+            <svg width="520" height="205" viewBox="0 0 520 205" xmlns="http://www.w3.org/2000/svg">
+                <style>
+                    @keyframes em-part { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+                    @keyframes proto-in { from{opacity:0;transform:translateX(-10px)} to{opacity:1;transform:translateX(0)} }
+                    @keyframes envelope-open { 0%{transform:rotate(0deg)} 50%{transform:rotate(-5deg)} 100%{transform:rotate(0deg)} }
+                    .eu{animation:em-part 0.5s 0.3s both;}
+                    .eat{animation:em-part 0.5s 0.7s both;}
+                    .ed{animation:em-part 0.5s 1.1s both;}
+                    .pr1{animation:proto-in 0.4s 1.5s both;}
+                    .pr2{animation:proto-in 0.4s 1.8s both;}
+                    .pr3{animation:proto-in 0.4s 2.1s both;}
+                    .env{animation:envelope-open 2s 2.5s ease-in-out infinite;}
+                </style>
+
+                <!-- Envelope animado -->
+                <g class="env" transform="translate(10,20)">
+                    <rect x="0" y="0" width="80" height="56" rx="6" fill="#00838f"/>
+                    <polyline points="0,0 40,32 80,0" fill="none" stroke="#4db6ac" stroke-width="2"/>
+                    <text x="40" y="42" text-anchor="middle" fill="white" font-size="18">📧</text>
+                </g>
+
+                <!-- Endereço de email -->
+                <rect x="110" y="18" width="380" height="44" rx="8" fill="#0f172a"/>
+                <g class="eu"><text x="145" y="46" fill="#0891b2" font-size="18" font-family="Courier New" font-weight="700">joao.silva</text></g>
+                <g class="eat"><text x="265" y="46" fill="#64748b" font-size="18" font-family="Courier New" font-weight="700">@</text></g>
+                <g class="ed"><text x="285" y="46" fill="#7c3aed" font-size="18" font-family="Courier New" font-weight="700">ifrn.edu.br</text></g>
+
+                <!-- Setas de explicação -->
+                <g class="eu"><line x1="175" y1="62" x2="175" y2="78" stroke="#0891b2" stroke-width="1.5"/><text x="175" y="92" text-anchor="middle" fill="#0891b2" font-size="10" font-weight="700">Usuário</text><text x="175" y="104" text-anchor="middle" fill="#64748b" font-size="9">identifica a pessoa</text></g>
+                <g class="eat"><line x1="275" y1="62" x2="275" y2="78" stroke="#64748b" stroke-width="1.5"/><text x="275" y="92" text-anchor="middle" fill="#64748b" font-size="10" font-weight="700">@ (arroba)</text><text x="275" y="104" text-anchor="middle" fill="#64748b" font-size="9">separa usuário/domínio</text></g>
+                <g class="ed"><line x1="385" y1="62" x2="385" y2="78" stroke="#7c3aed" stroke-width="1.5"/><text x="385" y="92" text-anchor="middle" fill="#7c3aed" font-size="10" font-weight="700">Domínio</text><text x="385" y="104" text-anchor="middle" fill="#64748b" font-size="9">servidor de e-mail</text></g>
+
+                <!-- Divisória -->
+                <line x1="10" y1="116" x2="510" y2="116" stroke="#e2e8f0" stroke-width="1"/>
+                <text x="260" y="130" text-anchor="middle" fill="#475569" font-size="10" font-weight="700">Protocolos de e-mail</text>
+
+                <!-- 3 protocolos -->
+                <g class="pr1">
+                    <rect x="10" y="136" width="153" height="60" rx="8" fill="#e0f2f1" stroke="#80cbc4" stroke-width="1.2"/>
+                    <text x="86" y="156" text-anchor="middle" fill="#00695c" font-size="12" font-weight="700">SMTP</text>
+                    <text x="86" y="170" text-anchor="middle" fill="#004d40" font-size="9">Envio de e-mails</text>
+                    <text x="86" y="185" text-anchor="middle" fill="#00695c" font-size="8">Simple Mail Transfer</text>
+                </g>
+                <g class="pr2">
+                    <rect x="183" y="136" width="154" height="60" rx="8" fill="#e3f2fd" stroke="#90caf9" stroke-width="1.2"/>
+                    <text x="260" y="156" text-anchor="middle" fill="#1565c0" font-size="12" font-weight="700">IMAP</text>
+                    <text x="260" y="170" text-anchor="middle" fill="#0d47a1" font-size="9">Recebimento sincronizado</text>
+                    <text x="260" y="185" text-anchor="middle" fill="#1565c0" font-size="8">E-mails ficam no servidor</text>
+                </g>
+                <g class="pr3">
+                    <rect x="357" y="136" width="153" height="60" rx="8" fill="#f3e5f5" stroke="#ce93d8" stroke-width="1.2"/>
+                    <text x="433" y="156" text-anchor="middle" fill="#6a1b9a" font-size="12" font-weight="700">POP3</text>
+                    <text x="433" y="170" text-anchor="middle" fill="#4a148c" font-size="9">Baixa para o dispositivo</text>
+                    <text x="433" y="185" text-anchor="middle" fill="#6a1b9a" font-size="8">Remove do servidor</text>
+                </g>
+            </svg>
+        </div>
+
+        <p>Voc&ecirc; pode acessar o e-mail via <strong>Webmail</strong> (pelo navegador, sem instalar nada: Gmail, Outlook.com) ou por um <strong>cliente de e-mail</strong> instalado no computador (Outlook, Thunderbird), que permite uso offline.</p>
+    </div>
+
+    <!-- SLIDE 6: Boas Práticas de E-mail -->
+    <div class="content-card">
+        <h2>&#x2705; Boas Pr&aacute;ticas no Uso de E-mail</h2>
+        <p>E-mail profissional exige aten&ccedil;&atilde;o ao formato e ao conte&uacute;do. Veja as principais boas pr&aacute;ticas:</p>
+
+        <!-- SVG: checklist animado -->
+        <div class="svg-wrap">
+            <svg width="520" height="205" viewBox="0 0 520 205" xmlns="http://www.w3.org/2000/svg">
+                <style>
+                    @keyframes bprow-in { from{opacity:0;transform:translateX(-14px)} to{opacity:1;transform:translateX(0)} }
+                    .bp1{animation:bprow-in 0.45s 0.2s both;}
+                    .bp2{animation:bprow-in 0.45s 0.5s both;}
+                    .bp3{animation:bprow-in 0.45s 0.8s both;}
+                    .bp4{animation:bprow-in 0.45s 1.1s both;}
+                    .bp5{animation:bprow-in 0.45s 1.4s both;}
+                    .bp6{animation:bprow-in 0.45s 1.7s both;}
+                </style>
+                <g class="bp1">
+                    <rect x="10" y="6" width="500" height="28" rx="7" fill="#e0f2f1"/>
+                    <text x="28" y="24" fill="#00695c" font-size="14">📌</text>
+                    <text x="52" y="25" fill="#004d40" font-size="11"><tspan font-weight="700">Assunto claro e objetivo</tspan> — resumir em uma linha, nunca deixar vazio</text>
+                </g>
+                <g class="bp2">
+                    <rect x="10" y="40" width="500" height="28" rx="7" fill="#e8f5e9"/>
+                    <text x="28" y="58" fill="#1b5e20" font-size="14">👋</text>
+                    <text x="52" y="59" fill="#1b5e20" font-size="11"><tspan font-weight="700">Saudação e despedida</tspan> — "Bom dia / Atenciosamente + nome"</text>
+                </g>
+                <g class="bp3">
+                    <rect x="10" y="74" width="500" height="28" rx="7" fill="#fff8e1"/>
+                    <text x="28" y="92" fill="#e65100" font-size="14">📎</text>
+                    <text x="52" y="93" fill="#e65100" font-size="11"><tspan font-weight="700">Cuidado com anexos</tspan> — prefira links do Drive; jamais abra de desconhecidos</text>
+                </g>
+                <g class="bp4">
+                    <rect x="10" y="108" width="500" height="28" rx="7" fill="#ede7f6"/>
+                    <text x="28" y="126" fill="#4a148c" font-size="14">↩️</text>
+                    <text x="52" y="127" fill="#4a148c" font-size="11"><tspan font-weight="700">Responder vs Responder a Todos</tspan> — use "Todos" só se necessário</text>
+                </g>
+                <g class="bp5">
+                    <rect x="10" y="142" width="500" height="28" rx="7" fill="#fce4ec"/>
+                    <text x="28" y="160" fill="#880e4f" font-size="14">🚫</text>
+                    <text x="52" y="161" fill="#880e4f" font-size="11"><tspan font-weight="700">Identifique spam e phishing</tspan> — erros de português, links suspeitos, urgência</text>
+                </g>
+                <g class="bp6">
+                    <rect x="10" y="176" width="500" height="28" rx="7" fill="#e3f2fd"/>
+                    <text x="28" y="194" fill="#1565c0" font-size="14">💼</text>
+                    <text x="52" y="195" fill="#1565c0" font-size="11"><tspan font-weight="700">E-mail institucional x pessoal</tspan> — use o do IFRN para assuntos escolares</text>
+                </g>
+            </svg>
+        </div>
+    </div>
+
+    <!-- SLIDE 7: Quiz -->
+    <div class="content-card">
+        <h2>&#x1F3AF; Verifique seu Conhecimento</h2>
+
+        <div class="mc-root" data-ex="mc21">
+
+            <div class="mc-question" data-correct="b">
+                <p><strong>1.</strong> O que &eacute; um navegador web?</p>
+                <div class="mc-option" data-opt="a">Um programa para criar p&aacute;ginas HTML</div>
+                <div class="mc-option" data-opt="b">Um programa que interpreta HTML, CSS e JS e exibe p&aacute;ginas da internet</div>
+                <div class="mc-option" data-opt="c">Um servi&ccedil;o de e-mail</div>
+                <div class="mc-option" data-opt="d">Um antiv&iacute;rus que protege a navega&ccedil;&atilde;o</div>
+                <div class="mc-explanation ok">Correto! O navegador recebe arquivos do servidor e os transforma na p&aacute;gina que voc&ecirc; v&ecirc; &mdash; ele interpreta HTML, CSS e JavaScript.</div>
+                <div class="mc-explanation err">O navegador &eacute; o programa que interpreta e exibe p&aacute;ginas web, n&atilde;o cria p&aacute;ginas nem &eacute; antiv&iacute;rus.</div>
             </div>
 
-            <div class="alert-box">
-                <p>&#x1F4CC; Chrome, Edge e Brave usam o mesmo motor (Blink), por isso p&aacute;ginas se comportam de forma semelhante neles. Firefox e Safari t&ecirc;m motores pr&oacute;prios &mdash; o que pode causar pequenas diferen&ccedil;as visuais em alguns sites.</p>
+            <div class="mc-question" data-correct="c">
+                <p><strong>2.</strong> Qual atalho abre o <strong>modo an&ocirc;nimo</strong> no Chrome e Edge?</p>
+                <div class="mc-option" data-opt="a">Ctrl + H</div>
+                <div class="mc-option" data-opt="b">Ctrl + D</div>
+                <div class="mc-option" data-opt="c">Ctrl + Shift + N</div>
+                <div class="mc-option" data-opt="d">Ctrl + T</div>
+                <div class="mc-explanation ok">Correto! Ctrl+Shift+N abre o modo an&ocirc;nimo. Ctrl+H &eacute; hist&oacute;rico, Ctrl+D &eacute; favorito e Ctrl+T abre nova aba.</div>
+                <div class="mc-explanation err">Ctrl+Shift+N &eacute; o atalho para o modo an&ocirc;nimo. Ctrl+T abre nova aba normal, Ctrl+H abre hist&oacute;rico e Ctrl+D salva favorito.</div>
+            </div>
+
+            <div class="mc-question" data-correct="a">
+                <p><strong>3.</strong> O que garante que um site usa HTTPS?</p>
+                <div class="mc-option" data-opt="a">O cadeado na barra de endere&ccedil;os, indicando criptografia TLS</div>
+                <div class="mc-option" data-opt="b">O site ter um design bonito e profissional</div>
+                <div class="mc-option" data-opt="c">O site ser acessado pelo Chrome</div>
+                <div class="mc-option" data-opt="d">A URL terminar em .com.br</div>
+                <div class="mc-explanation ok">Correto! O cadeado indica que a conex&atilde;o usa TLS/SSL, criptografando os dados trocados entre voc&ecirc; e o servidor.</div>
+                <div class="mc-explanation err">O design bonito n&atilde;o garante seguran&ccedil;a. Apenas o cadeado (HTTPS/TLS) confirma que a conex&atilde;o &eacute; criptografada.</div>
+            </div>
+
+            <div class="mc-question" data-correct="d">
+                <p><strong>4.</strong> Qual protocolo &eacute; respons&aacute;vel pelo <strong>envio</strong> de e-mails?</p>
+                <div class="mc-option" data-opt="a">IMAP</div>
+                <div class="mc-option" data-opt="b">POP3</div>
+                <div class="mc-option" data-opt="c">HTTP</div>
+                <div class="mc-option" data-opt="d">SMTP</div>
+                <div class="mc-explanation ok">Correto! SMTP (Simple Mail Transfer Protocol) &eacute; usado exclusivamente para enviar e-mails. IMAP e POP3 s&atilde;o para receber.</div>
+                <div class="mc-explanation err">SMTP &eacute; o protocolo de envio. IMAP e POP3 s&atilde;o para recebimento. HTTP &eacute; para navega&ccedil;&atilde;o na web.</div>
+            </div>
+
+            <div class="mc-question" data-correct="b">
+                <p><strong>5.</strong> Qual a principal diferen&ccedil;a entre IMAP e POP3?</p>
+                <div class="mc-option" data-opt="a">IMAP envia e-mails; POP3 recebe</div>
+                <div class="mc-option" data-opt="b">IMAP mant&eacute;m e-mails no servidor sincronizados; POP3 baixa e remove do servidor</div>
+                <div class="mc-option" data-opt="c">IMAP &eacute; mais antigo que POP3</div>
+                <div class="mc-option" data-opt="d">N&atilde;o h&aacute; diferen&ccedil;a pr&aacute;tica</div>
+                <div class="mc-explanation ok">Correto! Com IMAP os e-mails ficam sincronizados no servidor (acess&iacute;vel de qualquer dispositivo). POP3 baixa e geralmente remove do servidor.</div>
+                <div class="mc-explanation err">Ambos servem para receber. A diferen&ccedil;a &eacute; que IMAP sincroniza com o servidor e POP3 baixa os e-mails para o dispositivo.</div>
+            </div>
+
+            <div class="mc-question" data-correct="c">
+                <p><strong>6.</strong> Voc&ecirc; recebe um e-mail com erros de portugu&ecirc;s pedindo urgentemente sua senha banc&aacute;ria. O que &eacute; isso?</p>
+                <div class="mc-option" data-opt="a">Um e-mail leg&iacute;timo do banco</div>
+                <div class="mc-option" data-opt="b">Spam comum sem riscos</div>
+                <div class="mc-option" data-opt="c">Tentativa de phishing &mdash; nunca fornecer dados</div>
+                <div class="mc-option" data-opt="d">Uma promo&ccedil;&atilde;o especial</div>
+                <div class="mc-explanation ok">Correto! Erros de portugu&ecirc;s, urg&ecirc;ncia e pedidos de dados pessoais s&atilde;o sinais cl&aacute;ssicos de phishing. Bancos nunca pedem senha por e-mail.</div>
+                <div class="mc-explanation err">Esse &eacute; um sinal cl&aacute;ssico de phishing &mdash; uma tentativa de roubo de dados. Nunca fornecer senha ou dados banc&aacute;rios por e-mail.</div>
+            </div>
+
+            <div class="mc-actions">
+                <button onclick="mcVerify('mc21')">Verificar</button>
+                <button onclick="mcReset('mc21')">Refazer</button>
+            </div>
+            <div class="mc-result" id="mc21-result"></div>
+        </div>
+    </div>
+
+    <!-- SLIDE 8: Atividade Prática -->
+    <div class="content-card">
+        <h2>&#x1F6E0;&#xFE0F; Atividade Pr&aacute;tica &mdash; Explorando o Navegador e o E-mail</h2>
+
+        <div class="yt-wrap">
+            <iframe src="https://www.youtube.com/embed/3QhU9jd03a0"
+                    title="Navegadores Web e E-mail"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+        </div>
+
+        <p><strong>Materiais necess&aacute;rios:</strong></p>
+        <ul class="mat-list">
+            <li>&#x1F4BB; Computador com navegador</li>
+            <li>&#x1F310; Conex&atilde;o com internet</li>
+            <li>&#x1F4E7; Conta de e-mail (Gmail ou institucional)</li>
+        </ul>
+
+        <!-- Passo 1 -->
+        <div class="step-svg-card">
+            <div class="step-num">1</div>
+            <svg width="64" height="56" viewBox="0 0 64 56" xmlns="http://www.w3.org/2000/svg">
+                <style>@keyframes lock-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}.lb2{animation:lock-bob 1.2s infinite ease-in-out;}</style>
+                <rect x="8" y="6" width="48" height="36" rx="5" fill="#0f172a"/>
+                <text x="32" y="28" text-anchor="middle" fill="#34d399" font-size="10" font-family="Courier New">https://</text>
+                <g class="lb2"><text x="48" y="14" font-size="14">🔒</text></g>
+                <text x="32" y="52" text-anchor="middle" fill="#64748b" font-size="9">Cadeado</text>
+            </svg>
+            <div class="step-text">
+                <strong>Verifique o HTTPS nos sites</strong>
+                <span>Acesse 3 sites diferentes. Em cada um, observe se h&aacute; o cadeado na barra de endere&ccedil;os. Anote quais usam HTTPS e quais usam HTTP (sem cadeado).</span>
             </div>
         </div>
 
-        <!-- CARD 3 -->
-        <div class="content-card">
-            <h2>&#x2699;&#xFE0F; Recursos Essenciais do Navegador</h2>
-
-            <div class="feature-grid">
-                <div class="feature-item">
-                    <div class="fi-title">&#x1F4C2; Abas (Tabs)</div>
-                    <div class="fi-desc">Permite ter v&aacute;rios sites abertos ao mesmo tempo na mesma janela.</div>
-                    <div class="fi-kbd"><kbd>Ctrl</kbd>+<kbd>T</kbd> nova aba &nbsp; <kbd>Ctrl</kbd>+<kbd>W</kbd> fechar</div>
-                </div>
-                <div class="feature-item">
-                    <div class="fi-title">&#x2B50; Favoritos</div>
-                    <div class="fi-desc">Salva endere&ccedil;os de p&aacute;ginas para acess&aacute;-las rapidamente depois.</div>
-                    <div class="fi-kbd"><kbd>Ctrl</kbd>+<kbd>D</kbd> favoritar</div>
-                </div>
-                <div class="feature-item">
-                    <div class="fi-title">&#x1F4DC; Hist&oacute;rico</div>
-                    <div class="fi-desc">Registra todos os sites visitados, com data e hora de acesso.</div>
-                    <div class="fi-kbd"><kbd>Ctrl</kbd>+<kbd>H</kbd> abrir hist&oacute;rico</div>
-                </div>
-                <div class="feature-item">
-                    <div class="fi-title">&#x1F575;&#xFE0F; Modo An&ocirc;nimo</div>
-                    <div class="fi-desc">Navega sem salvar hist&oacute;rico, cookies ou dados de formul&aacute;rio no dispositivo.</div>
-                    <div class="fi-kbd"><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>N</kbd></div>
-                </div>
-                <div class="feature-item">
-                    <div class="fi-title">&#x1F9E9; Extens&otilde;es</div>
-                    <div class="fi-desc">Pequenos programas que adicionam funcionalidades ao navegador (bloqueador de an&uacute;ncios, tradutores&hellip;).</div>
-                    <div class="fi-kbd">Menu &rarr; Extens&otilde;es</div>
-                </div>
-                <div class="feature-item">
-                    <div class="fi-title">&#x1F504; Atualizar p&aacute;gina</div>
-                    <div class="fi-desc">Recarrega o conte&uacute;do do site, buscando a vers&atilde;o mais recente do servidor.</div>
-                    <div class="fi-kbd"><kbd>F5</kbd> ou <kbd>Ctrl</kbd>+<kbd>R</kbd></div>
-                </div>
+        <!-- Passo 2 -->
+        <div class="step-svg-card">
+            <div class="step-num">2</div>
+            <svg width="64" height="56" viewBox="0 0 64 56" xmlns="http://www.w3.org/2000/svg">
+                <style>@keyframes incognito{0%,100%{opacity:1}50%{opacity:0.4}}.inc{animation:incognito 1.5s infinite;}</style>
+                <rect x="8" y="6" width="48" height="36" rx="5" fill="#1e1e1e"/>
+                <text x="32" y="30" text-anchor="middle" font-size="22" class="inc">🕵️</text>
+                <text x="32" y="52" text-anchor="middle" fill="#64748b" font-size="9">Anônimo</text>
+            </svg>
+            <div class="step-text">
+                <strong>Modo an&ocirc;nimo</strong>
+                <span>Pressione <kbd>Ctrl+Shift+N</kbd> para abrir aba an&ocirc;nima. Acesse o mesmo site da aba normal. Compare: o navegador j&aacute; tem seus dados salvos na aba normal?</span>
             </div>
         </div>
 
-        <!-- CARD 4 -->
-        <div class="content-card">
-            <h2>&#x1F517; Anatomia de uma URL e HTTP vs HTTPS</h2>
-            <p>A <strong>URL</strong> (<em>Uniform Resource Locator</em>) &eacute; o endere&ccedil;o completo de um recurso na internet. Cada parte tem uma fun&ccedil;&atilde;o espec&iacute;fica:</p>
-
-            <div class="url-box">
-                <span class="url-part url-proto">https://</span><span class="url-part url-domain">www.ifrn.edu.br</span><span class="url-part url-path">/cursos/informatica</span><span class="url-part url-query">?turma=2025</span>
-            </div>
-
-            <div class="url-legend">
-                <div class="url-leg-item">
-                    <div class="leg-dot" style="background:#34d399"></div>
-                    <span><strong>Protocolo</strong> &mdash; como os dados s&atilde;o transmitidos</span>
-                </div>
-                <div class="url-leg-item">
-                    <div class="leg-dot" style="background:#60a5fa"></div>
-                    <span><strong>Dom&iacute;nio</strong> &mdash; endere&ccedil;o do servidor</span>
-                </div>
-                <div class="url-leg-item">
-                    <div class="leg-dot" style="background:#fbbf24"></div>
-                    <span><strong>Caminho</strong> &mdash; localiza&ccedil;&atilde;o do recurso</span>
-                </div>
-                <div class="url-leg-item">
-                    <div class="leg-dot" style="background:#f472b6"></div>
-                    <span><strong>Par&acirc;metros</strong> &mdash; dados extras na requisi&ccedil;&atilde;o</span>
-                </div>
-            </div>
-
-            <h3>&#x1F512; HTTP vs HTTPS</h3>
-            <div class="security-row">
-                <div class="security-card insecure">
-                    <div class="sc-icon">&#x26A0;&#xFE0F;</div>
-                    <div class="sc-title">HTTP</div>
-                    <div class="sc-desc">Dados trafegam <strong>sem criptografia</strong>. Qualquer pessoa na mesma rede pode interceptar as informa&ccedil;&otilde;es enviadas.</div>
-                </div>
-                <div class="security-card secure">
-                    <div class="sc-icon">&#x1F512;</div>
-                    <div class="sc-title">HTTPS</div>
-                    <div class="sc-desc">Dados s&atilde;o <strong>criptografados</strong> com TLS. O cadeado verde na barra confirma que a conex&atilde;o &eacute; segura.</div>
-                </div>
-            </div>
-
-            <div class="alert-box">
-                <p>&#x26A0;&#xFE0F; <strong>Regra pr&aacute;tica:</strong> Nunca insira senhas, n&uacute;meros de cart&atilde;o ou dados pessoais em sites sem o cadeado (HTTPS). Verifique sempre a barra de endere&ccedil;os antes de preencher qualquer formul&aacute;rio.</p>
+        <!-- Passo 3 -->
+        <div class="step-svg-card">
+            <div class="step-num">3</div>
+            <svg width="64" height="56" viewBox="0 0 64 56" xmlns="http://www.w3.org/2000/svg">
+                <style>@keyframes scroll-hist{0%{transform:translateY(0)}100%{transform:translateY(-20px)}}.sh{animation:scroll-hist 2s 1s linear infinite;}</style>
+                <rect x="8" y="6" width="48" height="40" rx="5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.2" clip-path="url(#hclip)"/>
+                <clipPath id="hclip"><rect x="8" y="6" width="48" height="40" rx="5"/></clipPath>
+                <g class="sh">
+                    <rect x="14" y="12" width="36" height="6" rx="2" fill="#e2e8f0"/>
+                    <rect x="14" y="21" width="36" height="6" rx="2" fill="#e2e8f0"/>
+                    <rect x="14" y="30" width="36" height="6" rx="2" fill="#e2e8f0"/>
+                    <rect x="14" y="39" width="36" height="6" rx="2" fill="#e2e8f0"/>
+                </g>
+                <text x="32" y="54" text-anchor="middle" fill="#64748b" font-size="9">Ctrl+H</text>
+            </svg>
+            <div class="step-text">
+                <strong>Explore o hist&oacute;rico</strong>
+                <span>Pressione <kbd>Ctrl+H</kbd>. Anote: quantos sites aparecem de hoje? Confira que o hist&oacute;rico da aba an&ocirc;nima <strong>n&atilde;o aparece</strong> aqui.</span>
             </div>
         </div>
 
-        <!-- CARD 5 -->
-        <div class="content-card">
-            <h2>&#x1F4E7; E-mail &mdash; Conceitos B&aacute;sicos</h2>
-            <p>O <strong>e-mail</strong> (<em>eletronic mail</em>) &eacute; um dos servi&ccedil;os mais antigos e ainda mais utilizados da internet. Permite enviar e receber mensagens, arquivos e documentos entre pessoas ao redor do mundo.</p>
-
-            <h3>Anatomia de um endere&ccedil;o de e-mail</h3>
-            <div class="email-anatomy">
-                <span class="em-user">joao.silva</span><span class="em-at">@</span><span class="em-domain">ifrn.edu.br</span>
-            </div>
-            <div class="email-labels">
-                <span>&#x2191;<strong style="color:#0891b2">Usu&aacute;rio</strong><br>identifica a pessoa</span>
-                <span>&#x2191;<strong style="color:#64748b">@</strong><br>"arroba" &mdash; separa<br>usu&aacute;rio do dom&iacute;nio</span>
-                <span>&#x2191;<strong style="color:#7c3aed">Dom&iacute;nio</strong><br>servidor de e-mail</span>
-            </div>
-
-            <h3>Formas de acessar o e-mail</h3>
-            <div class="email-type-grid">
-                <div class="etype-card webmail">
-                    <div class="et-title">&#x1F310; Webmail</div>
-                    <div class="et-desc">Acesso pelo navegador, sem instalar nada. E-mails ficam armazenados no servidor.</div>
-                    <div class="et-exemplos">Exemplos: <strong>Gmail, Outlook.com, Yahoo Mail</strong></div>
-                </div>
-                <div class="etype-card client">
-                    <div class="et-title">&#x1F4BB; Cliente de E-mail</div>
-                    <div class="et-desc">Programa instalado no computador. Baixa os e-mails e permite uso offline.</div>
-                    <div class="et-exemplos">Exemplos: <strong>Outlook, Thunderbird, Apple Mail</strong></div>
-                </div>
-            </div>
-
-            <h3>Protocolos de e-mail</h3>
-            <table class="compare-table">
-                <tr><th>Protocolo</th><th>Fun&ccedil;&atilde;o</th><th>Obs.</th></tr>
-                <tr><td><strong>SMTP</strong></td><td>Envio de e-mails</td><td>Simple Mail Transfer Protocol</td></tr>
-                <tr><td><strong>IMAP</strong></td><td>Recebimento &mdash; sincroniza com servidor</td><td>E-mails permanecem no servidor</td></tr>
-                <tr><td><strong>POP3</strong></td><td>Recebimento &mdash; baixa para o dispositivo</td><td>E-mails removidos do servidor</td></tr>
-            </table>
-        </div>
-
-        <!-- CARD 6 -->
-        <div class="content-card">
-            <h2>&#x2705; Boas Pr&aacute;ticas no Uso de E-mail</h2>
-
-            <div class="boas-grid">
-                <div class="boa-item">
-                    <div class="boa-icon">&#x1F4CC;</div>
-                    <div class="boa-text">
-                        <strong>Assunto claro e objetivo</strong>
-                        <span>O campo "Assunto" deve resumir o conte&uacute;do em uma linha. Evite deixar em branco ou usar "Ol&aacute;".</span>
-                    </div>
-                </div>
-                <div class="boa-item">
-                    <div class="boa-icon">&#x1F44B;</div>
-                    <div class="boa-text">
-                        <strong>Sauda&ccedil;&atilde;o e despedida</strong>
-                        <span>Inicie com "Bom dia" ou "Prezado(a)" e finalize com "Atenciosamente" + nome. Transmite profissionalismo.</span>
-                    </div>
-                </div>
-                <div class="boa-item">
-                    <div class="boa-icon">&#x1F4CE;</div>
-                    <div class="boa-text">
-                        <strong>Cuidado com anexos</strong>
-                        <span>Prefira links do Google Drive para arquivos grandes. Jamais abra anexos de remetentes desconhecidos.</span>
-                    </div>
-                </div>
-                <div class="boa-item">
-                    <div class="boa-icon">&#x21A9;&#xFE0F;</div>
-                    <div class="boa-text">
-                        <strong>Responder vs Responder a Todos</strong>
-                        <span>Use "Responder a Todos" apenas quando todos os destinat&aacute;rios precisam ver sua resposta.</span>
-                    </div>
-                </div>
-                <div class="boa-item">
-                    <div class="boa-icon">&#x1F6AB;</div>
-                    <div class="boa-text">
-                        <strong>Identifique spam e phishing</strong>
-                        <span>Desconfie de e-mails com erros de portugu&ecirc;s, links suspeitos ou pedidos urgentes de dados pessoais.</span>
-                    </div>
-                </div>
-                <div class="boa-item">
-                    <div class="boa-icon">&#x1F4BC;</div>
-                    <div class="boa-text">
-                        <strong>E-mail institucional x pessoal</strong>
-                        <span>Use o e-mail do IFRN para assuntos escolares. N&atilde;o misture com e-mails pessoais ou de redes sociais.</span>
-                    </div>
-                </div>
+        <!-- Passo 4 -->
+        <div class="step-svg-card">
+            <div class="step-num">4</div>
+            <svg width="64" height="56" viewBox="0 0 64 56" xmlns="http://www.w3.org/2000/svg">
+                <style>@keyframes star-spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}.ss{animation:star-spin 3s linear infinite;transform-origin:32px 24px;}</style>
+                <rect x="8" y="6" width="48" height="36" rx="5" fill="#fff8e1" stroke="#ffe082" stroke-width="1.2"/>
+                <text x="32" y="30" text-anchor="middle" font-size="22" class="ss">⭐</text>
+                <text x="32" y="54" text-anchor="middle" fill="#64748b" font-size="9">Ctrl+D</text>
+            </svg>
+            <div class="step-text">
+                <strong>Salve um favorito</strong>
+                <span>Acesse o site do IFRN (<strong>ifrn.edu.br</strong>). Pressione <kbd>Ctrl+D</kbd> para favoritar. Nomeie descritivamente. Feche a aba e abra o site apenas pelos favoritos.</span>
             </div>
         </div>
 
-        <!-- CARD 7 — RECAPITULANDO -->
-        <div class="content-card">
-            <h2>&#x1F4CB; Recapitulando</h2>
-            <ul>
-                <li>O <strong>navegador web</strong> interpreta HTML, CSS e JS e exibe p&aacute;ginas da internet</li>
-                <li>Os principais navegadores s&atilde;o <strong>Chrome, Edge, Firefox, Safari e Brave</strong> &mdash; com diferen&ccedil;as em privacidade, velocidade e recursos</li>
-                <li>Recursos essenciais: <strong>abas, favoritos, hist&oacute;rico, modo an&ocirc;nimo e extens&otilde;es</strong></li>
-                <li>A <strong>URL</strong> &eacute; composta por protocolo, dom&iacute;nio, caminho e par&acirc;metros</li>
-                <li><strong>HTTPS</strong> garante conex&atilde;o criptografada &mdash; verifique o cadeado antes de inserir dados pessoais</li>
-                <li>O endere&ccedil;o de e-mail tem formato <em>usu&aacute;rio@dom&iacute;nio</em>; pode ser acessado via webmail ou cliente de e-mail</li>
-                <li>Boas pr&aacute;ticas de e-mail incluem assunto claro, sauda&ccedil;&atilde;o adequada e cuidado com anexos e phishing</li>
-            </ul>
-
-            <div class="highlight-box">
-                <p>&#x1F4DA; <strong>Na pr&oacute;xima aula</strong> vamos explorar o <strong>armazenamento em nuvem</strong> &mdash; Google Drive, OneDrive e Dropbox &mdash; aprendendo a guardar, organizar e compartilhar arquivos de forma segura e acess&iacute;vel de qualquer lugar.</p>
+        <!-- Passo 5 -->
+        <div class="step-svg-card">
+            <div class="step-num">5</div>
+            <svg width="64" height="56" viewBox="0 0 64 56" xmlns="http://www.w3.org/2000/svg">
+                <style>@keyframes env-open2{0%,100%{transform:scaleY(1)}50%{transform:scaleY(0.85)}}.eo2{animation:env-open2 1.5s infinite ease-in-out;transform-origin:32px 26px;}</style>
+                <g class="eo2">
+                    <rect x="8" y="14" width="48" height="34" rx="5" fill="#00838f"/>
+                    <polyline points="8,14 32,32 56,14" fill="none" stroke="#4db6ac" stroke-width="2"/>
+                    <text x="32" y="40" text-anchor="middle" fill="white" font-size="14">✉️</text>
+                </g>
+                <text x="32" y="54" text-anchor="middle" fill="#64748b" font-size="9">Assinatura</text>
+            </svg>
+            <div class="step-text">
+                <strong>Configure sua assinatura de e-mail</strong>
+                <span>Acesse o Gmail ou webmail institucional. V&aacute; em <em>Configura&ccedil;&otilde;es &rarr; Assinatura</em>. Inclua: nome completo, turma/curso, institui&ccedil;&atilde;o e e-mail de contato.</span>
             </div>
         </div>
 
-        <!-- EXERCÍCIO: Arrastar e Soltar -->
-        <div class="content-card exercise-card">
-            <h2>&#x1F3AF; Exerc&iacute;cio &mdash; Arraste e Conecte</h2>
-            <p style="color:#475569;font-size:0.9em;margin-bottom:4px;">Arraste cada descri&ccedil;&atilde;o para o recurso do navegador correspondente. Em dispositivos m&oacute;veis, toque na descri&ccedil;&atilde;o e depois na zona de destino.</p>
-
-            <div class="ex-drag-root" data-ex="ex21">
-                <div class="ex-drag">
-                    <div>
-                        <div class="ex-col-title">Descri&ccedil;&atilde;o</div>
-                        <div class="ex-pool" data-pool="ex21">
-                            <div class="drag-chip" data-id="abas">Permite ter v&aacute;rios sites abertos ao mesmo tempo na mesma janela</div>
-                            <div class="drag-chip" data-id="favs">Salva endere&ccedil;os de p&aacute;ginas para acess&aacute;-las rapidamente</div>
-                            <div class="drag-chip" data-id="anonimo">Navega sem registrar hist&oacute;rico, cookies ou dados no dispositivo</div>
-                            <div class="drag-chip" data-id="hist">Lista de todos os sites visitados com data e hora</div>
-                            <div class="drag-chip" data-id="ext">Pequenos programas que adicionam funcionalidades ao navegador</div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="ex-col-title">Recurso</div>
-                        <div class="ex-zones" data-zones="ex21">
-                            <div class="drop-zone" data-zone="ex21-z1" data-accept="abas">
-                                <span class="zone-name">Abas (Tabs)</span>
-                                <div class="zone-slot"></div>
-                                <div class="zone-feedback"></div>
-                            </div>
-                            <div class="drop-zone" data-zone="ex21-z2" data-accept="favs">
-                                <span class="zone-name">Favoritos</span>
-                                <div class="zone-slot"></div>
-                                <div class="zone-feedback"></div>
-                            </div>
-                            <div class="drop-zone" data-zone="ex21-z3" data-accept="anonimo">
-                                <span class="zone-name">Modo An&ocirc;nimo</span>
-                                <div class="zone-slot"></div>
-                                <div class="zone-feedback"></div>
-                            </div>
-                            <div class="drop-zone" data-zone="ex21-z4" data-accept="hist">
-                                <span class="zone-name">Hist&oacute;rico</span>
-                                <div class="zone-slot"></div>
-                                <div class="zone-feedback"></div>
-                            </div>
-                            <div class="drop-zone" data-zone="ex21-z5" data-accept="ext">
-                                <span class="zone-name">Extens&otilde;es</span>
-                                <div class="zone-slot"></div>
-                                <div class="zone-feedback"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="ex-actions">
-                <button class="btn-verificar" onclick="dragVerify('ex21')">Verificar</button>
-                <button class="btn-refazer"  onclick="dragReset('ex21')">Refazer</button>
-            </div>
-            <div class="ex-result" id="ex21-result"></div>
-        </div>
-
-        <!-- ATIVIDADE PRÁTICA 2.1 -->
-        <div class="content-card practical-card" id="prat-21">
-            <h2>&#x1F6E0;&#xFE0F; Atividade Pr&aacute;tica &mdash; Explorando o Navegador e o E-mail</h2>
-            <div class="prat-meta">
-                <span class="prat-tag">&#x23F1; ~25 min</span>
-                <span class="prat-tag">&#x1F310; Requer internet</span>
-                <span class="prat-tag">&#x1F4CD; Sem instala&ccedil;&atilde;o</span>
-            </div>
-
-            <div class="prat-steps">
-                <div class="prat-step">
-                    <div class="step-num">1</div>
-                    <div class="step-body">
-                        <div class="step-label">Verifique o HTTPS nos sites</div>
-                        <div class="step-desc">Acesse 3 sites diferentes pela barra de endere&ccedil;os. Em cada um, observe se h&aacute; o cadeado antes do endere&ccedil;o. Anote: qual site usa HTTP (sem cadeado) e qual usa HTTPS (com cadeado). Tente acessar um site de not&iacute;cias e um banco online e compare.</div>
-                    </div>
-                </div>
-                <div class="prat-step">
-                    <div class="step-num">2</div>
-                    <div class="step-body">
-                        <div class="step-label">Abra o modo an&ocirc;nimo e compare</div>
-                        <div class="step-desc">Pressione <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>N</kbd> para abrir uma aba an&ocirc;nima. Acesse o mesmo site que voc&ecirc; abriu na aba normal. Observe as diferen&ccedil;as: o navegador j&aacute; tem seus dados salvos na aba normal (sugest&otilde;es, login)? No modo an&ocirc;nimo esses dados n&atilde;o aparecem.</div>
-                    </div>
-                </div>
-                <div class="prat-step">
-                    <div class="step-num">3</div>
-                    <div class="step-body">
-                        <div class="step-label">Explore o hist&oacute;rico</div>
-                        <div class="step-desc">Pressione <kbd>Ctrl</kbd>+<kbd>H</kbd> para abrir o hist&oacute;rico de navega&ccedil;&atilde;o. Anote: quantos sites aparecem de hoje? Voc&ecirc; consegue identificar a que hora cada um foi acessado? Observe que o hist&oacute;rico da aba an&ocirc;nima <strong>n&atilde;o aparece</strong> aqui.</div>
-                    </div>
-                </div>
-                <div class="prat-step">
-                    <div class="step-num">4</div>
-                    <div class="step-body">
-                        <div class="step-label">Salve um favorito</div>
-                        <div class="step-desc">Acesse o site do IFRN (<strong>ifrn.edu.br</strong>) ou o dashboard da disciplina. Pressione <kbd>Ctrl</kbd>+<kbd>D</kbd> para adicionar aos favoritos. Nomeie-o de forma descritiva. Depois, feche a aba e abra o site usando apenas os favoritos. Confirm que funcionou.</div>
-                    </div>
-                </div>
-                <div class="prat-step">
-                    <div class="step-num">5</div>
-                    <div class="step-body">
-                        <div class="step-label">Comunica&ccedil;&atilde;o profissional por e-mail &mdash; cen&aacute;rio completo</div>
-                        <div class="step-desc">
-                            <strong>Parte A &mdash; Configure sua assinatura</strong><br>
-                            Acesse seu webmail institucional ou Gmail. V&aacute; em <em>Configura&ccedil;&otilde;es &rarr; Assinatura</em> e crie uma assinatura com: seu <strong>nome completo</strong>, <strong>turma/curso</strong>, <strong>institui&ccedil;&atilde;o</strong> e <strong>e-mail de contato</strong>. Salve e tire um <strong>print</strong> da assinatura configurada.
-                            <br><br>
-                            <strong>Parte B &mdash; Redija dois e-mails</strong><br>
-                            <em>E-mail 1 &mdash; D&uacute;vida acad&ecirc;mica (ao professor):</em> Assunto descritivo (ex.: <code>"D&uacute;vida sobre Atividade 3 &mdash; [seu nome]"</code>), sauda&ccedil;&atilde;o formal, ao menos uma pergunta sobre o conte&uacute;do da unidade, despedida + nome completo + assinatura. Envie para <strong>cesar.augusto@escolar.ifrn.edu.br</strong>.<br>
-                            <em>E-mail 2 &mdash; Pedido de informa&ccedil;&atilde;o (a uma institui&ccedil;&atilde;o fict&iacute;cia, ex.: secretaria ou biblioteca):</em> Simule uma situa&ccedil;&atilde;o real (hor&aacute;rio de atendimento, renova&ccedil;&atilde;o de matr&iacute;cula etc.). Mesmo padr&atilde;o formal: sauda&ccedil;&atilde;o, corpo objetivo, despedida + assinatura. Envie tamb&eacute;m para <strong>cesar.augusto@escolar.ifrn.edu.br</strong> com CC para voc&ecirc; mesmo.
-                            <br><br>
-                            <strong>Parte C &mdash; Organize sua caixa de entrada</strong><br>
-                            Crie uma <strong>pasta ou etiqueta</strong> chamada <code>Escola</code>. Mova os dois rascunhos para essa pasta. Use a fun&ccedil;&atilde;o de <strong>busca</strong> do e-mail para pesquisar seu pr&oacute;prio nome e observe os resultados. Tire um <strong>print</strong> da pasta organizada.<br><br>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="prat-observe">
-                <strong>&#x1F4CC; Para saber:</strong> O modo an&ocirc;nimo <strong>n&atilde;o torna voc&ecirc; invis&iacute;vel na internet</strong>. Ele apenas n&atilde;o salva dados <em>localmente</em> no seu dispositivo. O provedor de internet, o administrador da rede escolar e os sites acessados ainda podem registrar sua atividade.
-            </div>
-
-            <div class="ex-actions">
-                <button class="btn-print" onclick="printPractical('prat-21', 'Aula 2.1 \u2014 Navegadores Web e E-mail')">&#x1F5A8;&#xFE0F; Imprimir roteiro</button>
+        <!-- Passo 6 -->
+        <div class="step-svg-card">
+            <div class="step-num">6</div>
+            <svg width="64" height="56" viewBox="0 0 64 56" xmlns="http://www.w3.org/2000/svg">
+                <style>@keyframes send-fly{0%{transform:translate(0,0);opacity:1}100%{transform:translate(20px,-12px);opacity:0}}.sf2{animation:send-fly 1.2s ease-out infinite;}</style>
+                <rect x="6" y="8" width="52" height="36" rx="5" fill="#e0f2f1" stroke="#80cbc4" stroke-width="1.2"/>
+                <text x="30" y="30" fill="#004d40" font-size="9">📝 Prezado Prof.</text>
+                <g class="sf2"><text x="44" y="16" font-size="14">✉️</text></g>
+                <text x="32" y="54" text-anchor="middle" fill="#64748b" font-size="9">Enviar e-mail</text>
+            </svg>
+            <div class="step-text">
+                <strong>Redija um e-mail profissional</strong>
+                <span>Escreva um e-mail formal com d&uacute;vida sobre o conte&uacute;do da unidade. Use assunto descritivo, sauda&ccedil;&atilde;o, corpo e despedida com sua assinatura. Envie para <strong>cesar.augusto@escolar.ifrn.edu.br</strong>.</span>
             </div>
         </div>
+    </div>
 
-        <div class="nav-footer">
-            <a href="uni1-04-softwares-utilitarios.html" class="nav-link">&#x2B05; Anterior: Softwares Utilit&aacute;rios</a>
-            <a href="uni2-02-armazenamento-nuvem.html" class="nav-link">Pr&oacute;xima: Armazenamento em Nuvem &#x27A1;</a>
-        </div>
+    <div class="nav-footer">
+        <a href="uni1-05-softwares-utilitarios.html" class="nav-link">&#x2B05; Anterior: Softwares Utilit&aacute;rios</a>
+        <a href="uni2-02-armazenamento-nuvem.html" class="nav-link">Pr&oacute;xima: Armazenamento em Nuvem &#x27A1;</a>
+    </div>
 
-    </div><!-- fim .content-wrapper -->
+</div>
 
-    <script src="slide-mode.js"></script>
-    <script src="exercise-drag.js"></script>
-    <script src="exercise-print.js"></script>
+<script src="slide-mode.js"></script>
+<script src="exercise-drag.js"></script>
+<script src="exercise-mc.js"></script>
+<script src="exercise-print.js"></script>
 </body>
 </html>
