@@ -2,924 +2,809 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aula 2.2 - Armazenamento em Nuvem</title>
-  <link rel="stylesheet" href="https://cesarazevedo.github.io/lesson.css">
-  <style>
-    /* Animações e estilos específicos desta aula */
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 2.2 - Armazenamento em Nuvem</title>
+    <link rel="stylesheet" href="slide-mode.css">
+    <link rel="stylesheet" href="exercise.css">
+    <script type="text/javascript" src="https://me.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=mKna_bsjceD4C8d5utE4cTHHlEL9eeUgd8ObJa1k1Xjz4amOTbWs6OzupxguyJmULXjksDA8Wc-TkEAilUPvPrnKbHjPl_R7WkOLKQvCCwnuRNO4XsjQ6UQMfkJkSnQZ" charset="UTF-8"></script><style>
+        :root {
+            --primary: #00838f;
+            --secondary: #006064;
+            --bg-light: #f0f4f8;
+            --text-dark: #1a202c;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+        .top-bar {
+            background: white;
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .back-btn {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+        .back-btn:hover { background: rgba(0,131,143,0.08); }
+        .page-badge {
+            font-size: 0.8em;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: rgba(0,131,143,0.12);
+            color: var(--primary);
+            font-weight: 600;
+        }
+        .content-wrapper {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 30px;
+        }
+        .lesson-hero {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            border-top: 4px solid var(--primary);
+        }
+        .lesson-hero h1 { font-size: 2em; margin-bottom: 10px; color: var(--primary); }
+        .lesson-hero .subtitle { font-size: 1.05em; color: #718096; }
+        .content-card {
+            background: white;
+            border-radius: 16px;
+            padding: 35px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+        .content-card h2 {
+            font-size: 1.4em;
+            color: var(--primary);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .content-card p { margin-bottom: 15px; text-align: justify; }
 
-    .cloud-container {
-      perspective: 1000px;
-      margin: 30px 0;
-    }
+        .svg-wrap { display: flex; justify-content: center; margin: 24px 0; }
+        .svg-wrap svg { max-width: 100%; height: auto; }
 
-    .sync-diagram {
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-      margin: 40px 0;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
+        /* compare table */
+        .compare-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88em; }
+        .compare-table th { background: var(--primary); color: white; padding: 11px 14px; text-align: left; }
+        .compare-table th:first-child { border-radius: 8px 0 0 0; }
+        .compare-table th:last-child  { border-radius: 0 8px 0 0; }
+        .compare-table td { padding: 10px 14px; border-bottom: 1px solid #e2e8f0; vertical-align: middle; }
+        .compare-table tr:nth-child(even) td { background: #f8fafc; }
+        .compare-table tr:last-child td { border-bottom: none; }
 
-    .sync-item {
-      text-align: center;
-      flex: 1;
-      min-width: 120px;
-    }
+        /* step cards */
+        .step-svg-card {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 16px 18px;
+            margin-bottom: 14px;
+        }
+        .step-svg-card .step-num {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white; font-weight: 700;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        .step-svg-card .step-text strong { display: block; color: var(--primary); margin-bottom: 3px; }
+        .step-svg-card .step-text span  { font-size: 0.88em; color: #4a5568; }
+        .step-svg-card svg { flex-shrink: 0; }
 
-    .sync-arrow {
-      font-size: 32px;
-      animation: bounce 2s infinite;
-    }
+        /* YouTube */
+        .yt-wrap { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px; margin: 20px 0; }
+        .yt-wrap iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; border-radius: 12px; }
 
-    @keyframes bounce {
-      0%, 100% { transform: translateX(0); }
-      50% { transform: translateX(10px); }
-    }
+        .mat-list { list-style: none; margin: 0 0 20px 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+        .mat-list li { background: #e0f2f1; color: #00695c; border-radius: 20px; padding: 6px 14px; font-size: 0.88em; font-weight: 600; }
 
-    /* Tabela melhorada */
-    .comparison-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 30px 0;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
+        .nav-footer { display: flex; justify-content: space-between; margin-top: 40px; padding-bottom: 40px; }
+        .nav-link {
+            text-decoration: none; color: var(--primary); font-weight: 600;
+            padding: 12px 24px; border-radius: 10px; background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05); transition: all 0.3s;
+        }
+        .nav-link:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
 
-    .comparison-table thead {
-      background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
-      color: white;
-    }
-
-    .comparison-table th {
-      padding: 16px;
-      text-align: left;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-    }
-
-    .comparison-table td {
-      padding: 14px 16px;
-      border-bottom: 1px solid #e0e0e0;
-    }
-
-    /* Zebra stripes */
-    .comparison-table tbody tr:nth-child(even) {
-      background-color: #f8f9fa;
-    }
-
-    .comparison-table tbody tr:hover {
-      background-color: #e3f2fd;
-      transition: background-color 0.3s ease;
-    }
-
-    .check-icon {
-      color: #4caf50;
-      font-weight: bold;
-    }
-
-    .partial-icon {
-      color: #ff9800;
-      font-weight: bold;
-    }
-
-    .cross-icon {
-      color: #f44336;
-      font-weight: bold;
-    }
-
-    /* Permissões cards */
-    .permissions-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-      margin: 30px 0;
-    }
-
-    .permission-card {
-      background: white;
-      border-left: 4px solid #4a90e2;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .permission-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
-    }
-
-    .permission-card h4 {
-      margin-top: 0;
-      color: #4a90e2;
-    }
-
-    .permission-icon {
-      font-size: 32px;
-      margin-bottom: 10px;
-    }
-
-    /* Drag and drop */
-    .drag-drop-container {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 30px;
-      margin: 30px 0;
-    }
-
-    .drag-list, .drop-zone {
-      background: #f5f5f5;
-      border: 2px dashed #ccc;
-      padding: 20px;
-      border-radius: 8px;
-      min-height: 300px;
-    }
-
-    .drag-list h3, .drop-zone h3 {
-      margin-top: 0;
-      color: #333;
-    }
-
-    .drag-item {
-      background: white;
-      padding: 12px;
-      margin: 8px 0;
-      border-radius: 6px;
-      cursor: move;
-      border-left: 4px solid #4a90e2;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      transition: all 0.3s ease;
-      user-select: none;
-    }
-
-    .drag-item:hover {
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-      transform: translateX(4px);
-    }
-
-    .drag-item.dragging {
-      opacity: 0.6;
-      transform: scale(0.98);
-    }
-
-    .drop-target {
-      background: white;
-      border: 2px solid transparent;
-      padding: 12px;
-      margin: 8px 0;
-      border-radius: 6px;
-      min-height: 44px;
-      display: flex;
-      align-items: center;
-      border-bottom: 2px solid #e0e0e0;
-    }
-
-    .drop-target.drag-over {
-      background-color: #e3f2fd;
-      border-color: #4a90e2;
-    }
-
-    .drop-target.filled {
-      background-color: #f1f8e9;
-      border-left: 4px solid #4caf50;
-    }
-
-    .drop-target.filled .remove-btn {
-      margin-left: auto;
-      background: #f44336;
-      color: white;
-      border: none;
-      padding: 4px 12px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 12px;
-    }
-
-    .quiz-container {
-      background: #fff3e0;
-      border-left: 4px solid #ff9800;
-      padding: 20px;
-      border-radius: 6px;
-      margin: 20px 0;
-    }
-
-    .quiz-question {
-      margin: 20px 0;
-    }
-
-    .quiz-question label {
-      display: block;
-      padding: 10px;
-      margin: 8px 0;
-      background: white;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-
-    .quiz-question label:hover {
-      background: #ffe0b2;
-    }
-
-    .quiz-question input[type="radio"] {
-      margin-right: 8px;
-    }
-
-    .btn-check {
-      background: #4caf50;
-      color: white;
-      border: none;
-      padding: 12px 24px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 16px;
-      margin-top: 10px;
-      transition: background 0.3s ease;
-    }
-
-    .btn-check:hover {
-      background: #45a049;
-    }
-
-    .result-message {
-      margin-top: 15px;
-      padding: 12px;
-      border-radius: 4px;
-      display: none;
-    }
-
-    .result-message.show {
-      display: block;
-    }
-
-    .result-message.correct {
-      background: #c8e6c9;
-      color: #2e7d32;
-      border-left: 4px solid #4caf50;
-    }
-
-    .result-message.incorrect {
-      background: #ffcdd2;
-      color: #c62828;
-      border-left: 4px solid #f44336;
-    }
-
-    /* Práticas */
-    .practice-step {
-      background: white;
-      border-left: 4px solid #4a90e2;
-      padding: 20px;
-      margin: 15px 0;
-      border-radius: 6px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-    }
-
-    .practice-step h4 {
-      margin-top: 0;
-      color: #4a90e2;
-    }
-
-    .step-number {
-      display: inline-block;
-      width: 32px;
-      height: 32px;
-      background: #4a90e2;
-      color: white;
-      border-radius: 50%;
-      text-align: center;
-      line-height: 32px;
-      font-weight: bold;
-      margin-right: 10px;
-    }
-
-    @media (max-width: 768px) {
-      .drag-drop-container {
-        grid-template-columns: 1fr;
-      }
-
-      .sync-diagram {
-        flex-direction: column;
-      }
-    }
-  </style>
+        @media (max-width: 768px) {
+            .content-wrapper { padding: 0 15px; }
+            .lesson-hero, .content-card { padding: 25px; }
+            .lesson-hero h1 { font-size: 1.5em; }
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <div class="slide-container">
 
-      <!-- Slide 1: Título e Introdução -->
-      <div class="slide">
+<div class="top-bar">
+    <a href="index.html" class="back-btn">&#x2B05; Voltar ao Dashboard</a>
+    <span class="page-badge">Unidade 2 &mdash; Internet e Segurança</span>
+    <button class="slide-toggle" id="slideToggleBtn">&#x1F4FA; Modo Slide</button>
+</div>
+
+<div class="content-wrapper">
+
+    <div class="lesson-hero">
         <h1>☁️ Armazenamento em Nuvem</h1>
-        <p style="font-size: 18px; color: #666;">Aula 2.2 — Como guardar, organizar e compartilhar arquivos na nuvem com Google Drive, OneDrive e Dropbox</p>
-        <div style="margin-top: 60px;">
-          <svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg" style="max-width: 300px; margin: 0 auto; display: block;">
-            <!-- Nuvem animada -->
-            <defs>
-              <style>
-                @keyframes float {
-                  0%, 100% { transform: translateY(0px); }
-                  50% { transform: translateY(-10px); }
-                }
-                .cloud { animation: float 3s ease-in-out infinite; }
-              </style>
-            </defs>
-            <ellipse cx="200" cy="100" rx="120" ry="60" fill="#4a90e2" opacity="0.1" class="cloud"/>
-            <path d="M 120 100 Q 120 60 160 60 Q 170 40 200 40 Q 230 40 240 60 Q 280 60 280 100" 
-                  fill="#4a90e2" class="cloud"/>
-            <circle cx="100" cy="140" r="20" fill="#ff9800"/>
-            <circle cx="300" cy="140" r="20" fill="#4caf50"/>
-            <circle cx="200" cy="150" r="20" fill="#2196f3"/>
-          </svg>
-        </div>
-      </div>
+        <p class="subtitle">Aula 2.2 &mdash; Como guardar, organizar e compartilhar arquivos na nuvem com Google Drive, OneDrive e Dropbox</p>
+    </div>
 
-      <!-- Slide 2: O que é Armazenamento em Nuvem -->
-      <div class="slide">
+    <!-- SLIDE 1: O que é armazenamento em nuvem -->
+    <div class="content-card">
         <h2>💬 O que é armazenamento em nuvem?</h2>
         <p>O <strong>armazenamento em nuvem</strong> (<em>cloud storage</em>) é um modelo em que seus arquivos ficam salvos em <strong>servidores remotos</strong> — computadores potentes mantidos por grandes empresas — e são acessados pela internet a partir de qualquer dispositivo.</p>
-        
-        <div style="background: #f0f7ff; border-left: 4px solid #4a90e2; padding: 20px; border-radius: 6px; margin: 20px 0;">
-          <strong>💡 Analogia:</strong> imagine que a nuvem é um <strong>armário virtual</strong> que você pode acessar de qualquer lugar — desde que tenha a chave certa (sua conta) e uma conexão com a internet.
+
+        <div class="svg-wrap">
+            <svg width="520" height="200" viewBox="0 0 520 200" xmlns="http://www.w3.org/2000/svg">
+                <style>
+                    @keyframes cloud-float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-8px); } }
+                    @keyframes device-glow1 { 0%, 100% { filter: drop-shadow(0 0 0 #00838f); } 50% { filter: drop-shadow(0 0 6px #00838f88); } }
+                    @keyframes device-glow2 { 0%, 100% { filter: drop-shadow(0 0 0 #00838f); } 50% { filter: drop-shadow(0 0 6px #00838f88); } }
+                    @keyframes device-glow3 { 0%, 100% { filter: drop-shadow(0 0 0 #00838f); } 50% { filter: drop-shadow(0 0 6px #00838f88); } }
+                    .cloud-main { animation: cloud-float 3s ease-in-out infinite; }
+                    .device1 { animation: device-glow1 2.5s ease-in-out 0.3s infinite; }
+                    .device2 { animation: device-glow2 2.5s ease-in-out 0.6s infinite; }
+                    .device3 { animation: device-glow3 2.5s ease-in-out 0.9s infinite; }
+                </style>
+
+                <!-- Computador -->
+                <g class="device1">
+                    <rect x="20" y="80" width="90" height="70" rx="6" fill="#e0f2f1" stroke="#80cbc4" stroke-width="1.5"/>
+                    <rect x="32" y="92" width="66" height="48" rx="3" fill="#f8f9fa" stroke="#80cbc4" stroke-width="1"/>
+                    <text x="65" y="125" text-anchor="middle" fill="#00695c" font-size="10">Computador</text>
+                    <circle cx="65" cy="148" r="3" fill="#00695c"/>
+                </g>
+
+                <!-- Nuvem no centro -->
+                <g class="cloud-main">
+                    <path d="M 250 40 Q 220 20 200 20 Q 180 20 170 35 Q 150 30 140 50 Q 130 60 140 70 Q 150 80 170 80 Q 200 85 240 85 Q 270 85 290 75 Q 310 60 290 40 Q 280 25 260 25 Q 255 20 250 40" 
+                          fill="#4a90e2" opacity="0.85"/>
+                    <text x="215" y="58" font-size="28" fill="white" text-anchor="middle">☁</text>
+                </g>
+
+                <!-- Celular -->
+                <g class="device2">
+                    <rect x="260" y="100" width="60" height="90" rx="8" fill="#e0f2f1" stroke="#80cbc4" stroke-width="1.5"/>
+                    <rect x="268" y="110" width="44" height="70" rx="4" fill="#f8f9fa" stroke="#80cbc4" stroke-width="1"/>
+                    <text x="290" y="165" text-anchor="middle" fill="#00695c" font-size="10">Celular</text>
+                    <circle cx="290" cy="185" r="2" fill="#00695c"/>
+                </g>
+
+                <!-- Tablet -->
+                <g class="device3">
+                    <rect x="410" y="80" width="90" height="70" rx="6" fill="#e0f2f1" stroke="#80cbc4" stroke-width="1.5"/>
+                    <rect x="422" y="92" width="66" height="48" rx="3" fill="#f8f9fa" stroke="#80cbc4" stroke-width="1"/>
+                    <text x="455" y="125" text-anchor="middle" fill="#00695c" font-size="10">Tablet</text>
+                    <circle cx="455" cy="148" r="3" fill="#00695c"/>
+                </g>
+
+                <!-- Setas de conexão -->
+                <line x1="110" y1="110" x2="190" y2="65" stroke="#4a90e2" stroke-width="2" stroke-dasharray="4,4" opacity="0.6"/>
+                <line x1="320" y1="130" x2="240" y2="70" stroke="#4a90e2" stroke-width="2" stroke-dasharray="4,4" opacity="0.6"/>
+                <line x1="410" y1="110" x2="290" y2="65" stroke="#4a90e2" stroke-width="2" stroke-dasharray="4,4" opacity="0.6"/>
+            </svg>
         </div>
 
-        <!-- SVG: Três dispositivos acessando nuvem -->
-        <svg viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg" style="max-width: 100%; margin: 30px 0;">
-          <!-- Computador -->
-          <rect x="20" y="80" width="80" height="60" fill="#e0e0e0" stroke="#666" stroke-width="2" rx="4"/>
-          <rect x="30" y="90" width="60" height="40" fill="#fff" stroke="#666" stroke-width="1"/>
-          <circle cx="60" cy="160" r="3" fill="#666"/>
-          <text x="60" y="175" text-anchor="middle" font-size="14">Computador</text>
+        <p style="background:linear-gradient(135deg,rgba(0,131,143,0.05),rgba(0,96,100,0.06));border-left:4px solid var(--primary);padding:16px 20px;border-radius:0 12px 12px 0;font-style:italic;margin:0;">
+            &#x1F4A1; <strong>Analogia:</strong> imagine que a nuvem é um <strong>armário virtual</strong> que você pode acessar de qualquer lugar — desde que tenha a chave certa (sua conta) e uma conexão com a internet.
+        </p>
+    </div>
 
-          <!-- Celular -->
-          <rect x="260" y="100" width="50" height="80" fill="#333" stroke="#666" stroke-width="2" rx="8"/>
-          <rect x="265" y="110" width="40" height="60" fill="#fff" stroke="#666" stroke-width="1"/>
-          <circle cx="285" cy="178" r="2" fill="#666"/>
-          <text x="285" y="195" text-anchor="middle" font-size="14">Celular</text>
-
-          <!-- Tablet -->
-          <rect x="480" y="90" width="80" height="60" fill="#e0e0e0" stroke="#666" stroke-width="2" rx="4"/>
-          <rect x="490" y="100" width="60" height="40" fill="#fff" stroke="#666" stroke-width="1"/>
-          <text x="520" y="175" text-anchor="middle" font-size="14">Tablet</text>
-
-          <!-- Nuvem no centro -->
-          <path d="M 250 30 Q 220 10 200 10 Q 180 10 170 25 Q 150 20 140 40 Q 130 50 140 60 Q 150 70 170 70 Q 200 75 240 75 Q 270 75 290 65 Q 310 50 290 30 Q 280 15 260 15 Q 255 10 250 30" 
-                fill="#4a90e2" opacity="0.8"/>
-          <text x="215" y="48" font-size="24" fill="white" text-anchor="middle">☁</text>
-
-          <!-- Setas -->
-          <line x1="100" y1="110" x2="150" y2="50" stroke="#4a90e2" stroke-width="2" stroke-dasharray="4"/>
-          <line x1="150" y1="50" x2="100" y2="110" stroke="#4a90e2" stroke-width="2" stroke-dasharray="4"/>
-          
-          <line x1="310" y1="130" x2="220" y2="60" stroke="#4caf50" stroke-width="2" stroke-dasharray="4"/>
-          <line x1="220" y1="60" x2="310" y2="130" stroke="#4caf50" stroke-width="2" stroke-dasharray="4"/>
-          
-          <line x1="480" y1="110" x2="290" y2="55" stroke="#ff9800" stroke-width="2" stroke-dasharray="4"/>
-          <line x1="290" y1="55" x2="480" y2="110" stroke="#ff9800" stroke-width="2" stroke-dasharray="4"/>
-        </svg>
-      </div>
-
-      <!-- Slide 3: Vantagens e Limitações -->
-      <div class="slide">
+    <!-- SLIDE 2: Vantagens e Limitações -->
+    <div class="content-card">
         <h2>✅ Vantagens vs ⚠️ Limitações</h2>
-        
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-          <!-- Vantagens -->
-          <div style="background: #f1f8e9; border-left: 4px solid #4caf50; padding: 20px; border-radius: 6px;">
-            <h3 style="color: #2e7d32; margin-top: 0;">✅ Vantagens</h3>
-            <ul style="margin: 0; padding-left: 20px;">
-              <li><strong>Acessibilidade:</strong> acesse de qualquer dispositivo</li>
-              <li><strong>Backup automático:</strong> dados sempre seguros</li>
-              <li><strong>Colaboração:</strong> múltiplas pessoas editam juntas</li>
-              <li><strong>Economia local:</strong> libera espaço no HD</li>
-              <li><strong>Compartilhamento:</strong> envie links, não e-mails</li>
-            </ul>
-          </div>
+        <p>Antes de usar a nuvem como solução, é importante conhecer suas vantagens e suas limitações.</p>
 
-          <!-- Limitações -->
-          <div style="background: #ffebee; border-left: 4px solid #f44336; padding: 20px; border-radius: 6px;">
-            <h3 style="color: #c62828; margin-top: 0;">⚠️ Limitações</h3>
-            <ul style="margin: 0; padding-left: 20px;">
-              <li><strong>Internet:</strong> sem conexão, acesso limitado</li>
-              <li><strong>Espaço grátis:</strong> limitado — planos pagos para mais</li>
-              <li><strong>Privacidade:</strong> depende da política do serviço</li>
-              <li><strong>Custo:</strong> armazenamento extra é pago</li>
-              <li><strong>Segurança:</strong> dados em servidor alheio</li>
-            </ul>
-          </div>
+        <div class="svg-wrap">
+            <svg width="520" height="180" viewBox="0 0 520 180" xmlns="http://www.w3.org/2000/svg">
+                <style>
+                    @keyframes advantage-pop { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+                    @keyframes limitation-pop { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+                    .adv1 { animation: advantage-pop 0.4s 0.2s both; }
+                    .adv2 { animation: advantage-pop 0.4s 0.4s both; }
+                    .adv3 { animation: advantage-pop 0.4s 0.6s both; }
+                    .adv4 { animation: advantage-pop 0.4s 0.8s both; }
+                    .adv5 { animation: advantage-pop 0.4s 1.0s both; }
+                    .lim1 { animation: limitation-pop 0.4s 1.2s both; }
+                    .lim2 { animation: limitation-pop 0.4s 1.4s both; }
+                    .lim3 { animation: limitation-pop 0.4s 1.6s both; }
+                </style>
+
+                <!-- VANTAGENS -->
+                <rect x="10" y="8" width="235" height="160" rx="10" fill="#f1f8e9" stroke="#a5d6a7" stroke-width="1.5"/>
+                <text x="127" y="28" text-anchor="middle" fill="#2e7d32" font-size="13" font-weight="700">✅ VANTAGENS</text>
+                <line x1="20" y1="35" x2="235" y2="35" stroke="#c8e6c9" stroke-width="1"/>
+
+                <g class="adv1"><text x="20" y="52" fill="#1b5e20" font-size="10" font-weight="600">🌍 Acessibilidade</text>
+                <text x="20" y="64" fill="#2e7d32" font-size="8">Acesso de qualquer lugar</text></g>
+
+                <g class="adv2"><text x="20" y="82" fill="#1b5e20" font-size="10" font-weight="600">💾 Backup Automático</text>
+                <text x="20" y="94" fill="#2e7d32" font-size="8">Dados sempre protegidos</text></g>
+
+                <g class="adv3"><text x="20" y="112" fill="#1b5e20" font-size="10" font-weight="600">👥 Colaboração</text>
+                <text x="20" y="124" fill="#2e7d32" font-size="8">Múltiplas pessoas editam juntas</text></g>
+
+                <g class="adv4"><text x="20" y="142" fill="#1b5e20" font-size="10" font-weight="600">📱 Economia Local</text>
+                <text x="20" y="154" fill="#2e7d32" font-size="8">Libera espaço no HD</text></g>
+
+                <!-- LIMITAÇÕES -->
+                <rect x="275" y="8" width="235" height="160" rx="10" fill="#ffebee" stroke="#f08080" stroke-width="1.5"/>
+                <text x="392" y="28" text-anchor="middle" fill="#c62828" font-size="13" font-weight="700">⚠️ LIMITAÇÕES</text>
+                <line x1="285" y1="35" x2="500" y2="35" stroke="#ffcdd2" stroke-width="1"/>
+
+                <g class="lim1"><text x="285" y="52" fill="#b71c1c" font-size="10" font-weight="600">📡 Requer Internet</text>
+                <text x="285" y="64" fill="#c62828" font-size="8">Sem conexão = acesso limitado</text></g>
+
+                <g class="lim2"><text x="285" y="82" fill="#b71c1c" font-size="10" font-weight="600">💰 Espaço Limitado</text>
+                <text x="285" y="94" fill="#c62828" font-size="8">Planos pagos para mais GB</text></g>
+
+                <g class="lim3"><text x="285" y="112" fill="#b71c1c" font-size="10" font-weight="600">🔐 Privacidade</text>
+                <text x="285" y="124" fill="#c62828" font-size="8">Dados em servidor alheio</text></g>
+            </svg>
         </div>
-      </div>
+    </div>
 
-      <!-- Slide 4: Principais Serviços -->
-      <div class="slide">
+    <!-- SLIDE 3: Principais Serviços -->
+    <div class="content-card">
         <h2>🧩 Principais Serviços de Nuvem</h2>
-        
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 30px 0;">
-          <!-- Google Drive -->
-          <div style="background: white; border: 2px solid #4a90e2; padding: 20px; border-radius: 8px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-            <div style="font-size: 48px; margin-bottom: 10px;">📂</div>
-            <h3 style="margin-top: 0; color: #4a90e2;">Google Drive</h3>
-            <p style="font-size: 14px;">Integrado ao Gmail, Google Docs, Sheets e Slides. Ótimo para colaboração.</p>
-            <div style="background: #f0f7ff; padding: 10px; border-radius: 4px; font-weight: bold; color: #4a90e2;">15 GB grátis</div>
-          </div>
+        <p>Existem vários serviços disponíveis. Os três principais são Google Drive, OneDrive e Dropbox. Cada um tem suas características.</p>
 
-          <!-- OneDrive -->
-          <div style="background: white; border: 2px solid #2196f3; padding: 20px; border-radius: 8px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-            <div style="font-size: 48px; margin-bottom: 10px;">📁</div>
-            <h3 style="margin-top: 0; color: #2196f3;">OneDrive</h3>
-            <p style="font-size: 14px;">Nativo no Windows 11. Integrado ao Microsoft 365 (Word, Excel, PowerPoint).</p>
-            <div style="background: #e3f2fd; padding: 10px; border-radius: 4px; font-weight: bold; color: #2196f3;">5 GB grátis</div>
-          </div>
+        <div class="svg-wrap">
+            <svg width="520" height="120" viewBox="0 0 520 120" xmlns="http://www.w3.org/2000/svg">
+                <style>
+                    @keyframes service-rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+                    .srv1 { animation: service-rise 0.5s 0.2s both; }
+                    .srv2 { animation: service-rise 0.5s 0.5s both; }
+                    .srv3 { animation: service-rise 0.5s 0.8s both; }
+                </style>
 
-          <!-- Dropbox -->
-          <div style="background: white; border: 2px solid #00bcd4; padding: 20px; border-radius: 8px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-            <div style="font-size: 48px; margin-bottom: 10px;">📦</div>
-            <h3 style="margin-top: 0; color: #00bcd4;">Dropbox</h3>
-            <p style="font-size: 14px;">Sincronia seletiva de pastas. Muito usado em ambientes corporativos.</p>
-            <div style="background: #e0f7fa; padding: 10px; border-radius: 4px; font-weight: bold; color: #00bcd4;">2 GB grátis</div>
-          </div>
+                <!-- Google Drive -->
+                <g class="srv1">
+                    <rect x="10" y="8" width="153" height="104" rx="8" fill="white" stroke="#e0e0e0" stroke-width="1.5" box-shadow="0 2px 8px rgba(0,0,0,0.05)"/>
+                    <text x="86" y="32" text-anchor="middle" font-size="28">📂</text>
+                    <text x="86" y="52" text-anchor="middle" fill="#4a90e2" font-size="12" font-weight="700">Google Drive</text>
+                    <text x="86" y="66" text-anchor="middle" fill="#666" font-size="9">Integrado ao Gmail</text>
+                    <text x="86" y="78" text-anchor="middle" fill="#666" font-size="9">e Google Docs</text>
+                    <rect x="30" y="84" width="112" height="18" rx="4" fill="#e3f2fd"/>
+                    <text x="86" y="96" text-anchor="middle" fill="#1976d2" font-size="10" font-weight="600">15 GB grátis</text>
+                </g>
+
+                <!-- OneDrive -->
+                <g class="srv2">
+                    <rect x="183" y="8" width="153" height="104" rx="8" fill="white" stroke="#e0e0e0" stroke-width="1.5"/>
+                    <text x="259" y="32" text-anchor="middle" font-size="28">📁</text>
+                    <text x="259" y="52" text-anchor="middle" fill="#0078d4" font-size="12" font-weight="700">OneDrive</text>
+                    <text x="259" y="66" text-anchor="middle" fill="#666" font-size="9">Nativo no Windows 11</text>
+                    <text x="259" y="78" text-anchor="middle" fill="#666" font-size="9">e Microsoft 365</text>
+                    <rect x="203" y="84" width="112" height="18" rx="4" fill="#e0f2f1"/>
+                    <text x="259" y="96" text-anchor="middle" fill="#00838f" font-size="10" font-weight="600">5 GB grátis</text>
+                </g>
+
+                <!-- Dropbox -->
+                <g class="srv3">
+                    <rect x="356" y="8" width="153" height="104" rx="8" fill="white" stroke="#e0e0e0" stroke-width="1.5"/>
+                    <text x="432" y="32" text-anchor="middle" font-size="28">📦</text>
+                    <text x="432" y="52" text-anchor="middle" fill="#0061ff" font-size="12" font-weight="700">Dropbox</text>
+                    <text x="432" y="66" text-anchor="middle" fill="#666" font-size="9">Sincronia seletiva</text>
+                    <text x="432" y="78" text-anchor="middle" fill="#666" font-size="9">Muito corporativo</text>
+                    <rect x="376" y="84" width="112" height="18" rx="4" fill="#fff8e1"/>
+                    <text x="432" y="96" text-anchor="middle" fill="#ff8f00" font-size="10" font-weight="600">2 GB grátis</text>
+                </g>
+            </svg>
         </div>
 
-        <div style="background: #fff8e1; border-left: 4px solid #fbc02d; padding: 15px; border-radius: 6px; margin-top: 20px;">
-          <strong>📌 Dica:</strong> Para quem usa Android e Gmail escolar, o <strong>Google Drive</strong> é a escolha mais natural — já vem integrado e é o mais usado no ambiente acadêmico brasileiro.
-        </div>
-      </div>
+        <p style="background:#fff8e1;border-left:4px solid #f59e0b;padding:14px 18px;border-radius:0 10px 10px 0;color:#78350f;font-size:0.9em;margin:0;">
+            &#x1F4CC; Para quem usa <strong>Android e Gmail escolar</strong>, o <strong>Google Drive</strong> é a escolha mais natural — já vem integrado e é o mais usado no ambiente acadêmico brasileiro.
+        </p>
+    </div>
 
-      <!-- Slide 5: Tabela Comparativa -->
-      <div class="slide">
+    <!-- SLIDE 4: Comparativo -->
+    <div class="content-card">
         <h2>📊 Comparativo dos Principais Serviços</h2>
-        
-        <table class="comparison-table">
-          <thead>
-            <tr>
-              <th>Recurso</th>
-              <th>Google Drive</th>
-              <th>OneDrive</th>
-              <th>Dropbox</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Espaço gratuito</strong></td>
-              <td><span class="check-icon">✔ 15 GB</span></td>
-              <td><span class="check-icon">✔ 5 GB</span></td>
-              <td><span class="check-icon">✔ 2 GB</span></td>
-            </tr>
-            <tr>
-              <td><strong>Edição colaborativa online</strong></td>
-              <td><span class="check-icon">✔ Excelente</span></td>
-              <td><span class="check-icon">✔ Boa</span></td>
-              <td><span class="partial-icon">⚫ Limitada</span></td>
-            </tr>
-            <tr>
-              <td><strong>Integração com e-mail</strong></td>
-              <td><span class="check-icon">✔ Gmail</span></td>
-              <td><span class="check-icon">✔ Outlook</span></td>
-              <td><span class="cross-icon">✕ Não nativa</span></td>
-            </tr>
-            <tr>
-              <td><strong>App desktop (Windows)</strong></td>
-              <td><span class="check-icon">✔ Drive for Desktop</span></td>
-              <td><span class="check-icon">✔ Nativo</span></td>
-              <td><span class="check-icon">✔ Dropbox Desktop</span></td>
-            </tr>
-            <tr>
-              <td><strong>Trabalho offline</strong></td>
-              <td><span class="partial-icon">⚫ Parcial</span></td>
-              <td><span class="check-icon">✔ Sim</span></td>
-              <td><span class="check-icon">✔ Sim</span></td>
-            </tr>
-            <tr>
-              <td><strong>Histórico de versões</strong></td>
-              <td><span class="check-icon">✔ 30 dias</span></td>
-              <td><span class="check-icon">✔ 30 dias</span></td>
-              <td><span class="partial-icon">⚫ 30 dias (180 pago)</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
 
-      <!-- Slide 6: Como Usar Google Drive -->
-      <div class="slide">
+        <table class="compare-table">
+            <thead>
+                <tr>
+                    <th>Recurso</th>
+                    <th>Google Drive</th>
+                    <th>OneDrive</th>
+                    <th>Dropbox</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Espaço gratuito</strong></td>
+                    <td>✔ 15 GB</td>
+                    <td>✔ 5 GB</td>
+                    <td>✔ 2 GB</td>
+                </tr>
+                <tr>
+                    <td><strong>Edição colaborativa</strong></td>
+                    <td>✔ Excelente</td>
+                    <td>✔ Boa</td>
+                    <td>⚫ Limitada</td>
+                </tr>
+                <tr>
+                    <td><strong>Integração com e-mail</strong></td>
+                    <td>✔ Gmail</td>
+                    <td>✔ Outlook</td>
+                    <td>✕ Não nativa</td>
+                </tr>
+                <tr>
+                    <td><strong>App desktop</strong></td>
+                    <td>✔ Drive for Desktop</td>
+                    <td>✔ Nativo</td>
+                    <td>✔ Dropbox Desktop</td>
+                </tr>
+                <tr>
+                    <td><strong>Trabalho offline</strong></td>
+                    <td>⚫ Parcial</td>
+                    <td>✔ Sim</td>
+                    <td>✔ Sim</td>
+                </tr>
+                <tr>
+                    <td><strong>Histórico de versões</strong></td>
+                    <td>✔ 30 dias</td>
+                    <td>✔ 30 dias</td>
+                    <td>⚫ 30 dias (180 pago)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- SLIDE 5: Como Usar Google Drive -->
+    <div class="content-card">
         <h2>🔨 Como Usar o Google Drive</h2>
         <p>O Google Drive é acessado pelo navegador em <strong>drive.google.com</strong> ou pelo aplicativo no celular. Confira as operações mais importantes:</p>
 
-        <div style="margin: 30px 0;">
-          <div class="practice-step">
-            <span class="step-number">1</span><h4>Fazer upload de arquivos</h4>
-            <p>Clique em <strong>+ Novo → Upload de arquivo</strong> (ou arraste o arquivo direto para a página). O arquivo será enviado para a nuvem e ficará acessível de qualquer lugar.</p>
-          </div>
-
-          <div class="practice-step">
-            <span class="step-number">2</span><h4>Criar e organizar pastas</h4>
-            <p>Clique em <strong>+ Novo → Pasta</strong>. Use uma estrutura como: <em>Escola › Informática › Unidade 2</em>. Uma boa organização economiza tempo na hora de encontrar arquivos.</p>
-          </div>
-
-          <div class="practice-step">
-            <span class="step-number">3</span><h4>Criar documentos diretamente na nuvem</h4>
-            <p>Clique em <strong>+ Novo</strong> e escolha <strong>Google Docs</strong> (texto), <strong>Google Sheets</strong> (planilha) ou <strong>Google Slides</strong> (apresentação). Tudo é salvo automaticamente.</p>
-          </div>
-
-          <div class="practice-step">
-            <span class="step-number">4</span><h4>Compartilhar arquivos e pastas</h4>
-            <p>Clique com o botão direito no arquivo → <strong>Compartilhar</strong>. Informe o e-mail do destinatário ou gere um link. Defina a permissão: <em>Ver</em>, <em>Comentar</em> ou <em>Editar</em>.</p>
-          </div>
-
-          <div class="practice-step">
-            <span class="step-number">5</span><h4>Colaborar em tempo real</h4>
-            <p>Quando um documento é aberto por várias pessoas ao mesmo tempo, cada uma aparece com um cursor colorido. As alterações aparecem instantaneamente — sem enviar arquivos por e-mail.</p>
-          </div>
+        <div class="step-svg-card">
+            <div class="step-num">1</div>
+            <svg width="56" height="56" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
+                <style>@keyframes file-fall { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }</style>
+                <rect x="6" y="6" width="44" height="44" rx="5" fill="#e3f2fd" stroke="#90caf9" stroke-width="1.2"/>
+                <path d="M 12 12 L 12 40 Q 12 44 16 44 L 40 44 L 40 18 L 28 6 L 16 6 Q 12 6 12 12" fill="#1976d2" opacity="0.2"/>
+                <text x="28" y="32" text-anchor="middle" font-size="18">📄</text>
+            </svg>
+            <div class="step-text">
+                <strong>Fazer upload de arquivos</strong>
+                <span>Clique em <kbd>+ Novo → Upload de arquivo</kbd> ou arraste o arquivo direto para a página. Será enviado para a nuvem e acessível de qualquer lugar.</span>
+            </div>
         </div>
-      </div>
 
-      <!-- Slide 7: Níveis de Permissão -->
-      <div class="slide">
+        <div class="step-svg-card">
+            <div class="step-num">2</div>
+            <svg width="56" height="56" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
+                <rect x="8" y="10" width="40" height="36" rx="5" fill="#fff8e1" stroke="#ffe082" stroke-width="1.2"/>
+                <line x1="12" y1="14" x2="44" y2="14" stroke="#ff9800" stroke-width="1.5"/>
+                <line x1="12" y1="22" x2="44" y2="22" stroke="#ff9800" stroke-width="1.5"/>
+                <line x1="12" y1="30" x2="44" y2="30" stroke="#ff9800" stroke-width="1.5"/>
+                <line x1="12" y1="38" x2="44" y2="38" stroke="#ff9800" stroke-width="1.5"/>
+            </svg>
+            <div class="step-text">
+                <strong>Criar e organizar pastas</strong>
+                <span>Clique em <kbd>+ Novo → Pasta</kbd>. Use estrutura como: <em>Escola › Informática › Unidade 2</em>. Boa organização economiza tempo.</span>
+            </div>
+        </div>
+
+        <div class="step-svg-card">
+            <div class="step-num">3</div>
+            <svg width="56" height="56" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="28" cy="28" r="22" fill="#e0f2f1" stroke="#80cbc4" stroke-width="1.2"/>
+                <text x="28" y="24" text-anchor="middle" fill="#00695c" font-size="10" font-weight="700">Doc</text>
+                <text x="28" y="36" text-anchor="middle" fill="#00695c" font-size="10" font-weight="700">Sheets</text>
+            </svg>
+            <div class="step-text">
+                <strong>Criar documentos na nuvem</strong>
+                <span>Clique em <kbd>+ Novo</kbd> e escolha <strong>Google Docs</strong>, <strong>Sheets</strong> ou <strong>Slides</strong>. Tudo é salvo automaticamente, sem apertar Ctrl+S.</span>
+            </div>
+        </div>
+
+        <div class="step-svg-card">
+            <div class="step-num">4</div>
+            <svg width="56" height="56" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
+                <rect x="6" y="12" width="44" height="32" rx="5" fill="#f3e5f5" stroke="#ce93d8" stroke-width="1.2"/>
+                <path d="M 16 22 Q 28 32 40 22" fill="none" stroke="#7b1fa2" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <div class="step-text">
+                <strong>Compartilhar arquivos</strong>
+                <span>Clique direito no arquivo → <kbd>Compartilhar</kbd>. Informe o e-mail ou gere um link. Defina permissão: <em>Ver, Comentar ou Editar</em>.</span>
+            </div>
+        </div>
+
+        <div class="step-svg-card">
+            <div class="step-num">5</div>
+            <svg width="56" height="56" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
+                <rect x="10" y="8" width="36" height="40" rx="5" fill="#e8f5e9" stroke="#a5d6a7" stroke-width="1.2"/>
+                <circle cx="18" cy="18" r="3" fill="#2e7d32"/>
+                <circle cx="28" cy="18" r="3" fill="#2e7d32"/>
+                <circle cx="38" cy="18" r="3" fill="#2e7d32"/>
+                <line x1="12" y1="30" x2="44" y2="30" stroke="#2e7d32" stroke-width="1.5" stroke-linecap="round"/>
+                <circle cx="20" cy="40" r="3" fill="#2e7d32"/>
+                <circle cx="36" cy="40" r="3" fill="#2e7d32"/>
+            </svg>
+            <div class="step-text">
+                <strong>Colaborar em tempo real</strong>
+                <span>Quando vários acessam o documento, cada um aparece com cursor colorido diferente. Alterações aparecem instantaneamente para todos.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 6: Níveis de Permissão -->
+    <div class="content-card">
         <h2>🔐 Níveis de Permissão ao Compartilhar</h2>
-        <p>Ao compartilhar um arquivo ou pasta no Google Drive, você escolhe <strong>o quanto cada pessoa pode fazer</strong>:</p>
+        <p>Ao compartilhar, você escolhe <strong>o quanto cada pessoa pode fazer</strong>:</p>
 
-        <div class="permissions-grid">
-          <div class="permission-card">
-            <div class="permission-icon">👁️</div>
-            <h4>Visualizador</h4>
-            <p>Pode <strong>apenas ler</strong> o arquivo. Não consegue alterar nem comentar nada. Ideal para entregar um material finalizado.</p>
-          </div>
+        <div class="svg-wrap">
+            <svg width="520" height="90" viewBox="0 0 520 90" xmlns="http://www.w3.org/2000/svg">
+                <style>
+                    @keyframes perm-appear { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+                    .p1 { animation: perm-appear 0.4s 0.2s both; }
+                    .p2 { animation: perm-appear 0.4s 0.5s both; }
+                    .p3 { animation: perm-appear 0.4s 0.8s both; }
+                </style>
 
-          <div class="permission-card">
-            <div class="permission-icon">💬</div>
-            <h4>Comentarista</h4>
-            <p>Pode ler e <strong>adicionar comentários e sugestões</strong>, sem editar o conteúdo diretamente. Muito usado em revisões.</p>
-          </div>
+                <!-- Visualizador -->
+                <g class="p1">
+                    <rect x="10" y="8" width="153" height="74" rx="8" fill="#f0f4f8" stroke="#b0bec5" stroke-width="1"/>
+                    <text x="86" y="24" text-anchor="middle" font-size="20">👁️</text>
+                    <text x="86" y="42" text-anchor="middle" fill="#455a64" font-size="11" font-weight="700">Visualizador</text>
+                    <text x="86" y="56" text-anchor="middle" fill="#607d8b" font-size="8">Pode apenas ler</text>
+                    <text x="86" y="66" text-anchor="middle" fill="#607d8b" font-size="8">Não pode editar</text>
+                </g>
 
-          <div class="permission-card">
-            <div class="permission-icon">✏️</div>
-            <h4>Editor</h4>
-            <p>Pode <strong>ler, comentar e editar</strong> livremente. Cuidado: a pessoa pode até excluir conteúdo.</p>
-          </div>
+                <!-- Comentarista -->
+                <g class="p2">
+                    <rect x="183" y="8" width="153" height="74" rx="8" fill="#f0f4f8" stroke="#b0bec5" stroke-width="1"/>
+                    <text x="259" y="24" text-anchor="middle" font-size="20">💬</text>
+                    <text x="259" y="42" text-anchor="middle" fill="#455a64" font-size="11" font-weight="700">Comentarista</text>
+                    <text x="259" y="56" text-anchor="middle" fill="#607d8b" font-size="8">Pode comentar</text>
+                    <text x="259" y="66" text-anchor="middle" fill="#607d8b" font-size="8">Sem editar conteúdo</text>
+                </g>
+
+                <!-- Editor -->
+                <g class="p3">
+                    <rect x="356" y="8" width="153" height="74" rx="8" fill="#f0f4f8" stroke="#b0bec5" stroke-width="1"/>
+                    <text x="432" y="24" text-anchor="middle" font-size="20">✏️</text>
+                    <text x="432" y="42" text-anchor="middle" fill="#455a64" font-size="11" font-weight="700">Editor</text>
+                    <text x="432" y="56" text-anchor="middle" fill="#607d8b" font-size="8">Editar e comentar</text>
+                    <text x="432" y="66" text-anchor="middle" fill="#607d8b" font-size="8">Cuidado com permissão!</text>
+                </g>
+            </svg>
         </div>
 
-        <div style="background: #ffebee; border-left: 4px solid #f44336; padding: 15px; border-radius: 6px; margin-top: 20px;">
-          <strong>⚠️ Cuidado:</strong> Ao gerar um link público com permissão de edição, qualquer pessoa que receber esse link poderá alterar ou excluir seu arquivo. Prefira sempre especificar e-mails ou usar permissão de "apenas visualização" ao compartilhar com público amplo.
-        </div>
-      </div>
+        <p style="background:#ffebee;border-left:4px solid #ef5350;padding:14px 18px;border-radius:0 10px 10px 0;color:#c62828;font-size:0.9em;margin:0;">
+            ⚠️ <strong>Cuidado:</strong> Ao gerar um link público com permissão de edição, qualquer pessoa que receber esse link poderá alterar ou excluir seu arquivo. Prefira sempre especificar e-mails ou usar "apenas visualização".
+        </p>
+    </div>
 
-      <!-- Slide 8: Sincronização -->
-      <div class="slide">
+    <!-- SLIDE 7: Sincronização -->
+    <div class="content-card">
         <h2>🔄 Como Funciona a Sincronização</h2>
-        <p>A <strong>sincronização</strong> é o processo que mantém os arquivos <strong>iguais</strong> entre seu dispositivo local e a nuvem. Quando você instala o aplicativo de desktop, uma pasta especial é criada:</p>
+        <p>A <strong>sincronização</strong> mantém os arquivos <strong>iguais</strong> entre seu dispositivo local e a nuvem. Quando você instala o app de desktop, uma pasta especial é criada no seu computador:</p>
 
-        <div class="sync-diagram">
-          <div class="sync-item">
-            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width: 80px; height: 80px;">
-              <rect x="15" y="30" width="70" height="50" fill="#e0e0e0" stroke="#666" stroke-width="2" rx="4"/>
-              <rect x="25" y="40" width="50" height="30" fill="white" stroke="#666" stroke-width="1"/>
-              <circle cx="50" cy="75" r="3" fill="#666"/>
-              <text x="50" y="95" text-anchor="middle" font-size="12">Computador</text>
+        <div class="svg-wrap">
+            <svg width="520" height="90" viewBox="0 0 520 90" xmlns="http://www.w3.org/2000/svg">
+                <style>
+                    @keyframes sync-pulse { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
+                    .sync-arrow { animation: sync-pulse 1.5s ease-in-out infinite; }
+                </style>
+
+                <!-- PC -->
+                <rect x="20" y="12" width="70" height="56" rx="5" fill="#e0f2f1" stroke="#80cbc4" stroke-width="1.2"/>
+                <rect x="28" y="18" width="54" height="40" rx="3" fill="#f8f9fa"/>
+                <text x="55" y="48" text-anchor="middle" fill="#00695c" font-size="10" font-weight="600">Computador</text>
+
+                <!-- Seta dupla -->
+                <g class="sync-arrow">
+                    <path d="M 95 38 L 110 38" stroke="#4a90e2" stroke-width="2.5" fill="none" marker-end="url(#arrowhead1)"/>
+                    <path d="M 110 52 L 95 52" stroke="#26a69a" stroke-width="2.5" fill="none" marker-end="url(#arrowhead2)"/>
+                    <text x="102" y="48" text-anchor="middle" fill="#4a90e2" font-size="14">⇄</text>
+                </g>
+                <defs>
+                    <marker id="arrowhead1" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                        <polygon points="0 0, 10 3, 0 6" fill="#4a90e2"/>
+                    </marker>
+                    <marker id="arrowhead2" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                        <polygon points="0 0, 10 3, 0 6" fill="#26a69a"/>
+                    </marker>
+                </defs>
+
+                <!-- Nuvem -->
+                <path d="M 210 30 Q 195 18 180 18 Q 165 18 158 28 Q 142 24 135 38 Q 128 48 135 58 Q 142 66 158 66 Q 185 70 215 70 Q 240 70 255 62 Q 270 50 255 30 Q 247 20 230 20 Q 225 16 210 30" 
+                      fill="#4a90e2" opacity="0.7"/>
+                <text x="195" y="48" text-anchor="middle" fill="white" font-size="22">☁</text>
+
+                <!-- Celular -->
+                <rect x="430" y="16" width="50" height="68" rx="6" fill="#e0f2f1" stroke="#80cbc4" stroke-width="1.2"/>
+                <rect x="436" y="24" width="38" height="52" rx="3" fill="#f8f9fa"/>
+                <text x="455" y="62" text-anchor="middle" fill="#00695c" font-size="10" font-weight="600">Celular</text>
+                <circle cx="455" cy="80" r="2" fill="#00695c"/>
+
+                <!-- Descrição -->
+                <text x="260" y="88" text-anchor="middle" fill="#718096" font-size="9">Arquivos sincronizados automaticamente entre todos os dispositivos</text>
             </svg>
-          </div>
-
-          <div class="sync-item">
-            <div class="sync-arrow">⇄</div>
-          </div>
-
-          <div class="sync-item">
-            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width: 80px; height: 80px;">
-              <path d="M 30 20 Q 20 15 15 25 Q 10 35 20 45 Q 30 50 50 50 Q 70 50 80 45 Q 90 35 85 25 Q 80 15 70 20" 
-                    fill="#4a90e2" opacity="0.7"/>
-              <text x="50" y="48" text-anchor="middle" font-size="18" fill="white">☁</text>
-              <text x="50" y="95" text-anchor="middle" font-size="12">Nuvem</text>
-            </svg>
-          </div>
-
-          <div class="sync-item">
-            <div class="sync-arrow">⇄</div>
-          </div>
-
-          <div class="sync-item">
-            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width: 80px; height: 80px;">
-              <rect x="25" y="15" width="50" height="70" fill="#f5f5f5" stroke="#666" stroke-width="2" rx="6"/>
-              <rect x="30" y="25" width="40" height="50" fill="white" stroke="#666" stroke-width="1"/>
-              <circle cx="50" cy="82" r="2.5" fill="#666"/>
-              <text x="50" y="95" text-anchor="middle" font-size="12">Celular</text>
-            </svg>
-          </div>
         </div>
 
-        <div style="background: #f0f7ff; border-left: 4px solid #4a90e2; padding: 15px; border-radius: 6px; margin-top: 20px;">
-          <ul style="margin: 0; padding-left: 20px;">
-            <li>Qualquer arquivo colocado na pasta é enviado <strong>automaticamente</strong> para a nuvem</li>
-            <li>Qualquer alteração feita na nuvem ou em outro dispositivo aparece <strong>logo no seu computador</strong></li>
-            <li>Mesmo sem internet, você pode trabalhar nos arquivos baixados — eles se sincronizam quando a conexão retornar</li>
-          </ul>
+        <div style="background:#f0f7ff;border-left:4px solid var(--primary);padding:14px 18px;border-radius:0 10px 10px 0;margin-top:16px;">
+            <ul style="margin: 0; padding-left: 20px; font-size: 0.9em;">
+                <li>Qualquer arquivo colocado na pasta é enviado <strong>automaticamente</strong> para a nuvem</li>
+                <li>Alterações na nuvem aparecem <strong>logo no seu computador</strong></li>
+                <li>Mesmo sem internet, você trabalha nos arquivos — sincronizam quando a conexão retornar</li>
+            </ul>
         </div>
+    </div>
 
-        <div style="background: #fff3e0; border-left: 4px solid #ff9800; padding: 15px; border-radius: 6px; margin-top: 15px;">
-          <strong>💡 Dica:</strong> O Google Drive no celular permite marcar arquivos para <strong>acesso offline</strong>: toque nos três pontos → <strong>Tornar disponível offline</strong>. Assim, você os acessa mesmo sem internet.
-        </div>
-      </div>
-
-      <!-- Slide 9: Boas Práticas -->
-      <div class="slide">
+    <!-- SLIDE 8: Boas Práticas -->
+    <div class="content-card">
         <h2>✅ Boas Práticas ao Usar a Nuvem</h2>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
-          <div style="background: #f1f8e9; border-left: 4px solid #4caf50; padding: 15px; border-radius: 6px;">
-            <strong>📂 Organize em pastas claras</strong>
-            <p>Use uma hierarquia lógica: por disciplina, ano ou projeto. Evite jogar tudo na raiz.</p>
-          </div>
-
-          <div style="background: #f1f8e9; border-left: 4px solid #4caf50; padding: 15px; border-radius: 6px;">
-            <strong>🔒 Revise as permissões</strong>
-            <p>Verifique quem tem acesso aos seus arquivos. Remova permissões de quem não precisa mais.</p>
-          </div>
-
-          <div style="background: #ffebee; border-left: 4px solid #f44336; padding: 15px; border-radius: 6px;">
-            <strong>🚫 Não armazene senhas</strong>
-            <p>A nuvem não é lugar para guardar senhas, números de cartão ou dados altamente sensíveis.</p>
-          </div>
-
-          <div style="background: #f1f8e9; border-left: 4px solid #4caf50; padding: 15px; border-radius: 6px;">
-            <strong>💾 Nuvem + Backup local</strong>
-            <p>Arquivos importantes devem estar em dois lugares: no computador e na nuvem.</p>
-          </div>
-
-          <div style="background: #f1f8e9; border-left: 4px solid #4caf50; padding: 15px; border-radius: 6px;">
-            <strong>🔗 Prefira links a anexos</strong>
-            <p>Compartilhe o link do Drive em vez de anexar. Mais rápido e sempre a versão atualizada.</p>
-          </div>
-
-          <div style="background: #ffebee; border-left: 4px solid #f44336; padding: 15px; border-radius: 6px;">
-            <strong>📱 Wi-Fi público é perigoso</strong>
-            <p>Evite acessar a nuvem em Wi-Fi público sem VPN. Dados podem ser interceptados.</p>
-          </div>
+        <div class="step-svg-card" style="background: #f1f8e9; margin-bottom: 10px;">
+            <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;">
+                <text x="16" y="22" text-anchor="middle" font-size="20">📂</text>
+            </svg>
+            <div class="step-text">
+                <strong style="color: #2e7d32;">Organize em pastas com nomes claros</strong>
+                <span>Use hierarquia lógica: por disciplina, ano ou projeto. Evite jogar tudo na raiz.</span>
+            </div>
         </div>
-      </div>
 
-      <!-- Slide 10: Quiz (reordenado para antes da prática) -->
-      <div class="slide">
+        <div class="step-svg-card" style="background: #f1f8e9; margin-bottom: 10px;">
+            <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;">
+                <text x="16" y="22" text-anchor="middle" font-size="20">🔒</text>
+            </svg>
+            <div class="step-text">
+                <strong style="color: #2e7d32;">Revise as permissões regularmente</strong>
+                <span>Verifique quem tem acesso aos seus arquivos. Remova permissões de quem não precisa mais.</span>
+            </div>
+        </div>
+
+        <div class="step-svg-card" style="background: #ffebee; margin-bottom: 10px;">
+            <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;">
+                <text x="16" y="22" text-anchor="middle" font-size="20">🚫</text>
+            </svg>
+            <div class="step-text">
+                <strong style="color: #c62828;">Não armazene senhas ou dados bancários</strong>
+                <span>A nuvem não é lugar para guardar senhas, números de cartão ou dados altamente sensíveis.</span>
+            </div>
+        </div>
+
+        <div class="step-svg-card" style="background: #f1f8e9; margin-bottom: 10px;">
+            <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;">
+                <text x="16" y="22" text-anchor="middle" font-size="20">💾</text>
+            </svg>
+            <div class="step-text">
+                <strong style="color: #2e7d32;">Use a nuvem como backup, não substituto</strong>
+                <span>Arquivos importantes devem estar em dois lugares: computador local e nuvem.</span>
+            </div>
+        </div>
+
+        <div class="step-svg-card" style="background: #f1f8e9; margin-bottom: 10px;">
+            <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;">
+                <text x="16" y="22" text-anchor="middle" font-size="20">🔗</text>
+            </svg>
+            <div class="step-text">
+                <strong style="color: #2e7d32;">Prefira links a anexos em e-mails</strong>
+                <span>Compartilhe o link do Drive em vez de anexar. Mais rápido e sempre a versão atualizada.</span>
+            </div>
+        </div>
+
+        <div class="step-svg-card" style="background: #ffebee;">
+            <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;">
+                <text x="16" y="22" text-anchor="middle" font-size="20">📱</text>
+            </svg>
+            <div class="step-text">
+                <strong style="color: #c62828;">Cuidado com redes Wi-Fi públicas</strong>
+                <span>Evite acessar a nuvem em Wi-Fi público sem VPN. Dados podem ser interceptados.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 9: Quiz -->
+    <div class="content-card">
         <h2>🎯 Verifique seu Conhecimento</h2>
-        
-        <div class="quiz-container">
-          <div class="quiz-question">
-            <p><strong>Pergunta 1:</strong> Qual serviço oferece 15 GB de espaço gratuito e é integrado ao Gmail?</p>
-            <label><input type="radio" name="q1" value="a"> Google Drive</label>
-            <label><input type="radio" name="q1" value="b"> OneDrive</label>
-            <label><input type="radio" name="q1" value="c"> Dropbox</label>
-          </div>
 
-          <div class="quiz-question">
-            <p><strong>Pergunta 2:</strong> Qual permissão permite ler, comentar e editar um arquivo?</p>
-            <label><input type="radio" name="q2" value="a"> Visualizador</label>
-            <label><input type="radio" name="q2" value="b"> Comentarista</label>
-            <label><input type="radio" name="q2" value="c"> Editor</label>
-          </div>
+        <div class="mc-root" data-ex="mc22">
 
-          <div class="quiz-question">
-            <p><strong>Pergunta 3:</strong> O que é sincronização na nuvem?</p>
-            <label><input type="radio" name="q3" value="a"> Fazer backup manual dos arquivos</label>
-            <label><input type="radio" name="q3" value="b"> Manter arquivos iguais entre dispositivo e nuvem automaticamente</label>
-            <label><input type="radio" name="q3" value="c"> Compartilhar arquivos por link</label>
-          </div>
+            <div class="mc-question" data-correct="a">
+                <p><strong>1.</strong> Qual serviço oferece 15 GB gratuitos e é integrado ao Gmail?</p>
+                <div class="mc-option" data-opt="a">Google Drive</div>
+                <div class="mc-option" data-opt="b">OneDrive</div>
+                <div class="mc-option" data-opt="c">Dropbox</div>
+                <div class="mc-explanation ok">Correto! Google Drive oferece 15 GB grátis integrado ao Gmail e Google Docs.</div>
+                <div class="mc-explanation err">Google Drive é quem oferece 15 GB e integração com Gmail. OneDrive oferece 5 GB e Dropbox apenas 2 GB.</div>
+            </div>
 
-          <div class="quiz-question">
-            <p><strong>Pergunta 4:</strong> Qual é o maior risco ao gerar um link público com permissão de edição?</p>
-            <label><input type="radio" name="q4" value="a"> Não há risco, qualquer um pode editar</label>
-            <label><input type="radio" name="q4" value="b"> Qualquer pessoa com o link pode alterar ou excluir seu arquivo</label>
-            <label><input type="radio" name="q4" value="c"> O arquivo fica mais lento para carregar</label>
-          </div>
+            <div class="mc-question" data-correct="c">
+                <p><strong>2.</strong> Qual permissão permite ler, comentar e editar um arquivo?</p>
+                <div class="mc-option" data-opt="a">Visualizador</div>
+                <div class="mc-option" data-opt="b">Comentarista</div>
+                <div class="mc-option" data-opt="c">Editor</div>
+                <div class="mc-explanation ok">Correto! Editor permite ler, comentar e editar. Visualizador apenas lê. Comentarista lê e comenta, mas não edita.</div>
+                <div class="mc-explanation err">Editor é quem pode ler, comentar e editar. Visualizador só lê, e Comentarista lê e comenta sem editar.</div>
+            </div>
 
-          <button class="btn-check" onclick="verificarQuiz()">Verificar Respostas</button>
-          <div id="resultado-quiz" class="result-message"></div>
+            <div class="mc-question" data-correct="b">
+                <p><strong>3.</strong> O que é sincronização na nuvem?</p>
+                <div class="mc-option" data-opt="a">Fazer backup manual dos arquivos</div>
+                <div class="mc-option" data-opt="b">Manter arquivos iguais entre dispositivo e nuvem automaticamente</div>
+                <div class="mc-option" data-opt="c">Compartilhar arquivos por link</div>
+                <div class="mc-explanation ok">Correto! Sincronização mantém arquivos iguais entre seu dispositivo local e a nuvem automaticamente.</div>
+                <div class="mc-explanation err">Sincronização é manter arquivos iguais entre dispositivo e nuvem automaticamente, não é backup manual nem compartilhamento.</div>
+            </div>
+
+            <div class="mc-question" data-correct="b">
+                <p><strong>4.</strong> Qual é o maior risco ao gerar um link público com permissão de edição?</p>
+                <div class="mc-option" data-opt="a">O link fica muito longo</div>
+                <div class="mc-option" data-opt="b">Qualquer pessoa pode alterar ou excluir seu arquivo</div>
+                <div class="mc-option" data-opt="c">A nuvem fica mais lenta</div>
+                <div class="mc-explanation ok">Correto! Link público com edição = qualquer um pode alterar ou excluir o arquivo.</div>
+                <div class="mc-explanation err">O risco é que qualquer pessoa com o link pode alterar ou excluir seu arquivo. Por isso, use permissão de visualização para links públicos.</div>
+            </div>
+
+            <div class="mc-question" data-correct="a">
+                <p><strong>5.</strong> Qual é a principal diferença entre IMAP e POP3 mencionada no contexto de nuvem?</p>
+                <div class="mc-option" data-opt="a">IMAP sincroniza com servidor; POP3 baixa e remove</div>
+                <div class="mc-option" data-opt="b">IMAP é mais rápido que POP3</div>
+                <div class="mc-option" data-opt="c">POP3 é mais seguro</div>
+                <div class="mc-explanation ok">Correto! IMAP mantém e-mails no servidor sincronizados. POP3 baixa para o dispositivo e geralmente remove do servidor.</div>
+                <div class="mc-explanation err">A diferença é que IMAP sincroniza com o servidor, mantendo e-mails acessíveis de qualquer dispositivo. POP3 baixa para o dispositivo.</div>
+            </div>
+
+            <div class="mc-actions">
+                <button onclick="mcVerify('mc22')">Verificar</button>
+                <button onclick="mcReset('mc22')">Refazer</button>
+            </div>
+            <div class="mc-result" id="mc22-result"></div>
         </div>
-      </div>
+    </div>
 
-      <!-- Slide 11: Exercício Drag and Drop -->
-      <div class="slide">
-        <h2>🎯 Exercício — Arraste e Conecte</h2>
-        <p>Arraste cada descrição para o conceito ou serviço correspondente. Em dispositivos móveis, toque na descrição e depois na zona de destino.</p>
-
-        <div class="drag-drop-container">
-          <!-- Lado esquerdo: Itens para arrastar -->
-          <div class="drag-list">
-            <h3>Descrições</h3>
-            <div class="drag-item" draggable="true" data-id="desc1">15 GB gratuitos, integrado ao Gmail e Docs — ótimo para colaboração</div>
-            <div class="drag-item" draggable="true" data-id="desc2">5 GB gratuitos e nativo no Windows 11, integra com Word e Excel</div>
-            <div class="drag-item" draggable="true" data-id="desc3">2 GB gratuitos, sincronia seletiva de pastas, foco em equipes corporativas</div>
-            <div class="drag-item" draggable="true" data-id="desc4">Processo que mantém arquivos iguais entre o dispositivo local e a nuvem</div>
-            <div class="drag-item" draggable="true" data-id="desc5">Permissão que permite ler, comentar e modificar livremente o arquivo</div>
-          </div>
-
-          <!-- Lado direito: Zonas de destino -->
-          <div class="drop-zone">
-            <h3>Conceitos / Serviços</h3>
-            <div class="drop-target" data-match="desc1">Google Drive</div>
-            <div class="drop-target" data-match="desc2">OneDrive</div>
-            <div class="drop-target" data-match="desc3">Dropbox</div>
-            <div class="drop-target" data-match="desc4">Sincronização</div>
-            <div class="drop-target" data-match="desc5">Permissão: Editor</div>
-          </div>
-        </div>
-
-        <div style="margin-top: 20px;">
-          <button class="btn-check" onclick="verificarDragDrop()">Verificar Respostas</button>
-          <button class="btn-check" style="background: #999; margin-left: 10px;" onclick="resetarDragDrop()">Refazer</button>
-        </div>
-      </div>
-
-      <!-- Slide 12: Atividade Prática -->
-      <div class="slide">
+    <!-- SLIDE 10: Atividade Prática -->
+    <div class="content-card">
         <h2>🛠️ Atividade Prática — Organizando Arquivos no Google Drive</h2>
+
         <p><strong>⏱ ~25 min | 🌐 Requer internet | 📧 Precisa de conta Google</strong></p>
 
-        <div class="practice-step">
-          <span class="step-number">1</span><h4>Acesse o Google Drive</h4>
-          <p>Abra o navegador e acesse <strong>drive.google.com</strong>. Entre com sua conta Google (pode ser a conta institucional do IFRN ou uma conta pessoal). Se não tiver conta, o professor orientará a criação.</p>
+        <div class="yt-wrap">
+            <iframe src="https://www.youtube.com/embed/a-_LcJlddL8"
+                    title="Como usar Google Drive"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
         </div>
 
-        <div class="practice-step">
-          <span class="step-number">2</span><h4>Crie uma estrutura de pastas</h4>
-          <p>Clique em <strong>+ Novo → Pasta</strong>. Crie a seguinte estrutura: uma pasta chamada <strong>"Escola"</strong>, dentro dela uma pasta <strong>"Informática"</strong> e dentro dela <strong>"Unidade 2"</strong>. Essa organização será usada durante toda a unidade.</p>
+        <p><strong>Materiais necessários:</strong></p>
+        <ul class="mat-list">
+            <li>💻 Computador ou celular</li>
+            <li>🌐 Conexão com internet</li>
+            <li>📧 Conta Google (pessoal ou institucional)</li>
+        </ul>
+
+        <div class="step-svg-card">
+            <div class="step-num">1</div>
+            <svg width="64" height="56" viewBox="0 0 64 56" xmlns="http://www.w3.org/2000/svg">
+                <rect x="8" y="6" width="48" height="40" rx="5" fill="#e0f2f1" stroke="#80cbc4" stroke-width="1.2"/>
+                <text x="32" y="38" text-anchor="middle" fill="#00695c" font-size="20">🌐</text>
+            </svg>
+            <div class="step-text">
+                <strong>Acesse o Google Drive</strong>
+                <span>Abra o navegador e acesse <strong>drive.google.com</strong>. Entre com sua conta Google. Se não tiver, o professor orientará a criação.</span>
+            </div>
         </div>
 
-        <div class="practice-step">
-          <span class="step-number">3</span><h4>Crie e salve um documento</h4>
-          <p>Dentro da pasta <strong>Unidade 2</strong>, crie um novo <strong>Google Docs</strong> (+ Novo → Google Docs). Escreva o título <em>"Minhas anotações — Aula 2.2"</em> e anote ao menos três coisas que você aprendeu hoje. O documento é salvo automaticamente na nuvem.</p>
+        <div class="step-svg-card">
+            <div class="step-num">2</div>
+            <svg width="64" height="56" viewBox="0 0 64 56" xmlns="http://www.w3.org/2000/svg">
+                <rect x="10" y="8" width="20" height="20" rx="3" fill="#fff9c4" stroke="#fdd835" stroke-width="1.2"/>
+                <rect x="34" y="8" width="20" height="20" rx="3" fill="#fff9c4" stroke="#fdd835" stroke-width="1.2"/>
+                <rect x="10" y="32" width="20" height="20" rx="3" fill="#fff9c4" stroke="#fdd835" stroke-width="1.2"/>
+                <rect x="34" y="32" width="20" height="20" rx="3" fill="#fff9c4" stroke="#fdd835" stroke-width="1.2"/>
+            </svg>
+            <div class="step-text">
+                <strong>Crie uma estrutura de pastas</strong>
+                <span>Clique em <kbd>+ Novo → Pasta</kbd>. Crie: <strong>Escola</strong> > <strong>Informática</strong> > <strong>Unidade 2</strong>. Boa organização economiza tempo.</span>
+            </div>
         </div>
 
-        <div class="practice-step">
-          <span class="step-number">4</span><h4>Compartilhe com o professor</h4>
-          <p>Clique com o botão direito no documento → <strong>Compartilhar</strong>. No campo de e-mail, digite: <strong>cesar.augusto@ifrn.edu.br</strong>. Defina a permissão como <strong>Comentarista</strong> e clique em Enviar.</p>
+        <div class="step-svg-card">
+            <div class="step-num">3</div>
+            <svg width="64" height="56" viewBox="0 0 64 56" xmlns="http://www.w3.org/2000/svg">
+                <rect x="8" y="8" width="48" height="40" rx="5" fill="#e3f2fd" stroke="#90caf9" stroke-width="1.2"/>
+                <line x1="16" y1="20" x2="56" y2="20" stroke="#1976d2" stroke-width="1.5"/>
+                <line x1="16" y1="28" x2="56" y2="28" stroke="#1976d2" stroke-width="1.5"/>
+                <line x1="16" y1="36" x2="56" y2="36" stroke="#1976d2" stroke-width="1.5"/>
+            </svg>
+            <div class="step-text">
+                <strong>Crie e salve um documento</strong>
+                <span>Dentro de <strong>Unidade 2</strong>, crie um <kbd>Google Docs</kbd>. Escreva: <em>"Minhas anotações — Aula 2.2"</em> e anote 3 coisas que aprendeu. Salva automaticamente.</span>
+            </div>
         </div>
 
-        <div class="practice-step">
-          <span class="step-number">5</span><h4>Explore o histórico de versões</h4>
-          <p>Dentro do Google Docs, clique em <strong>Arquivo → Histórico de versões → Ver histórico de versões</strong>. Observe que cada alteração fica registrada com horário e autor. Isso permite restaurar qualquer versão anterior.</p>
+        <div class="step-svg-card">
+            <div class="step-num">4</div>
+            <svg width="64" height="56" viewBox="0 0 64 56" xmlns="http://www.w3.org/2000/svg">
+                <rect x="12" y="10" width="40" height="36" rx="5" fill="#f3e5f5" stroke="#ce93d8" stroke-width="1.2"/>
+                <text x="32" y="32" text-anchor="middle" fill="#7b1fa2" font-size="18">👥</text>
+            </svg>
+            <div class="step-text">
+                <strong>Compartilhe com o professor</strong>
+                <span>Clique direito no documento → <kbd>Compartilhar</kbd>. Insira <strong>cesar.augusto@ifrn.edu.br</strong>. Permissão: <strong>Comentarista</strong>. Clique Enviar.</span>
+            </div>
         </div>
 
-        <div style="background: #fff3e0; border-left: 4px solid #ff9800; padding: 15px; border-radius: 6px; margin-top: 20px;">
-          <strong>📌 Para saber:</strong> O Google Drive não substitui um sistema de backup profissional. Embora seja muito seguro, é recomendável manter cópias de arquivos muito importantes em mais de um lugar — por exemplo, também no computador local ou em um HD externo.
+        <div class="step-svg-card">
+            <div class="step-num">5</div>
+            <svg width="64" height="56" viewBox="0 0 64 56" xmlns="http://www.w3.org/2000/svg">
+                <rect x="8" y="8" width="48" height="40" rx="5" fill="#e8f5e9" stroke="#a5d6a7" stroke-width="1.2"/>
+                <text x="32" y="20" text-anchor="middle" fill="#2e7d32" font-size="10" font-weight="600">Histórico</text>
+                <text x="32" y="32" text-anchor="middle" fill="#2e7d32" font-size="10" font-weight="600">Versões</text>
+                <text x="32" y="44" text-anchor="middle" fill="#2e7d32" font-size="10" font-weight="600">Anterior</text>
+            </svg>
+            <div class="step-text">
+                <strong>Explore o histórico de versões</strong>
+                <span>No Google Docs, vá em <kbd>Arquivo → Histórico de versões</kbd>. Observe que cada alteração fica registrada com horário. Você pode restaurar versões anteriores.</span>
+            </div>
         </div>
-      </div>
 
-      <!-- Slide 13: Recapitulação -->
-      <div class="slide">
+        <p style="background:#fff3e0;border-left:4px solid #f59e0b;padding:14px 18px;border-radius:0 10px 10px 0;color:#78350f;font-size:0.9em;margin-top:20px;">
+            &#x1F4CC; <strong>Dica:</strong> Google Drive não substitui backup profissional. Mantenha cópias de arquivos muito importantes em múltiplos lugares: computador local E nuvem.
+        </p>
+    </div>
+
+    <!-- SLIDE 11: Recapitulação -->
+    <div class="content-card">
         <h2>📋 Recapitulando</h2>
-        
-        <div style="background: #f0f7ff; border-left: 4px solid #4a90e2; padding: 20px; border-radius: 6px;">
-          <ul style="font-size: 16px; line-height: 1.8;">
-            <li>O <strong>armazenamento em nuvem</strong> guarda arquivos em servidores remotos, acessíveis pela internet de qualquer dispositivo</li>
-            <li>Principais serviços: <strong>Google Drive</strong> (15 GB grátis), <strong>OneDrive</strong> (5 GB) e <strong>Dropbox</strong> (2 GB)</li>
-            <li>O Google Drive permite <strong>criar, organizar, compartilhar e colaborar</strong> em documentos em tempo real</li>
-            <li>Ao compartilhar, escolha o nível correto: <strong>Visualizador, Comentarista ou Editor</strong></li>
-            <li>A <strong>sincronização</strong> mantém os arquivos atualizados entre todos os dispositivos automaticamente</li>
-            <li>Boas práticas incluem organizar pastas, revisar permissões e nunca compartilhar dados sensíveis publicamente</li>
-          </ul>
+
+        <div style="background:#f0f7ff;border-left:4px solid var(--primary);padding:16px 20px;border-radius:0 12px 12px 0;">
+            <ul style="margin: 0; padding-left: 20px; font-size: 0.95em; line-height: 1.8;">
+                <li>O <strong>armazenamento em nuvem</strong> guarda arquivos em servidores remotos, acessíveis pela internet</li>
+                <li>Principais serviços: <strong>Google Drive</strong> (15 GB), <strong>OneDrive</strong> (5 GB) e <strong>Dropbox</strong> (2 GB)</li>
+                <li>Google Drive permite <strong>criar, organizar, compartilhar e colaborar</strong> em tempo real</li>
+                <li>Ao compartilhar, escolha: <strong>Visualizador, Comentarista ou Editor</strong></li>
+                <li><strong>Sincronização</strong> mantém arquivos iguais entre dispositivos automaticamente</li>
+                <li>Boas práticas: organizar pastas, revisar permissões, nunca compartilhar dados sensíveis</li>
+            </ul>
         </div>
 
-        <div style="background: #e8f5e9; border-left: 4px solid #4caf50; padding: 15px; border-radius: 6px; margin-top: 20px;">
-          <strong>📚 Na próxima aula</strong> vamos explorar os <strong>Ambientes Virtuais de Aprendizagem (AVA)</strong> — plataformas como SUAP e Google Classroom — aprendendo a navegar, entregar atividades e interagir no ambiente digital da escola.
+        <div style="background:#e8f5e9;border-left:4px solid #4caf50;padding:14px 18px;border-radius:0 10px 10px 0;margin-top:16px;">
+            <strong>📚 Na próxima aula</strong> vamos explorar os <strong>Ambientes Virtuais de Aprendizagem (AVA)</strong> — plataformas como SUAP e Google Classroom — aprendendo a navegar, entregar atividades e interagir.
         </div>
-      </div>
-
     </div>
 
-    <!-- Navegação -->
-    <div class="nav-buttons">
-      <button class="btn-prev">← Anterior</button>
-      <span class="slide-counter"><span id="current-slide">1</span> / <span id="total-slides">13</span></span>
-      <button class="btn-next">Próximo →</button>
+    <div class="nav-footer">
+        <a href="uni2-01-navegadores-email.html" class="nav-link">&#x2B05; Anterior: Navegadores e E-mail</a>
+        <a href="uni2-03-ava.html" class="nav-link">Próxima: Ambientes Virtuais &#x27A1;</a>
     </div>
-  </div>
 
-  <script>
-    let currentSlide = 0;
-    const slides = document.querySelectorAll('.slide');
-    const totalSlides = slides.length;
+</div>
 
-    document.getElementById('total-slides').textContent = totalSlides;
-
-    function showSlide(n) {
-      if (n >= totalSlides) currentSlide = 0;
-      if (n < 0) currentSlide = totalSlides - 1;
-
-      slides.forEach(slide => slide.classList.remove('active'));
-      slides[currentSlide].classList.add('active');
-      document.getElementById('current-slide').textContent = currentSlide + 1;
-    }
-
-    document.querySelector('.btn-prev').addEventListener('click', () => {
-      currentSlide--;
-      showSlide(currentSlide);
-    });
-
-    document.querySelector('.btn-next').addEventListener('click', () => {
-      currentSlide++;
-      showSlide(currentSlide);
-    });
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowLeft') { currentSlide--; showSlide(currentSlide); }
-      if (e.key === 'ArrowRight') { currentSlide++; showSlide(currentSlide); }
-    });
-
-    showSlide(0);
-
-    // Quiz
-    function verificarQuiz() {
-      const q1 = document.querySelector('input[name="q1"]:checked')?.value;
-      const q2 = document.querySelector('input[name="q2"]:checked')?.value;
-      const q3 = document.querySelector('input[name="q3"]:checked')?.value;
-      const q4 = document.querySelector('input[name="q4"]:checked')?.value;
-
-      if (!q1 || !q2 || !q3 || !q4) {
-        alert('Responda todas as perguntas antes de verificar!');
-        return;
-      }
-
-      const corretas = q1 === 'a' && q2 === 'c' && q3 === 'b' && q4 === 'b';
-      const resultado = document.getElementById('resultado-quiz');
-      
-      if (corretas) {
-        resultado.innerHTML = '✅ <strong>Perfeito!</strong> Você acertou todas as respostas!';
-        resultado.className = 'result-message show correct';
-      } else {
-        resultado.innerHTML = '⚠️ <strong>Nem tudo certo.</strong> Revise os conceitos e tente novamente!';
-        resultado.className = 'result-message show incorrect';
-      }
-    }
-
-    // Drag and Drop
-    let draggedElement = null;
-
-    document.querySelectorAll('.drag-item').forEach(item => {
-      item.addEventListener('dragstart', (e) => {
-        draggedElement = item;
-        item.classList.add('dragging');
-      });
-
-      item.addEventListener('dragend', () => {
-        draggedElement = null;
-        item.classList.remove('dragging');
-      });
-    });
-
-    document.querySelectorAll('.drop-target').forEach(target => {
-      target.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        target.classList.add('drag-over');
-      });
-
-      target.addEventListener('dragleave', () => {
-        target.classList.remove('drag-over');
-      });
-
-      target.addEventListener('drop', (e) => {
-        e.preventDefault();
-        target.classList.remove('drag-over');
-
-        if (draggedElement && draggedElement.dataset.id === target.dataset.match) {
-          target.innerHTML = draggedElement.innerHTML + '<button class="remove-btn">✕</button>';
-          target.classList.add('filled');
-          draggedElement.style.display = 'none';
-
-          target.querySelector('.remove-btn').addEventListener('click', () => {
-            target.innerHTML = target.dataset.match === 'desc1' ? 'Google Drive' : 
-                              target.dataset.match === 'desc2' ? 'OneDrive' :
-                              target.dataset.match === 'desc3' ? 'Dropbox' :
-                              target.dataset.match === 'desc4' ? 'Sincronização' : 'Permissão: Editor';
-            target.classList.remove('filled');
-            draggedElement.style.display = 'block';
-          });
-        }
-      });
-    });
-
-    function verificarDragDrop() {
-      const targets = document.querySelectorAll('.drop-target');
-      let acertos = 0;
-
-      targets.forEach(target => {
-        if (target.classList.contains('filled')) acertos++;
-      });
-
-      alert(`Você acertou ${acertos} de 5 correspondências!`);
-    }
-
-    function resetarDragDrop() {
-      document.querySelectorAll('.drop-target').forEach(target => {
-        target.innerHTML = target.dataset.match === 'desc1' ? 'Google Drive' : 
-                          target.dataset.match === 'desc2' ? 'OneDrive' :
-                          target.dataset.match === 'desc3' ? 'Dropbox' :
-                          target.dataset.match === 'desc4' ? 'Sincronização' : 'Permissão: Editor';
-        target.classList.remove('filled');
-      });
-
-      document.querySelectorAll('.drag-item').forEach(item => {
-        item.style.display = 'block';
-      });
-    }
-  </script>
+<script src="slide-mode.js"></script>
+<script src="exercise-drag.js"></script>
+<script src="exercise-mc.js"></script>
+<script src="exercise-print.js"></script>
 </body>
 </html>
