@@ -6,6 +6,9 @@
     <title>Aula 2.4 - Conceitos Fundamentais de Segurança da Informação</title>
     <link rel="stylesheet" href="slide-mode.css">
     <link rel="stylesheet" href="exercise.css">
+    <script>
+        if (localStorage.getItem('darkMode') === null) localStorage.setItem('darkMode', '1');
+    </script>
     <style>
         :root {
             --primary: #00838f;
@@ -13,9 +16,7 @@
             --bg-light: #f0f4f8;
             --text-dark: #1a202c;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--bg-light);
@@ -23,6 +24,7 @@
             line-height: 1.7;
         }
 
+        /* ── LAYOUT ── */
         .top-bar {
             background: white;
             padding: 15px 30px;
@@ -34,7 +36,6 @@
             top: 0;
             z-index: 10;
         }
-
         .back-btn {
             text-decoration: none;
             color: var(--primary);
@@ -47,22 +48,19 @@
             transition: background 0.3s;
         }
         .back-btn:hover { background: rgba(0,131,143,0.08); }
-
         .page-badge {
             font-size: 0.8em;
             padding: 4px 12px;
             border-radius: 20px;
-            background: rgba(0, 131, 143, 0.12);
+            background: rgba(0,131,143,0.12);
             color: var(--primary);
             font-weight: 600;
         }
-
         .content-wrapper {
             max-width: 800px;
             margin: 40px auto;
             padding: 0 30px;
         }
-
         .lesson-hero {
             background: white;
             border-radius: 16px;
@@ -73,7 +71,6 @@
         }
         .lesson-hero h1 { font-size: 2em; margin-bottom: 10px; color: var(--primary); }
         .lesson-hero .subtitle { font-size: 1.05em; color: #718096; }
-
         .content-card {
             background: white;
             border-radius: 16px;
@@ -89,9 +86,21 @@
             align-items: center;
             gap: 10px;
         }
+        .content-card h2::before { content: none; }
         .content-card h3 { font-size: 1.05em; color: var(--secondary); margin: 20px 0 10px; }
         .content-card p  { margin-bottom: 15px; text-align: justify; }
+        ul, ol { margin: 10px 0 15px 25px; }
+        li { margin-bottom: 8px; }
 
+        .svg-wrap {
+            background: #f0f9ff;
+            border-radius: 12px;
+            padding: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        /* ── Caixas ── */
         .highlight-box {
             background: linear-gradient(135deg, rgba(0,131,143,0.05), rgba(0,96,100,0.06));
             border-left: 4px solid var(--primary);
@@ -100,7 +109,6 @@
             margin: 20px 0;
         }
         .highlight-box p { margin-bottom: 0; font-style: italic; }
-
         .alert-box {
             background: #fff8e1;
             border-left: 4px solid #f59e0b;
@@ -109,9 +117,6 @@
             margin: 20px 0;
         }
         .alert-box p { margin: 0; color: #78350f; font-size: 0.93em; }
-
-        ul, ol { margin: 10px 0 15px 25px; }
-        li { margin-bottom: 8px; }
 
         /* ── Tríade CID ── */
         .cid-grid {
@@ -168,7 +173,7 @@
         .badge-d { background: #fef3c7; color: #92400e; }
         .cenario-item p { margin: 0; font-size: 0.87em; color: #334155; }
 
-        /* ── Grid de malware ── */
+        /* ── Tabela malware ── */
         .compare-table {
             width: 100%;
             border-collapse: collapse;
@@ -210,7 +215,7 @@
         .vetor-title { font-weight: 700; font-size: 0.85em; color: #b91c1c; margin-bottom: 4px; }
         .vetor-desc  { font-size: 0.76em; color: #475569; line-height: 1.5; }
 
-        /* ── Engenharia social: modalidades ── */
+        /* ── Engenharia social ── */
         .eng-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
@@ -264,7 +269,7 @@
         .boa-text strong { display: block; font-size: 0.88em; color: var(--primary); margin-bottom: 3px; }
         .boa-text span   { font-size: 0.8em; color: #475569; }
 
-        /* ── nav ── */
+        /* ── Nav ── */
         .nav-footer {
             display: flex;
             justify-content: space-between;
@@ -283,6 +288,42 @@
         }
         .nav-link:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
 
+        /* ═══════════════════════════
+           DARK MODE
+           ═══════════════════════════ */
+        body.dark-mode { background: #0f172a; color: #e2e8f0; }
+        body.dark-mode .top-bar { background: #1e293b; box-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+        body.dark-mode .lesson-hero,
+        body.dark-mode .content-card { background: #1e293b; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        body.dark-mode .lesson-hero .subtitle { color: #94a3b8; }
+        body.dark-mode .content-card h3 { color: #4db6ac; }
+        body.dark-mode .content-card p,
+        body.dark-mode li { color: #cbd5e1; }
+        body.dark-mode strong { color: #e2e8f0; }
+        body.dark-mode .svg-wrap { background: #0f172a; }
+        body.dark-mode .cid-card.conf  { background: #1e3a5f; }
+        body.dark-mode .cid-card.integ { background: #052e16; }
+        body.dark-mode .cid-card.disp  { background: #431407; }
+        body.dark-mode .cid-desc { color: #94a3b8; }
+        body.dark-mode .cenario-item { background: #0f172a; }
+        body.dark-mode .cenario-item p { color: #94a3b8; }
+        body.dark-mode .compare-table td { color: #cbd5e1; border-color: #334155; }
+        body.dark-mode .compare-table tr:nth-child(even) td { background: #0f172a; }
+        body.dark-mode .vetor-card { background: #2d0a0a; border-color: #b91c1c; }
+        body.dark-mode .vetor-desc { color: #94a3b8; }
+        body.dark-mode .eng-card { background: #2d0a0a; border-color: #b91c1c; }
+        body.dark-mode .eng-canal { color: #64748b; }
+        body.dark-mode .eng-desc { color: #94a3b8; }
+        body.dark-mode .alerta-item { background: #1c0f00; }
+        body.dark-mode .alerta-item p { color: #fbbf24; }
+        body.dark-mode .boa-item { background: #0f172a; }
+        body.dark-mode .boa-text span { color: #94a3b8; }
+        body.dark-mode .highlight-box { background: rgba(0,131,143,0.12); }
+        body.dark-mode .highlight-box p { color: #94a3b8; }
+        body.dark-mode .alert-box { background: #1c1007; }
+        body.dark-mode .alert-box p { color: #fbbf24; }
+        body.dark-mode .nav-link { background: #1e293b; color: var(--primary); }
+
         @media (max-width: 768px) {
             .content-wrapper { padding: 0 15px; }
             .lesson-hero, .content-card { padding: 25px; }
@@ -291,432 +332,915 @@
         }
     </style>
 </head>
-<body>
+<body class="dark-mode">
 
-    <div class="top-bar">
-        <a href="index.html" class="back-btn">&#x2B05; Voltar ao Dashboard</a>
-        <span class="page-badge">Unidade 2 &mdash; Internet e Seguran&ccedil;a</span>
-        <button class="slide-toggle" id="slideToggleBtn">&#x1F4FA; Modo Slide</button>
+<!-- TOP BAR -->
+<div class="top-bar">
+    <a href="index.html" class="back-btn">&#x2B05; Voltar ao Dashboard</a>
+    <span class="page-badge">Unidade 2 &mdash; Internet e Seguran&ccedil;a</span>
+    <button class="slide-toggle" id="slideToggleBtn">&#x1F4FA; Modo Slide</button>
+</div>
+
+<div class="content-wrapper">
+
+    <div class="lesson-hero">
+        <h1>&#x1F6E1;&#xFE0F; Conceitos Fundamentais de Seguran&ccedil;a da Informa&ccedil;&atilde;o</h1>
+        <p class="subtitle">Aula 2.4 &mdash; Os pilares da seguran&ccedil;a (CID), os principais tipos de amea&ccedil;as digitais e como reconhecer ataques antes de ser v&iacute;tima</p>
     </div>
 
-    <div class="content-wrapper">
+    <!-- SLIDE 1: O que é Segurança da Informação -->
+    <div class="content-card">
+        <h2>&#x1F4AC; O que &eacute; Seguran&ccedil;a da Informa&ccedil;&atilde;o?</h2>
 
-        <div class="lesson-hero">
-            <h1>&#x1F6E1;&#xFE0F; Conceitos Fundamentais de Seguran&ccedil;a da Informa&ccedil;&atilde;o</h1>
-            <p class="subtitle">Aula 2.4 &mdash; Os pilares da seguran&ccedil;a (CID), os principais tipos de amea&ccedil;as digitais e como reconhecer ataques antes de ser v&iacute;tima</p>
+        <!-- SVG: escudo central protegendo dados -->
+        <div class="svg-wrap">
+        <svg viewBox="0 0 680 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
+            <defs>
+                <radialGradient id="shieldGlow" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#00838f" stop-opacity="0.3"/>
+                    <stop offset="100%" stop-color="#00838f" stop-opacity="0"/>
+                </radialGradient>
+            </defs>
+            <!-- glow de fundo -->
+            <ellipse cx="340" cy="110" rx="90" ry="90" fill="url(#shieldGlow)">
+                <animate attributeName="rx" values="90;110;90" dur="3s" repeatCount="indefinite"/>
+                <animate attributeName="ry" values="90;110;90" dur="3s" repeatCount="indefinite"/>
+            </ellipse>
+            <!-- escudo -->
+            <path d="M340,30 L390,55 L390,120 Q390,155 340,175 Q290,155 290,120 L290,55 Z" fill="#00838f" opacity="0.9"/>
+            <path d="M340,45 L378,66 L378,118 Q378,147 340,164 Q302,147 302,118 L302,66 Z" fill="#004d52"/>
+            <text x="340" y="118" text-anchor="middle" font-size="30" fill="white">&#x1F512;</text>
+
+            <!-- ícones de dados ao redor -->
+            <!-- Dados pessoais -->
+            <rect x="30" y="40" width="110" height="48" rx="10" fill="#1e293b" stroke="#00838f" stroke-width="1.5" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.3s" fill="freeze"/>
+            </rect>
+            <text x="85" y="62" text-anchor="middle" font-size="13" fill="#e2e8f0" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.3s" fill="freeze"/>&#x1F464; Dados pessoais</text>
+            <text x="85" y="79" text-anchor="middle" font-size="9" fill="#64748b" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.3s" fill="freeze"/>nome, CPF, endereço</text>
+            <line x1="140" y1="64" x2="288" y2="95" stroke="#00838f" stroke-width="1.5" stroke-dasharray="4,3" opacity="0">
+                <animate attributeName="opacity" from="0" to="0.6" dur="0.5s" begin="0.3s" fill="freeze"/>
+            </line>
+
+            <!-- Senhas -->
+            <rect x="30" y="110" width="110" height="48" rx="10" fill="#1e293b" stroke="#00838f" stroke-width="1.5" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.6s" fill="freeze"/>
+            </rect>
+            <text x="85" y="132" text-anchor="middle" font-size="13" fill="#e2e8f0" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.6s" fill="freeze"/>&#x1F511; Senhas</text>
+            <text x="85" y="149" text-anchor="middle" font-size="9" fill="#64748b" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.6s" fill="freeze"/>contas e acessos</text>
+            <line x1="140" y1="134" x2="288" y2="120" stroke="#00838f" stroke-width="1.5" stroke-dasharray="4,3" opacity="0">
+                <animate attributeName="opacity" from="0" to="0.6" dur="0.5s" begin="0.6s" fill="freeze"/>
+            </line>
+
+            <!-- Documentos -->
+            <rect x="30" y="160" width="110" height="48" rx="10" fill="#1e293b" stroke="#00838f" stroke-width="1.5" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.9s" fill="freeze"/>
+            </rect>
+            <text x="85" y="182" text-anchor="middle" font-size="13" fill="#e2e8f0" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.9s" fill="freeze"/>&#x1F4C4; Documentos</text>
+            <text x="85" y="199" text-anchor="middle" font-size="9" fill="#64748b" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.9s" fill="freeze"/>arquivos e trabalhos</text>
+            <line x1="140" y1="174" x2="288" y2="140" stroke="#00838f" stroke-width="1.5" stroke-dasharray="4,3" opacity="0">
+                <animate attributeName="opacity" from="0" to="0.6" dur="0.5s" begin="0.9s" fill="freeze"/>
+            </line>
+
+            <!-- Financeiro -->
+            <rect x="540" y="40" width="120" height="48" rx="10" fill="#1e293b" stroke="#00838f" stroke-width="1.5" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="1.2s" fill="freeze"/>
+            </rect>
+            <text x="600" y="62" text-anchor="middle" font-size="13" fill="#e2e8f0" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="1.2s" fill="freeze"/>&#x1F4B3; Financeiro</text>
+            <text x="600" y="79" text-anchor="middle" font-size="9" fill="#64748b" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="1.2s" fill="freeze"/>cartões, contas</text>
+            <line x1="540" y1="64" x2="392" y2="95" stroke="#00838f" stroke-width="1.5" stroke-dasharray="4,3" opacity="0">
+                <animate attributeName="opacity" from="0" to="0.6" dur="0.5s" begin="1.2s" fill="freeze"/>
+            </line>
+
+            <!-- Mensagens -->
+            <rect x="540" y="110" width="120" height="48" rx="10" fill="#1e293b" stroke="#00838f" stroke-width="1.5" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="1.5s" fill="freeze"/>
+            </rect>
+            <text x="600" y="132" text-anchor="middle" font-size="13" fill="#e2e8f0" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="1.5s" fill="freeze"/>&#x1F4E8; Mensagens</text>
+            <text x="600" y="149" text-anchor="middle" font-size="9" fill="#64748b" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="1.5s" fill="freeze"/>comunicações privadas</text>
+            <line x1="540" y1="134" x2="392" y2="120" stroke="#00838f" stroke-width="1.5" stroke-dasharray="4,3" opacity="0">
+                <animate attributeName="opacity" from="0" to="0.6" dur="0.5s" begin="1.5s" fill="freeze"/>
+            </line>
+
+            <!-- Acadêmico -->
+            <rect x="540" y="160" width="120" height="48" rx="10" fill="#1e293b" stroke="#00838f" stroke-width="1.5" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="1.8s" fill="freeze"/>
+            </rect>
+            <text x="600" y="182" text-anchor="middle" font-size="13" fill="#e2e8f0" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="1.8s" fill="freeze"/>&#x1F393; Acad&ecirc;mico</text>
+            <text x="600" y="199" text-anchor="middle" font-size="9" fill="#64748b" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="1.8s" fill="freeze"/>notas, frequência</text>
+            <line x1="540" y1="174" x2="392" y2="140" stroke="#00838f" stroke-width="1.5" stroke-dasharray="4,3" opacity="0">
+                <animate attributeName="opacity" from="0" to="0.6" dur="0.5s" begin="1.8s" fill="freeze"/>
+            </line>
+        </svg>
         </div>
 
-        <!-- CARD 1 — O que é Segurança da Informação -->
-        <div class="content-card">
-            <h2>&#x1F4AC; O que &eacute; Seguran&ccedil;a da Informa&ccedil;&atilde;o?</h2>
-            <p>A <strong>Seguran&ccedil;a da Informa&ccedil;&atilde;o</strong> &eacute; o conjunto de pr&aacute;ticas, tecnologias e pol&iacute;ticas que protegem os dados contra acesso n&atilde;o autorizado, altera&ccedil;&otilde;es indevidas e indisponibilidade. Seu objetivo &eacute; garantir que a informa&ccedil;&atilde;o certa esteja dispon&iacute;vel para as pessoas certas, no momento certo &mdash; e apenas para elas.</p>
-            <p>Na era digital, <strong>dados s&atilde;o um ativo valioso</strong>. Informa&ccedil;&otilde;es pessoais, senhas, documentos acad&ecirc;micos e financeiros pr&eacute;cisam ser protegidos assim como se protege uma carteira ou um documento f&iacute;sico.</p>
+        <p>A <strong>Seguran&ccedil;a da Informa&ccedil;&atilde;o</strong> &eacute; o conjunto de pr&aacute;ticas, tecnologias e pol&iacute;ticas que protegem os dados contra acesso n&atilde;o autorizado, altera&ccedil;&otilde;es indevidas e indisponibilidade. Seu objetivo &eacute; garantir que a informa&ccedil;&atilde;o certa esteja dispon&iacute;vel para as pessoas certas, no momento certo &mdash; e apenas para elas.</p>
+        <p>Na era digital, <strong>dados s&atilde;o um ativo valioso</strong>. Informa&ccedil;&otilde;es pessoais, senhas, documentos acad&ecirc;micos e financeiros precisam ser protegidos assim como se protege uma carteira ou um documento f&iacute;sico.</p>
 
-            <div class="highlight-box">
-                <p>&#x1F4A1; Seguran&ccedil;a da Informa&ccedil;&atilde;o n&atilde;o &eacute; apenas responsabilidade de especialistas em TI. <strong>Cada usu&aacute;rio &eacute; a primeira e mais importante linha de defesa</strong> &mdash; a maioria dos ataques explora erros humanos, n&atilde;o falhas t&eacute;cnicas.</p>
-            </div>
-
-            <h3>&#x1F4CA; Panorama das amea&ccedil;as digitais no Brasil</h3>
-            <ul>
-                <li>O Brasil &eacute; um dos pa&iacute;ses <strong>mais atacados da Am&eacute;rica Latina</strong> por ciberataques</li>
-                <li>Phishing &eacute; o tipo de golpe digital mais comum, especialmente por WhatsApp e e-mail</li>
-                <li>Ataques de ransomware (sequestrando dados por resgate) cresceram mais de 90% ap&oacute;s 2020</li>
-                <li>A maior parte das v&iacute;timas n&atilde;o sabia que estava em risco at&eacute; o momento do ataque</li>
-            </ul>
+        <div class="highlight-box">
+            <p>&#x1F4A1; Seguran&ccedil;a da Informa&ccedil;&atilde;o n&atilde;o &eacute; apenas responsabilidade de especialistas em TI. <strong>Cada usu&aacute;rio &eacute; a primeira e mais importante linha de defesa</strong> &mdash; a maioria dos ataques explora erros humanos, n&atilde;o falhas t&eacute;cnicas.</p>
         </div>
 
-        <!-- CARD 2 — Tríade CID -->
-        <div class="content-card">
-            <h2>&#x1F510; A Tr&iacute;ade CID &mdash; Os Tr&ecirc;s Pilares</h2>
-            <p>A base de toda a Seguran&ccedil;a da Informa&ccedil;&atilde;o &eacute; a <strong>tr&iacute;ade CID</strong> (em ingl&ecirc;s, CIA). Qualquer incidente de seguran&ccedil;a viola ao menos um desses tr&ecirc;s pilares:</p>
+        <h3>&#x1F4CA; Panorama das amea&ccedil;as digitais no Brasil</h3>
+        <ul>
+            <li>O Brasil &eacute; um dos pa&iacute;ses <strong>mais atacados da Am&eacute;rica Latina</strong> por ciberataques</li>
+            <li>Phishing &eacute; o tipo de golpe digital mais comum, especialmente por WhatsApp e e-mail</li>
+            <li>Ataques de ransomware cresceram mais de 90% ap&oacute;s 2020, atingindo hospitais e &oacute;rg&atilde;os p&uacute;blicos</li>
+            <li>A maior parte das v&iacute;timas n&atilde;o sabia que estava em risco at&eacute; o momento do ataque</li>
+        </ul>
+    </div>
 
-            <div class="cid-grid">
-                <div class="cid-card conf">
-                    <div class="cid-icon">&#x1F512;</div>
-                    <div class="cid-letra">C</div>
-                    <div class="cid-nome">Confidencialidade</div>
-                    <div class="cid-desc">A informa&ccedil;&atilde;o s&oacute; &eacute; acessada por quem tem <strong>permiss&atilde;o</strong>. Dados pessoais, senhas e documentos sigilosos devem ser vis&iacute;veis apenas aos autorizados.</div>
-                </div>
-                <div class="cid-card integ">
-                    <div class="cid-icon">&#x2714;&#xFE0F;</div>
-                    <div class="cid-letra">I</div>
-                    <div class="cid-nome">Integridade</div>
-                    <div class="cid-desc">A informa&ccedil;&atilde;o &eacute; <strong>precisa e n&atilde;o foi alterada</strong> indevidamente. Um arquivo corrompido ou uma nota adulterada no sistema viola a integridade.</div>
-                </div>
-                <div class="cid-card disp">
-                    <div class="cid-icon">&#x1F7E1;</div>
-                    <div class="cid-letra">D</div>
-                    <div class="cid-nome">Disponibilidade</div>
-                    <div class="cid-desc">A informa&ccedil;&atilde;o e os sistemas est&atilde;o <strong>acess&iacute;veis quando necess&aacute;rio</strong>. Um site fora do ar ou um sistema travado viola a disponibilidade.</div>
-                </div>
-            </div>
+    <!-- SLIDE 2: Tríade CID -->
+    <div class="content-card">
+        <h2>&#x1F510; A Tr&iacute;ade CID &mdash; Os Tr&ecirc;s Pilares</h2>
 
-            <h3>&#x1F4CB; Exemplos pr&aacute;ticos da tr&iacute;ade</h3>
-            <div class="cenario-list">
-                <div class="cenario-item">
-                    <span class="cenario-badge badge-c">Confidencialidade</span>
-                    <p>Um colega descobre sua senha e acessa sua conta no SUAP sem permiss&atilde;o, lendo suas notas e mensagens privadas.</p>
-                </div>
-                <div class="cenario-item">
-                    <span class="cenario-badge badge-i">Integridade</span>
-                    <p>Um hacker invade o banco de dados de uma escola e altera notas de alunos para aprovar reprovados mediante pagamento.</p>
-                </div>
-                <div class="cenario-item">
-                    <span class="cenario-badge badge-d">Disponibilidade</span>
-                    <p>O sistema do ENEM fica fora do ar no dia da prova online por causa de um ataque, impedindo candidatos de acessar.</p>
-                </div>
-                <div class="cenario-item">
-                    <span class="cenario-badge badge-c">Confidencialidade</span>
-                    <p>Uma foto sua enviada em conversa privada &eacute; compartilhada sem sua autoriza&ccedil;&atilde;o para outras pessoas.</p>
-                </div>
-                <div class="cenario-item">
-                    <span class="cenario-badge badge-i">Integridade</span>
-                    <p>Um v&iacute;rus modifica os arquivos de um trabalho acad&ecirc;mico salvo no computador, tornando-os ileg&iacute;veis ou com conte&uacute;do diferente.</p>
-                </div>
-            </div>
+        <!-- SVG: triângulo CID animado -->
+        <div class="svg-wrap">
+        <svg viewBox="0 0 680 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
+            <!-- triângulo conectando os 3 pilares -->
+            <line x1="340" y1="45" x2="120" y2="215" stroke="#334155" stroke-width="2" stroke-dasharray="6,4" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="0.8s" fill="freeze"/>
+            </line>
+            <line x1="340" y1="45" x2="560" y2="215" stroke="#334155" stroke-width="2" stroke-dasharray="6,4" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="0.8s" fill="freeze"/>
+            </line>
+            <line x1="120" y1="215" x2="560" y2="215" stroke="#334155" stroke-width="2" stroke-dasharray="6,4" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="0.8s" fill="freeze"/>
+            </line>
+            <!-- label central -->
+            <text x="340" y="148" text-anchor="middle" font-size="11" fill="#475569" font-weight="600" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="1.2s" fill="freeze"/>Tríade CID</text>
+            <text x="340" y="164" text-anchor="middle" font-size="10" fill="#64748b" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="1.2s" fill="freeze"/>base da Segurança da Informação</text>
+
+            <!-- D — Disponibilidade (topo) -->
+            <rect x="270" y="10" width="140" height="72" rx="14" fill="#b45309" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0s" fill="freeze"/>
+            </rect>
+            <text x="340" y="35" text-anchor="middle" font-size="18" fill="white" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0s" fill="freeze"/>&#x1F7E1;</text>
+            <text x="340" y="55" text-anchor="middle" font-size="14" fill="white" font-weight="900" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0s" fill="freeze"/>D</text>
+            <text x="340" y="72" text-anchor="middle" font-size="9" fill="#fed7aa" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0s" fill="freeze"/>Disponibilidade</text>
+            <!-- pulse D -->
+            <ellipse cx="340" cy="46" rx="80" ry="44" fill="none" stroke="#f59e0b" stroke-width="2" opacity="0">
+                <animate attributeName="opacity" values="0;0.6;0" dur="2s" begin="0.5s" repeatCount="indefinite"/>
+                <animate attributeName="rx" values="80;100;80" dur="2s" begin="0.5s" repeatCount="indefinite"/>
+                <animate attributeName="ry" values="44;58;44" dur="2s" begin="0.5s" repeatCount="indefinite"/>
+            </ellipse>
+
+            <!-- C — Confidencialidade (esquerda) -->
+            <rect x="40" y="175" width="160" height="72" rx="14" fill="#1d4ed8" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.3s" fill="freeze"/>
+            </rect>
+            <text x="120" y="200" text-anchor="middle" font-size="18" fill="white" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.3s" fill="freeze"/>&#x1F512;</text>
+            <text x="120" y="220" text-anchor="middle" font-size="14" fill="white" font-weight="900" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.3s" fill="freeze"/>C</text>
+            <text x="120" y="237" text-anchor="middle" font-size="9" fill="#bfdbfe" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.3s" fill="freeze"/>Confidencialidade</text>
+            <!-- pulse C -->
+            <ellipse cx="120" cy="211" rx="88" ry="44" fill="none" stroke="#3b82f6" stroke-width="2" opacity="0">
+                <animate attributeName="opacity" values="0;0.6;0" dur="2s" begin="1s" repeatCount="indefinite"/>
+                <animate attributeName="rx" values="88;108;88" dur="2s" begin="1s" repeatCount="indefinite"/>
+                <animate attributeName="ry" values="44;58;44" dur="2s" begin="1s" repeatCount="indefinite"/>
+            </ellipse>
+
+            <!-- I — Integridade (direita) -->
+            <rect x="480" y="175" width="160" height="72" rx="14" fill="#15803d" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.6s" fill="freeze"/>
+            </rect>
+            <text x="560" y="200" text-anchor="middle" font-size="18" fill="white" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.6s" fill="freeze"/>&#x2714;&#xFE0F;</text>
+            <text x="560" y="220" text-anchor="middle" font-size="14" fill="white" font-weight="900" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.6s" fill="freeze"/>I</text>
+            <text x="560" y="237" text-anchor="middle" font-size="9" fill="#bbf7d0" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.6s" fill="freeze"/>Integridade</text>
+            <!-- pulse I -->
+            <ellipse cx="560" cy="211" rx="88" ry="44" fill="none" stroke="#22c55e" stroke-width="2" opacity="0">
+                <animate attributeName="opacity" values="0;0.6;0" dur="2s" begin="1.5s" repeatCount="indefinite"/>
+                <animate attributeName="rx" values="88;108;88" dur="2s" begin="1.5s" repeatCount="indefinite"/>
+                <animate attributeName="ry" values="44;58;44" dur="2s" begin="1.5s" repeatCount="indefinite"/>
+            </ellipse>
+        </svg>
         </div>
 
-        <!-- CARD 3 — Tipos de Malware -->
-        <div class="content-card">
-            <h2>&#x1F9A0; Tipos de Malware</h2>
-            <p>O termo <strong>malware</strong> (do ingl&ecirc;s <em>malicious software</em>) designa qualquer programa criado com inten&ccedil;&atilde;o maliciosa. Cada tipo age de forma diferente e tem objetivos distintos:</p>
+        <p>A base de toda a Seguran&ccedil;a da Informa&ccedil;&atilde;o &eacute; a <strong>tr&iacute;ade CID</strong> (em ingl&ecirc;s, CIA). Qualquer incidente de seguran&ccedil;a viola ao menos um desses tr&ecirc;s pilares:</p>
 
-            <table class="compare-table">
-                <tr>
-                    <th>Tipo</th>
-                    <th>Como age</th>
-                    <th>Exemplo / Impacto</th>
-                </tr>
-                <tr>
-                    <td><span class="malware-nome">&#x1F9A0; V&iacute;rus</span></td>
-                    <td>Infecta arquivos leg&iacute;timos e se espalha quando o arquivo &eacute; executado. Precisa de a&ccedil;&atilde;o humana para se propagar.</td>
-                    <td>Corrupc&atilde;o de arquivos, lentid&atilde;o do sistema</td>
-                </tr>
-                <tr>
-                    <td><span class="malware-nome">&#x1F40D; Worm</span></td>
-                    <td>Se replica <strong>automaticamente</strong> pela rede sem precisar de a&ccedil;&atilde;o do usu&aacute;rio. Consome recursos e pode abrir portas para outros ataques.</td>
-                    <td>Sobrecarga de redes, espalha outros malwares</td>
-                </tr>
-                <tr>
-                    <td><span class="malware-nome">&#x1F434; Trojan</span></td>
-                    <td>Disfarça-se de programa leg&iacute;timo. Ap&oacute;s instalado, abre acesso remoto ao invasor ou instala outros malwares.</td>
-                    <td>Roubo de dados, controle remoto do dispositivo</td>
-                </tr>
-                <tr>
-                    <td><span class="malware-nome">&#x1F510; Ransomware</span></td>
-                    <td><strong>Criptografa</strong> os arquivos da v&iacute;tima e exige pagamento (resgate) para devolver o acesso. Muito usado contra empresas e &oacute;rg&atilde;os p&uacute;blicos.</td>
-                    <td>Perda total de dados, preju&iacute;zos milion&aacute;rios</td>
-                </tr>
-                <tr>
-                    <td><span class="malware-nome">&#x1F576;&#xFE0F; Spyware</span></td>
-                    <td>Monitora <strong>silenciosamente</strong> as atividades do usu&aacute;rio: teclas digitadas, sites visitados, senhas.</td>
-                    <td>Roubo de credenciais banc&aacute;rias e senhas</td>
-                </tr>
-                <tr>
-                    <td><span class="malware-nome">&#x1F4E2; Adware</span></td>
-                    <td>Exibe an&uacute;ncios indesejados de forma agressiva. Geralmente menos perigoso, mas pode abrir caminho para malwares piores.</td>
-                    <td>Pop-ups, redirecionamentos no navegador</td>
-                </tr>
-            </table>
-
-            <div class="alert-box">
-                <p>&#x26A0;&#xFE0F; O <strong>ransomware</strong> &eacute; considerado a amea&ccedil;a mais destrutiva da atualidade. Em 2023, ataques de ransomware paralisaram hospitais, &oacute;rg&atilde;os do governo e universidades no Brasil. A principal prote&ccedil;&atilde;o &eacute; manter backups atualizados e n&atilde;o abrir arquivos suspeitos.</p>
+        <div class="cid-grid">
+            <div class="cid-card conf">
+                <div class="cid-icon">&#x1F512;</div>
+                <div class="cid-letra">C</div>
+                <div class="cid-nome">Confidencialidade</div>
+                <div class="cid-desc">A informa&ccedil;&atilde;o s&oacute; &eacute; acessada por quem tem <strong>permiss&atilde;o</strong>. Dados pessoais, senhas e documentos sigilosos devem ser vis&iacute;veis apenas aos autorizados.</div>
             </div>
-        </div>
-
-        <!-- CARD 4 — Vetores de ataque -->
-        <div class="content-card">
-            <h2>&#x1F3AF; Como os Ataques Chegam at&eacute; Voc&ecirc;</h2>
-            <p>Os <strong>vetores de ataque</strong> s&atilde;o os caminhos que os criminosos digitais usam para atingir as v&iacute;timas. Conhec&ecirc;-los &eacute; o primeiro passo para se proteger:</p>
-
-            <div class="vetor-grid">
-                <div class="vetor-card">
-                    <div class="vetor-icon">&#x1F4E7;</div>
-                    <div class="vetor-title">E-mail malicioso</div>
-                    <div class="vetor-desc">Links e anexos falsos enviados por remetentes que parecem confi&aacute;veis. &Eacute; o vetor mais comum.</div>
-                </div>
-                <div class="vetor-card">
-                    <div class="vetor-icon">&#x1F310;</div>
-                    <div class="vetor-title">Sites falsos</div>
-                    <div class="vetor-desc">P&aacute;ginas que imitam bancos, lojas ou institui&ccedil;&otilde;es para roubar dados digitados pelo usu&aacute;rio.</div>
-                </div>
-                <div class="vetor-card">
-                    <div class="vetor-icon">&#x1F4F2;</div>
-                    <div class="vetor-title">WhatsApp / SMS</div>
-                    <div class="vetor-desc">Mensagens com links encurtados ou promo&ccedil;&otilde;es falsas que direcionam para p&aacute;ginas maliciosas.</div>
-                </div>
-                <div class="vetor-card">
-                    <div class="vetor-icon">&#x1F4BE;</div>
-                    <div class="vetor-title">Pendrive infectado</div>
-                    <div class="vetor-desc">Dispositivos USB deixados propositalmente em locais p&uacute;blicos. Ao conectar, instalam malware automaticamente.</div>
-                </div>
-                <div class="vetor-card">
-                    <div class="vetor-icon">&#x1F4F6;</div>
-                    <div class="vetor-title">Wi-Fi p&uacute;blico</div>
-                    <div class="vetor-desc">Redes abertas permitem que atacantes interceptem dados trafegados, como senhas e logins.</div>
-                </div>
-                <div class="vetor-card">
-                    <div class="vetor-icon">&#x1F4F1;</div>
-                    <div class="vetor-title">Apps falsos</div>
-                    <div class="vetor-desc">Aplicativos fora das lojas oficiais ou clones de apps populares que cont&ecirc;m c&oacute;digo malicioso.</div>
-                </div>
+            <div class="cid-card integ">
+                <div class="cid-icon">&#x2714;&#xFE0F;</div>
+                <div class="cid-letra">I</div>
+                <div class="cid-nome">Integridade</div>
+                <div class="cid-desc">A informa&ccedil;&atilde;o &eacute; <strong>precisa e n&atilde;o foi alterada</strong> indevidamente. Um arquivo corrompido ou uma nota adulterada no sistema viola a integridade.</div>
             </div>
-        </div>
-
-        <!-- CARD 5 — Engenharia social -->
-        <div class="content-card">
-            <h2>&#x1F3AD; Engenharia Social</h2>
-            <p>A <strong>engenharia social</strong> &eacute; a manipula&ccedil;&atilde;o psicol&oacute;gica de pessoas para que revelem informa&ccedil;&otilde;es confidenciais ou executem a&ccedil;&otilde;es prejudiciais. Em vez de atacar sistemas, o criminoso <strong>ataca o ser humano</strong> &mdash; explorando empresos, confian&ccedil;a, medo ou urg&ecirc;ncia.</p>
-            <p>&Eacute; considerada a t&eacute;cnica mais eficaz de ataque porque <strong>nenhum antiv&iacute;rus protege contra um usu&aacute;rio enganado</strong>. Por isso, conhecer os tipos &eacute; a melhor defesa.</p>
-
-            <div class="eng-grid">
-                <div class="eng-card">
-                    <div class="eng-tipo">&#x1F3A3; Phishing</div>
-                    <div class="eng-canal">Via e-mail</div>
-                    <div class="eng-desc">Mensagem falsa que imita uma institui&ccedil;&atilde;o (banco, Receita Federal, IFRN) com link para p&aacute;gina clonada onde a v&iacute;tima digita seus dados.</div>
-                </div>
-                <div class="eng-card">
-                    <div class="eng-tipo">&#x1F4F1; Smishing</div>
-                    <div class="eng-canal">Via SMS ou WhatsApp</div>
-                    <div class="eng-desc">Mesmo princípio do phishing, mas executado por mensagem de texto. Comum com falsas notifica&ccedil;&otilde;es de entrega de encomenda ou premia&ccedil;&otilde;es.</div>
-                </div>
-                <div class="eng-card">
-                    <div class="eng-tipo">&#x1F4DE; Vishing</div>
-                    <div class="eng-canal">Via liga&ccedil;&atilde;o telef&ocirc;nica</div>
-                    <div class="eng-desc">Ligação falsa de "banco" ou "suporte t&eacute;cnico" pedindo senha, token ou acesso remoto ao computador da v&iacute;tima.</div>
-                </div>
-                <div class="eng-card">
-                    <div class="eng-tipo">&#x1F3AD; Pretexting</div>
-                    <div class="eng-canal">Qualquer canal</div>
-                    <div class="eng-desc">O atacante cria um cen&aacute;rio falso convincente (&ldquo;Sou do TI da escola&rdquo;) para extrair informa&ccedil;&otilde;es ou acesso privilegiado.</div>
-                </div>
-            </div>
-
-            <h3>&#x26A0;&#xFE0F; Sinais de alerta &mdash; desconfie quando houver:</h3>
-            <div class="alerta-list">
-                <div class="alerta-item">
-                    <div class="al-icon">&#x23F0;</div>
-                    <p><strong>Urg&ecirc;ncia ou amea&ccedil;a:</strong> &ldquo;Sua conta ser&aacute; bloqueada em 24h se voc&ecirc; n&atilde;o agir agora!&rdquo;</p>
-                </div>
-                <div class="alerta-item">
-                    <div class="al-icon">&#x1F381;</div>
-                    <p><strong>Premia&ccedil;&atilde;o inesperada:</strong> &ldquo;Voc&ecirc; foi selecionado para ganhar um pr&ecirc;mio. Clique aqui!&rdquo;</p>
-                </div>
-                <div class="alerta-item">
-                    <div class="al-icon">&#x1F517;</div>
-                    <p><strong>Links suspeitos:</strong> URL com erros de grafia (<em>bancobrasil.com<strong>br</strong>.xyz</em>) ou encurtadores.</p>
-                </div>
-                <div class="alerta-item">
-                    <div class="al-icon">&#x1F4DD;</div>
-                    <p><strong>Erros de portugu&ecirc;s:</strong> mensagens com gram&aacute;tica estranha ou palavras fora de contexto.</p>
-                </div>
-                <div class="alerta-item">
-                    <div class="al-icon">&#x1F4CE;</div>
-                    <p><strong>Anexo n&atilde;o solicitado:</strong> arquivo enviado por desconhecido ou que voc&ecirc; n&atilde;o esperava receber.</p>
-                </div>
-                <div class="alerta-item">
-                    <div class="al-icon">&#x1F511;</div>
-                    <p><strong>Pedido de senha:</strong> institui&ccedil;&otilde;es leg&iacute;timas <strong>nunca pedem sua senha</strong> por e-mail, SMS ou telefone.</p>
-                </div>
+            <div class="cid-card disp">
+                <div class="cid-icon">&#x1F7E1;</div>
+                <div class="cid-letra">D</div>
+                <div class="cid-nome">Disponibilidade</div>
+                <div class="cid-desc">A informa&ccedil;&atilde;o e os sistemas est&atilde;o <strong>acess&iacute;veis quando necess&aacute;rio</strong>. Um site fora do ar ou um sistema travado viola a disponibilidade.</div>
             </div>
         </div>
 
-        <!-- CARD 6 — Boas práticas -->
-        <div class="content-card">
-            <h2>&#x2705; Como se Proteger &mdash; Boas Pr&aacute;ticas</h2>
+        <h3>&#x1F4CB; Exemplos pr&aacute;ticos da tr&iacute;ade</h3>
+        <div class="cenario-list">
+            <div class="cenario-item">
+                <span class="cenario-badge badge-c">Confidencialidade</span>
+                <p>Um colega descobre sua senha e acessa sua conta no SUAP sem permiss&atilde;o, lendo suas notas e mensagens privadas.</p>
+            </div>
+            <div class="cenario-item">
+                <span class="cenario-badge badge-i">Integridade</span>
+                <p>Um hacker invade o banco de dados de uma escola e altera notas de alunos para aprovar reprovados mediante pagamento.</p>
+            </div>
+            <div class="cenario-item">
+                <span class="cenario-badge badge-d">Disponibilidade</span>
+                <p>O sistema do ENEM fica fora do ar no dia da prova online por causa de um ataque, impedindo candidatos de acessar.</p>
+            </div>
+            <div class="cenario-item">
+                <span class="cenario-badge badge-c">Confidencialidade</span>
+                <p>Uma foto sua enviada em conversa privada &eacute; compartilhada sem sua autoriza&ccedil;&atilde;o para outras pessoas.</p>
+            </div>
+            <div class="cenario-item">
+                <span class="cenario-badge badge-i">Integridade</span>
+                <p>Um v&iacute;rus modifica os arquivos de um trabalho acad&ecirc;mico salvo no computador, tornando-os ileg&iacute;veis ou com conte&uacute;do diferente.</p>
+            </div>
+        </div>
+    </div>
 
-            <div class="boas-grid">
-                <div class="boa-item">
-                    <div class="boa-icon">&#x1F9D0;</div>
-                    <div class="boa-text">
-                        <strong>Pense antes de clicar</strong>
-                        <span>Antes de abrir um link ou anexo, pergunte-se: eu esperava esse e-mail? O remetente &eacute; quem diz ser? O endere&ccedil;o do link faz sentido?</span>
+    <!-- SLIDE 3: Tipos de Malware -->
+    <div class="content-card">
+        <h2>&#x1F9A0; Tipos de Malware</h2>
+
+        <!-- SVG: computador com tipos de malware entrando -->
+        <div class="svg-wrap">
+        <svg viewBox="0 0 680 180" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
+            <defs>
+                <marker id="atk" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto">
+                    <path d="M0,0 L0,6 L7,3 z" fill="#dc2626"/>
+                </marker>
+            </defs>
+            <!-- computador central -->
+            <rect x="270" y="55" width="140" height="90" rx="8" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+            <rect x="278" y="63" width="124" height="64" rx="4" fill="#0f172a"/>
+            <text x="340" y="100" text-anchor="middle" font-size="26" fill="#e2e8f0">&#x1F4BB;</text>
+            <rect x="300" y="150" width="80" height="8" rx="4" fill="#334155"/>
+            <rect x="320" y="145" width="40" height="8" rx="4" fill="#1e293b"/>
+
+            <!-- vírus -->
+            <text x="60" y="32" text-anchor="middle" font-size="10" fill="#ef4444" font-weight="700">&#x1F9A0; Vírus</text>
+            <line x1="100" y1="35" x2="268" y2="88" stroke="#dc2626" stroke-width="1.8" stroke-dasharray="5,3" marker-end="url(#atk)">
+                <animate attributeName="stroke-dashoffset" from="50" to="0" dur="0.8s" repeatCount="indefinite"/>
+            </line>
+
+            <!-- worm -->
+            <text x="60" y="78" text-anchor="middle" font-size="10" fill="#ef4444" font-weight="700">&#x1F40D; Worm</text>
+            <line x1="100" y1="78" x2="268" y2="100" stroke="#dc2626" stroke-width="1.8" stroke-dasharray="5,3" marker-end="url(#atk)">
+                <animate attributeName="stroke-dashoffset" from="50" to="0" dur="0.9s" repeatCount="indefinite"/>
+            </line>
+
+            <!-- trojan -->
+            <text x="60" y="124" text-anchor="middle" font-size="10" fill="#ef4444" font-weight="700">&#x1F434; Trojan</text>
+            <line x1="100" y1="120" x2="268" y2="112" stroke="#dc2626" stroke-width="1.8" stroke-dasharray="5,3" marker-end="url(#atk)">
+                <animate attributeName="stroke-dashoffset" from="50" to="0" dur="1.0s" repeatCount="indefinite"/>
+            </line>
+
+            <!-- ransomware -->
+            <text x="620" y="32" text-anchor="middle" font-size="10" fill="#ef4444" font-weight="700">&#x1F510; Ransomware</text>
+            <line x1="580" y1="35" x2="412" y2="88" stroke="#dc2626" stroke-width="1.8" stroke-dasharray="5,3" marker-end="url(#atk)">
+                <animate attributeName="stroke-dashoffset" from="50" to="0" dur="0.7s" repeatCount="indefinite"/>
+            </line>
+
+            <!-- spyware -->
+            <text x="620" y="78" text-anchor="middle" font-size="10" fill="#ef4444" font-weight="700">&#x1F576;&#xFE0F; Spyware</text>
+            <line x1="580" y1="78" x2="412" y2="100" stroke="#dc2626" stroke-width="1.8" stroke-dasharray="5,3" marker-end="url(#atk)">
+                <animate attributeName="stroke-dashoffset" from="50" to="0" dur="1.1s" repeatCount="indefinite"/>
+            </line>
+
+            <!-- adware -->
+            <text x="620" y="124" text-anchor="middle" font-size="10" fill="#ef4444" font-weight="700">&#x1F4E2; Adware</text>
+            <line x1="580" y1="120" x2="412" y2="112" stroke="#dc2626" stroke-width="1.8" stroke-dasharray="5,3" marker-end="url(#atk)">
+                <animate attributeName="stroke-dashoffset" from="50" to="0" dur="1.2s" repeatCount="indefinite"/>
+            </line>
+
+            <!-- escudo tentando bloquear -->
+            <text x="340" y="175" text-anchor="middle" font-size="10" fill="#00838f" font-weight="600">🛡️ Antivírus + Comportamento do usuário = Proteção</text>
+        </svg>
+        </div>
+
+        <p>O termo <strong>malware</strong> (do ingl&ecirc;s <em>malicious software</em>) designa qualquer programa criado com inten&ccedil;&atilde;o maliciosa. Cada tipo age de forma diferente e tem objetivos distintos:</p>
+
+        <table class="compare-table">
+            <tr>
+                <th>Tipo</th>
+                <th>Como age</th>
+                <th>Exemplo / Impacto</th>
+            </tr>
+            <tr>
+                <td><span class="malware-nome">&#x1F9A0; V&iacute;rus</span></td>
+                <td>Infecta arquivos leg&iacute;timos e se espalha quando o arquivo &eacute; executado. Precisa de a&ccedil;&atilde;o humana para se propagar.</td>
+                <td>Corrup&ccedil;&atilde;o de arquivos, lentid&atilde;o do sistema</td>
+            </tr>
+            <tr>
+                <td><span class="malware-nome">&#x1F40D; Worm</span></td>
+                <td>Se replica <strong>automaticamente</strong> pela rede sem precisar de a&ccedil;&atilde;o do usu&aacute;rio. Consome recursos e pode abrir portas para outros ataques.</td>
+                <td>Sobrecarga de redes, espalha outros malwares</td>
+            </tr>
+            <tr>
+                <td><span class="malware-nome">&#x1F434; Trojan</span></td>
+                <td>Disfarça-se de programa leg&iacute;timo. Ap&oacute;s instalado, abre acesso remoto ao invasor ou instala outros malwares.</td>
+                <td>Roubo de dados, controle remoto do dispositivo</td>
+            </tr>
+            <tr>
+                <td><span class="malware-nome">&#x1F510; Ransomware</span></td>
+                <td><strong>Criptografa</strong> os arquivos da v&iacute;tima e exige pagamento (resgate) para devolver o acesso. Muito usado contra empresas e &oacute;rg&atilde;os p&uacute;blicos.</td>
+                <td>Perda total de dados, preju&iacute;zos milion&aacute;rios</td>
+            </tr>
+            <tr>
+                <td><span class="malware-nome">&#x1F576;&#xFE0F; Spyware</span></td>
+                <td>Monitora <strong>silenciosamente</strong> as atividades do usu&aacute;rio: teclas digitadas, sites visitados, senhas.</td>
+                <td>Roubo de credenciais banc&aacute;rias e senhas</td>
+            </tr>
+            <tr>
+                <td><span class="malware-nome">&#x1F4E2; Adware</span></td>
+                <td>Exibe an&uacute;ncios indesejados de forma agressiva. Geralmente menos perigoso, mas pode abrir caminho para malwares piores.</td>
+                <td>Pop-ups, redirecionamentos no navegador</td>
+            </tr>
+        </table>
+
+        <div class="alert-box">
+            <p>&#x26A0;&#xFE0F; O <strong>ransomware</strong> &eacute; considerado a amea&ccedil;a mais destrutiva da atualidade. Em 2023, ataques de ransomware paralisaram hospitais, &oacute;rg&atilde;os do governo e universidades no Brasil. A principal prote&ccedil;&atilde;o &eacute; manter backups atualizados e n&atilde;o abrir arquivos suspeitos.</p>
+        </div>
+    </div>
+
+    <!-- SLIDE 4: Vetores de ataque -->
+    <div class="content-card">
+        <h2>&#x1F3AF; Como os Ataques Chegam at&eacute; Voc&ecirc;</h2>
+
+        <!-- SVG: vetores de entrada animados -->
+        <div class="svg-wrap">
+        <svg viewBox="0 0 680 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
+            <defs>
+                <marker id="atk2" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto">
+                    <path d="M0,0 L0,6 L7,3 z" fill="#ef4444"/>
+                </marker>
+            </defs>
+            <!-- usuário no centro -->
+            <circle cx="340" cy="110" r="48" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+            <text x="340" y="103" text-anchor="middle" font-size="24">&#x1F9D1;</text>
+            <text x="340" y="126" text-anchor="middle" font-size="9" fill="#94a3b8">Usuário</text>
+            <text x="340" y="140" text-anchor="middle" font-size="9" fill="#dc2626" font-weight="700">alvo</text>
+
+            <!-- E-mail malicioso — cima esquerda -->
+            <rect x="20" y="10" width="120" height="44" rx="8" fill="#2d0a0a" stroke="#dc2626" stroke-width="1.5" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="0.2s" fill="freeze"/>
+            </rect>
+            <text x="80" y="30" text-anchor="middle" font-size="12" fill="#fca5a5" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="0.2s" fill="freeze"/>&#x1F4E7; E-mail</text>
+            <text x="80" y="46" text-anchor="middle" font-size="9" fill="#f87171" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="0.2s" fill="freeze"/>malicioso</text>
+            <line x1="142" y1="36" x2="295" y2="82" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#atk2)" opacity="0">
+                <animate attributeName="opacity" from="0" to="0.8" dur="0.4s" begin="0.2s" fill="freeze"/>
+                <animate attributeName="stroke-dashoffset" from="40" to="0" dur="0.6s" repeatCount="indefinite"/>
+            </line>
+
+            <!-- Sites falsos — cima -->
+            <rect x="280" y="10" width="120" height="44" rx="8" fill="#2d0a0a" stroke="#dc2626" stroke-width="1.5" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="0.5s" fill="freeze"/>
+            </rect>
+            <text x="340" y="30" text-anchor="middle" font-size="12" fill="#fca5a5" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="0.5s" fill="freeze"/>&#x1F310; Sites falsos</text>
+            <text x="340" y="46" text-anchor="middle" font-size="9" fill="#f87171" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="0.5s" fill="freeze"/>phishing web</text>
+            <line x1="340" y1="56" x2="340" y2="60" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#atk2)" opacity="0">
+                <animate attributeName="opacity" from="0" to="0.8" dur="0.4s" begin="0.5s" fill="freeze"/>
+                <animate attributeName="stroke-dashoffset" from="40" to="0" dur="0.6s" repeatCount="indefinite"/>
+            </line>
+
+            <!-- WhatsApp — cima direita -->
+            <rect x="540" y="10" width="120" height="44" rx="8" fill="#2d0a0a" stroke="#dc2626" stroke-width="1.5" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="0.8s" fill="freeze"/>
+            </rect>
+            <text x="600" y="30" text-anchor="middle" font-size="12" fill="#fca5a5" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="0.8s" fill="freeze"/>&#x1F4F2; WhatsApp</text>
+            <text x="600" y="46" text-anchor="middle" font-size="9" fill="#f87171" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="0.8s" fill="freeze"/>smishing</text>
+            <line x1="538" y1="36" x2="385" y2="82" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#atk2)" opacity="0">
+                <animate attributeName="opacity" from="0" to="0.8" dur="0.4s" begin="0.8s" fill="freeze"/>
+                <animate attributeName="stroke-dashoffset" from="40" to="0" dur="0.6s" repeatCount="indefinite"/>
+            </line>
+
+            <!-- Pendrive — baixo esquerda -->
+            <rect x="20" y="168" width="120" height="44" rx="8" fill="#2d0a0a" stroke="#dc2626" stroke-width="1.5" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="1.1s" fill="freeze"/>
+            </rect>
+            <text x="80" y="188" text-anchor="middle" font-size="12" fill="#fca5a5" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="1.1s" fill="freeze"/>&#x1F4BE; Pendrive</text>
+            <text x="80" y="204" text-anchor="middle" font-size="9" fill="#f87171" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="1.1s" fill="freeze"/>infectado</text>
+            <line x1="142" y1="180" x2="295" y2="140" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#atk2)" opacity="0">
+                <animate attributeName="opacity" from="0" to="0.8" dur="0.4s" begin="1.1s" fill="freeze"/>
+                <animate attributeName="stroke-dashoffset" from="40" to="0" dur="0.6s" repeatCount="indefinite"/>
+            </line>
+
+            <!-- Wi-Fi público — baixo -->
+            <rect x="280" y="168" width="120" height="44" rx="8" fill="#2d0a0a" stroke="#dc2626" stroke-width="1.5" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="1.4s" fill="freeze"/>
+            </rect>
+            <text x="340" y="188" text-anchor="middle" font-size="12" fill="#fca5a5" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="1.4s" fill="freeze"/>&#x1F4F6; Wi-Fi p&uacute;blico</text>
+            <text x="340" y="204" text-anchor="middle" font-size="9" fill="#f87171" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="1.4s" fill="freeze"/>interceptação</text>
+            <line x1="340" y1="166" x2="340" y2="160" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#atk2)" opacity="0">
+                <animate attributeName="opacity" from="0" to="0.8" dur="0.4s" begin="1.4s" fill="freeze"/>
+                <animate attributeName="stroke-dashoffset" from="40" to="0" dur="0.6s" repeatCount="indefinite"/>
+            </line>
+
+            <!-- Apps falsos — baixo direita -->
+            <rect x="540" y="168" width="120" height="44" rx="8" fill="#2d0a0a" stroke="#dc2626" stroke-width="1.5" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="1.7s" fill="freeze"/>
+            </rect>
+            <text x="600" y="188" text-anchor="middle" font-size="12" fill="#fca5a5" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="1.7s" fill="freeze"/>&#x1F4F1; Apps falsos</text>
+            <text x="600" y="204" text-anchor="middle" font-size="9" fill="#f87171" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="1.7s" fill="freeze"/>fora da loja oficial</text>
+            <line x1="538" y1="180" x2="385" y2="140" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#atk2)" opacity="0">
+                <animate attributeName="opacity" from="0" to="0.8" dur="0.4s" begin="1.7s" fill="freeze"/>
+                <animate attributeName="stroke-dashoffset" from="40" to="0" dur="0.6s" repeatCount="indefinite"/>
+            </line>
+        </svg>
+        </div>
+
+        <p>Os <strong>vetores de ataque</strong> s&atilde;o os caminhos que os criminosos digitais usam para atingir as v&iacute;timas. Conhec&ecirc;-los &eacute; o primeiro passo para se proteger:</p>
+
+        <div class="vetor-grid">
+            <div class="vetor-card">
+                <div class="vetor-icon">&#x1F4E7;</div>
+                <div class="vetor-title">E-mail malicioso</div>
+                <div class="vetor-desc">Links e anexos falsos enviados por remetentes que parecem confi&aacute;veis. &Eacute; o vetor mais comum.</div>
+            </div>
+            <div class="vetor-card">
+                <div class="vetor-icon">&#x1F310;</div>
+                <div class="vetor-title">Sites falsos</div>
+                <div class="vetor-desc">P&aacute;ginas que imitam bancos, lojas ou institui&ccedil;&otilde;es para roubar dados digitados pelo usu&aacute;rio.</div>
+            </div>
+            <div class="vetor-card">
+                <div class="vetor-icon">&#x1F4F2;</div>
+                <div class="vetor-title">WhatsApp / SMS</div>
+                <div class="vetor-desc">Mensagens com links encurtados ou promo&ccedil;&otilde;es falsas que direcionam para p&aacute;ginas maliciosas.</div>
+            </div>
+            <div class="vetor-card">
+                <div class="vetor-icon">&#x1F4BE;</div>
+                <div class="vetor-title">Pendrive infectado</div>
+                <div class="vetor-desc">Dispositivos USB deixados propositalmente em locais p&uacute;blicos. Ao conectar, instalam malware automaticamente.</div>
+            </div>
+            <div class="vetor-card">
+                <div class="vetor-icon">&#x1F4F6;</div>
+                <div class="vetor-title">Wi-Fi p&uacute;blico</div>
+                <div class="vetor-desc">Redes abertas permitem que atacantes interceptem dados trafegados, como senhas e logins.</div>
+            </div>
+            <div class="vetor-card">
+                <div class="vetor-icon">&#x1F4F1;</div>
+                <div class="vetor-title">Apps falsos</div>
+                <div class="vetor-desc">Aplicativos fora das lojas oficiais ou clones de apps populares que cont&ecirc;m c&oacute;digo malicioso.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 5: Engenharia Social -->
+    <div class="content-card">
+        <h2>&#x1F3AD; Engenharia Social</h2>
+
+        <!-- SVG: táticas psicológicas atacando o usuário -->
+        <div class="svg-wrap">
+        <svg viewBox="0 0 680 160" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
+            <!-- pessoa no centro -->
+            <circle cx="340" cy="80" r="42" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+            <text x="340" y="73" text-anchor="middle" font-size="22">&#x1F9E0;</text>
+            <text x="340" y="94" text-anchor="middle" font-size="9" fill="#94a3b8">mente humana</text>
+            <text x="340" y="108" text-anchor="middle" font-size="8" fill="#dc2626" font-weight="700">alvo real</text>
+
+            <!-- Medo / Urgência -->
+            <rect x="20" y="12" width="130" height="50" rx="10" fill="#450a0a" stroke="#dc2626" stroke-width="1.5"/>
+            <text x="85" y="32" text-anchor="middle" font-size="12" fill="#fca5a5">&#x23F0; Urg&ecirc;ncia</text>
+            <text x="85" y="48" text-anchor="middle" font-size="9" fill="#f87171">&ldquo;Sua conta ser&aacute; bloqueada!&rdquo;</text>
+            <line x1="152" y1="37" x2="297" y2="65" stroke="#dc2626" stroke-width="2" stroke-dasharray="4,3">
+                <animate attributeName="stroke-dashoffset" from="30" to="0" dur="0.8s" repeatCount="indefinite"/>
+            </line>
+
+            <!-- Confiança / Autoridade -->
+            <rect x="20" y="98" width="130" height="50" rx="10" fill="#450a0a" stroke="#dc2626" stroke-width="1.5"/>
+            <text x="85" y="118" text-anchor="middle" font-size="12" fill="#fca5a5">&#x1F3AD; Confian&ccedil;a</text>
+            <text x="85" y="134" text-anchor="middle" font-size="9" fill="#f87171">&ldquo;Sou do TI da escola&rdquo;</text>
+            <line x1="152" y1="118" x2="297" y2="95" stroke="#dc2626" stroke-width="2" stroke-dasharray="4,3">
+                <animate attributeName="stroke-dashoffset" from="30" to="0" dur="1.0s" repeatCount="indefinite"/>
+            </line>
+
+            <!-- Prêmio / Ganância -->
+            <rect x="530" y="12" width="130" height="50" rx="10" fill="#450a0a" stroke="#dc2626" stroke-width="1.5"/>
+            <text x="595" y="32" text-anchor="middle" font-size="12" fill="#fca5a5">&#x1F381; Pr&ecirc;mio</text>
+            <text x="595" y="48" text-anchor="middle" font-size="9" fill="#f87171">&ldquo;Voc&ecirc; ganhou um pr&ecirc;mio!&rdquo;</text>
+            <line x1="528" y1="37" x2="383" y2="65" stroke="#dc2626" stroke-width="2" stroke-dasharray="4,3">
+                <animate attributeName="stroke-dashoffset" from="30" to="0" dur="0.7s" repeatCount="indefinite"/>
+            </line>
+
+            <!-- Pretexto -->
+            <rect x="530" y="98" width="130" height="50" rx="10" fill="#450a0a" stroke="#dc2626" stroke-width="1.5"/>
+            <text x="595" y="118" text-anchor="middle" font-size="12" fill="#fca5a5">&#x1F4C4; Pretexto</text>
+            <text x="595" y="134" text-anchor="middle" font-size="9" fill="#f87171">cen&aacute;rio falso elaborado</text>
+            <line x1="528" y1="118" x2="383" y2="95" stroke="#dc2626" stroke-width="2" stroke-dasharray="4,3">
+                <animate attributeName="stroke-dashoffset" from="30" to="0" dur="1.2s" repeatCount="indefinite"/>
+            </line>
+        </svg>
+        </div>
+
+        <p>A <strong>engenharia social</strong> &eacute; a manipula&ccedil;&atilde;o psicol&oacute;gica de pessoas para que revelem informa&ccedil;&otilde;es confidenciais ou executem a&ccedil;&otilde;es prejudiciais. Em vez de atacar sistemas, o criminoso <strong>ataca o ser humano</strong> &mdash; explorando confian&ccedil;a, medo ou urg&ecirc;ncia.</p>
+        <p>&Eacute; considerada a t&eacute;cnica mais eficaz de ataque porque <strong>nenhum antiv&iacute;rus protege contra um usu&aacute;rio enganado</strong>. Por isso, conhecer os tipos &eacute; a melhor defesa.</p>
+
+        <div class="eng-grid">
+            <div class="eng-card">
+                <div class="eng-tipo">&#x1F3A3; Phishing</div>
+                <div class="eng-canal">Via e-mail</div>
+                <div class="eng-desc">Mensagem falsa que imita uma institui&ccedil;&atilde;o (banco, Receita Federal, IFRN) com link para p&aacute;gina clonada onde a v&iacute;tima digita seus dados.</div>
+            </div>
+            <div class="eng-card">
+                <div class="eng-tipo">&#x1F4F1; Smishing</div>
+                <div class="eng-canal">Via SMS ou WhatsApp</div>
+                <div class="eng-desc">Mesmo princ&iacute;pio do phishing, mas executado por mensagem de texto. Comum com falsas notifica&ccedil;&otilde;es de entrega de encomenda ou premia&ccedil;&otilde;es.</div>
+            </div>
+            <div class="eng-card">
+                <div class="eng-tipo">&#x1F4DE; Vishing</div>
+                <div class="eng-canal">Via liga&ccedil;&atilde;o telef&ocirc;nica</div>
+                <div class="eng-desc">Liga&ccedil;&atilde;o falsa de &ldquo;banco&rdquo; ou &ldquo;suporte t&eacute;cnico&rdquo; pedindo senha, token ou acesso remoto ao computador da v&iacute;tima.</div>
+            </div>
+            <div class="eng-card">
+                <div class="eng-tipo">&#x1F3AD; Pretexting</div>
+                <div class="eng-canal">Qualquer canal</div>
+                <div class="eng-desc">O atacante cria um cen&aacute;rio falso convincente (&ldquo;Sou do TI da escola&rdquo;) para extrair informa&ccedil;&otilde;es ou acesso privilegiado.</div>
+            </div>
+        </div>
+
+        <h3>&#x26A0;&#xFE0F; Sinais de alerta &mdash; desconfie quando houver:</h3>
+        <div class="alerta-list">
+            <div class="alerta-item">
+                <div class="al-icon">&#x23F0;</div>
+                <p><strong>Urg&ecirc;ncia ou amea&ccedil;a:</strong> &ldquo;Sua conta ser&aacute; bloqueada em 24h se voc&ecirc; n&atilde;o agir agora!&rdquo;</p>
+            </div>
+            <div class="alerta-item">
+                <div class="al-icon">&#x1F381;</div>
+                <p><strong>Premia&ccedil;&atilde;o inesperada:</strong> &ldquo;Voc&ecirc; foi selecionado para ganhar um pr&ecirc;mio. Clique aqui!&rdquo;</p>
+            </div>
+            <div class="alerta-item">
+                <div class="al-icon">&#x1F517;</div>
+                <p><strong>Links suspeitos:</strong> URL com erros de grafia (<em>bancobrasil.com<strong>br</strong>.xyz</em>) ou encurtadores.</p>
+            </div>
+            <div class="alerta-item">
+                <div class="al-icon">&#x1F4DD;</div>
+                <p><strong>Erros de portugu&ecirc;s:</strong> mensagens com gram&aacute;tica estranha ou palavras fora de contexto.</p>
+            </div>
+            <div class="alerta-item">
+                <div class="al-icon">&#x1F4CE;</div>
+                <p><strong>Anexo n&atilde;o solicitado:</strong> arquivo enviado por desconhecido ou que voc&ecirc; n&atilde;o esperava receber.</p>
+            </div>
+            <div class="alerta-item">
+                <div class="al-icon">&#x1F511;</div>
+                <p><strong>Pedido de senha:</strong> institui&ccedil;&otilde;es leg&iacute;timas <strong>nunca pedem sua senha</strong> por e-mail, SMS ou telefone.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 6: Boas práticas -->
+    <div class="content-card">
+        <h2>&#x2705; Como se Proteger &mdash; Boas Pr&aacute;ticas</h2>
+
+        <div class="boas-grid">
+            <div class="boa-item">
+                <div class="boa-icon">&#x1F9D0;</div>
+                <div class="boa-text">
+                    <strong>Pense antes de clicar</strong>
+                    <span>Antes de abrir um link ou anexo, pergunte-se: eu esperava esse e-mail? O remetente &eacute; quem diz ser? O endere&ccedil;o do link faz sentido?</span>
+                </div>
+            </div>
+            <div class="boa-item">
+                <div class="boa-icon">&#x1F6E1;&#xFE0F;</div>
+                <div class="boa-text">
+                    <strong>Mantenha antiv&iacute;rus ativo</strong>
+                    <span>Use um antiv&iacute;rus confi&aacute;vel e mantenha-o atualizado. Ele &eacute; a segunda linha de defesa &mdash; a primeira &eacute; voc&ecirc;.</span>
+                </div>
+            </div>
+            <div class="boa-item">
+                <div class="boa-icon">&#x1F504;</div>
+                <div class="boa-text">
+                    <strong>Atualize sempre o sistema</strong>
+                    <span>Atualiza&ccedil;&otilde;es corrigem falhas de seguran&ccedil;a exploradas por malwares. N&atilde;o ignore a notifica&ccedil;&atilde;o de atualiza&ccedil;&atilde;o do Windows ou do celular.</span>
+                </div>
+            </div>
+            <div class="boa-item">
+                <div class="boa-icon">&#x1F4BE;</div>
+                <div class="boa-text">
+                    <strong>Fa&ccedil;a backups regularmente</strong>
+                    <span>Mantenha c&oacute;pias de arquivos importantes na nuvem e em HD externo. Um backup atual anula o poder de um ataque de ransomware.</span>
+                </div>
+            </div>
+            <div class="boa-item">
+                <div class="boa-icon">&#x1F4F6;</div>
+                <div class="boa-text">
+                    <strong>Evite Wi-Fi p&uacute;blico para dados sens&iacute;veis</strong>
+                    <span>N&atilde;o acesse internet banking nem sistemas institucionais em redes abertas. Se precisar, use dados m&oacute;veis ou VPN.</span>
+                </div>
+            </div>
+            <div class="boa-item">
+                <div class="boa-icon">&#x1F4F1;</div>
+                <div class="boa-text">
+                    <strong>Instale apps apenas de fontes oficiais</strong>
+                    <span>Baixe aplicativos somente da Google Play Store ou Apple App Store. Nunca instale APKs de sites desconhecidos.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 7: Recapitulando -->
+    <div class="content-card">
+        <h2>&#x1F4CB; Recapitulando</h2>
+        <ul>
+            <li>A <strong>Seguran&ccedil;a da Informa&ccedil;&atilde;o</strong> protege dados contra acesso indevido, altera&ccedil;&atilde;o e indisponibilidade</li>
+            <li>A <strong>tr&iacute;ade CID</strong>: <em>Confidencialidade</em> (s&oacute; quem pode acessa), <em>Integridade</em> (dado n&atilde;o foi adulterado) e <em>Disponibilidade</em> (acesso garantido quando necess&aacute;rio)</li>
+            <li>Principais malwares: <strong>v&iacute;rus, worm, trojan, ransomware, spyware e adware</strong> &mdash; cada um com mecanismo e impacto diferente</li>
+            <li>Os vetores mais comuns s&atilde;o: <strong>e-mail, sites falsos, WhatsApp, pendrives e Wi-Fi p&uacute;blico</strong></li>
+            <li>A <strong>engenharia social</strong> manipula pessoas &mdash; n&atilde;o sistemas. Phishing, smishing e vishing exploram confian&ccedil;a e urg&ecirc;ncia</li>
+            <li>Sinais de alerta: urg&ecirc;ncia, premia&ccedil;&otilde;es, links estranhos, pedidos de senha e portugu&ecirc;s incorreto</li>
+            <li>A defesa come&ccedil;a com o <strong>comportamento humano</strong>: pensar antes de clicar, atualizar o sistema e fazer backups</li>
+        </ul>
+
+        <div class="highlight-box">
+            <p>&#x1F4DA; <strong>Na pr&oacute;xima aula</strong> vamos aprender <strong>Medidas de Prote&ccedil;&atilde;o de Dados Pessoais</strong>: como criar senhas fortes, ativar a autentica&ccedil;&atilde;o em dois fatores (2FA) e adotar boas pr&aacute;ticas de privacidade no dia a dia digital.</p>
+        </div>
+    </div>
+
+    <!-- EXERCÍCIO: Arrastar e Soltar -->
+    <div class="content-card exercise-card">
+        <h2>&#x1F3AF; Exerc&iacute;cio &mdash; Arraste e Conecte</h2>
+        <p style="color:#475569;font-size:0.9em;margin-bottom:4px;">Arraste cada cen&aacute;rio ou descri&ccedil;&atilde;o para o conceito correspondente. Em dispositivos m&oacute;veis, toque na descri&ccedil;&atilde;o e depois na zona de destino.</p>
+
+        <div class="ex-drag-root" data-ex="ex24">
+            <div class="ex-drag">
+                <div>
+                    <div class="ex-col-title">Cen&aacute;rio / Descri&ccedil;&atilde;o</div>
+                    <div class="ex-pool" data-pool="ex24">
+                        <div class="drag-chip" data-id="conf">Acesso n&atilde;o autorizado ao e-mail de uma pessoa que teve a senha roubada</div>
+                        <div class="drag-chip" data-id="integ">Hacker altera registros de notas no sistema acad&ecirc;mico sem autoriza&ccedil;&atilde;o</div>
+                        <div class="drag-chip" data-id="disp">Ataque que deixa o site do ENEM fora do ar no dia da prova online</div>
+                        <div class="drag-chip" data-id="ransom">Malware que criptografa todos os arquivos do computador e exige pagamento</div>
+                        <div class="drag-chip" data-id="phish">E-mail falso que imita o banco pedindo para &ldquo;confirmar seus dados&rdquo; em um link</div>
                     </div>
                 </div>
-                <div class="boa-item">
-                    <div class="boa-icon">&#x1F6E1;&#xFE0F;</div>
-                    <div class="boa-text">
-                        <strong>Mantenha antiv&iacute;rus ativo</strong>
-                        <span>Use um antiv&iacute;rus confi&aacute;vel e mantenha-o atualizado. Ele &eacute; a segunda linha de defesa &mdash; a primeira &eacute; voc&ecirc;.</span>
-                    </div>
-                </div>
-                <div class="boa-item">
-                    <div class="boa-icon">&#x1F504;</div>
-                    <div class="boa-text">
-                        <strong>Atualize sempre o sistema</strong>
-                        <span>Atualizações corrigem falhas de seguran&ccedil;a exploradas por malwares. N&atilde;o ignore a notifica&ccedil;&atilde;o de atualiza&ccedil;&atilde;o do Windows ou do celular.</span>
-                    </div>
-                </div>
-                <div class="boa-item">
-                    <div class="boa-icon">&#x1F4BE;</div>
-                    <div class="boa-text">
-                        <strong>Fa&ccedil;a backups regularmente</strong>
-                        <span>Mantenha c&oacute;pias de arquivos importantes na nuvem e em HD externo. Um backup atual anula o poder de um ataque de ransomware.</span>
-                    </div>
-                </div>
-                <div class="boa-item">
-                    <div class="boa-icon">&#x1F4F6;</div>
-                    <div class="boa-text">
-                        <strong>Evite Wi-Fi p&uacute;blico para dados sens&iacute;veis</strong>
-                        <span>N&atilde;o acesse internet banking nem sistemas institucionais em redes abertas. Se precisar, use dados m&oacute;veis ou VPN.</span>
-                    </div>
-                </div>
-                <div class="boa-item">
-                    <div class="boa-icon">&#x1F4F1;</div>
-                    <div class="boa-text">
-                        <strong>Instale apps apenas de fontes oficiais</strong>
-                        <span>Baixe aplicativos somente da Google Play Store ou Apple App Store. Nunca instale APKs de sites desconhecidos.</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- CARD 7 — RECAPITULANDO -->
-        <div class="content-card">
-            <h2>&#x1F4CB; Recapitulando</h2>
-            <ul>
-                <li>A <strong>Seguran&ccedil;a da Informa&ccedil;&atilde;o</strong> protege dados contra acesso indevido, altera&ccedil;&atilde;o e indisponibilidade</li>
-                <li>A <strong>tr&iacute;ade CID</strong>: <em>Confidencialidade</em> (s&oacute; quem pode acessa), <em>Integridade</em> (dado n&atilde;o foi adulterado) e <em>Disponibilidade</em> (acesso garantido quando necess&aacute;rio)</li>
-                <li>Principais malwares: <strong>v&iacute;rus, worm, trojan, ransomware, spyware e adware</strong> &mdash; cada um com mecanismo e impacto diferente</li>
-                <li>Os vetores mais comuns s&atilde;o: <strong>e-mail, sites falsos, WhatsApp, pendrives e Wi-Fi p&uacute;blico</strong></li>
-                <li>A <strong>engenharia social</strong> manipula pessoas &mdash; n&atilde;o sistemas. Phishing, smishing e vishing exploram confian&ccedil;a e urg&ecirc;ncia</li>
-                <li>Sinais de alerta: urg&ecirc;ncia, premia&ccedil;&otilde;es, links estranhos, pedidos de senha e portugu&ecirc;s incorreto</li>
-                <li>A defesa come&ccedil;a com o <strong>comportamento humano</strong>: pensar antes de clicar, atualizar o sistema e fazer backups</li>
-            </ul>
-
-            <div class="highlight-box">
-                <p>&#x1F4DA; <strong>Na pr&oacute;xima aula</strong> vamos aprender <strong>Medidas de Prote&ccedil;&atilde;o de Dados Pessoais</strong>: como criar senhas fortes, ativar a autentica&ccedil;&atilde;o em dois fatores (2FA) e adotar boas pr&aacute;ticas de privacidade no dia a dia digital.</p>
-            </div>
-        </div>
-
-        <!-- EXERCÍCIO: Arrastar e Soltar -->
-        <div class="content-card exercise-card">
-            <h2>&#x1F3AF; Exerc&iacute;cio &mdash; Arraste e Conecte</h2>
-            <p style="color:#475569;font-size:0.9em;margin-bottom:4px;">Arraste cada cen&aacute;rio ou descri&ccedil;&atilde;o para o conceito correspondente. Em dispositivos m&oacute;veis, toque na descri&ccedil;&atilde;o e depois na zona de destino.</p>
-
-            <div class="ex-drag-root" data-ex="ex24">
-                <div class="ex-drag">
-                    <div>
-                        <div class="ex-col-title">Cen&aacute;rio / Descri&ccedil;&atilde;o</div>
-                        <div class="ex-pool" data-pool="ex24">
-                            <div class="drag-chip" data-id="conf">Acesso n&atilde;o autorizado ao e-mail de uma pessoa que teve a senha roubada</div>
-                            <div class="drag-chip" data-id="integ">Hacker altera registros de notas no sistema acad&ecirc;mico sem autoriza&ccedil;&atilde;o</div>
-                            <div class="drag-chip" data-id="disp">Ataque que deixa o site do ENEM fora do ar no dia da prova online</div>
-                            <div class="drag-chip" data-id="ransom">Malware que criptografa todos os arquivos do computador e exige pagamento</div>
-                            <div class="drag-chip" data-id="phish">E-mail falso que imita o banco pedindo para &ldquo;confirmar seus dados&rdquo; em um link</div>
+                <div>
+                    <div class="ex-col-title">Conceito</div>
+                    <div class="ex-zones" data-zones="ex24">
+                        <div class="drop-zone" data-zone="ex24-z1" data-accept="conf">
+                            <span class="zone-name">Viola&ccedil;&atilde;o de Confidencialidade</span>
+                            <div class="zone-slot"></div>
+                            <div class="zone-feedback"></div>
+                        </div>
+                        <div class="drop-zone" data-zone="ex24-z2" data-accept="integ">
+                            <span class="zone-name">Viola&ccedil;&atilde;o de Integridade</span>
+                            <div class="zone-slot"></div>
+                            <div class="zone-feedback"></div>
+                        </div>
+                        <div class="drop-zone" data-zone="ex24-z3" data-accept="disp">
+                            <span class="zone-name">Viola&ccedil;&atilde;o de Disponibilidade</span>
+                            <div class="zone-slot"></div>
+                            <div class="zone-feedback"></div>
+                        </div>
+                        <div class="drop-zone" data-zone="ex24-z4" data-accept="ransom">
+                            <span class="zone-name">Ransomware</span>
+                            <div class="zone-slot"></div>
+                            <div class="zone-feedback"></div>
+                        </div>
+                        <div class="drop-zone" data-zone="ex24-z5" data-accept="phish">
+                            <span class="zone-name">Phishing</span>
+                            <div class="zone-slot"></div>
+                            <div class="zone-feedback"></div>
                         </div>
                     </div>
-                    <div>
-                        <div class="ex-col-title">Conceito</div>
-                        <div class="ex-zones" data-zones="ex24">
-                            <div class="drop-zone" data-zone="ex24-z1" data-accept="conf">
-                                <span class="zone-name">Viola&ccedil;&atilde;o de Confidencialidade</span>
-                                <div class="zone-slot"></div>
-                                <div class="zone-feedback"></div>
-                            </div>
-                            <div class="drop-zone" data-zone="ex24-z2" data-accept="integ">
-                                <span class="zone-name">Viola&ccedil;&atilde;o de Integridade</span>
-                                <div class="zone-slot"></div>
-                                <div class="zone-feedback"></div>
-                            </div>
-                            <div class="drop-zone" data-zone="ex24-z3" data-accept="disp">
-                                <span class="zone-name">Viola&ccedil;&atilde;o de Disponibilidade</span>
-                                <div class="zone-slot"></div>
-                                <div class="zone-feedback"></div>
-                            </div>
-                            <div class="drop-zone" data-zone="ex24-z4" data-accept="ransom">
-                                <span class="zone-name">Ransomware</span>
-                                <div class="zone-slot"></div>
-                                <div class="zone-feedback"></div>
-                            </div>
-                            <div class="drop-zone" data-zone="ex24-z5" data-accept="phish">
-                                <span class="zone-name">Phishing</span>
-                                <div class="zone-slot"></div>
-                                <div class="zone-feedback"></div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
-            </div>
-
-            <div class="ex-actions">
-                <button class="btn-verificar" onclick="dragVerify('ex24')">Verificar</button>
-                <button class="btn-refazer"  onclick="dragReset('ex24')">Refazer</button>
-            </div>
-            <div class="ex-result" id="ex24-result"></div>
-        </div>
-
-        <!-- ATIVIDADE PRÁTICA 2.4 -->
-        <div class="content-card practical-card" id="prat-24">
-            <h2>&#x1F6E0;&#xFE0F; Atividade Pr&aacute;tica &mdash; Analisando Amea&ccedil;as Reais</h2>
-            <div class="prat-meta">
-                <span class="prat-tag">&#x23F1; ~25 min</span>
-                <span class="prat-tag">&#x1F310; Requer internet</span>
-                <span class="prat-tag">&#x1F4DD; Individual ou em dupla</span>
-            </div>
-
-            <div class="prat-steps">
-                <div class="prat-step">
-                    <div class="step-num">1</div>
-                    <div class="step-body">
-                        <div class="step-label">Identifique os pilares violados</div>
-                        <div class="step-desc">Leia os cen&aacute;rios abaixo e, para cada um, anote qual pilar da tr&iacute;ade CID foi violado e justifique:<br>
-                        <strong>a)</strong> O notebook de um aluno &eacute; furtado com trabalhos n&atilde;o enviados ao professor.<br>
-                        <strong>b)</strong> Um funcion&aacute;rio mal-intencionado altera relat&oacute;rios antes de envi&aacute;-los &agrave; dire&ccedil;&atilde;o.<br>
-                        <strong>c)</strong> Um sistema de chamada online fica inacess&iacute;vel por 3 dias por falha no servidor.</div>
-                    </div>
-                </div>
-                <div class="prat-step">
-                    <div class="step-num">2</div>
-                    <div class="step-body">
-                        <div class="step-label">Analise um e-mail suspeito</div>
-                        <div class="step-desc">O professor disponibilizar&aacute; (ou projeta) um exemplo de e-mail de phishing impresso ou na tela. Identifique e anote pelo menos <strong>4 sinais de alerta</strong> presentes na mensagem: remetente duvidoso, urg&ecirc;ncia, link suspeito, erros gramaticais, pedido de dados, etc.</div>
-                    </div>
-                </div>
-                <div class="prat-step">
-                    <div class="step-num">3</div>
-                    <div class="step-body">
-                        <div class="step-label">Verifique um link antes de clicar</div>
-                        <div class="step-desc">Acesse o site <strong>virustotal.com</strong> pelo navegador. Na aba <em>URL</em>, cole o endere&ccedil;o que o professor indicar (ou um link encurtado de exemplo). Observe o resultado: quantos antiv&iacute;rus o marcaram como malicioso? O que o relat&oacute;rio mostra sobre o site?</div>
-                    </div>
-                </div>
-                <div class="prat-step">
-                    <div class="step-num">4</div>
-                    <div class="step-body">
-                        <div class="step-label">Classifique tipos de malware</div>
-                        <div class="step-desc">Com base na tabela da aula, classifique cada situa&ccedil;&atilde;o pelo tipo de malware:<br>
-                        <strong>a)</strong> O computador come&ccedil;ou a mostrar propagandas em portugu&ecirc;s de lojas nunca visitadas.<br>
-                        <strong>b)</strong> Todos os arquivos da pasta Documentos t&ecirc;m agora a extens&atilde;o <em>.locked</em>.<br>
-                        <strong>c)</strong> Um programa de TV pirata instalado come&ccedil;ou a enviar senhas digitadas para um servidor externo.</div>
-                    </div>
-                </div>
-                <div class="prat-step">
-                    <div class="step-num">5</div>
-                    <div class="step-body">
-                        <div class="step-label">Crie um checklist de seguran&ccedil;a pessoal</div>
-                        <div class="step-desc">No Google Docs (na pasta criada na Aula 2.2), crie um documento chamado <strong>"Checklist de Seguran&ccedil;a Digital"</strong>. Liste pelo menos <strong>8 h&aacute;bitos</strong> que voc&ecirc; vai adotar (ou j&aacute; adota) para proteger seus dados. Compartilhe com o professor como <em>Comentarista</em>.</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="prat-observe">
-                <strong>&#x1F4CC; Para saber:</strong> O <strong>VirusTotal</strong> &eacute; uma ferramenta gratuita do Google que verifica arquivos e URLs com mais de 70 antiv&iacute;rus simultaneamente. &Eacute; uma das primeiras ferramentas a usar antes de acessar um link suspeito &mdash; e salva muita gente de cair em golpes.
-            </div>
-
-            <div class="ex-actions">
-                <button class="btn-print" onclick="printPractical('prat-24', 'Aula 2.4 \u2014 Conceitos Fundamentais de Seguran\u00e7a da Informa\u00e7\u00e3o')">&#x1F5A8;&#xFE0F; Imprimir roteiro</button>
             </div>
         </div>
 
-        <div class="nav-footer">
-            <a href="uni2-03-ava.html" class="nav-link">&#x2B05; Anterior: AVA</a>
-            <a href="uni2-05-protecao-dados.html" class="nav-link">Pr&oacute;xima: Prote&ccedil;&atilde;o de Dados &#x27A1;</a>
+        <div class="ex-actions">
+            <button class="btn-verificar" onclick="dragVerify('ex24')">Verificar</button>
+            <button class="btn-refazer"  onclick="dragReset('ex24')">Refazer</button>
+        </div>
+        <div class="ex-result" id="ex24-result"></div>
+    </div>
+
+    <!-- QUIZ: Múltipla Escolha -->
+    <div class="content-card exercise-card">
+        <h2>&#x1F9E0; Quiz &mdash; M&uacute;ltipla Escolha</h2>
+        <p style="color:#475569;font-size:0.9em;margin-bottom:18px;">Selecione a alternativa correta em cada quest&atilde;o.</p>
+
+        <div class="mc-root" data-ex="mc24">
+
+            <!-- Q1 -->
+            <div class="mc-question" data-correct="b">
+                <div class="mc-q-text">1. Qual pilar da tr&iacute;ade CID &eacute; violado quando um hacker acessa seu e-mail <strong>sem autoriza&ccedil;&atilde;o</strong>?</div>
+                <div class="mc-options">
+                    <div class="mc-option" data-opt="a"><span class="mc-letter">A</span> Disponibilidade &mdash; o sistema ficou fora do ar</div>
+                    <div class="mc-option" data-opt="b"><span class="mc-letter">B</span> Confidencialidade &mdash; algu&eacute;m sem permiss&atilde;o acessou a informa&ccedil;&atilde;o</div>
+                    <div class="mc-option" data-opt="c"><span class="mc-letter">C</span> Integridade &mdash; os dados foram modificados sem autoriza&ccedil;&atilde;o</div>
+                    <div class="mc-option" data-opt="d"><span class="mc-letter">D</span> Nenhum pilar &mdash; apenas a senha foi roubada, n&atilde;o os dados</div>
+                </div>
+                <div class="mc-explanation ok" data-for="b">&#x2714; Correto! Confidencialidade garante que s&oacute; pessoas autorizadas acessem a informa&ccedil;&atilde;o. Acesso n&atilde;o autorizado ao e-mail viola exatamente esse pilar.</div>
+                <div class="mc-explanation err" data-for="a">&#x2716; Errado. Disponibilidade trata da acessibilidade do sistema. O e-mail n&atilde;o ficou fora do ar &mdash; foi acessado por quem n&atilde;o deveria.</div>
+                <div class="mc-explanation err" data-for="c">&#x2716; Errado. Integridade seria violada se os dados fossem <em>alterados</em>. Aqui o problema &eacute; o acesso n&atilde;o autorizado, que &eacute; confidencialidade.</div>
+                <div class="mc-explanation err" data-for="d">&#x2716; Errado. Roubo de senha que permite acesso indevido &eacute; exatamente uma viola&ccedil;&atilde;o de confidencialidade.</div>
+            </div>
+
+            <hr class="mc-sep">
+
+            <!-- Q2 -->
+            <div class="mc-question" data-correct="c">
+                <div class="mc-q-text">2. Um malware que <strong>criptografa seus arquivos</strong> e exige pagamento para devolver o acesso &eacute; chamado de:</div>
+                <div class="mc-options">
+                    <div class="mc-option" data-opt="a"><span class="mc-letter">A</span> Spyware</div>
+                    <div class="mc-option" data-opt="b"><span class="mc-letter">B</span> Trojan</div>
+                    <div class="mc-option" data-opt="c"><span class="mc-letter">C</span> Ransomware</div>
+                    <div class="mc-option" data-opt="d"><span class="mc-letter">D</span> Worm</div>
+                </div>
+                <div class="mc-explanation ok" data-for="c">&#x2714; Correto! Ransomware &eacute; o malware que sequestra dados criptografando os arquivos e exige resgate (ransom) para restaurar o acesso.</div>
+                <div class="mc-explanation err" data-for="a">&#x2716; Errado. Spyware monitora silenciosamente suas atividades (teclas, senhas, sites visitados), mas n&atilde;o criptografa arquivos.</div>
+                <div class="mc-explanation err" data-for="b">&#x2716; Errado. Trojan disfarça-se de programa leg&iacute;timo para abrir acesso remoto ou instalar outros malwares, mas n&atilde;o criptografa arquivos.</div>
+                <div class="mc-explanation err" data-for="d">&#x2716; Errado. Worm se replica automaticamente pela rede, mas seu objetivo &eacute; propaga&ccedil;&atilde;o, n&atilde;o criptografar e cobrar resgate.</div>
+            </div>
+
+            <hr class="mc-sep">
+
+            <!-- Q3 -->
+            <div class="mc-question" data-correct="b">
+                <div class="mc-q-text">3. Qual das situa&ccedil;&otilde;es abaixo &eacute; um exemplo cl&aacute;ssico de <strong>phishing</strong>?</div>
+                <div class="mc-options">
+                    <div class="mc-option" data-opt="a"><span class="mc-letter">A</span> Um pendrive encontrado no corredor que, ao ser conectado, instala um malware</div>
+                    <div class="mc-option" data-opt="b"><span class="mc-letter">B</span> E-mail falso imitando o banco pedindo para clicar em link e &ldquo;confirmar seus dados&rdquo;</div>
+                    <div class="mc-option" data-opt="c"><span class="mc-letter">C</span> Liga&ccedil;&atilde;o telef&ocirc;nica de falso suporte t&eacute;cnico pedindo acesso remoto ao computador</div>
+                    <div class="mc-option" data-opt="d"><span class="mc-letter">D</span> Aplica&ccedil;&atilde;o baixada fora da Play Store que rouba senhas em segundo plano</div>
+                </div>
+                <div class="mc-explanation ok" data-for="b">&#x2714; Correto! Phishing &eacute; o golpe por e-mail que imita uma institui&ccedil;&atilde;o leg&iacute;tima e leva a v&iacute;tima a um site falso para roubar seus dados.</div>
+                <div class="mc-explanation err" data-for="a">&#x2716; Errado. Isso descreve um ataque de &ldquo;baiting&rdquo; com pendrive infectado, n&atilde;o phishing.</div>
+                <div class="mc-explanation err" data-for="c">&#x2716; Errado. Liga&ccedil;&atilde;o telef&ocirc;nica falsa &eacute; <strong>vishing</strong> (voice + phishing), uma modalidade distinta de engenharia social.</div>
+                <div class="mc-explanation err" data-for="d">&#x2716; Errado. App malicioso fora da loja &eacute; um vetor de ataque por <strong>aplicativo falso</strong>, n&atilde;o phishing.</div>
+            </div>
+
+            <hr class="mc-sep">
+
+            <!-- Q4 -->
+            <div class="mc-question" data-correct="a">
+                <div class="mc-q-text">4. Um <strong>worm</strong> se diferencia de um v&iacute;rus porque:</div>
+                <div class="mc-options">
+                    <div class="mc-option" data-opt="a"><span class="mc-letter">A</span> Se replica automaticamente pela rede sem precisar de a&ccedil;&atilde;o do usu&aacute;rio</div>
+                    <div class="mc-option" data-opt="b"><span class="mc-letter">B</span> Criptografa arquivos e exige resgate para devolver o acesso</div>
+                    <div class="mc-option" data-opt="c"><span class="mc-letter">C</span> Disfarça-se de programa leg&iacute;timo para enganar o usu&aacute;rio</div>
+                    <div class="mc-option" data-opt="d"><span class="mc-letter">D</span> Monitora silenciosamente as teclas digitadas e envia para o atacante</div>
+                </div>
+                <div class="mc-explanation ok" data-for="a">&#x2714; Correto! O worm &eacute; aut&ocirc;nomo: se propaga sozinho pela rede sem a&ccedil;&atilde;o humana. O v&iacute;rus precisa que o usu&aacute;rio execute um arquivo infectado para se espalhar.</div>
+                <div class="mc-explanation err" data-for="b">&#x2716; Errado. Criptografar arquivos e exigir resgate &eacute; a caracter&iacute;stica do <strong>ransomware</strong>.</div>
+                <div class="mc-explanation err" data-for="c">&#x2716; Errado. Disfarçar-se de programa leg&iacute;timo &eacute; a caracter&iacute;stica do <strong>trojan</strong>.</div>
+                <div class="mc-explanation err" data-for="d">&#x2716; Errado. Monitorar teclas silenciosamente &eacute; a caracter&iacute;stica do <strong>spyware</strong> (especificamente keylogger).</div>
+            </div>
+
+            <hr class="mc-sep">
+
+            <!-- Q5 -->
+            <div class="mc-question" data-correct="d">
+                <div class="mc-q-text">5. Qual boa pr&aacute;tica &eacute; a <strong>mais eficaz</strong> para se proteger de um ataque de ransomware?</div>
+                <div class="mc-options">
+                    <div class="mc-option" data-opt="a"><span class="mc-letter">A</span> N&atilde;o abrir e-mails de desconhecidos</div>
+                    <div class="mc-option" data-opt="b"><span class="mc-letter">B</span> Usar antiv&iacute;rus atualizado</div>
+                    <div class="mc-option" data-opt="c"><span class="mc-letter">C</span> Evitar o uso de Wi-Fi p&uacute;blico</div>
+                    <div class="mc-option" data-opt="d"><span class="mc-letter">D</span> Manter backups atualizados em local separado do computador principal</div>
+                </div>
+                <div class="mc-explanation ok" data-for="d">&#x2714; Correto! O backup &eacute; a prote&ccedil;&atilde;o definitiva contra ransomware: mesmo que os arquivos sejam criptografados, voc&ecirc; restaura a c&oacute;pia. Antiv&iacute;rus ajuda, mas pode falhar com variantes novas.</div>
+                <div class="mc-explanation err" data-for="a">&#x2716; Parcialmente correto, mas insuficiente. Ransomware tamb&eacute;m chega por sites, downloads e pendrives. Apenas evitar e-mails n&atilde;o garante prote&ccedil;&atilde;o total.</div>
+                <div class="mc-explanation err" data-for="b">&#x2716; Importante, mas n&atilde;o &eacute; a mais eficaz <em>contra ransomware especificamente</em>. Novas variantes podem n&atilde;o ser detectadas. O backup garante a recupera&ccedil;&atilde;o mesmo ap&oacute;s o ataque.</div>
+                <div class="mc-explanation err" data-for="c">&#x2716; Evitar Wi-Fi p&uacute;blico protege contra intercepta&ccedil;&atilde;o de dados, mas n&atilde;o &eacute; o vetor principal do ransomware.</div>
+            </div>
+
+            <hr class="mc-sep">
+
+            <!-- Q6 -->
+            <div class="mc-question" data-correct="c">
+                <div class="mc-q-text">6. O que define a <strong>engenharia social</strong> como t&eacute;cnica de ataque?</div>
+                <div class="mc-options">
+                    <div class="mc-option" data-opt="a"><span class="mc-letter">A</span> Uso de softwares especializados para explorar vulnerabilidades em servidores</div>
+                    <div class="mc-option" data-opt="b"><span class="mc-letter">B</span> Cria&ccedil;&atilde;o de v&iacute;rus que se propagam automaticamente pela rede interna</div>
+                    <div class="mc-option" data-opt="c"><span class="mc-letter">C</span> Manipula&ccedil;&atilde;o psicol&oacute;gica de pessoas para que revelem informa&ccedil;&otilde;es ou executem a&ccedil;&otilde;es prejudiciais</div>
+                    <div class="mc-option" data-opt="d"><span class="mc-letter">D</span> Intercep&ccedil;&atilde;o de dados em redes Wi-Fi p&uacute;blicas sem criptografia</div>
+                </div>
+                <div class="mc-explanation ok" data-for="c">&#x2714; Correto! Engenharia social ataca o elo mais fraco: o ser humano. Usa confian&ccedil;a, urg&ecirc;ncia e medo para enganar &mdash; nenhum antiv&iacute;rus protege contra um usu&aacute;rio manipulado.</div>
+                <div class="mc-explanation err" data-for="a">&#x2716; Errado. Explorar vulnerabilidades em servidores com software &eacute; um ataque t&eacute;cnico (exploit), n&atilde;o engenharia social.</div>
+                <div class="mc-explanation err" data-for="b">&#x2716; Errado. V&iacute;rus que se propagam automaticamente descrevem um <strong>worm</strong>, n&atilde;o engenharia social.</div>
+                <div class="mc-explanation err" data-for="d">&#x2716; Errado. Intercepta&ccedil;&atilde;o em Wi-Fi &eacute; um ataque t&eacute;cnico chamado <em>man-in-the-middle</em>, diferente da manipula&ccedil;&atilde;o humana da engenharia social.</div>
+            </div>
+
+        </div><!-- fim .mc-root -->
+
+        <div class="ex-actions">
+            <button class="btn-verificar" onclick="mcVerify('mc24')">Verificar</button>
+            <button class="btn-refazer"  onclick="mcReset('mc24')">Refazer</button>
+        </div>
+        <div class="ex-result" id="mc24-result"></div>
+    </div>
+
+    <!-- ATIVIDADE PRÁTICA -->
+    <div class="content-card practical-card" id="prat-24">
+        <h2>&#x1F6E0;&#xFE0F; Atividade Pr&aacute;tica &mdash; Analisando Amea&ccedil;as Reais</h2>
+        <div class="prat-meta">
+            <span class="prat-tag">&#x23F1; ~25 min</span>
+            <span class="prat-tag">&#x1F310; Requer internet</span>
+            <span class="prat-tag">&#x1F4DD; Individual ou em dupla</span>
         </div>
 
-    </div><!-- fim .content-wrapper -->
+        <div class="prat-steps">
+            <div class="prat-step">
+                <div class="step-num">1</div>
+                <div class="step-body">
+                    <div class="step-label">Identifique os pilares violados</div>
+                    <div class="step-desc">Leia os cen&aacute;rios abaixo e, para cada um, anote qual pilar da tr&iacute;ade CID foi violado e justifique:<br>
+                    <strong>a)</strong> O notebook de um aluno &eacute; furtado com trabalhos n&atilde;o enviados ao professor.<br>
+                    <strong>b)</strong> Um funcion&aacute;rio mal-intencionado altera relat&oacute;rios antes de envi&aacute;-los &agrave; dire&ccedil;&atilde;o.<br>
+                    <strong>c)</strong> Um sistema de chamada online fica inacess&iacute;vel por 3 dias por falha no servidor.</div>
+                </div>
+            </div>
+            <div class="prat-step">
+                <div class="step-num">2</div>
+                <div class="step-body">
+                    <div class="step-label">Analise um e-mail suspeito</div>
+                    <div class="step-desc">O professor disponibilizar&aacute; (ou projeta) um exemplo de e-mail de phishing. Identifique e anote pelo menos <strong>4 sinais de alerta</strong> presentes na mensagem: remetente duvidoso, urg&ecirc;ncia, link suspeito, erros gramaticais, pedido de dados, etc.</div>
+                </div>
+            </div>
+            <div class="prat-step">
+                <div class="step-num">3</div>
+                <div class="step-body">
+                    <div class="step-label">Verifique um link antes de clicar</div>
+                    <div class="step-desc">Acesse o site <strong>virustotal.com</strong> pelo navegador. Na aba <em>URL</em>, cole o endere&ccedil;o que o professor indicar (ou um link encurtado de exemplo). Observe o resultado: quantos antiv&iacute;rus o marcaram como malicioso? O que o relat&oacute;rio mostra sobre o site?</div>
+                </div>
+            </div>
+            <div class="prat-step">
+                <div class="step-num">4</div>
+                <div class="step-body">
+                    <div class="step-label">Classifique tipos de malware</div>
+                    <div class="step-desc">Com base na tabela da aula, classifique cada situa&ccedil;&atilde;o pelo tipo de malware:<br>
+                    <strong>a)</strong> O computador come&ccedil;ou a mostrar propagandas em portugu&ecirc;s de lojas nunca visitadas.<br>
+                    <strong>b)</strong> Todos os arquivos da pasta Documentos t&ecirc;m agora a extens&atilde;o <em>.locked</em>.<br>
+                    <strong>c)</strong> Um programa de TV pirata instalado come&ccedil;ou a enviar senhas digitadas para um servidor externo.</div>
+                </div>
+            </div>
+            <div class="prat-step">
+                <div class="step-num">5</div>
+                <div class="step-body">
+                    <div class="step-label">Crie um checklist de seguran&ccedil;a pessoal</div>
+                    <div class="step-desc">No Google Docs (na pasta criada na Aula 2.2), crie um documento chamado <strong>&ldquo;Checklist de Seguran&ccedil;a Digital&rdquo;</strong>. Liste pelo menos <strong>8 h&aacute;bitos</strong> que voc&ecirc; vai adotar (ou j&aacute; adota) para proteger seus dados. Compartilhe com o professor como <em>Comentarista</em>.</div>
+                </div>
+            </div>
+        </div>
 
-    <script src="slide-mode.js"></script>
-    <script src="exercise-drag.js"></script>
-    <script src="exercise-print.js"></script>
+        <div class="prat-observe">
+            <strong>&#x1F4CC; Para saber:</strong> O <strong>VirusTotal</strong> &eacute; uma ferramenta gratuita do Google que verifica arquivos e URLs com mais de 70 antiv&iacute;rus simultaneamente. &Eacute; uma das primeiras ferramentas a usar antes de acessar um link suspeito &mdash; e salva muita gente de cair em golpes.
+        </div>
+
+        <div class="ex-actions">
+            <button class="btn-print" onclick="printPractical('prat-24', 'Aula 2.4 \u2014 Conceitos Fundamentais de Seguran\u00e7a da Informa\u00e7\u00e3o')">&#x1F5A8;&#xFE0F; Imprimir roteiro</button>
+        </div>
+    </div>
+
+    <!-- NAVEGAÇÃO -->
+    <div class="nav-footer">
+        <a href="uni2-03-ava.html" class="nav-link">&#x2B05; Anterior: AVA</a>
+        <a href="uni2-05-protecao-dados.html" class="nav-link">Pr&oacute;xima: Prote&ccedil;&atilde;o de Dados &#x27A1;</a>
+    </div>
+
+</div><!-- fim .content-wrapper -->
+
+<script src="slide-mode.js"></script>
+<script src="exercise-mc.js"></script>
+<script src="exercise-drag.js"></script>
+<script src="exercise-print.js"></script>
 </body>
 </html>
