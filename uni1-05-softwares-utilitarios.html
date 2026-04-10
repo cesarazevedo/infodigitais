@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aula 1.5 - Softwares Utilitários</title>
+    <title>Aula 1.4 - Softwares Utilitários</title>
     <link rel="stylesheet" href="slide-mode.css">
     <link rel="stylesheet" href="exercise.css">
     <style>
@@ -13,16 +13,13 @@
             --bg-light: #f0f4f8;
             --text-dark: #1a202c;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--bg-light);
             color: var(--text-dark);
             line-height: 1.7;
         }
-
         .top-bar {
             background: white;
             padding: 15px 30px;
@@ -34,7 +31,6 @@
             top: 0;
             z-index: 10;
         }
-
         .back-btn {
             text-decoration: none;
             color: var(--primary);
@@ -46,24 +42,20 @@
             border-radius: 8px;
             transition: background 0.3s;
         }
-
         .back-btn:hover { background: rgba(21,101,192,0.08); }
-
         .page-badge {
             font-size: 0.8em;
             padding: 4px 12px;
             border-radius: 20px;
-            background: rgba(21, 101, 192, 0.12);
+            background: rgba(21,101,192,0.12);
             color: #1565c0;
             font-weight: 600;
         }
-
         .content-wrapper {
             max-width: 800px;
             margin: 40px auto;
             padding: 0 30px;
         }
-
         .lesson-hero {
             background: white;
             border-radius: 16px;
@@ -72,18 +64,8 @@
             margin-bottom: 30px;
             border-top: 4px solid var(--primary);
         }
-
-        .lesson-hero h1 {
-            font-size: 2em;
-            margin-bottom: 10px;
-            color: var(--primary);
-        }
-
-        .lesson-hero .subtitle {
-            font-size: 1.05em;
-            color: #718096;
-        }
-
+        .lesson-hero h1 { font-size: 2em; margin-bottom: 10px; color: var(--primary); }
+        .lesson-hero .subtitle { font-size: 1.05em; color: #718096; }
         .content-card {
             background: white;
             border-radius: 16px;
@@ -91,7 +73,6 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             margin-bottom: 25px;
         }
-
         .content-card h2 {
             font-size: 1.4em;
             color: var(--primary);
@@ -100,97 +81,17 @@
             align-items: center;
             gap: 10px;
         }
-
-        .content-card h3 {
-            font-size: 1.05em;
-            color: #2d5a9e;
-            margin: 20px 0 10px;
-        }
-
         .content-card p { margin-bottom: 15px; text-align: justify; }
 
-        .highlight-box {
-            background: linear-gradient(135deg, rgba(21,101,192,0.05), rgba(0,137,123,0.06));
-            border-left: 4px solid var(--primary);
-            padding: 20px 25px;
-            border-radius: 0 12px 12px 0;
-            margin: 20px 0;
-        }
-
-        .highlight-box p { margin-bottom: 0; font-style: italic; }
-
-        .alert-box {
-            background: #fff8e1;
-            border-left: 4px solid #f59e0b;
-            padding: 18px 22px;
-            border-radius: 0 12px 12px 0;
-            margin: 20px 0;
-        }
-
-        .alert-box p { margin: 0; color: #78350f; font-size: 0.93em; }
-
-        /* Grid de categorias de utilitários */
-        .cat-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 14px;
-            margin: 20px 0;
-        }
-
-        .cat-item {
-            background: #f8fafc;
-            border-radius: 12px;
-            padding: 20px 16px;
-            text-align: center;
-            border-top: 3px solid var(--primary);
-            transition: transform 0.2s;
-        }
-
-        .cat-item:hover { transform: translateY(-3px); }
-        .cat-icon { font-size: 2em; margin-bottom: 8px; }
-        .cat-item strong { display: block; color: var(--primary); font-size: 0.9em; margin-bottom: 4px; }
-        .cat-item span { font-size: 0.8em; color: #718096; }
-
-        /* Bloco de utilitário detalhado */
-        .util-block {
-            border-radius: 14px;
-            padding: 26px;
-            margin: 18px 0;
-        }
-
-        .util-block.antivirus  { background: #fce4ec; border-left: 5px solid #c62828; }
-        .util-block.compactor  { background: #e8f5e9; border-left: 5px solid #2e7d32; }
-        .util-block.download   { background: #e3f2fd; border-left: 5px solid #1565c0; }
-        .util-block.manutencao { background: #fff3e0; border-left: 5px solid #e65100; }
-        .util-block.outros     { background: #f3e5f5; border-left: 5px solid #6a1b9a; }
-
-        .util-header {
+        .svg-wrap {
             display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 12px;
+            justify-content: center;
+            margin: 24px 0;
         }
+        .svg-wrap svg { max-width: 100%; height: auto; }
 
-        .util-icon { font-size: 2em; }
-
-        .util-title { font-size: 1.15em; font-weight: 700; }
-        .util-block.antivirus  .util-title { color: #b71c1c; }
-        .util-block.compactor  .util-title { color: #1b5e20; }
-        .util-block.download   .util-title { color: #0d47a1; }
-        .util-block.manutencao .util-title { color: #bf360c; }
-        .util-block.outros     .util-title { color: #4a148c; }
-
-        .util-block p { color: #4a5568; font-size: 0.93em; margin-bottom: 10px; text-align: justify; }
-        .util-block p:last-child { margin-bottom: 0; }
-
-        /* Grid de softwares exemplo */
-        .soft-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 10px;
-        }
-
+        /* soft-tag */
+        .soft-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
         .soft-tag {
             display: inline-flex;
             align-items: center;
@@ -204,570 +105,764 @@
             color: #475569;
         }
 
-        /* Tabela comparativa de compactadores */
-        .compare-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 16px 0;
-            font-size: 0.88em;
-        }
-
-        .compare-table th {
-            background: var(--primary);
-            color: white;
-            padding: 11px 14px;
-            text-align: left;
-        }
-
+        /* compare table */
+        .compare-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88em; }
+        .compare-table th { background: var(--primary); color: white; padding: 11px 14px; text-align: left; }
         .compare-table th:first-child { border-radius: 8px 0 0 0; }
         .compare-table th:last-child  { border-radius: 0 8px 0 0; }
-
-        .compare-table td {
-            padding: 10px 14px;
-            border-bottom: 1px solid #e2e8f0;
-            vertical-align: middle;
-        }
-
+        .compare-table td { padding: 10px 14px; border-bottom: 1px solid #e2e8f0; vertical-align: middle; }
         .compare-table tr:nth-child(even) td { background: #f8fafc; }
         .compare-table tr:last-child td { border-bottom: none; }
-
         .check  { color: #38b000; font-weight: 700; }
         .cross  { color: #e53935; font-weight: 700; }
-        .middle { color: #f59e0b; font-weight: 700; }
+        .mid    { color: #f59e0b; font-weight: 700; }
 
-        /* Barra de compressão */
-        .compress-demo {
-            background: #f8fafc;
-            border-radius: 10px;
-            padding: 16px 20px;
-            margin: 14px 0;
-        }
-
-        .compress-label {
-            font-size: 0.85em;
-            color: #718096;
-            margin-bottom: 6px;
-        }
-
-        .compress-bar-wrap {
-            background: #e2e8f0;
-            border-radius: 20px;
-            height: 22px;
-            overflow: hidden;
-            margin-bottom: 4px;
-        }
-
-        .compress-bar {
-            height: 100%;
-            border-radius: 20px;
+        /* step cards */
+        .step-svg-card {
             display: flex;
             align-items: center;
-            padding-left: 10px;
-            font-size: 0.78em;
-            font-weight: 700;
+            gap: 18px;
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 16px 18px;
+            margin-bottom: 14px;
+        }
+        .step-svg-card .step-num {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            background: var(--primary);
             color: white;
-            transition: width 1s ease;
-        }
-
-        .bar-original  { width: 100%; background: #94a3b8; }
-        .bar-zip       { width: 60%;  background: #2e7d32; }
-        .bar-7z        { width: 50%;  background: #1565c0; }
-
-        ul, ol { margin: 10px 0 15px 25px; }
-        li { margin-bottom: 8px; }
-
-        .nav-footer {
+            font-weight: 700;
             display: flex;
-            justify-content: space-between;
-            margin-top: 40px;
-            padding-bottom: 40px;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .step-svg-card .step-text strong { display: block; color: var(--primary); margin-bottom: 3px; }
+        .step-svg-card .step-text span  { font-size: 0.88em; color: #4a5568; }
+        .step-svg-card svg { flex-shrink: 0; }
+
+        /* YouTube */
+        .yt-wrap {
+            position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;
+            border-radius: 12px; margin: 20px 0;
+        }
+        .yt-wrap iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; border-radius: 12px; }
+
+        .mat-list { list-style: none; margin: 0 0 20px 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+        .mat-list li {
+            background: #e8f0fe; color: #1a56db;
+            border-radius: 20px; padding: 6px 14px;
+            font-size: 0.88em; font-weight: 600;
         }
 
+        .nav-footer { display: flex; justify-content: space-between; margin-top: 40px; padding-bottom: 40px; }
         .nav-link {
-            text-decoration: none;
-            color: var(--primary);
-            font-weight: 600;
-            padding: 12px 24px;
-            border-radius: 10px;
-            background: white;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            transition: all 0.3s;
+            text-decoration: none; color: var(--primary); font-weight: 600;
+            padding: 12px 24px; border-radius: 10px; background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05); transition: all 0.3s;
         }
-
-        .nav-link:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
+        .nav-link:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
 
         @media (max-width: 768px) {
             .content-wrapper { padding: 0 15px; }
             .lesson-hero, .content-card { padding: 25px; }
             .lesson-hero h1 { font-size: 1.5em; }
-            .cat-grid { grid-template-columns: repeat(3, 1fr); }
         }
     </style>
 </head>
 <body>
 
-    <div class="top-bar">
-        <a href="index.html" class="back-btn">&#x2B05; Voltar ao Dashboard</a>
-        <span class="page-badge">Unidade 1 &mdash; S.O. e Utilit&aacute;rios</span>
-        <button class="slide-toggle" id="slideToggleBtn">&#x1F4FA; Modo Slide</button>
+<div class="top-bar">
+    <a href="index.html" class="back-btn">&#x2B05; Voltar ao Dashboard</a>
+    <span class="page-badge">Unidade 1 &mdash; S.O. e Utilit&aacute;rios</span>
+    <button class="slide-toggle" id="slideToggleBtn">&#x1F4FA; Modo Slide</button>
+</div>
+
+<div class="content-wrapper">
+
+    <div class="lesson-hero">
+        <h1>&#x1F6E0;&#xFE0F; Softwares Utilit&aacute;rios</h1>
+        <p class="subtitle">Aula 1.4 &mdash; Ferramentas que complementam o S.O. e mantêm o computador seguro, r&aacute;pido e organizado</p>
     </div>
 
-    <div class="content-wrapper">
+    <!-- SLIDE 1: Título -->
+    <div class="content-card">
+        <h2>&#x1F4AC; O que s&atilde;o softwares utilit&aacute;rios?</h2>
+        <p>Al&eacute;m dos programas que usamos para trabalhar (editores, navegadores, jogos), existe uma categoria especial: os <strong>utilit&aacute;rios</strong>. Eles atuam nos bastidores, mantendo o computador <strong>seguro, r&aacute;pido e organizado</strong>.</p>
 
-        <div class="lesson-hero">
-            <h1>&#x1F6E0;&#xFE0F; Softwares Utilit&aacute;rios</h1>
-            <p class="subtitle">Aula 1.5 &mdash; Ferramentas que complementam o S.O. e facilitam o dia a dia no computador</p>
+        <!-- SVG: ferramentas orbitando um computador -->
+        <div class="svg-wrap">
+            <svg width="520" height="210" viewBox="0 0 520 210" xmlns="http://www.w3.org/2000/svg">
+                <style>
+                    @keyframes orbit-tool { from{transform:rotate(0deg) translateX(110px) rotate(0deg)} to{transform:rotate(360deg) translateX(110px) rotate(-360deg)} }
+                    @keyframes badge-pop { from{opacity:0;transform:scale(0.6)} to{opacity:1;transform:scale(1)} }
+                    .t1{animation:orbit-tool 8s 0s linear infinite;transform-origin:260px 105px;}
+                    .t2{animation:orbit-tool 8s -1.6s linear infinite;transform-origin:260px 105px;}
+                    .t3{animation:orbit-tool 8s -3.2s linear infinite;transform-origin:260px 105px;}
+                    .t4{animation:orbit-tool 8s -4.8s linear infinite;transform-origin:260px 105px;}
+                    .t5{animation:orbit-tool 8s -6.4s linear infinite;transform-origin:260px 105px;}
+                    .bp1{animation:badge-pop 0.4s 0.3s both;}
+                    .bp2{animation:badge-pop 0.4s 0.6s both;}
+                    .bp3{animation:badge-pop 0.4s 0.9s both;}
+                    .bp4{animation:badge-pop 0.4s 1.2s both;}
+                    .bp5{animation:badge-pop 0.4s 1.5s both;}
+                </style>
+
+                <!-- Computador central -->
+                <rect x="210" y="68" width="100" height="68" rx="8" fill="#1e293b"/>
+                <rect x="218" y="76" width="84" height="52" rx="4" fill="#0f172a"/>
+                <rect x="222" y="80" width="76" height="44" rx="2" fill="#1565c0" opacity="0.8"/>
+                <text x="260" y="107" text-anchor="middle" fill="white" font-size="16" font-weight="700">S.O.</text>
+                <rect x="238" y="136" width="44" height="8" rx="4" fill="#334155"/>
+                <rect x="220" y="144" width="80" height="6" rx="3" fill="#475569"/>
+
+                <!-- ferramentas em órbita -->
+                <g class="t1">
+                    <circle cx="260" cy="105" r="20" fill="#c62828"/>
+                    <text x="260" y="110" text-anchor="middle" font-size="16">&#x1F6E1;&#xFE0F;</text>
+                </g>
+                <g class="t2">
+                    <circle cx="260" cy="105" r="20" fill="#2e7d32"/>
+                    <text x="260" y="110" text-anchor="middle" font-size="16">&#x1F4E6;</text>
+                </g>
+                <g class="t3">
+                    <circle cx="260" cy="105" r="20" fill="#1565c0"/>
+                    <text x="260" y="110" text-anchor="middle" font-size="16">&#x2B07;&#xFE0F;</text>
+                </g>
+                <g class="t4">
+                    <circle cx="260" cy="105" r="20" fill="#e65100"/>
+                    <text x="260" y="110" text-anchor="middle" font-size="16">&#x1FA9A;</text>
+                </g>
+                <g class="t5">
+                    <circle cx="260" cy="105" r="20" fill="#6a1b9a"/>
+                    <text x="260" y="110" text-anchor="middle" font-size="16">&#x1F4D1;</text>
+                </g>
+
+                <!-- labels embaixo -->
+                <g class="bp1">
+                    <rect x="8" y="172" width="90" height="28" rx="8" fill="#fce4ec"/>
+                    <text x="53" y="190" text-anchor="middle" fill="#c62828" font-size="10" font-weight="700">&#x1F6E1;&#xFE0F; Antivírus</text>
+                </g>
+                <g class="bp2">
+                    <rect x="106" y="172" width="90" height="28" rx="8" fill="#e8f5e9"/>
+                    <text x="151" y="190" text-anchor="middle" fill="#2e7d32" font-size="10" font-weight="700">&#x1F4E6; Compactador</text>
+                </g>
+                <g class="bp3">
+                    <rect x="204" y="172" width="112" height="28" rx="8" fill="#e3f2fd"/>
+                    <text x="260" y="190" text-anchor="middle" fill="#1565c0" font-size="10" font-weight="700">&#x2B07;&#xFE0F; Gerenc. Download</text>
+                </g>
+                <g class="bp4">
+                    <rect x="324" y="172" width="90" height="28" rx="8" fill="#fff3e0"/>
+                    <text x="369" y="190" text-anchor="middle" fill="#e65100" font-size="10" font-weight="700">&#x1FA9A; Manutenção</text>
+                </g>
+                <g class="bp5">
+                    <rect x="422" y="172" width="90" height="28" rx="8" fill="#f3e5f5"/>
+                    <text x="467" y="190" text-anchor="middle" fill="#6a1b9a" font-size="10" font-weight="700">&#x1F4D1; PDF/Backup</text>
+                </g>
+            </svg>
         </div>
 
-        <!-- CARD 1 -->
-        <div class="content-card">
-            <h2>&#x1F4AC; O que s&atilde;o softwares utilit&aacute;rios?</h2>
-            <p>Al&eacute;m dos programas que usamos para criar e consumir conte&uacute;do (editores de texto, navegadores, jogos), existe uma categoria especial de software chamada <strong>utilit&aacute;rio</strong>. Esses programas n&atilde;o s&atilde;o o foco principal do trabalho &mdash; mas funcionam nos bastidores, <strong>mantendo o computador seguro, r&aacute;pido e organizado</strong>.</p>
-            <p>Pense neles como as ferramentas de uma caixa de ferramentas: voc&ecirc; n&atilde;o usa o alicate o dia todo, mas quando precisa, ele &eacute; indispens&aacute;vel.</p>
-
-            <div class="cat-grid">
-                <div class="cat-item">
-                    <div class="cat-icon">&#x1F6E1;&#xFE0F;</div>
-                    <strong>Antiv&iacute;rus</strong>
-                    <span>Prote&ccedil;&atilde;o contra amea&ccedil;as</span>
-                </div>
-                <div class="cat-item">
-                    <div class="cat-icon">&#x1F4E6;</div>
-                    <strong>Compactadores</strong>
-                    <span>Redu&ccedil;&atilde;o e empacotamento</span>
-                </div>
-                <div class="cat-item">
-                    <div class="cat-icon">&#x2B07;&#xFE0F;</div>
-                    <strong>Gerenc. de Download</strong>
-                    <span>Downloads r&aacute;pidos e seguros</span>
-                </div>
-                <div class="cat-item">
-                    <div class="cat-icon">&#x1FA9A;</div>
-                    <strong>Manuten&ccedil;&atilde;o</strong>
-                    <span>Limpeza e otimiza&ccedil;&atilde;o</span>
-                </div>
-                <div class="cat-item">
-                    <div class="cat-icon">&#x1F4AC;</div>
-                    <strong>Outros Utilit&aacute;rios</strong>
-                    <span>PDF, backup, captura de tela</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- CARD 2 — ANTIVÍRUS -->
-        <div class="content-card">
-            <h2>&#x1F6E1;&#xFE0F; Antiv&iacute;rus e Prote&ccedil;&atilde;o</h2>
-
-            <div class="util-block antivirus">
-                <div class="util-header">
-                    <span class="util-icon">&#x1F6E1;&#xFE0F;</span>
-                    <span class="util-title">Antiv&iacute;rus</span>
-                </div>
-                <p>Um <strong>antiv&iacute;rus</strong> &eacute; um programa que detecta, bloqueia e remove softwares maliciosos (malware) do computador. Ele monitora continuamente os arquivos, downloads e conex&otilde;es de rede em busca de amea&ccedil;as.</p>
-                <p>O antiv&iacute;rus usa uma <strong>base de dados de assinaturas</strong> de v&iacute;rus conhecidos e tamb&eacute;m an&aacute;lise de comportamento para identificar amea&ccedil;as novas. Por isso &eacute; fundamental mant&ecirc;-lo <strong>sempre atualizado</strong>.</p>
-            </div>
-
-            <h3>Tipos de amea&ccedil;as que o antiv&iacute;rus combate</h3>
-            <ul>
-                <li><strong>V&iacute;rus</strong> &mdash; se replicam e infectam outros arquivos</li>
-                <li><strong>Trojan (Cavalo de Troia)</strong> &mdash; se disfarça de programa leg&iacute;timo para abrir acesso ao sistema</li>
-                <li><strong>Ransomware</strong> &mdash; sequestra os arquivos e exige resgate em dinheiro</li>
-                <li><strong>Spyware</strong> &mdash; monitora e rouba informa&ccedil;&otilde;es do usu&aacute;rio</li>
-                <li><strong>Adware</strong> &mdash; exibe propagandas indesejadas</li>
-            </ul>
-
-            <h3>Principais antiv&iacute;rus do mercado</h3>
-            <div class="soft-grid">
-                <span class="soft-tag">&#x1F6E1;&#xFE0F; Windows Defender (gratuito)</span>
-                <span class="soft-tag">&#x1F7E2; Avast Free</span>
-                <span class="soft-tag">&#x1F534; Kaspersky</span>
-                <span class="soft-tag">&#x1F535; ESET NOD32</span>
-                <span class="soft-tag">&#x26AB; Bitdefender</span>
-                <span class="soft-tag">&#x1F7E1; Malwarebytes</span>
-            </div>
-
-            <div class="highlight-box">
-                <p>&#x1F4A1; O <strong>Windows Defender</strong>, j&aacute; inclu&iacute;do no Windows 10 e 11, oferece prote&ccedil;&atilde;o suficiente para a maioria dos usu&aacute;rios sem custo adicional. O mais importante &eacute; mant&ecirc;-lo ativo e atualizado.</p>
-            </div>
-        </div>
-
-        <!-- CARD 3 — COMPACTADORES -->
-        <div class="content-card">
-            <h2>&#x1F4E6; Compactadores de Arquivos</h2>
-
-            <div class="util-block compactor">
-                <div class="util-header">
-                    <span class="util-icon">&#x1F4E6;</span>
-                    <span class="util-title">Compactadores</span>
-                </div>
-                <p>Compactadores s&atilde;o programas que <strong>reduzem o tamanho dos arquivos</strong> usando algoritmos de compress&atilde;o. Al&eacute;m de economizar espa&ccedil;o, permitem agrupar v&aacute;rios arquivos em um &uacute;nico pacote, facilitando o envio por e-mail ou armazenamento.</p>
-            </div>
-
-            <h3>Como funciona a compress&atilde;o?</h3>
-            <p>Arquivos cont&ecirc;m muita informa&ccedil;&atilde;o redundante (dados que se repetem). O compactador identifica essas repeti&ccedil;&otilde;es e as substitui por c&oacute;digos menores, reduzindo o tamanho sem perder informa&ccedil;&atilde;o.</p>
-
-            <div class="compress-demo">
-                <div class="compress-label">Exemplo: arquivo de texto de 10 MB</div>
-                <div class="compress-bar-wrap">
-                    <div class="compress-bar bar-original">Original &mdash; 10 MB</div>
-                </div>
-                <div class="compress-bar-wrap">
-                    <div class="compress-bar bar-zip">ZIP &mdash; ~6 MB (40% menor)</div>
-                </div>
-                <div class="compress-bar-wrap">
-                    <div class="compress-bar bar-7z">7z &mdash; ~5 MB (50% menor)</div>
-                </div>
-            </div>
-
-            <h3>Principais formatos e programas</h3>
-            <table class="compare-table">
-                <tr>
-                    <th>Formato</th>
-                    <th>Programa</th>
-                    <th>Gratuito</th>
-                    <th>Compress&atilde;o</th>
-                    <th>Obs.</th>
-                </tr>
-                <tr>
-                    <td><strong>.zip</strong></td>
-                    <td>WinZip, 7-Zip, nativo do S.O.</td>
-                    <td><span class="check">Sim*</span></td>
-                    <td><span class="middle">M&eacute;dia</span></td>
-                    <td>Mais compat&iacute;vel</td>
-                </tr>
-                <tr>
-                    <td><strong>.rar</strong></td>
-                    <td>WinRAR</td>
-                    <td><span class="cross">N&atilde;o</span></td>
-                    <td><span class="check">Alta</span></td>
-                    <td>Muito popular no Brasil</td>
-                </tr>
-                <tr>
-                    <td><strong>.7z</strong></td>
-                    <td>7-Zip</td>
-                    <td><span class="check">Sim</span></td>
-                    <td><span class="check">Alta</span></td>
-                    <td>Open source, recomendado</td>
-                </tr>
-                <tr>
-                    <td><strong>.tar.gz</strong></td>
-                    <td>Nativo Linux/macOS</td>
-                    <td><span class="check">Sim</span></td>
-                    <td><span class="middle">M&eacute;dia</span></td>
-                    <td>Padr&atilde;o no Linux</td>
-                </tr>
-            </table>
-
-            <div class="alert-box">
-                <p>&#x26A0;&#xFE0F; <strong>Cuidado com arquivos compactados de origem desconhecida.</strong> V&iacute;rus e malwares s&atilde;o frequentemente distribuídos dentro de arquivos .zip ou .rar para enganar o antiv&iacute;rus. Nunca descompacte arquivos recebidos de fontes n&atilde;o confi&aacute;veis.</p>
-            </div>
-        </div>
-
-        <!-- CARD 4 — GERENCIADORES DE DOWNLOAD -->
-        <div class="content-card">
-            <h2>&#x2B07;&#xFE0F; Gerenciadores de Download</h2>
-
-            <div class="util-block download">
-                <div class="util-header">
-                    <span class="util-icon">&#x2B07;&#xFE0F;</span>
-                    <span class="util-title">Gerenciadores de Download</span>
-                </div>
-                <p>Os navegadores j&aacute; fazem downloads, mas um <strong>gerenciador de download dedicado</strong> vai al&eacute;m: ele divide o arquivo em partes e as baixa em paralelo, aumentando significativamente a velocidade. Al&eacute;m disso, permite <strong>pausar e retomar</strong> downloads interrompidos, o que &eacute; essencial para arquivos grandes.</p>
-            </div>
-
-            <h3>Vantagens de usar um gerenciador de download</h3>
-            <ul>
-                <li><strong>Velocidade maior</strong> &mdash; divide o arquivo em m&uacute;ltiplas conex&otilde;es simult&acirc;neas</li>
-                <li><strong>Retomada autom&aacute;tica</strong> &mdash; se a conex&atilde;o cair, o download continua de onde parou</li>
-                <li><strong>Agendamento</strong> &mdash; programa downloads para hor&aacute;rios de menor uso da internet</li>
-                <li><strong>Organiza&ccedil;&atilde;o</strong> &mdash; categoriza downloads por tipo (v&iacute;deo, m&uacute;sica, documento)</li>
-                <li><strong>Verifica&ccedil;&atilde;o de integridade</strong> &mdash; confirma que o arquivo n&atilde;o foi corrompido</li>
-            </ul>
-
-            <h3>Principais gerenciadores</h3>
-            <div class="soft-grid">
-                <span class="soft-tag">&#x2B07;&#xFE0F; IDM &mdash; Internet Download Manager</span>
-                <span class="soft-tag">&#x1F7E2; JDownloader (gratuito)</span>
-                <span class="soft-tag">&#x1F535; Free Download Manager (gratuito)</span>
-                <span class="soft-tag">&#x26AB; uTorrent (torrents)</span>
-                <span class="soft-tag">&#x1F7E1; qBittorrent (gratuito)</span>
-            </div>
-
-            <div class="alert-box">
-                <p>&#x26A0;&#xFE0F; <strong>Torrents e direitos autorais:</strong> programas como uTorrent e qBittorrent s&atilde;o usados para baixar arquivos via protocolo torrent. Baixar conte&uacute;do protegido por direitos autorais (filmes, jogos, m&uacute;sicas) sem autoriza&ccedil;&atilde;o &eacute; <strong>ilegal</strong> e pode acarretar san&ccedil;&otilde;es legais.</p>
-            </div>
-        </div>
-
-        <!-- CARD 5 — MANUTENÇÃO -->
-        <div class="content-card">
-            <h2>&#x1FA9A; Utilit&aacute;rios de Manuten&ccedil;&atilde;o</h2>
-
-            <div class="util-block manutencao">
-                <div class="util-header">
-                    <span class="util-icon">&#x1FA9A;</span>
-                    <span class="util-title">Ferramentas de Manuten&ccedil;&atilde;o</span>
-                </div>
-                <p>Com o tempo, o computador acumula arquivos tempor&aacute;rios, entradas de registro desnecess&aacute;rias e fragmenta&ccedil;&atilde;o de dados no disco. Utilit&aacute;rios de manuten&ccedil;&atilde;o fazem a <strong>limpeza e otimiza&ccedil;&atilde;o</strong> do sistema, mantendo-o r&aacute;pido e est&aacute;vel.</p>
-            </div>
-
-            <h3>Principais fun&ccedil;&otilde;es de manuten&ccedil;&atilde;o</h3>
-            <ul>
-                <li>
-                    <strong>Limpeza de disco</strong> &mdash; remove arquivos tempor&aacute;rios, cache do navegador e lixo do sistema. O Windows j&aacute; inclui a ferramenta <em>Limpeza de Disco</em> e o <em>Storage Sense</em>.
-                </li>
-                <li>
-                    <strong>Desfragmentador de disco</strong> &mdash; reorganiza os dados em discos HD para acesso mais r&aacute;pido. <em>Discos SSD n&atilde;o precisam ser desfragmentados.</em>
-                </li>
-                <li>
-                    <strong>Gerenciador de inicializa&ccedil;&atilde;o</strong> &mdash; controla quais programas abrem junto com o Windows, reduzindo o tempo de boot.
-                </li>
-                <li>
-                    <strong>Monitor de sistema</strong> &mdash; exibe uso de CPU, mem&oacute;ria RAM, disco e rede em tempo real (Gerenciador de Tarefas no Windows, Monitor de Atividade no macOS).
-                </li>
-                <li>
-                    <strong>Atualiza&ccedil;&atilde;o de drivers</strong> &mdash; mant&eacute;m os drivers de hardware atualizados para melhor desempenho e compatibilidade.
-                </li>
-            </ul>
-
-            <h3>Ferramentas populares</h3>
-            <div class="soft-grid">
-                <span class="soft-tag">&#x1FA9F; CCleaner</span>
-                <span class="soft-tag">&#x1F7E2; BleachBit (gratuito)</span>
-                <span class="soft-tag">&#x1F535; Gerenciador de Tarefas (nativo)</span>
-                <span class="soft-tag">&#x26AB; Driver Booster</span>
-                <span class="soft-tag">&#x1F7E1; Autoruns (Sysinternals)</span>
-                <span class="soft-tag">&#x1F534; CrystalDiskInfo</span>
-            </div>
-
-            <div class="highlight-box">
-                <p>&#x1F4A1; A maioria das fun&ccedil;&otilde;es de manuten&ccedil;&atilde;o j&aacute; est&aacute; dispon&iacute;vel <strong>nativamente no Windows</strong>. Antes de instalar um software de terceiros, explore as ferramentas embutidas do pr&oacute;prio sistema operacional.</p>
-            </div>
-        </div>
-
-        <!-- CARD 6 — OUTROS UTILITÁRIOS -->
-        <div class="content-card">
-            <h2>&#x1F4AC; Outros Utilit&aacute;rios Essenciais</h2>
-            <p>H&aacute; diversos outros programas utilit&aacute;rios que facilitam o dia a dia. Conhe&ccedil;a os mais usados:</p>
-
-            <div class="util-block outros">
-                <div class="util-header">
-                    <span class="util-icon">&#x1F4D1;</span>
-                    <span class="util-title">Leitores e Editores de PDF</span>
-                </div>
-                <p>O formato PDF &eacute; o padr&atilde;o para documentos digitais. Leitores como o <strong>Adobe Acrobat Reader</strong> (gratuito) e o <strong>Foxit Reader</strong> permitem visualizar, anotar e preencher formul&aacute;rios. Editores completos (como o Acrobat Pro) permitem criar e modificar PDFs.</p>
-                <div class="soft-grid">
-                    <span class="soft-tag">Adobe Acrobat Reader (gratuito)</span>
-                    <span class="soft-tag">Foxit Reader (gratuito)</span>
-                    <span class="soft-tag">PDF24 (gratuito)</span>
-                    <span class="soft-tag">Smallpdf (online)</span>
-                </div>
-            </div>
-
-            <div class="util-block outros">
-                <div class="util-header">
-                    <span class="util-icon">&#x1F4F8;</span>
-                    <span class="util-title">Captura de Tela (Screenshot)</span>
-                </div>
-                <p>Ferramentas de captura de tela registram o que est&aacute; sendo exibido no monitor. O Windows j&aacute; possui a <strong>Ferramenta de Recorte</strong> e o atalho <strong>Win + Shift + S</strong>. Para usos mais avan&ccedil;ados, existem programas dedicados.</p>
-                <div class="soft-grid">
-                    <span class="soft-tag">Ferramenta de Recorte (nativa)</span>
-                    <span class="soft-tag">Lightshot (gratuito)</span>
-                    <span class="soft-tag">ShareX (gratuito)</span>
-                    <span class="soft-tag">Snagit (pago)</span>
-                </div>
-            </div>
-
-            <div class="util-block outros">
-                <div class="util-header">
-                    <span class="util-icon">&#x1F4BE;</span>
-                    <span class="util-title">Backup e Recupera&ccedil;&atilde;o</span>
-                </div>
-                <p>Programas de backup criam c&oacute;pias de seguran&ccedil;a dos seus dados, protegendo-os contra perda por falha de hardware, exclus&atilde;o acidental ou ransomware. O Windows possui o <strong>Hist&oacute;rico de Arquivos</strong> e o <strong>Backup do Windows</strong> como ferramentas nativas.</p>
-                <div class="soft-grid">
-                    <span class="soft-tag">Hist&oacute;rico de Arquivos (nativo)</span>
-                    <span class="soft-tag">Macrium Reflect (gratuito)</span>
-                    <span class="soft-tag">AOMEI Backupper</span>
-                    <span class="soft-tag">Veeam Agent (gratuito)</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- CARD 7 — RECAPITULANDO -->
-        <div class="content-card">
-            <h2>&#x1F4CB; Recapitulando</h2>
-            <ul>
-                <li><strong>Softwares utilit&aacute;rios</strong> complementam o S.O., mantendo o computador seguro, r&aacute;pido e organizado</li>
-                <li>O <strong>antiv&iacute;rus</strong> detecta e remove malware &mdash; deve ser mantido sempre atualizado</li>
-                <li><strong>Compactadores</strong> (.zip, .rar, .7z) reduzem o tamanho dos arquivos e agrupam v&aacute;rios em um s&oacute;</li>
-                <li><strong>Gerenciadores de download</strong> aceleram e organizam os downloads, permitindo pausar e retomar</li>
-                <li>Ferramentas de <strong>manuten&ccedil;&atilde;o</strong> limpam arquivos tempor&aacute;rios, otimizam o disco e controlam a inicializa&ccedil;&atilde;o</li>
-                <li>Outros utilit&aacute;rios essenciais: <strong>leitores de PDF</strong>, <strong>captura de tela</strong> e <strong>backup</strong></li>
-                <li>Muitas dessas ferramentas j&aacute; est&atilde;o <strong>inclu&iacute;das nativamente</strong> no Windows &mdash; explore-as antes de instalar programas de terceiros</li>
-            </ul>
-
-            <div class="highlight-box">
-                <p>&#x1F4DA; <strong>Pr&oacute;xima unidade:</strong> Agora que conhecemos os fundamentos do sistema operacional, vamos explorar o mundo da <strong>Internet</strong> &mdash; navegadores, e-mail, armazenamento em nuvem e seguran&ccedil;a digital.</p>
-            </div>
-        </div>
-
-        <!-- EXERCÍCIO: Múltipla Escolha -->
-        <div class="content-card exercise-card">
-            <h2>&#x1F4DD; Exerc&iacute;cio &mdash; M&uacute;ltipla Escolha</h2>
-            <p style="color:#475569;font-size:0.9em;margin-bottom:16px;">Leia cada situa&ccedil;&atilde;o e identifique qual software utilit&aacute;rio resolver&iacute;a o problema.</p>
-
-            <div class="mc-root" data-ex="mc14">
-
-                <div class="mc-question" data-q="q1" data-correct="b">
-                    <p class="mc-q-text">1. Seu computador est&aacute; lento e voc&ecirc; suspeita que h&aacute; um programa malicioso rodando em segundo plano. Qual tipo de software voc&ecirc; deve usar?</p>
-                    <div class="mc-options">
-                        <div class="mc-option" data-opt="a"><span class="mc-letter">A</span><span>Compactador de arquivos</span></div>
-                        <div class="mc-option" data-opt="b"><span class="mc-letter">B</span><span>Antiv&iacute;rus &mdash; detecta e remove malware</span></div>
-                        <div class="mc-option" data-opt="c"><span class="mc-letter">C</span><span>Gerenciador de download</span></div>
-                        <div class="mc-option" data-opt="d"><span class="mc-letter">D</span><span>Leitor de PDF</span></div>
-                    </div>
-                    <div class="mc-explanation ok">&#x2714; Correto! O antiv&iacute;rus &eacute; a ferramenta certa para detectar, bloquear e remover programas maliciosos do computador.</div>
-                    <div class="mc-explanation err">&#x2716; Essa ferramenta n&atilde;o serve para detectar malware. O antiv&iacute;rus &eacute; o software indicado para essa situa&ccedil;&atilde;o.</div>
-                </div>
-
-                <hr class="mc-sep">
-
-                <div class="mc-question" data-q="q2" data-correct="c">
-                    <p class="mc-q-text">2. Voc&ecirc; recebeu por e-mail um arquivo <strong>.rar</strong> com fotos de uma viagem. Para abrir esse arquivo, o que voc&ecirc; precisa?</p>
-                    <div class="mc-options">
-                        <div class="mc-option" data-opt="a"><span class="mc-letter">A</span><span>Antiv&iacute;rus atualizado</span></div>
-                        <div class="mc-option" data-opt="b"><span class="mc-letter">B</span><span>Gerenciador de download</span></div>
-                        <div class="mc-option" data-opt="c"><span class="mc-letter">C</span><span>Compactador de arquivos (WinRAR ou 7-Zip)</span></div>
-                        <div class="mc-option" data-opt="d"><span class="mc-letter">D</span><span>Software de backup</span></div>
-                    </div>
-                    <div class="mc-explanation ok">&#x2714; Correto! O formato .rar &eacute; um arquivo compactado. Voc&ecirc; precisa de um compactador como WinRAR ou 7-Zip para extra&iacute;-lo.</div>
-                    <div class="mc-explanation err" data-for="a">&#x2716; O antiv&iacute;rus n&atilde;o abre arquivos compactados. Voc&ecirc; precisa de um programa como WinRAR ou 7-Zip.</div>
-                    <div class="mc-explanation err" data-for="b">&#x2716; O gerenciador de download &eacute; usado para baixar arquivos, n&atilde;o para extrair compactados.</div>
-                    <div class="mc-explanation err" data-for="d">&#x2716; Software de backup faz c&oacute;pias de seguran&ccedil;a, n&atilde;o extrai arquivos .rar.</div>
-                </div>
-
-                <hr class="mc-sep">
-
-                <div class="mc-question" data-q="q3" data-correct="a">
-                    <p class="mc-q-text">3. Voc&ecirc; precisa baixar um arquivo de 4 GB e quer poder pausar e continuar o download depois, sem perder o progresso. Qual ferramenta usar?</p>
-                    <div class="mc-options">
-                        <div class="mc-option" data-opt="a"><span class="mc-letter">A</span><span>Gerenciador de downloads (IDM, Free Download Manager)</span></div>
-                        <div class="mc-option" data-opt="b"><span class="mc-letter">B</span><span>Compactador de arquivos</span></div>
-                        <div class="mc-option" data-opt="c"><span class="mc-letter">C</span><span>Software de manuten&ccedil;&atilde;o</span></div>
-                        <div class="mc-option" data-opt="d"><span class="mc-letter">D</span><span>Leitor de PDF</span></div>
-                    </div>
-                    <div class="mc-explanation ok">&#x2714; Correto! Gerenciadores de download permitem pausar, retomar e at&eacute; acelerar downloads grandes, sem perder o que j&aacute; foi baixado.</div>
-                    <div class="mc-explanation err">&#x2716; Essa ferramenta n&atilde;o gerencia downloads. Para pausar e retomar arquivos grandes, use um gerenciador de downloads como IDM ou Free Download Manager.</div>
-                </div>
-
-                <hr class="mc-sep">
-
-                <div class="mc-question" data-q="q4" data-correct="d">
-                    <p class="mc-q-text">4. Seu computador est&aacute; demorando muito para iniciar. Voc&ecirc; quer remover programas desnecess&aacute;rios da inicializa&ccedil;&atilde;o e limpar arquivos tempor&aacute;rios. Qual tipo de software usar?</p>
-                    <div class="mc-options">
-                        <div class="mc-option" data-opt="a"><span class="mc-letter">A</span><span>Antiv&iacute;rus</span></div>
-                        <div class="mc-option" data-opt="b"><span class="mc-letter">B</span><span>Compactador</span></div>
-                        <div class="mc-option" data-opt="c"><span class="mc-letter">C</span><span>Gerenciador de downloads</span></div>
-                        <div class="mc-option" data-opt="d"><span class="mc-letter">D</span><span>Software de manuten&ccedil;&atilde;o (CCleaner ou Limpeza de Disco)</span></div>
-                    </div>
-                    <div class="mc-explanation ok">&#x2714; Correto! Softwares de manuten&ccedil;&atilde;o como CCleaner ou a pr&oacute;pria Limpeza de Disco do Windows limpam arquivos tempor&aacute;rios e gerenciam a inicializa&ccedil;&atilde;o do sistema.</div>
-                    <div class="mc-explanation err" data-for="a">&#x2716; O antiv&iacute;rus protege contra malware, mas n&atilde;o gerencia programas de inicializa&ccedil;&atilde;o nem limpa arquivos tempor&aacute;rios.</div>
-                    <div class="mc-explanation err" data-for="b">&#x2716; O compactador serve para comprimir arquivos, n&atilde;o para otimizar o sistema.</div>
-                    <div class="mc-explanation err" data-for="c">&#x2716; O gerenciador de downloads cuida apenas de arquivos sendo baixados da internet.</div>
-                </div>
-
-                <hr class="mc-sep">
-
-                <div class="mc-question" data-q="q5" data-correct="c">
-                    <p class="mc-q-text">5. Voc&ecirc; precisa enviar um relat&oacute;rio em formato que qualquer pessoa possa abrir sem alterar a formata&ccedil;&atilde;o. Qual ferramenta gera esse tipo de arquivo?</p>
-                    <div class="mc-options">
-                        <div class="mc-option" data-opt="a"><span class="mc-letter">A</span><span>Compactador &mdash; gera arquivo .zip</span></div>
-                        <div class="mc-option" data-opt="b"><span class="mc-letter">B</span><span>Antiv&iacute;rus &mdash; garante seguran&ccedil;a no envio</span></div>
-                        <div class="mc-option" data-opt="c"><span class="mc-letter">C</span><span>Conversor/exportador de PDF (Adobe Acrobat, LibreOffice)</span></div>
-                        <div class="mc-option" data-opt="d"><span class="mc-letter">D</span><span>Software de backup</span></div>
-                    </div>
-                    <div class="mc-explanation ok">&#x2714; Correto! O formato PDF preserva a formata&ccedil;&atilde;o e pode ser aberto em qualquer dispositivo. Ferramentas como LibreOffice, Word ou Adobe Acrobat exportam para PDF.</div>
-                    <div class="mc-explanation err" data-for="a">&#x2716; O .zip compacta arquivos, mas n&atilde;o garante que a formata&ccedil;&atilde;o seja preservada na abertura.</div>
-                    <div class="mc-explanation err" data-for="b">&#x2716; O antiv&iacute;rus protege o computador, mas n&atilde;o converte documentos para um formato universal.</div>
-                    <div class="mc-explanation err" data-for="d">&#x2716; Software de backup faz c&oacute;pias de seguran&ccedil;a dos seus arquivos, n&atilde;o converte documentos em PDF.</div>
-                </div>
-
-            </div>
-
-            <div class="ex-actions">
-                <button class="btn-verificar" onclick="mcVerify('mc14')">Verificar</button>
-                <button class="btn-refazer"  onclick="mcReset('mc14')">Refazer</button>
-            </div>
-            <div class="ex-result" id="mc14-result"></div>
-        </div>
-
-        <!-- ATIVIDADE PRÁTICA 1.4 -->
-        <div class="content-card practical-card" id="prat-14">
-            <h2>&#x1F6E0;&#xFE0F; Atividade Pr&aacute;tica &mdash; Utilit&aacute;rios Nativos do Windows</h2>
-            <div class="prat-meta">
-                <span class="prat-tag">&#x23F1; ~25 min</span>
-                <span class="prat-tag">&#x1F4BB; Sem instala&ccedil;&atilde;o</span>
-                <span class="prat-tag">&#x1F4CD; Windows nativo</span>
-            </div>
-
-            <div class="prat-steps">
-                <div class="prat-step">
-                    <div class="step-num">1</div>
-                    <div class="step-body">
-                        <div class="step-label">Compacta&ccedil;&atilde;o nativa de arquivos</div>
-                        <div class="step-desc">Localize a pasta <strong>Escola</strong> criada na aula anterior (em Documentos). Clique com o bot&atilde;o direito nela e selecione <strong>"Compactar em arquivo ZIP"</strong>. Anote o tamanho da pasta original (Alt+Enter) e compare com o arquivo <em>.zip</em> gerado. Qual foi a redu&ccedil;&atilde;o?</div>
-                    </div>
-                </div>
-                <div class="prat-step">
-                    <div class="step-num">2</div>
-                    <div class="step-body">
-                        <div class="step-label">Extraindo o arquivo compactado</div>
-                        <div class="step-desc">Clique com o bot&atilde;o direito no arquivo <em>.zip</em> reci&eacute;m-criado e escolha <strong>"Extrair tudo"</strong>. Escolha a &Aacute;rea de Trabalho como destino. Confirme que a pasta extra&iacute;da est&aacute; igual &agrave; original. Ap&oacute;s verificar, delete a c&oacute;pia extra&iacute;da.</div>
-                    </div>
-                </div>
-                <div class="prat-step">
-                    <div class="step-num">3</div>
-                    <div class="step-body">
-                        <div class="step-label">Limpeza de Disco</div>
-                        <div class="step-desc">Pressione <kbd>Windows</kbd>+<kbd>R</kbd>, digite <kbd>cleanmgr</kbd> e pressione <kbd>Enter</kbd>. Selecione a unidade <strong>C:</strong>. Aguarde a an&aacute;lise. Anote: quais categorias aparecem e quanto espa&ccedil;o total poderia ser liberado. <em>(N&atilde;o precisa confirmar a limpeza.)</em></div>
-                    </div>
-                </div>
-                <div class="prat-step">
-                    <div class="step-num">4</div>
-                    <div class="step-body">
-                        <div class="step-label">Windows Defender &mdash; status de prote&ccedil;&atilde;o</div>
-                        <div class="step-desc">V&aacute; em Iniciar e pesquise <strong>"Seguran&ccedil;a do Windows"</strong>. Abra e acesse <strong>Prote&ccedil;&atilde;o contra v&iacute;rus e amea&ccedil;as</strong>. Anote: quando foi a &uacute;ltima varredura? O sistema est&aacute; protegido? H&aacute; alguma amea&ccedil;a detectada?</div>
-                    </div>
-                </div>
-                <div class="prat-step">
-                    <div class="step-num">5</div>
-                    <div class="step-body">
-                        <div class="step-label">Programas de inicializa&ccedil;&atilde;o</div>
-                        <div class="step-desc">Abra o Gerenciador de Tarefas (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Esc</kbd>) e clique na aba <strong>Inicializa&ccedil;&atilde;o</strong>. Liste todos os programas com impacto <strong>Alto</strong>. Esses programas s&atilde;o gerenciados pelo pr&oacute;prio S.O. &mdash; &eacute; poss&iacute;vel desativ&aacute;-los clicando com bot&atilde;o direito (n&atilde;o fa&ccedil;a isso em computador do laborat&oacute;rio).</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="prat-observe">
-                <strong>&#x1F4CC; Para saber:</strong> O Windows j&aacute; inclui nativamente antiv&iacute;rus (Defender), compactador (ZIP), limpeza de disco e gerenciador de inicializa&ccedil;&atilde;o. N&atilde;o &eacute; necess&aacute;rio instalar programas de terceiros para essas fun&ccedil;&otilde;es &mdash; a maioria dos usu&aacute;rios domina apenas uma parte do que o pr&oacute;prio sistema j&aacute; oferece.
-            </div>
-
-            <div class="ex-actions">
-                <button class="btn-print" onclick="printPractical('prat-14', 'Aula 1.5 \u2014 Softwares Utilit\u00e1rios')">&#x1F5A8;&#xFE0F; Imprimir roteiro</button>
-            </div>
-        </div>
-
-        <div class="nav-footer">
-            <a href="uni1-05-revisao.html" class="nav-link">&#x2B05; Anterior: Revis&atilde;o da Unidade 1</a>
-            <a href="uni2-01-navegadores-email.html" class="nav-link">Pr&oacute;xima: Navegadores e E-mail &#x27A1;</a>
-        </div>
-
+        <p>Pense neles como a <strong>caixa de ferramentas</strong> do computador: voc&ecirc; n&atilde;o usa o alicate o dia todo, mas quando precisa, ele &eacute; indispens&aacute;vel. Muitos j&aacute; vêm <strong>nativamente no Windows</strong> &mdash; vamos conhecer cada categoria.</p>
     </div>
 
-    <script src="slide-mode.js"></script>
-    <script src="exercise-mc.js"></script>
-    <script src="exercise-print.js"></script>
+    <!-- SLIDE 2: Antivírus -->
+    <div class="content-card">
+        <h2>&#x1F6E1;&#xFE0F; Antiv&iacute;rus e Prote&ccedil;&atilde;o</h2>
+        <p>O <strong>antiv&iacute;rus</strong> monitora continuamente arquivos, downloads e conex&otilde;es de rede em busca de <strong>malware</strong> (software malicioso). Ele usa uma base de dados de assinaturas conhecidas e an&aacute;lise de comportamento para detectar amea&ccedil;as novas.</p>
+
+        <!-- SVG: escudo bloqueando vírus -->
+        <div class="svg-wrap">
+            <svg width="520" height="195" viewBox="0 0 520 195" xmlns="http://www.w3.org/2000/svg">
+                <style>
+                    @keyframes virus-fly1 { 0%{transform:translate(0,0);opacity:1} 70%{transform:translate(80px,-10px);opacity:1} 100%{transform:translate(80px,-10px);opacity:0} }
+                    @keyframes virus-fly2 { 0%{transform:translate(0,0);opacity:1} 70%{transform:translate(85px,20px);opacity:1} 100%{transform:translate(85px,20px);opacity:0} }
+                    @keyframes virus-fly3 { 0%{transform:translate(0,0);opacity:1} 70%{transform:translate(75px,50px);opacity:1} 100%{transform:translate(75px,50px);opacity:0} }
+                    @keyframes shield-pulse { 0%,100%{filter:drop-shadow(0 0 0 #c62828)} 50%{filter:drop-shadow(0 0 12px #c62828aa)} }
+                    @keyframes x-pop { 0%{opacity:0;transform:scale(0)} 100%{opacity:1;transform:scale(1)} }
+                    .vf1{animation:virus-fly1 2s 0.5s ease-in-out infinite;}
+                    .vf2{animation:virus-fly2 2s 1.0s ease-in-out infinite;}
+                    .vf3{animation:virus-fly3 2s 1.5s ease-in-out infinite;}
+                    .shield{animation:shield-pulse 2s ease-in-out infinite;}
+                    .xp1{animation:x-pop 0.3s 1.0s both;}
+                    .xp2{animation:x-pop 0.3s 1.5s both;}
+                    .xp3{animation:x-pop 0.3s 2.0s both;}
+                </style>
+
+                <!-- Vírus à esquerda -->
+                <g class="vf1">
+                    <circle cx="80" cy="50" r="18" fill="#ef5350" opacity="0.9"/>
+                    <text x="80" y="56" text-anchor="middle" font-size="16">🦠</text>
+                    <text x="80" y="38" text-anchor="middle" fill="#b71c1c" font-size="8" font-weight="700">Vírus</text>
+                </g>
+                <g class="vf2">
+                    <circle cx="70" cy="100" r="18" fill="#e53935" opacity="0.9"/>
+                    <text x="70" y="106" text-anchor="middle" font-size="16">💀</text>
+                    <text x="70" y="88" text-anchor="middle" fill="#b71c1c" font-size="8" font-weight="700">Trojan</text>
+                </g>
+                <g class="vf3">
+                    <circle cx="80" cy="155" r="18" fill="#f44336" opacity="0.9"/>
+                    <text x="80" y="161" text-anchor="middle" font-size="16">🔒</text>
+                    <text x="80" y="143" text-anchor="middle" fill="#b71c1c" font-size="8" font-weight="700">Ransomware</text>
+                </g>
+
+                <!-- Escudo central -->
+                <g class="shield">
+                    <path d="M260,20 L310,45 L310,105 Q310,145 260,165 Q210,145 210,105 L210,45 Z" fill="#c62828"/>
+                    <path d="M260,30 L302,52 L302,105 Q302,138 260,156 Q218,138 218,105 L218,52 Z" fill="#ef5350"/>
+                    <text x="260" y="102" text-anchor="middle" fill="white" font-size="32">🛡️</text>
+                    <text x="260" y="130" text-anchor="middle" fill="white" font-size="10" font-weight="700">Antivírus</text>
+                </g>
+
+                <!-- X de bloqueio -->
+                <g class="xp1" transform="translate(192,42)">
+                    <circle r="12" fill="#b71c1c"/>
+                    <text x="0" y="5" text-anchor="middle" fill="white" font-size="14" font-weight="700">✕</text>
+                </g>
+                <g class="xp2" transform="translate(188,98)">
+                    <circle r="12" fill="#b71c1c"/>
+                    <text x="0" y="5" text-anchor="middle" fill="white" font-size="14" font-weight="700">✕</text>
+                </g>
+                <g class="xp3" transform="translate(196,148)">
+                    <circle r="12" fill="#b71c1c"/>
+                    <text x="0" y="5" text-anchor="middle" fill="white" font-size="14" font-weight="700">✕</text>
+                </g>
+
+                <!-- Computador protegido -->
+                <rect x="360" y="55" width="120" height="80" rx="8" fill="#1e293b"/>
+                <rect x="368" y="63" width="104" height="60" rx="4" fill="#0f172a"/>
+                <rect x="372" y="67" width="96" height="52" rx="2" fill="#1565c0" opacity="0.6"/>
+                <text x="420" y="97" text-anchor="middle" fill="#22c55e" font-size="20">✓</text>
+                <text x="420" y="112" text-anchor="middle" fill="white" font-size="8">Protegido</text>
+                <rect x="398" y="135" width="44" height="6" rx="3" fill="#334155"/>
+                <rect x="380" y="141" width="80" height="4" rx="2" fill="#475569"/>
+
+                <!-- seta do escudo para PC -->
+                <line x1="312" y1="95" x2="358" y2="95" stroke="#22c55e" stroke-width="2" marker-end="url(#ok)"/>
+                <defs>
+                    <marker id="ok" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                        <path d="M0,0 L6,3 L0,6 Z" fill="#22c55e"/>
+                    </marker>
+                </defs>
+            </svg>
+        </div>
+
+        <p>O <strong>Windows Defender</strong> (j&aacute; inclu&iacute;do no Windows 10/11) oferece prote&ccedil;&atilde;o suficiente para a maioria dos usu&aacute;rios. O mais importante &eacute; mant&ecirc;-lo <strong>sempre ativo e atualizado</strong>.</p>
+
+        <div class="soft-grid">
+            <span class="soft-tag">&#x1F6E1;&#xFE0F; Windows Defender (gratuito)</span>
+            <span class="soft-tag">&#x1F7E2; Avast Free</span>
+            <span class="soft-tag">&#x1F534; Kaspersky</span>
+            <span class="soft-tag">&#x1F535; ESET NOD32</span>
+            <span class="soft-tag">&#x26AB; Bitdefender</span>
+            <span class="soft-tag">&#x1F7E1; Malwarebytes</span>
+        </div>
+    </div>
+
+    <!-- SLIDE 3: Compactadores -->
+    <div class="content-card">
+        <h2>&#x1F4E6; Compactadores de Arquivos</h2>
+        <p>Compactadores <strong>reduzem o tamanho dos arquivos</strong> usando algoritmos de compress&atilde;o. Al&eacute;m de economizar espa&ccedil;o, agrupam v&aacute;rios arquivos em um &uacute;nico pacote, facilitando o envio por e-mail.</p>
+
+        <!-- SVG: barras de compressão animadas -->
+        <div class="svg-wrap">
+            <svg width="520" height="175" viewBox="0 0 520 175" xmlns="http://www.w3.org/2000/svg">
+                <style>
+                    @keyframes bar-grow { from{width:0} to{width:var(--w)} }
+                    @keyframes bar-shrink-zip { from{width:0} to{width:60%} }
+                    @keyframes bar-shrink-7z  { from{width:0} to{width:48%} }
+                    @keyframes bar-full { from{width:0} to{width:100%} }
+                    @keyframes label-in { from{opacity:0} to{opacity:1} }
+                    .orig-bar { animation:bar-full 0.7s 0.3s both ease-out; }
+                    .zip-bar  { animation:bar-shrink-zip 0.7s 1.0s both ease-out; }
+                    .sv-bar   { animation:bar-shrink-7z  0.7s 1.7s both ease-out; }
+                    .lbl2{animation:label-in 0.4s 1.0s both;}
+                    .lbl3{animation:label-in 0.4s 1.7s both;}
+
+                    rect.orig-bar { width:0; }
+                    rect.zip-bar  { width:0; }
+                    rect.sv-bar   { width:0; }
+                </style>
+
+                <!-- Labels esquerda -->
+                <text x="10" y="48" fill="#475569" font-size="11" font-weight="700">Original</text>
+                <text x="10" y="94" fill="#475569" font-size="11" font-weight="700">.zip</text>
+                <text x="10" y="140" fill="#475569" font-size="11" font-weight="700">.7z</text>
+
+                <!-- Barra original: 100% -->
+                <rect x="100" y="28" width="380" height="30" rx="6" fill="#e2e8f0"/>
+                <rect x="100" y="28" height="30" rx="6" fill="#94a3b8" class="orig-bar"/>
+                <text x="488" y="47" fill="#64748b" font-size="10">10 MB</text>
+
+                <!-- Barra ZIP: 60% = 228px -->
+                <rect x="100" y="74" width="380" height="30" rx="6" fill="#e2e8f0"/>
+                <rect x="100" y="74" height="30" rx="6" fill="#2e7d32" class="zip-bar"/>
+                <g class="lbl2">
+                    <text x="329" y="93" fill="white" font-size="10" font-weight="700">~6 MB (40% menor)</text>
+                </g>
+
+                <!-- Barra 7z: 48% = 182px -->
+                <rect x="100" y="120" width="380" height="30" rx="6" fill="#e2e8f0"/>
+                <rect x="100" y="120" height="30" rx="6" fill="#1565c0" class="sv-bar"/>
+                <g class="lbl3">
+                    <text x="290" y="139" fill="white" font-size="10" font-weight="700">~5 MB (50% menor)</text>
+                </g>
+
+                <text x="260" y="168" text-anchor="middle" fill="#94a3b8" font-size="9">Exemplo: arquivo de texto de 10 MB compactado com diferentes formatos</text>
+            </svg>
+        </div>
+
+        <table class="compare-table">
+            <tr>
+                <th>Formato</th>
+                <th>Programa</th>
+                <th>Gratuito</th>
+                <th>Compress&atilde;o</th>
+            </tr>
+            <tr>
+                <td><strong>.zip</strong></td>
+                <td>7-Zip, WinZip, nativo do S.O.</td>
+                <td><span class="check">Sim</span></td>
+                <td><span class="mid">M&eacute;dia</span></td>
+            </tr>
+            <tr>
+                <td><strong>.rar</strong></td>
+                <td>WinRAR</td>
+                <td><span class="cross">N&atilde;o</span></td>
+                <td><span class="check">Alta</span></td>
+            </tr>
+            <tr>
+                <td><strong>.7z</strong></td>
+                <td>7-Zip (open source)</td>
+                <td><span class="check">Sim</span></td>
+                <td><span class="check">Alta</span></td>
+            </tr>
+            <tr>
+                <td><strong>.tar.gz</strong></td>
+                <td>Nativo Linux/macOS</td>
+                <td><span class="check">Sim</span></td>
+                <td><span class="mid">M&eacute;dia</span></td>
+            </tr>
+        </table>
+
+        <p style="background:#fff8e1;border-left:4px solid #f59e0b;padding:14px 18px;border-radius:0 10px 10px 0;color:#78350f;font-size:0.93em;margin:0;">
+            &#x26A0;&#xFE0F; <strong>Cuidado com compactados de origem desconhecida.</strong> V&iacute;rus s&atilde;o frequentemente distribuídos dentro de .zip ou .rar para enganar o antiv&iacute;rus. Nunca descompacte arquivos de fontes n&atilde;o confi&aacute;veis.
+        </p>
+    </div>
+
+    <!-- SLIDE 4: Gerenciadores de Download -->
+    <div class="content-card">
+        <h2>&#x2B07;&#xFE0F; Gerenciadores de Download</h2>
+        <p>Os navegadores j&aacute; fazem downloads, mas um <strong>gerenciador dedicado</strong> divide o arquivo em partes e baixa em paralelo, aumentando a velocidade. Al&eacute;m disso, permite <strong>pausar e retomar</strong> downloads interrompidos.</p>
+
+        <!-- SVG: download em múltiplas partes -->
+        <div class="svg-wrap">
+            <svg width="520" height="180" viewBox="0 0 520 180" xmlns="http://www.w3.org/2000/svg">
+                <style>
+                    @keyframes dl-bar { from{width:0} to{width:var(--dw)} }
+                    @keyframes dl-p1 { from{width:0} to{width:72%} }
+                    @keyframes dl-p2 { from{width:0} to{width:85%} }
+                    @keyframes dl-p3 { from{width:0} to{width:60%} }
+                    @keyframes dl-p4 { from{width:0} to{width:90%} }
+                    @keyframes nav-bar { from{width:0} to{width:40%} }
+                    .pb1{animation:dl-p1 1.2s 0.3s both ease-out;}
+                    .pb2{animation:dl-p2 1.0s 0.5s both ease-out;}
+                    .pb3{animation:dl-p3 1.4s 0.4s both ease-out;}
+                    .pb4{animation:dl-p4 0.9s 0.6s both ease-out;}
+                    .nav-pb{animation:nav-bar 2s 0.3s both ease-out;}
+                </style>
+
+                <!-- Gerenciador -->
+                <text x="30" y="22" fill="#1565c0" font-size="11" font-weight="700">Gerenciador de Downloads (4 conexões paralelas)</text>
+
+                <!-- 4 barras paralelas -->
+                <text x="14" y="46" fill="#64748b" font-size="9">Parte 1</text>
+                <rect x="80" y="30" width="340" height="22" rx="5" fill="#e2e8f0"/>
+                <rect x="80" y="30" height="22" rx="5" fill="#1565c0" class="pb1"/>
+                <text x="428" y="45" fill="#64748b" font-size="9">72%</text>
+
+                <text x="14" y="74" fill="#64748b" font-size="9">Parte 2</text>
+                <rect x="80" y="58" width="340" height="22" rx="5" fill="#e2e8f0"/>
+                <rect x="80" y="58" height="22" rx="5" fill="#0288d1" class="pb2"/>
+                <text x="428" y="73" fill="#64748b" font-size="9">85%</text>
+
+                <text x="14" y="102" fill="#64748b" font-size="9">Parte 3</text>
+                <rect x="80" y="86" width="340" height="22" rx="5" fill="#e2e8f0"/>
+                <rect x="80" y="86" height="22" rx="5" fill="#1976d2" class="pb3"/>
+                <text x="428" y="101" fill="#64748b" font-size="9">60%</text>
+
+                <text x="14" y="130" fill="#64748b" font-size="9">Parte 4</text>
+                <rect x="80" y="114" width="340" height="22" rx="5" fill="#e2e8f0"/>
+                <rect x="80" y="114" height="22" rx="5" fill="#1565c0" class="pb4"/>
+                <text x="428" y="129" fill="#64748b" font-size="9">90%</text>
+
+                <!-- vs Navegador -->
+                <text x="30" y="158" fill="#94a3b8" font-size="11" font-weight="700">Navegador simples (1 conexão)</text>
+                <rect x="80" y="162" width="340" height="12" rx="4" fill="#e2e8f0"/>
+                <rect x="80" y="162" height="12" rx="4" fill="#94a3b8" class="nav-pb"/>
+                <text x="428" y="172" fill="#94a3b8" font-size="9">40%</text>
+            </svg>
+        </div>
+
+        <div class="soft-grid">
+            <span class="soft-tag">&#x2B07;&#xFE0F; IDM &mdash; Internet Download Manager</span>
+            <span class="soft-tag">&#x1F7E2; JDownloader (gratuito)</span>
+            <span class="soft-tag">&#x1F535; Free Download Manager (gratuito)</span>
+            <span class="soft-tag">&#x1F7E1; qBittorrent (gratuito)</span>
+        </div>
+        <p style="background:#fff8e1;border-left:4px solid #f59e0b;padding:12px 16px;border-radius:0 10px 10px 0;color:#78350f;font-size:0.9em;margin-top:16px;margin-bottom:0;">
+            &#x26A0;&#xFE0F; <strong>Torrents e direitos autorais:</strong> baixar conte&uacute;do protegido (filmes, jogos, m&uacute;sicas) sem autoriza&ccedil;&atilde;o &eacute; <strong>ilegal</strong>.
+        </p>
+    </div>
+
+    <!-- SLIDE 5: Manutenção -->
+    <div class="content-card">
+        <h2>&#x1FA9A; Utilit&aacute;rios de Manuten&ccedil;&atilde;o</h2>
+        <p>Com o tempo, o computador acumula arquivos tempor&aacute;rios, entradas desnecess&aacute;rias e fragmenta&ccedil;&atilde;o no disco. Ferramentas de manuten&ccedil;&atilde;o fazem a <strong>limpeza e otimiza&ccedil;&atilde;o</strong> do sistema.</p>
+
+        <!-- SVG: computador sendo limpo, CPU e RAM melhorando -->
+        <div class="svg-wrap">
+            <svg width="520" height="195" viewBox="0 0 520 195" xmlns="http://www.w3.org/2000/svg">
+                <style>
+                    @keyframes cpu-fill { from{width:80%} to{width:30%} }
+                    @keyframes ram-fill { from{width:85%} to{width:40%} }
+                    @keyframes disk-fill { from{width:90%} to{width:55%} }
+                    @keyframes trash-fade { 0%{opacity:1} 100%{opacity:0;transform:translateY(-20px)} }
+                    @keyframes speed-up  { 0%{fill:#ef5350} 100%{fill:#22c55e} }
+                    .cpu-b{animation:cpu-fill 2s 1s ease-out forwards;}
+                    .ram-b{animation:ram-fill 2s 1.3s ease-out forwards;}
+                    .disk-b{animation:disk-fill 2s 1.6s ease-out forwards;}
+                    .tr1{animation:trash-fade 0.8s 0.5s ease-out forwards;}
+                    .tr2{animation:trash-fade 0.8s 0.8s ease-out forwards;}
+                    .tr3{animation:trash-fade 0.8s 1.1s ease-out forwards;}
+                    .cpu-color{animation:speed-up 2s 1s ease-out forwards;}
+                    .ram-color{animation:speed-up 2s 1.3s ease-out forwards;}
+                    .disk-color{animation:speed-up 2s 1.6s ease-out forwards;}
+                </style>
+
+                <!-- Lixo sumindo -->
+                <g class="tr1">
+                    <rect x="40" y="30" width="60" height="20" rx="5" fill="#fecaca"/>
+                    <text x="70" y="44" text-anchor="middle" fill="#991b1b" font-size="9">temp cache</text>
+                </g>
+                <g class="tr2">
+                    <rect x="38" y="55" width="64" height="20" rx="5" fill="#fde68a"/>
+                    <text x="70" y="69" text-anchor="middle" fill="#92400e" font-size="9">lixo sistema</text>
+                </g>
+                <g class="tr3">
+                    <rect x="40" y="80" width="60" height="20" rx="5" fill="#fbcfe8"/>
+                    <text x="70" y="94" text-anchor="middle" fill="#9d174d" font-size="9">log antigos</text>
+                </g>
+
+                <!-- Seta de limpeza -->
+                <text x="118" y="70" fill="#1565c0" font-size="22">&#x1FA9A;</text>
+                <line x1="148" y1="70" x2="178" y2="70" stroke="#94a3b8" stroke-width="2" stroke-dasharray="4,3" marker-end="url(#ar2)"/>
+                <defs>
+                    <marker id="ar2" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                        <path d="M0,0 L6,3 L0,6 Z" fill="#94a3b8"/>
+                    </marker>
+                </defs>
+
+                <!-- Monitores de uso -->
+                <text x="190" y="24" fill="#1565c0" font-size="11" font-weight="700">Antes da limpeza → Depois</text>
+
+                <text x="190" y="48" fill="#475569" font-size="10">CPU</text>
+                <rect x="220" y="34" width="260" height="20" rx="5" fill="#fee2e2"/>
+                <rect x="220" y="34" height="20" rx="5" fill="#ef5350" class="cpu-b cpu-color" style="width:80%;"/>
+
+                <text x="190" y="80" fill="#475569" font-size="10">RAM</text>
+                <rect x="220" y="66" width="260" height="20" rx="5" fill="#fee2e2"/>
+                <rect x="220" y="66" height="20" rx="5" fill="#ef5350" class="ram-b ram-color" style="width:85%;"/>
+
+                <text x="190" y="112" fill="#475569" font-size="10">Disco</text>
+                <rect x="220" y="98" width="260" height="20" rx="5" fill="#fee2e2"/>
+                <rect x="220" y="98" height="20" rx="5" fill="#ef5350" class="disk-b disk-color" style="width:90%;"/>
+
+                <!-- Funções listadas embaixo -->
+                <rect x="10" y="130" width="500" height="56" rx="10" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+                <text x="26" y="148" fill="#166534" font-size="10" font-weight="700">Funções de manutenção nativas no Windows:</text>
+                <text x="26" y="164" fill="#15803d" font-size="9">• Limpeza de Disco (cleanmgr)  • Desfragmentador  • Storage Sense</text>
+                <text x="26" y="178" fill="#15803d" font-size="9">• Gerenciador de Tarefas (Ctrl+Shift+Esc)  • Autoruns  • Windows Update</text>
+            </svg>
+        </div>
+
+        <div class="soft-grid">
+            <span class="soft-tag">&#x1FA9F; CCleaner</span>
+            <span class="soft-tag">&#x1F7E2; BleachBit (gratuito)</span>
+            <span class="soft-tag">&#x1F535; Gerenciador de Tarefas (nativo)</span>
+            <span class="soft-tag">&#x26AB; Driver Booster</span>
+            <span class="soft-tag">&#x1F534; CrystalDiskInfo</span>
+        </div>
+    </div>
+
+    <!-- SLIDE 6: Outros Utilitários -->
+    <div class="content-card">
+        <h2>&#x1F4AC; Outros Utilit&aacute;rios Essenciais</h2>
+        <p>H&aacute; outros programas utilit&aacute;rios do dia a dia que voc&ecirc; precisa conhecer:</p>
+
+        <!-- SVG: 3 categorias aparecendo em sequência -->
+        <div class="svg-wrap">
+            <svg width="520" height="165" viewBox="0 0 520 165" xmlns="http://www.w3.org/2000/svg">
+                <style>
+                    @keyframes card3-in { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+                    .c3a{animation:card3-in 0.5s 0.2s both;}
+                    .c3b{animation:card3-in 0.5s 0.7s both;}
+                    .c3c{animation:card3-in 0.5s 1.2s both;}
+                </style>
+
+                <!-- PDF -->
+                <g class="c3a">
+                    <rect x="10" y="10" width="153" height="145" rx="12" fill="#f3e5f5" stroke="#ce93d8" stroke-width="1.5"/>
+                    <text x="86" y="52" text-anchor="middle" font-size="30">📄</text>
+                    <text x="86" y="78" text-anchor="middle" fill="#4a148c" font-size="12" font-weight="700">Leitores de PDF</text>
+                    <text x="86" y="96" text-anchor="middle" fill="#6a1b9a" font-size="9">Formato universal para</text>
+                    <text x="86" y="110" text-anchor="middle" fill="#6a1b9a" font-size="9">documentos. Preserva</text>
+                    <text x="86" y="124" text-anchor="middle" fill="#6a1b9a" font-size="9">a formatação original.</text>
+                    <text x="86" y="143" text-anchor="middle" fill="#9c27b0" font-size="8">Adobe, Foxit, PDF24</text>
+                </g>
+
+                <!-- Screenshot -->
+                <g class="c3b">
+                    <rect x="183" y="10" width="154" height="145" rx="12" fill="#e1f5fe" stroke="#81d4fa" stroke-width="1.5"/>
+                    <text x="260" y="52" text-anchor="middle" font-size="30">📸</text>
+                    <text x="260" y="78" text-anchor="middle" fill="#01579b" font-size="12" font-weight="700">Captura de Tela</text>
+                    <text x="260" y="96" text-anchor="middle" fill="#0277bd" font-size="9">Registra o que está</text>
+                    <text x="260" y="110" text-anchor="middle" fill="#0277bd" font-size="9">sendo exibido no</text>
+                    <text x="260" y="124" text-anchor="middle" fill="#0277bd" font-size="9">monitor.</text>
+                    <text x="260" y="143" text-anchor="middle" fill="#0288d1" font-size="8">Win+Shift+S, ShareX</text>
+                </g>
+
+                <!-- Backup -->
+                <g class="c3c">
+                    <rect x="357" y="10" width="153" height="145" rx="12" fill="#e8f5e9" stroke="#a5d6a7" stroke-width="1.5"/>
+                    <text x="433" y="52" text-anchor="middle" font-size="30">💾</text>
+                    <text x="433" y="78" text-anchor="middle" fill="#1b5e20" font-size="12" font-weight="700">Backup</text>
+                    <text x="433" y="96" text-anchor="middle" fill="#2e7d32" font-size="9">Cópias de segurança</text>
+                    <text x="433" y="110" text-anchor="middle" fill="#2e7d32" font-size="9">contra perda de dados</text>
+                    <text x="433" y="124" text-anchor="middle" fill="#2e7d32" font-size="9">por falha ou exclusão.</text>
+                    <text x="433" y="143" text-anchor="middle" fill="#388e3c" font-size="8">Histórico de Arquivos, Macrium</text>
+                </g>
+            </svg>
+        </div>
+
+        <p style="background:linear-gradient(135deg,rgba(21,101,192,0.05),rgba(0,137,123,0.06));border-left:4px solid var(--primary);padding:16px 20px;border-radius:0 12px 12px 0;font-style:italic;margin:0;">
+            &#x1F4A1; Muitos utilit&aacute;rios j&aacute; est&atilde;o <strong>inclu&iacute;dos nativamente no Windows</strong>: Ferramenta de Recorte, Hist&oacute;rico de Arquivos, ZIP nativo, Windows Defender. Explore-os antes de instalar programas de terceiros.
+        </p>
+    </div>
+
+    <!-- SLIDE 7: Quiz -->
+    <div class="content-card">
+        <h2>&#x1F3AF; Verifique seu Conhecimento</h2>
+
+        <div class="mc-root" data-ex="mc14">
+
+            <div class="mc-question" data-correct="b">
+                <p><strong>1.</strong> Seu computador est&aacute; lento e voc&ecirc; suspeita de um programa malicioso. Qual utilitário usar?</p>
+                <div class="mc-option" data-opt="a">Compactador de arquivos</div>
+                <div class="mc-option" data-opt="b">Antiv&iacute;rus &mdash; detecta e remove malware</div>
+                <div class="mc-option" data-opt="c">Gerenciador de download</div>
+                <div class="mc-option" data-opt="d">Leitor de PDF</div>
+                <div class="mc-explanation ok">Correto! O antivírus &eacute; a ferramenta certa para detectar, bloquear e remover programas maliciosos.</div>
+                <div class="mc-explanation err">Essa ferramenta n&atilde;o serve para detectar malware. O antivírus é o software indicado para essa situação.</div>
+            </div>
+
+            <div class="mc-question" data-correct="c">
+                <p><strong>2.</strong> Voc&ecirc; recebeu por e-mail um arquivo <strong>.rar</strong> com fotos. O que precisa para abri-lo?</p>
+                <div class="mc-option" data-opt="a">Antivírus atualizado</div>
+                <div class="mc-option" data-opt="b">Gerenciador de download</div>
+                <div class="mc-option" data-opt="c">Compactador de arquivos (WinRAR ou 7-Zip)</div>
+                <div class="mc-option" data-opt="d">Software de backup</div>
+                <div class="mc-explanation ok">Correto! .rar é um arquivo compactado. Você precisa de WinRAR ou 7-Zip para extraí-lo.</div>
+                <div class="mc-explanation err">Você precisa de um compactador como WinRAR ou 7-Zip para abrir arquivos .rar.</div>
+            </div>
+
+            <div class="mc-question" data-correct="a">
+                <p><strong>3.</strong> Voc&ecirc; precisa baixar um arquivo de 4 GB e quer pausar e retomar o download. Qual ferramenta usar?</p>
+                <div class="mc-option" data-opt="a">Gerenciador de downloads (IDM, Free Download Manager)</div>
+                <div class="mc-option" data-opt="b">Compactador de arquivos</div>
+                <div class="mc-option" data-opt="c">Software de manutenção</div>
+                <div class="mc-option" data-opt="d">Leitor de PDF</div>
+                <div class="mc-explanation ok">Correto! Gerenciadores de download permitem pausar, retomar e acelerar downloads grandes.</div>
+                <div class="mc-explanation err">Para pausar e retomar downloads grandes, use um gerenciador como IDM ou Free Download Manager.</div>
+            </div>
+
+            <div class="mc-question" data-correct="d">
+                <p><strong>4.</strong> Seu computador demora para iniciar e tem arquivos tempor&aacute;rios acumulados. O que usar?</p>
+                <div class="mc-option" data-opt="a">Antivírus</div>
+                <div class="mc-option" data-opt="b">Compactador</div>
+                <div class="mc-option" data-opt="c">Gerenciador de downloads</div>
+                <div class="mc-option" data-opt="d">Software de manutenção (CCleaner ou Limpeza de Disco)</div>
+                <div class="mc-explanation ok">Correto! Softwares de manutenção limpam arquivos temporários e gerenciam a inicialização do sistema.</div>
+                <div class="mc-explanation err">Para limpeza e otimização do sistema, use uma ferramenta de manutenção como CCleaner ou a Limpeza de Disco nativa.</div>
+            </div>
+
+            <div class="mc-question" data-correct="c">
+                <p><strong>5.</strong> Voc&ecirc; precisa enviar um relat&oacute;rio que qualquer pessoa possa abrir sem alterar a formata&ccedil;&atilde;o. Qual formato usar?</p>
+                <div class="mc-option" data-opt="a">Compactador — gera arquivo .zip</div>
+                <div class="mc-option" data-opt="b">Antivírus — garante segurança no envio</div>
+                <div class="mc-option" data-opt="c">PDF (Adobe Acrobat, LibreOffice, Word)</div>
+                <div class="mc-option" data-opt="d">Software de backup</div>
+                <div class="mc-explanation ok">Correto! O PDF preserva a formatação e pode ser aberto em qualquer dispositivo.</div>
+                <div class="mc-explanation err">O PDF é o formato certo para preservar formatação. Word, LibreOffice ou Adobe exportam para PDF.</div>
+            </div>
+
+            <div class="mc-question" data-correct="b">
+                <p><strong>6.</strong> Qual das alternativas descreve corretamente um compactador do tipo <strong>.7z</strong>?</p>
+                <div class="mc-option" data-opt="a">É pago e exclusivo do Windows</div>
+                <div class="mc-option" data-opt="b">É gratuito, open source e oferece alta taxa de compressão</div>
+                <div class="mc-option" data-opt="c">Só funciona com imagens</div>
+                <div class="mc-option" data-opt="d">É o formato padrão nativo do macOS</div>
+                <div class="mc-explanation ok">Correto! O 7-Zip é gratuito, open source e tem uma das maiores taxas de compressão disponíveis.</div>
+                <div class="mc-explanation err">O formato .7z é usado pelo 7-Zip, um programa gratuito e open source com excelente compressão, disponível para Windows, Linux e macOS.</div>
+            </div>
+
+            <div class="mc-actions">
+                <button onclick="mcVerify('mc14')">Verificar</button>
+                <button onclick="mcReset('mc14')">Refazer</button>
+            </div>
+            <div class="mc-result" id="mc14-result"></div>
+        </div>
+    </div>
+
+    <!-- SLIDE 8: Atividade Prática -->
+    <div class="content-card">
+        <h2>&#x1F6E0;&#xFE0F; Atividade Pr&aacute;tica &mdash; Utilit&aacute;rios Nativos do Windows</h2>
+
+        <div class="yt-wrap">
+            <iframe src="https://www.youtube.com/embed/NLjbwA6GHSM"
+                    title="Softwares Utilitários do Windows"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+        </div>
+
+        <p><strong>Materiais necess&aacute;rios:</strong></p>
+        <ul class="mat-list">
+            <li>&#x1F4BB; Computador com Windows 10 ou 11</li>
+            <li>&#x270F;&#xFE0F; Papel e caneta para anotar</li>
+            <li>&#x1F4C1; Pasta Escola criada na aula anterior</li>
+        </ul>
+
+        <!-- Passo 1 -->
+        <div class="step-svg-card">
+            <div class="step-num">1</div>
+            <svg width="64" height="56" viewBox="0 0 64 56" xmlns="http://www.w3.org/2000/svg">
+                <style>@keyframes zip-squish{0%,100%{transform:scaleY(1)}50%{transform:scaleY(0.7)}}.zs{animation:zip-squish 1.2s infinite ease-in-out;transform-origin:32px 28px;}</style>
+                <g class="zs">
+                    <rect x="14" y="8" width="36" height="42" rx="5" fill="#fef3c7"/>
+                    <polyline points="38,8 50,20 50,50" fill="none" stroke="#fcd34d" stroke-width="1.5"/>
+                    <polygon points="38,8 50,20 38,20" fill="#fcd34d"/>
+                    <text x="32" y="38" text-anchor="middle" font-size="9" fill="#92400e" font-weight="700">.zip</text>
+                </g>
+                <text x="32" y="54" text-anchor="middle" fill="#64748b" font-size="9">Compactar</text>
+            </svg>
+            <div class="step-text">
+                <strong>Compacta&ccedil;&atilde;o nativa</strong>
+                <span>Clique com bot&atilde;o direito na pasta <strong>Escola</strong> e selecione <em>"Compactar em arquivo ZIP"</em>. Anote o tamanho original e do .zip gerado. Qual foi a redu&ccedil;&atilde;o?</span>
+            </div>
+        </div>
+
+        <!-- Passo 2 -->
+        <div class="step-svg-card">
+            <div class="step-num">2</div>
+            <svg width="64" height="56" viewBox="0 0 64 56" xmlns="http://www.w3.org/2000/svg">
+                <style>@keyframes extract{0%{transform:translateY(0)}50%{transform:translateY(8px)}100%{transform:translateY(0)}}.ext2{animation:extract 1.4s infinite ease-in-out;}</style>
+                <rect x="10" y="6" width="44" height="36" rx="5" fill="#dbeafe" stroke="#93c5fd" stroke-width="1.2"/>
+                <text x="32" y="28" text-anchor="middle" font-size="16" class="ext2">📂</text>
+                <text x="32" y="54" text-anchor="middle" fill="#64748b" font-size="9">Extrair</text>
+            </svg>
+            <div class="step-text">
+                <strong>Extraindo o arquivo</strong>
+                <span>Clique com bot&atilde;o direito no .zip e escolha <em>"Extrair tudo"</em>. Escolha a &Aacute;rea de Trabalho como destino. Confirme que a pasta extra&iacute;da est&aacute; igual &agrave; original.</span>
+            </div>
+        </div>
+
+        <!-- Passo 3 -->
+        <div class="step-svg-card">
+            <div class="step-num">3</div>
+            <svg width="64" height="56" viewBox="0 0 64 56" xmlns="http://www.w3.org/2000/svg">
+                <style>@keyframes clean-bar{from{width:40px}to{width:8px}}.cb3{animation:clean-bar 2s 0.5s ease-out infinite alternate;}</style>
+                <rect x="6" y="8" width="52" height="40" rx="5" fill="#f0fdf4" stroke="#86efac" stroke-width="1.2"/>
+                <rect x="12" y="20" width="40" height="8" rx="3" fill="#e2e8f0"/>
+                <rect x="12" y="20" height="8" rx="3" fill="#22c55e" class="cb3"/>
+                <text x="32" y="38" text-anchor="middle" fill="#15803d" font-size="8">cleanmgr</text>
+                <text x="32" y="54" text-anchor="middle" fill="#64748b" font-size="9">Limpeza</text>
+            </svg>
+            <div class="step-text">
+                <strong>Limpeza de Disco</strong>
+                <span>Pressione <kbd>Win+R</kbd>, digite <kbd>cleanmgr</kbd> e clique OK. Selecione o disco C:. Anote as categorias e o espa&ccedil;o que poderia ser liberado. <em>(N&atilde;o precisa confirmar.)</em></span>
+            </div>
+        </div>
+
+        <!-- Passo 4 -->
+        <div class="step-svg-card">
+            <div class="step-num">4</div>
+            <svg width="64" height="56" viewBox="0 0 64 56" xmlns="http://www.w3.org/2000/svg">
+                <style>@keyframes shield-glow2{0%,100%{opacity:0.7}50%{opacity:1}}.sg2{animation:shield-glow2 1.5s infinite;}</style>
+                <g class="sg2">
+                    <path d="M32,6 L52,16 L52,38 Q52,50 32,54 Q12,50 12,38 L12,16 Z" fill="#fee2e2"/>
+                    <path d="M32,10 L48,18 L48,38 Q48,48 32,51 Q16,48 16,38 L16,18 Z" fill="#ef5350"/>
+                    <text x="32" y="36" text-anchor="middle" font-size="18">🛡️</text>
+                </g>
+                <text x="32" y="54" text-anchor="middle" fill="#64748b" font-size="9">Defender</text>
+            </svg>
+            <div class="step-text">
+                <strong>Windows Defender &mdash; status</strong>
+                <span>Pesquise <em>"Seguran&ccedil;a do Windows"</em> no menu Iniciar. Acesse <strong>Prote&ccedil;&atilde;o contra v&iacute;rus</strong>. Anote: &uacute;ltima varredura, se est&aacute; protegido e se h&aacute; amea&ccedil;as detectadas.</span>
+            </div>
+        </div>
+
+        <!-- Passo 5 -->
+        <div class="step-svg-card">
+            <div class="step-num">5</div>
+            <svg width="64" height="56" viewBox="0 0 64 56" xmlns="http://www.w3.org/2000/svg">
+                <style>
+                    @keyframes row-blink{0%,100%{opacity:0.4}50%{opacity:1}}
+                    .rb1{animation:row-blink 1.2s 0s infinite;}
+                    .rb2{animation:row-blink 1.2s 0.4s infinite;}
+                    .rb3{animation:row-blink 1.2s 0.8s infinite;}
+                </style>
+                <rect x="6" y="6" width="52" height="44" rx="5" fill="#1e293b"/>
+                <rect x="6" y="6" width="52" height="14" rx="5" fill="#1565c0"/>
+                <text x="32" y="17" text-anchor="middle" fill="white" font-size="7">Inicialização</text>
+                <rect x="12" y="24" width="40" height="6" rx="2" class="rb1" fill="#fbbf24"/>
+                <rect x="12" y="33" width="40" height="6" rx="2" class="rb2" fill="#ef5350"/>
+                <rect x="12" y="42" width="40" height="6" rx="2" class="rb3" fill="#22c55e"/>
+                <text x="32" y="54" text-anchor="middle" fill="#64748b" font-size="9">Startup</text>
+            </svg>
+            <div class="step-text">
+                <strong>Programas de inicializa&ccedil;&atilde;o</strong>
+                <span>Abra o Gerenciador de Tarefas (<kbd>Ctrl+Shift+Esc</kbd>) e clique na aba <strong>Inicializa&ccedil;&atilde;o</strong>. Liste todos os programas com impacto <strong>Alto</strong>.</span>
+            </div>
+        </div>
+
+        <!-- Passo 6 -->
+        <div class="step-svg-card">
+            <div class="step-num">6</div>
+            <svg width="64" height="56" viewBox="0 0 64 56" xmlns="http://www.w3.org/2000/svg">
+                <style>@keyframes snap-flash{0%,100%{opacity:0}30%,70%{opacity:1}}.sf{animation:snap-flash 2s infinite;}</style>
+                <rect x="8" y="6" width="48" height="36" rx="5" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+                <rect x="20" y="12" width="24" height="18" rx="3" fill="#f8fafc"/>
+                <rect x="8" y="6" width="48" height="36" rx="5" fill="#1565c0" opacity="0.1" class="sf"/>
+                <text x="32" y="25" text-anchor="middle" font-size="14">📸</text>
+                <rect x="28" y="38" width="8" height="6" rx="2" fill="#60a5fa"/>
+                <text x="32" y="54" text-anchor="middle" fill="#64748b" font-size="9">Screenshot</text>
+            </svg>
+            <div class="step-text">
+                <strong>Captura de tela nativa</strong>
+                <span>Pressione <kbd>Win+Shift+S</kbd> para abrir a Ferramenta de Recorte. Fa&ccedil;a uma captura de tela do Gerenciador de Tarefas aberto. Salve como imagem na pasta <strong>Escola</strong>.</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-footer">
+        <a href="uni1-04-gerenciamento-arquivos.html" class="nav-link">&#x2B05; Anterior: Gerenciamento de Arquivos</a>
+        <a href="uni1-06-revisao.html" class="nav-link">Pr&oacute;xima: Revis&atilde;o da Unidade 1 &#x27A1;</a>
+    </div>
+
+</div>
+
+<script src="slide-mode.js"></script>
+<script src="exercise-mc.js"></script>
+<script src="exercise-print.js"></script>
 </body>
 </html>
