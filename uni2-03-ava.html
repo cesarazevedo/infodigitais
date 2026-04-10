@@ -6,6 +6,9 @@
     <title>Aula 2.3 - Ambientes Virtuais de Aprendizagem (AVA)</title>
     <link rel="stylesheet" href="slide-mode.css">
     <link rel="stylesheet" href="exercise.css">
+    <script>
+        if (localStorage.getItem('darkMode') === null) localStorage.setItem('darkMode', '1');
+    </script>
     <style>
         :root {
             --primary: #00838f;
@@ -13,9 +16,7 @@
             --bg-light: #f0f4f8;
             --text-dark: #1a202c;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--bg-light);
@@ -23,6 +24,7 @@
             line-height: 1.7;
         }
 
+        /* ── LAYOUT ── */
         .top-bar {
             background: white;
             padding: 15px 30px;
@@ -34,7 +36,6 @@
             top: 0;
             z-index: 10;
         }
-
         .back-btn {
             text-decoration: none;
             color: var(--primary);
@@ -47,22 +48,19 @@
             transition: background 0.3s;
         }
         .back-btn:hover { background: rgba(0,131,143,0.08); }
-
         .page-badge {
             font-size: 0.8em;
             padding: 4px 12px;
             border-radius: 20px;
-            background: rgba(0, 131, 143, 0.12);
+            background: rgba(0,131,143,0.12);
             color: var(--primary);
             font-weight: 600;
         }
-
         .content-wrapper {
             max-width: 800px;
             margin: 40px auto;
             padding: 0 30px;
         }
-
         .lesson-hero {
             background: white;
             border-radius: 16px;
@@ -73,7 +71,6 @@
         }
         .lesson-hero h1 { font-size: 2em; margin-bottom: 10px; color: var(--primary); }
         .lesson-hero .subtitle { font-size: 1.05em; color: #718096; }
-
         .content-card {
             background: white;
             border-radius: 16px;
@@ -89,9 +86,22 @@
             align-items: center;
             gap: 10px;
         }
+        .content-card h2::before { content: none; }
         .content-card h3 { font-size: 1.05em; color: var(--secondary); margin: 20px 0 10px; }
         .content-card p  { margin-bottom: 15px; text-align: justify; }
+        ul, ol { margin: 10px 0 15px 25px; }
+        li { margin-bottom: 8px; }
 
+        /* ── SVG container ── */
+        .svg-wrap {
+            background: #f0f9ff;
+            border-radius: 12px;
+            padding: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        /* ── Caixas de destaque ── */
         .highlight-box {
             background: linear-gradient(135deg, rgba(0,131,143,0.05), rgba(0,96,100,0.06));
             border-left: 4px solid var(--primary);
@@ -100,7 +110,6 @@
             margin: 20px 0;
         }
         .highlight-box p { margin-bottom: 0; font-style: italic; }
-
         .alert-box {
             background: #fff8e1;
             border-left: 4px solid #f59e0b;
@@ -109,9 +118,6 @@
             margin: 20px 0;
         }
         .alert-box p { margin: 0; color: #78350f; font-size: 0.93em; }
-
-        ul, ol { margin: 10px 0 15px 25px; }
-        li { margin-bottom: 8px; }
 
         /* ── Grid de plataformas ── */
         .platform-grid {
@@ -133,7 +139,7 @@
         .platform-card strong { display: block; font-size: 0.9em; color: var(--primary); margin-bottom: 4px; }
         .platform-card em     { font-size: 0.78em; color: #718096; font-style: normal; line-height: 1.5; display: block; }
 
-        /* ── SUAP: módulos em grid ── */
+        /* ── Módulos SUAP ── */
         .module-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -149,7 +155,7 @@
         .module-item .mod-title { font-weight: 700; font-size: 0.9em; color: var(--primary); margin-bottom: 4px; }
         .module-item .mod-desc  { font-size: 0.82em; color: #475569; line-height: 1.5; }
 
-        /* ── Classroom: abas visuais ── */
+        /* ── Classroom tabs ── */
         .classroom-tabs {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -172,36 +178,6 @@
         .ct-tab.pessoas    .ct-title { color: #7e22ce; }
         .ct-tab.notas      .ct-title { color: #b45309; }
         .ct-desc  { font-size: 0.78em; color: #475569; line-height: 1.5; }
-
-        /* ── Fluxo de entrega ── */
-        .flow-row {
-            display: flex;
-            align-items: flex-start;
-            gap: 0;
-            margin: 18px 0;
-            flex-wrap: wrap;
-        }
-        .flow-step {
-            flex: 1;
-            min-width: 120px;
-            text-align: center;
-            padding: 14px 8px;
-            position: relative;
-        }
-        .flow-step::after {
-            content: '→';
-            position: absolute;
-            right: -8px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--primary);
-            font-size: 1.2em;
-            font-weight: 700;
-        }
-        .flow-step:last-child::after { display: none; }
-        .flow-icon   { font-size: 1.8em; margin-bottom: 6px; }
-        .flow-label  { font-size: 0.78em; font-weight: 700; color: var(--secondary); margin-bottom: 3px; }
-        .flow-desc   { font-size: 0.74em; color: #718096; line-height: 1.4; }
 
         /* ── Netiqueta ── */
         .netiq-grid {
@@ -244,7 +220,7 @@
         .boa-text strong { display: block; font-size: 0.88em; color: var(--primary); margin-bottom: 3px; }
         .boa-text span   { font-size: 0.8em; color: #475569; }
 
-        /* ── Comparativo ── */
+        /* ── Tabela comparativa ── */
         .compare-table {
             width: 100%;
             border-collapse: collapse;
@@ -269,7 +245,7 @@
         .tag-yes { color: #16a34a; font-weight: 700; }
         .tag-no  { color: #dc2626; }
 
-        /* ── nav ── */
+        /* ── Nav ── */
         .nav-footer {
             display: flex;
             justify-content: space-between;
@@ -288,483 +264,848 @@
         }
         .nav-link:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
 
+        /* ═══════════════════════════
+           DARK MODE
+           ═══════════════════════════ */
+        body.dark-mode { background: #0f172a; color: #e2e8f0; }
+        body.dark-mode .top-bar { background: #1e293b; box-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+        body.dark-mode .lesson-hero,
+        body.dark-mode .content-card { background: #1e293b; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        body.dark-mode .lesson-hero .subtitle { color: #94a3b8; }
+        body.dark-mode .content-card h3 { color: #4db6ac; }
+        body.dark-mode .content-card p,
+        body.dark-mode li { color: #cbd5e1; }
+        body.dark-mode strong { color: #e2e8f0; }
+        body.dark-mode .svg-wrap { background: #0f172a; }
+        body.dark-mode .platform-card { background: #0f172a; }
+        body.dark-mode .platform-card em { color: #64748b; }
+        body.dark-mode .module-item { background: #0f172a; }
+        body.dark-mode .module-item .mod-desc { color: #94a3b8; }
+        body.dark-mode .ct-tab.mural      { background: #1e3a5f; }
+        body.dark-mode .ct-tab.atividades { background: #052e16; }
+        body.dark-mode .ct-tab.pessoas    { background: #2e1065; }
+        body.dark-mode .ct-tab.notas      { background: #431407; }
+        body.dark-mode .ct-desc { color: #94a3b8; }
+        body.dark-mode .netiq-item.ok  { background: #052e16; }
+        body.dark-mode .netiq-item.nok { background: #450a0a; }
+        body.dark-mode .netiq-text span { color: #94a3b8; }
+        body.dark-mode .boa-item { background: #0f172a; }
+        body.dark-mode .boa-text span { color: #94a3b8; }
+        body.dark-mode .highlight-box { background: rgba(0,131,143,0.12); }
+        body.dark-mode .highlight-box p { color: #94a3b8; }
+        body.dark-mode .alert-box { background: #1c1007; }
+        body.dark-mode .alert-box p { color: #fbbf24; }
+        body.dark-mode .compare-table td { color: #cbd5e1; border-color: #334155; }
+        body.dark-mode .compare-table tr:nth-child(even) td { background: #0f172a; }
+        body.dark-mode .nav-link { background: #1e293b; color: var(--primary); }
+
+        /* ── Responsivo ── */
         @media (max-width: 768px) {
             .content-wrapper { padding: 0 15px; }
             .lesson-hero, .content-card { padding: 25px; }
             .lesson-hero h1 { font-size: 1.5em; }
-            .flow-row { flex-direction: column; gap: 8px; }
-            .flow-step::after { display: none; }
             .classroom-tabs { grid-template-columns: 1fr 1fr; }
         }
     </style>
 </head>
-<body>
+<body class="dark-mode">
 
-    <div class="top-bar">
-        <a href="index.html" class="back-btn">&#x2B05; Voltar ao Dashboard</a>
-        <span class="page-badge">Unidade 2 &mdash; Internet e Seguran&ccedil;a</span>
-        <button class="slide-toggle" id="slideToggleBtn">&#x1F4FA; Modo Slide</button>
+<!-- TOP BAR -->
+<div class="top-bar">
+    <a href="index.html" class="back-btn">&#x2B05; Voltar ao Dashboard</a>
+    <span class="page-badge">Unidade 2 &mdash; Internet e Seguran&ccedil;a</span>
+    <button class="slide-toggle" id="slideToggleBtn">&#x1F4FA; Modo Slide</button>
+</div>
+
+<div class="content-wrapper">
+
+    <div class="lesson-hero">
+        <h1>&#x1F393; Ambientes Virtuais de Aprendizagem</h1>
+        <p class="subtitle">Aula 2.3 &mdash; Como usar o SUAP, o Google Classroom e outras plataformas digitais para aprender, entregar atividades e se comunicar com professores</p>
     </div>
 
-    <div class="content-wrapper">
+    <!-- SLIDE 1: O que é AVA? -->
+    <div class="content-card">
+        <h2>&#x1F4AC; O que &eacute; um AVA?</h2>
 
-        <div class="lesson-hero">
-            <h1>&#x1F393; Ambientes Virtuais de Aprendizagem</h1>
-            <p class="subtitle">Aula 2.3 &mdash; Como usar o SUAP, o Google Classroom e outras plataformas digitais para aprender, entregar atividades e se comunicar com professores</p>
+        <!-- SVG: Hub central AVA conectado a 6 conceitos -->
+        <div class="svg-wrap">
+        <svg viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
+            <defs>
+                <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                    <path d="M0,0 L0,6 L8,3 z" fill="#00838f"/>
+                </marker>
+            </defs>
+            <!-- centro -->
+            <rect x="290" y="100" width="140" height="60" rx="14" fill="#00838f"/>
+            <text x="360" y="124" text-anchor="middle" font-size="13" fill="white" font-weight="700">&#x1F393; AVA</text>
+            <text x="360" y="143" text-anchor="middle" font-size="10" fill="#b2dfdb">Sala de aula digital</text>
+
+            <!-- spoke 1 — Materiais -->
+            <line x1="290" y1="118" x2="168" y2="60" stroke="#00838f" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arr)">
+                <animate attributeName="stroke-dashoffset" from="40" to="0" dur="1.5s" repeatCount="indefinite"/>
+            </line>
+            <rect x="60" y="30" width="102" height="44" rx="10" fill="#e0f2f1" stroke="#00838f" stroke-width="1.5"/>
+            <text x="111" y="50" text-anchor="middle" font-size="11" fill="#004d40">&#x1F4DA; Materiais</text>
+            <text x="111" y="66" text-anchor="middle" font-size="9" fill="#00796b">slides, PDFs, v&iacute;deos</text>
+
+            <!-- spoke 2 — Atividades -->
+            <line x1="290" y1="130" x2="168" y2="130" stroke="#00838f" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arr)">
+                <animate attributeName="stroke-dashoffset" from="40" to="0" dur="1.2s" repeatCount="indefinite"/>
+            </line>
+            <rect x="60" y="108" width="102" height="44" rx="10" fill="#e0f2f1" stroke="#00838f" stroke-width="1.5"/>
+            <text x="111" y="128" text-anchor="middle" font-size="11" fill="#004d40">&#x1F4DD; Atividades</text>
+            <text x="111" y="144" text-anchor="middle" font-size="9" fill="#00796b">tarefas e prazos</text>
+
+            <!-- spoke 3 — Notas -->
+            <line x1="290" y1="148" x2="168" y2="200" stroke="#00838f" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arr)">
+                <animate attributeName="stroke-dashoffset" from="40" to="0" dur="1.8s" repeatCount="indefinite"/>
+            </line>
+            <rect x="60" y="186" width="102" height="44" rx="10" fill="#e0f2f1" stroke="#00838f" stroke-width="1.5"/>
+            <text x="111" y="206" text-anchor="middle" font-size="11" fill="#004d40">&#x1F4CA; Notas</text>
+            <text x="111" y="222" text-anchor="middle" font-size="9" fill="#00796b">boletim e avalia&ccedil;&otilde;es</text>
+
+            <!-- spoke 4 — Comunicação -->
+            <line x1="430" y1="118" x2="552" y2="60" stroke="#00838f" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arr)">
+                <animate attributeName="stroke-dashoffset" from="40" to="0" dur="1.4s" repeatCount="indefinite"/>
+            </line>
+            <rect x="558" y="30" width="110" height="44" rx="10" fill="#e0f2f1" stroke="#00838f" stroke-width="1.5"/>
+            <text x="613" y="50" text-anchor="middle" font-size="11" fill="#004d40">&#x1F4AC; Comunica&ccedil;&atilde;o</text>
+            <text x="613" y="66" text-anchor="middle" font-size="9" fill="#00796b">f&oacute;runs e avisos</text>
+
+            <!-- spoke 5 — Frequência -->
+            <line x1="430" y1="130" x2="552" y2="130" stroke="#00838f" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arr)">
+                <animate attributeName="stroke-dashoffset" from="40" to="0" dur="1.0s" repeatCount="indefinite"/>
+            </line>
+            <rect x="558" y="108" width="110" height="44" rx="10" fill="#e0f2f1" stroke="#00838f" stroke-width="1.5"/>
+            <text x="613" y="128" text-anchor="middle" font-size="11" fill="#004d40">&#x1F4C5; Frequ&ecirc;ncia</text>
+            <text x="613" y="144" text-anchor="middle" font-size="9" fill="#00796b">presen&ccedil;a e registro</text>
+
+            <!-- spoke 6 — Feedback -->
+            <line x1="430" y1="148" x2="552" y2="200" stroke="#00838f" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arr)">
+                <animate attributeName="stroke-dashoffset" from="40" to="0" dur="1.6s" repeatCount="indefinite"/>
+            </line>
+            <rect x="558" y="186" width="110" height="44" rx="10" fill="#e0f2f1" stroke="#00838f" stroke-width="1.5"/>
+            <text x="613" y="206" text-anchor="middle" font-size="11" fill="#004d40">&#x2705; Feedback</text>
+            <text x="613" y="222" text-anchor="middle" font-size="9" fill="#00796b">devolutivas do prof.</text>
+        </svg>
         </div>
 
-        <!-- CARD 1 — O que é um AVA? -->
-        <div class="content-card">
-            <h2>&#x1F4AC; O que &eacute; um AVA?</h2>
-            <p>Um <strong>Ambiente Virtual de Aprendizagem</strong> (AVA) &eacute; uma plataforma digital que re&uacute;ne, em um s&oacute; lugar, tudo que &eacute; necess&aacute;rio para o processo de ensino e aprendizagem: materiais did&aacute;ticos, atividades, comunica&ccedil;&atilde;o entre professores e alunos, entrega de trabalhos e registro de notas e frequ&ecirc;ncia.</p>
-            <p>Pense no AVA como uma <strong>sala de aula digital</strong>: assim como a sala f&iacute;sica tem quadro, cadernos, listas de chamada e provas, o AVA possui equivalentes virtuais para cada um desses elementos &mdash; acess&iacute;veis a qualquer hora e de qualquer dispositivo.</p>
+        <p>Um <strong>Ambiente Virtual de Aprendizagem</strong> (AVA) &eacute; uma plataforma digital que re&uacute;ne, em um s&oacute; lugar, tudo que &eacute; necess&aacute;rio para o processo de ensino e aprendizagem: materiais did&aacute;ticos, atividades, comunica&ccedil;&atilde;o entre professores e alunos, entrega de trabalhos e registro de notas e frequ&ecirc;ncia.</p>
+        <p>Pense no AVA como uma <strong>sala de aula digital</strong>: assim como a sala f&iacute;sica tem quadro, cadernos, listas de chamada e provas, o AVA possui equivalentes virtuais para cada um desses elementos &mdash; acess&iacute;veis a qualquer hora e de qualquer dispositivo.</p>
 
-            <div class="highlight-box">
-                <p>&#x1F4A1; O AVA n&atilde;o substitui a sala de aula presencial &mdash; ele a <strong>complementa e amplia</strong>. &Eacute; onde o aprendizado continua fora do hor&aacute;rio escolar, onde voc&ecirc; revisa conte&uacute;do, tira d&uacute;vidas e entrega atividades.</p>
-            </div>
-
-            <h3>&#x2705; Por que usar um AVA?</h3>
-            <ul>
-                <li><strong>Centraliza&ccedil;&atilde;o:</strong> materiais, atividades e notas em um &uacute;nico lugar</li>
-                <li><strong>Acesso 24h:</strong> estude no hor&aacute;rio que for mais produtivo para voc&ecirc;</li>
-                <li><strong>Registro:</strong> hist&oacute;rico de tudo que foi entregue e recebido</li>
-                <li><strong>Comunica&ccedil;&atilde;o estruturada:</strong> f&oacute;runs, mensagens e an&uacute;ncios organizados por turma</li>
-                <li><strong>Feedback:</strong> professores podem comentar e corrigir diretamente nas atividades</li>
-            </ul>
+        <div class="highlight-box">
+            <p>&#x1F4A1; O AVA n&atilde;o substitui a sala de aula presencial &mdash; ele a <strong>complementa e amplia</strong>. &Eacute; onde o aprendizado continua fora do hor&aacute;rio escolar, onde voc&ecirc; revisa conte&uacute;do, tira d&uacute;vidas e entrega atividades.</p>
         </div>
 
-        <!-- CARD 2 — Principais plataformas -->
-        <div class="content-card">
-            <h2>&#x1F9E9; Principais Plataformas AVA</h2>
+        <h3>&#x2705; Por que usar um AVA?</h3>
+        <ul>
+            <li><strong>Centraliza&ccedil;&atilde;o:</strong> materiais, atividades e notas em um &uacute;nico lugar</li>
+            <li><strong>Acesso 24h:</strong> estude no hor&aacute;rio que for mais produtivo para voc&ecirc;</li>
+            <li><strong>Registro:</strong> hist&oacute;rico de tudo que foi entregue e recebido</li>
+            <li><strong>Comunica&ccedil;&atilde;o estruturada:</strong> f&oacute;runs, mensagens e an&uacute;ncios organizados por turma</li>
+            <li><strong>Feedback:</strong> professores podem comentar e corrigir diretamente nas atividades</li>
+        </ul>
+    </div>
 
-            <div class="platform-grid">
-                <div class="platform-card">
-                    <div class="platform-icon">&#x1F3EB;</div>
-                    <strong>SUAP</strong>
-                    <em>Sistema do IFRN: notas, faltas, di&aacute;rios, not&iacute;cias e requisi&ccedil;&otilde;es acad&ecirc;micas.</em>
-                </div>
-                <div class="platform-card">
-                    <div class="platform-icon">&#x1F4D6;</div>
-                    <strong>Google Classroom</strong>
-                    <em>Plataforma do Google: distribui&ccedil;&atilde;o de atividades, mural e integra&ccedil;&atilde;o com Drive e Meet.</em>
-                </div>
-                <div class="platform-card">
-                    <div class="platform-icon">&#x1F4BB;</div>
-                    <strong>Moodle</strong>
-                    <em>Open source, muito usado em universidades: quiz, f&oacute;runs, videoaulas e m&oacute;dulos interativos.</em>
-                </div>
-                <div class="platform-card">
-                    <div class="platform-icon">&#x1F91D;</div>
-                    <strong>Teams Educa&ccedil;&atilde;o</strong>
-                    <em>Vers&atilde;o educacional do Microsoft Teams: v&iacute;deoconfer&ecirc;ncia, chat por turma e integra&ccedil;&atilde;o com Office.</em>
-                </div>
-            </div>
+    <!-- SLIDE 2: Plataformas -->
+    <div class="content-card">
+        <h2>&#x1F9E9; Principais Plataformas AVA</h2>
 
-            <div class="alert-box">
-                <p>&#x1F4CC; No IFRN Campus Parnamirim, os principais ambientes s&atilde;o o <strong>SUAP</strong> (para registros acad&ecirc;micos) e o <strong>Google Classroom</strong> (para atividades e materiais did&aacute;ticos). Conhec&ecirc;-los bem &eacute; essencial para acompanhar as disciplinas.</p>
-            </div>
+        <!-- SVG: barras comparativas -->
+        <div class="svg-wrap">
+        <svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
+            <text x="20" y="24" font-size="11" fill="#94a3b8" font-weight="600">Adoção no contexto escolar brasileiro</text>
+            <!-- SUAP -->
+            <text x="20" y="55" font-size="12" fill="#e2e8f0" font-weight="700">&#x1F3EB; SUAP (IFRN)</text>
+            <rect x="160" y="41" width="0" height="22" rx="6" fill="#00838f">
+                <animate attributeName="width" from="0" to="440" dur="1.2s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.4,0,0.2,1"/>
+            </rect>
+            <text x="608" y="57" font-size="11" fill="#4db6ac">Oficial IFRN</text>
+            <!-- Classroom -->
+            <text x="20" y="100" font-size="12" fill="#e2e8f0" font-weight="700">&#x1F4D6; Google Classroom</text>
+            <rect x="160" y="86" width="0" height="22" rx="6" fill="#1565c0">
+                <animate attributeName="width" from="0" to="400" dur="1.4s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.4,0,0.2,1"/>
+            </rect>
+            <text x="568" y="102" font-size="11" fill="#90caf9">Atividades</text>
+            <!-- Moodle -->
+            <text x="20" y="145" font-size="12" fill="#e2e8f0" font-weight="700">&#x1F4BB; Moodle</text>
+            <rect x="160" y="131" width="0" height="22" rx="6" fill="#7e22ce">
+                <animate attributeName="width" from="0" to="280" dur="1.6s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.4,0,0.2,1"/>
+            </rect>
+            <text x="448" y="147" font-size="11" fill="#c4b5fd">Universidades</text>
+            <!-- Teams -->
+            <text x="20" y="190" font-size="12" fill="#e2e8f0" font-weight="700">&#x1F91D; Teams Educ.</text>
+            <rect x="160" y="176" width="0" height="22" rx="6" fill="#1d4ed8">
+                <animate attributeName="width" from="0" to="200" dur="1.8s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines="0.4,0,0.2,1"/>
+            </rect>
+            <text x="368" y="192" font-size="11" fill="#93c5fd">Microsoft 365</text>
+        </svg>
         </div>
 
-        <!-- CARD 3 — SUAP -->
-        <div class="content-card">
-            <h2>&#x1F3EB; SUAP &mdash; O Sistema do IFRN</h2>
-            <p>O <strong>SUAP</strong> (Sistema Unificado de Administra&ccedil;&atilde;o P&uacute;blica) &eacute; o sistema oficial do IFRN para a gest&atilde;o acad&ecirc;mica. &Eacute; por ele que voc&ecirc; acompanha notas, frequ&ecirc;ncia, calend&aacute;rio e comunicados institucionais.</p>
-            <p>O acesso &eacute; feito pelo navegador em <strong>suap.ifrn.edu.br</strong> com o login e senha fornecidos pela institui&ccedil;&atilde;o.</p>
-
-            <h3>&#x1F4CC; Principais m&oacute;dulos para alunos</h3>
-            <div class="module-grid">
-                <div class="module-item">
-                    <div class="mod-title">&#x1F4CA; Boletim</div>
-                    <div class="mod-desc">Consulte suas notas bimestrais e m&eacute;dias de todas as disciplinas em tempo real.</div>
-                </div>
-                <div class="module-item">
-                    <div class="mod-title">&#x1F4C5; Frequ&ecirc;ncia</div>
-                    <div class="mod-desc">Veja o percentual de presen&ccedil;a em cada disciplina. Aten&ccedil;&atilde;o: o limite &eacute; 25% de faltas.</div>
-                </div>
-                <div class="module-item">
-                    <div class="mod-title">&#x1F4F0; Mural de Not&iacute;cias</div>
-                    <div class="mod-desc">Comunicados oficiais da institui&ccedil;&atilde;o: editais, eventos, prazos e avisos gerais.</div>
-                </div>
-                <div class="module-item">
-                    <div class="mod-title">&#x1F4CB; Di&aacute;rio de Aula</div>
-                    <div class="mod-desc">Conte&uacute;dos ministrados, observa&ccedil;&otilde;es do professor e registro das aulas dadas.</div>
-                </div>
-                <div class="module-item">
-                    <div class="mod-title">&#x1F4C4; Requisi&ccedil;&otilde;es</div>
-                    <div class="mod-desc">Solicita&ccedil;&atilde;o de documentos: declara&ccedil;&atilde;o de matr&iacute;cula, hist&oacute;rico escolar e outros.</div>
-                </div>
-                <div class="module-item">
-                    <div class="mod-title">&#x1F4E7; Mensagens</div>
-                    <div class="mod-desc">Envio e recebimento de mensagens internas entre alunos, professores e servidores.</div>
-                </div>
+        <div class="platform-grid">
+            <div class="platform-card">
+                <div class="platform-icon">&#x1F3EB;</div>
+                <strong>SUAP</strong>
+                <em>Sistema do IFRN: notas, faltas, di&aacute;rios, not&iacute;cias e requisi&ccedil;&otilde;es acad&ecirc;micas.</em>
             </div>
-
-            <div class="highlight-box">
-                <p>&#x26A0;&#xFE0F; <strong>Dica importante:</strong> Verifique o SUAP pelo menos uma vez por semana. Comunicados sobre prazos de matr&iacute;cula, atividades complementares e eventos importantes s&atilde;o publicados ali com anteced&ecirc;ncia.</p>
+            <div class="platform-card">
+                <div class="platform-icon">&#x1F4D6;</div>
+                <strong>Google Classroom</strong>
+                <em>Plataforma do Google: distribui&ccedil;&atilde;o de atividades, mural e integra&ccedil;&atilde;o com Drive e Meet.</em>
             </div>
-        </div>
-
-        <!-- CARD 4 — Google Classroom -->
-        <div class="content-card">
-            <h2>&#x1F4D6; Google Classroom</h2>
-            <p>O <strong>Google Classroom</strong> &eacute; a plataforma onde os professores distribuem materiais, postam atividades, d&atilde;o devolutivas e se comunicam com a turma. &Eacute; acessado em <strong>classroom.google.com</strong> com a conta Google institucional.</p>
-
-            <h3>Fluxo b&aacute;sico de uso</h3>
-            <div class="flow-row">
-                <div class="flow-step">
-                    <div class="flow-icon">&#x1F511;</div>
-                    <div class="flow-label">1. C&oacute;digo da turma</div>
-                    <div class="flow-desc">Professor compartilha o c&oacute;digo. Aluno entra em <em>+ Entrar na turma</em></div>
-                </div>
-                <div class="flow-step">
-                    <div class="flow-icon">&#x1F4E2;</div>
-                    <div class="flow-label">2. Mural</div>
-                    <div class="flow-desc">An&uacute;ncios, materiais e links postados pelo professor aparecem aqui</div>
-                </div>
-                <div class="flow-step">
-                    <div class="flow-icon">&#x1F4DD;</div>
-                    <div class="flow-label">3. Atividade</div>
-                    <div class="flow-desc">Aluno lê, faz e anexa a resposta (arquivo, texto ou link do Drive)</div>
-                </div>
-                <div class="flow-step">
-                    <div class="flow-icon">&#x1F4E4;</div>
-                    <div class="flow-label">4. Entregar</div>
-                    <div class="flow-desc">Clica em <strong>Entregar</strong> antes do prazo. O professor &eacute; notificado</div>
-                </div>
-                <div class="flow-step">
-                    <div class="flow-icon">&#x2705;</div>
-                    <div class="flow-label">5. Nota</div>
-                    <div class="flow-desc">Professor corrige e devolve com coment&aacute;rios. Nota aparece em <em>Notas</em></div>
-                </div>
+            <div class="platform-card">
+                <div class="platform-icon">&#x1F4BB;</div>
+                <strong>Moodle</strong>
+                <em>Open source, muito usado em universidades: quiz, f&oacute;runs, videoaulas e m&oacute;dulos interativos.</em>
             </div>
-
-            <h3>Abas do Classroom</h3>
-            <div class="classroom-tabs">
-                <div class="ct-tab mural">
-                    <div class="ct-icon">&#x1F4E2;</div>
-                    <div class="ct-title">Mural</div>
-                    <div class="ct-desc">An&uacute;ncios, links e arquivos postados pelo professor para a turma</div>
-                </div>
-                <div class="ct-tab atividades">
-                    <div class="ct-icon">&#x1F4CB;</div>
-                    <div class="ct-title">Atividades</div>
-                    <div class="ct-desc">Lista de todas as tarefas, quiz e materiais com prazos e status</div>
-                </div>
-                <div class="ct-tab pessoas">
-                    <div class="ct-icon">&#x1F465;</div>
-                    <div class="ct-title">Pessoas</div>
-                    <div class="ct-desc">Lista de professores e alunos matriculados na turma</div>
-                </div>
-                <div class="ct-tab notas">
-                    <div class="ct-icon">&#x1F4C8;</div>
-                    <div class="ct-title">Notas</div>
-                    <div class="ct-desc">Resumo das pontua&ccedil;&otilde;es obtidas em cada atividade entregue</div>
-                </div>
-            </div>
-
-            <div class="alert-box">
-                <p>&#x23F0; <strong>Aten&ccedil;&atilde;o aos prazos!</strong> Ao clicar em <strong>Entregar</strong> ap&oacute;s o prazo definido pelo professor, a atividade fica marcada como <em>entregue com atraso</em>. Verifique o Google Classroom diariamente para n&atilde;o perder nenhuma entrega.</p>
+            <div class="platform-card">
+                <div class="platform-icon">&#x1F91D;</div>
+                <strong>Teams Educa&ccedil;&atilde;o</strong>
+                <em>Vers&atilde;o educacional do Microsoft Teams: videoconfer&ecirc;ncia, chat por turma e integra&ccedil;&atilde;o com Office.</em>
             </div>
         </div>
 
-        <!-- CARD 5 — Moodle e comparativo -->
-        <div class="content-card">
-            <h2>&#x1F4BB; Moodle e Comparativo das Plataformas</h2>
-            <p>O <strong>Moodle</strong> (<em>Modular Object-Oriented Dynamic Learning Environment</em>) &eacute; uma plataforma open source amplamente adotada em universidades e institutos federais. Oferece recursos avan&ccedil;ados como quiz com tempo, banco de quest&otilde;es, videoaulas integradas e relat&oacute;rios de progresso detalhados.</p>
+        <div class="alert-box">
+            <p>&#x1F4CC; No IFRN Campus Parnamirim, os principais ambientes s&atilde;o o <strong>SUAP</strong> (para registros acad&ecirc;micos) e o <strong>Google Classroom</strong> (para atividades e materiais did&aacute;ticos). Conhec&ecirc;-los bem &eacute; essencial para acompanhar as disciplinas.</p>
+        </div>
+    </div>
 
-            <table class="compare-table">
-                <tr>
-                    <th>Recurso</th>
-                    <th>SUAP</th>
-                    <th>Google Classroom</th>
-                    <th>Moodle</th>
-                </tr>
-                <tr>
-                    <td>Boletim / notas</td>
-                    <td class="tag-yes">&#x2714; Oficial</td>
-                    <td class="tag-yes">&#x2714; Parcial</td>
-                    <td class="tag-yes">&#x2714; Sim</td>
-                </tr>
-                <tr>
-                    <td>Frequ&ecirc;ncia oficial</td>
-                    <td class="tag-yes">&#x2714; Sim</td>
-                    <td class="tag-no">&#x2715; N&atilde;o</td>
-                    <td class="tag-no">&#x2715; N&atilde;o</td>
-                </tr>
-                <tr>
-                    <td>Distribui&ccedil;&atilde;o de atividades</td>
-                    <td class="tag-no">&#x2715; N&atilde;o</td>
-                    <td class="tag-yes">&#x2714; Excelente</td>
-                    <td class="tag-yes">&#x2714; Avan&ccedil;ado</td>
-                </tr>
-                <tr>
-                    <td>Quiz / avalia&ccedil;&atilde;o online</td>
-                    <td class="tag-no">&#x2715; N&atilde;o</td>
-                    <td class="tag-yes">&#x2714; Sim (Forms)</td>
-                    <td class="tag-yes">&#x2714; Completo</td>
-                </tr>
-                <tr>
-                    <td>F&oacute;rum de discuss&atilde;o</td>
-                    <td class="tag-no">&#x2715; N&atilde;o</td>
-                    <td class="tag-yes">&#x2714; Mural / t&oacute;picos</td>
-                    <td class="tag-yes">&#x2714; Avan&ccedil;ado</td>
-                </tr>
-                <tr>
-                    <td>Requer instala&ccedil;&atilde;o</td>
-                    <td class="tag-no">&#x2715; Apenas navegador</td>
-                    <td class="tag-no">&#x2715; Apenas navegador</td>
-                    <td class="tag-no">&#x2715; Apenas navegador</td>
-                </tr>
-            </table>
+    <!-- SLIDE 3: SUAP -->
+    <div class="content-card">
+        <h2>&#x1F3EB; SUAP &mdash; O Sistema do IFRN</h2>
+
+        <!-- SVG: tela do SUAP com módulos que aparecem -->
+        <div class="svg-wrap">
+        <svg viewBox="0 0 680 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
+            <!-- janela -->
+            <rect x="20" y="10" width="640" height="200" rx="10" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
+            <rect x="20" y="10" width="640" height="30" rx="10" fill="#0f172a"/>
+            <rect x="20" y="30" width="640" height="10" fill="#0f172a"/>
+            <circle cx="42" cy="25" r="6" fill="#ef4444"/>
+            <circle cx="62" cy="25" r="6" fill="#f59e0b"/>
+            <circle cx="82" cy="25" r="6" fill="#22c55e"/>
+            <text x="340" y="30" text-anchor="middle" font-size="11" fill="#94a3b8">suap.ifrn.edu.br</text>
+            <!-- sidebar -->
+            <rect x="20" y="40" width="120" height="170" fill="#0f172a"/>
+            <text x="80" y="64" text-anchor="middle" font-size="11" fill="#00838f" font-weight="700">SUAP</text>
+            <text x="80" y="82" text-anchor="middle" font-size="9" fill="#64748b">&#x1F4CA; Boletim</text>
+            <text x="80" y="98" text-anchor="middle" font-size="9" fill="#64748b">&#x1F4C5; Frequ&ecirc;ncia</text>
+            <text x="80" y="114" text-anchor="middle" font-size="9" fill="#64748b">&#x1F4F0; Mural</text>
+            <text x="80" y="130" text-anchor="middle" font-size="9" fill="#64748b">&#x1F4CB; Di&aacute;rio</text>
+            <text x="80" y="146" text-anchor="middle" font-size="9" fill="#64748b">&#x1F4C4; Requisi&ccedil;&otilde;es</text>
+            <text x="80" y="162" text-anchor="middle" font-size="9" fill="#64748b">&#x2709;&#xFE0F; Mensagens</text>
+            <!-- cards animados -->
+            <rect x="150" y="50" width="130" height="60" rx="8" fill="#00838f" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.2s" fill="freeze"/>
+            </rect>
+            <text x="215" y="75" text-anchor="middle" font-size="12" fill="white" font-weight="700" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.2s" fill="freeze"/>&#x1F4CA; Boletim</text>
+            <text x="215" y="93" text-anchor="middle" font-size="9" fill="#b2dfdb" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.2s" fill="freeze"/>Notas bimestrais</text>
+
+            <rect x="295" y="50" width="130" height="60" rx="8" fill="#1565c0" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.5s" fill="freeze"/>
+            </rect>
+            <text x="360" y="75" text-anchor="middle" font-size="12" fill="white" font-weight="700" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.5s" fill="freeze"/>&#x1F4C5; Frequ&ecirc;ncia</text>
+            <text x="360" y="93" text-anchor="middle" font-size="9" fill="#90caf9" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.5s" fill="freeze"/>M&aacute;x. 25% faltas</text>
+
+            <rect x="440" y="50" width="130" height="60" rx="8" fill="#7e22ce" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.8s" fill="freeze"/>
+            </rect>
+            <text x="505" y="75" text-anchor="middle" font-size="12" fill="white" font-weight="700" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.8s" fill="freeze"/>&#x1F4F0; Mural</text>
+            <text x="505" y="93" text-anchor="middle" font-size="9" fill="#c4b5fd" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.8s" fill="freeze"/>Avisos institucionais</text>
+
+            <rect x="150" y="125" width="130" height="60" rx="8" fill="#b45309" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="1.1s" fill="freeze"/>
+            </rect>
+            <text x="215" y="150" text-anchor="middle" font-size="12" fill="white" font-weight="700" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="1.1s" fill="freeze"/>&#x1F4CB; Di&aacute;rio</text>
+            <text x="215" y="168" text-anchor="middle" font-size="9" fill="#fed7aa" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="1.1s" fill="freeze"/>Conte&uacute;do das aulas</text>
+
+            <rect x="295" y="125" width="130" height="60" rx="8" fill="#065f46" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="1.4s" fill="freeze"/>
+            </rect>
+            <text x="360" y="150" text-anchor="middle" font-size="12" fill="white" font-weight="700" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="1.4s" fill="freeze"/>&#x1F4C4; Requisi&ccedil;&otilde;es</text>
+            <text x="360" y="168" text-anchor="middle" font-size="9" fill="#6ee7b7" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="1.4s" fill="freeze"/>Documentos escolares</text>
+
+            <rect x="440" y="125" width="130" height="60" rx="8" fill="#1e3a5f" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="1.7s" fill="freeze"/>
+            </rect>
+            <text x="505" y="150" text-anchor="middle" font-size="12" fill="white" font-weight="700" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="1.7s" fill="freeze"/>&#x2709;&#xFE0F; Mensagens</text>
+            <text x="505" y="168" text-anchor="middle" font-size="9" fill="#93c5fd" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="1.7s" fill="freeze"/>Prof. e servidores</text>
+        </svg>
         </div>
 
-        <!-- CARD 6 — Fóruns e netiqueta -->
-        <div class="content-card">
-            <h2>&#x1F4AC; F&oacute;runs e Netiqueta Digital</h2>
-            <p>Os <strong>f&oacute;runs</strong> s&atilde;o espa&ccedil;os de discuss&atilde;o p&uacute;blica dentro dos AVAs onde alunos e professores debatem temas, tiram d&uacute;vidas e trocam experi&ecirc;ncias. Diferente de uma mensagem privada, tudo que &eacute; postado no f&oacute;rum fica vis&iacute;vel para toda a turma.</p>
+        <p>O <strong>SUAP</strong> (Sistema Unificado de Administra&ccedil;&atilde;o P&uacute;blica) &eacute; o sistema oficial do IFRN para a gest&atilde;o acad&ecirc;mica. &Eacute; por ele que voc&ecirc; acompanha notas, frequ&ecirc;ncia, calend&aacute;rio e comunicados institucionais.</p>
+        <p>O acesso &eacute; feito pelo navegador em <strong>suap.ifrn.edu.br</strong> com o login e senha fornecidos pela institui&ccedil;&atilde;o.</p>
 
-            <div class="highlight-box">
-                <p>&#x1F4A1; Prefira d&uacute;vidas t&eacute;cnicas e did&aacute;ticas no <strong>f&oacute;rum</strong> (toda a turma se beneficia da resposta) e assuntos pessoais ou sigilosos em <strong>mensagem privada</strong> para o professor.</p>
+        <h3>&#x1F4CC; Principais m&oacute;dulos para alunos</h3>
+        <div class="module-grid">
+            <div class="module-item">
+                <div class="mod-title">&#x1F4CA; Boletim</div>
+                <div class="mod-desc">Consulte suas notas bimestrais e m&eacute;dias de todas as disciplinas em tempo real.</div>
             </div>
-
-            <h3>Netiqueta &mdash; Boas maneiras online</h3>
-            <p>A <strong>netiqueta</strong> &eacute; o conjunto de boas pr&aacute;ticas de comunica&ccedil;&atilde;o no ambiente digital. No contexto escolar, ela &eacute; ainda mais importante, pois o AVA &eacute; um espa&ccedil;o formal de aprendizagem.</p>
-
-            <div class="netiq-grid">
-                <div class="netiq-item ok">
-                    <div class="netiq-icon">&#x2705;</div>
-                    <div class="netiq-text">
-                        <strong>Identifique-se sempre</strong>
-                        <span>Ao postar uma d&uacute;vida ou comentar, diga quem &eacute; voc&ecirc;. Mesmo logado, contextualize: "Sou aluno do 1&ordm; Ano A&hellip;"</span>
-                    </div>
-                </div>
-                <div class="netiq-item ok">
-                    <div class="netiq-icon">&#x2705;</div>
-                    <div class="netiq-text">
-                        <strong>Escreva com cuidado</strong>
-                        <span>Use portugu&ecirc;s correto, sem grias ou abrevia&ccedil;&otilde;es de WhatsApp. O tom deve ser respeitoso e claro.</span>
-                    </div>
-                </div>
-                <div class="netiq-item ok">
-                    <div class="netiq-icon">&#x2705;</div>
-                    <div class="netiq-text">
-                        <strong>Leia antes de perguntar</strong>
-                        <span>Verifique se a d&uacute;vida j&aacute; foi respondida em outro t&oacute;pico. Evite perguntas duplicadas no f&oacute;rum.</span>
-                    </div>
-                </div>
-                <div class="netiq-item nok">
-                    <div class="netiq-icon">&#x1F6AB;</div>
-                    <div class="netiq-text">
-                        <strong>N&atilde;o use CAIXA ALTA</strong>
-                        <span>Escrever tudo em mai&uacute;sculas equivale a GRITAR na internet. &Eacute; considerado grosseiro.</span>
-                    </div>
-                </div>
-                <div class="netiq-item nok">
-                    <div class="netiq-icon">&#x1F6AB;</div>
-                    <div class="netiq-text">
-                        <strong>Evite coment&aacute;rios desnecessários</strong>
-                        <span>Postagens como "eu tb tenho essa d&uacute;vida" ou "concordo" sem acrescentar nada poluem o f&oacute;rum.</span>
-                    </div>
-                </div>
-                <div class="netiq-item nok">
-                    <div class="netiq-icon">&#x1F6AB;</div>
-                    <div class="netiq-text">
-                        <strong>N&atilde;o compartilhe informa&ccedil;&otilde;es de colegas</strong>
-                        <span>N&atilde;o divulgue notas, situa&ccedil;&otilde;es pessoais ou dados de outros alunos sem permiss&atilde;o.</span>
-                    </div>
-                </div>
+            <div class="module-item">
+                <div class="mod-title">&#x1F4C5; Frequ&ecirc;ncia</div>
+                <div class="mod-desc">Veja o percentual de presen&ccedil;a em cada disciplina. Aten&ccedil;&atilde;o: o limite &eacute; 25% de faltas.</div>
             </div>
-        </div>
-
-        <!-- CARD 7 — Boas práticas -->
-        <div class="content-card">
-            <h2>&#x2705; Boas Pr&aacute;ticas no Uso de AVAs</h2>
-
-            <div class="boas-grid">
-                <div class="boa-item">
-                    <div class="boa-icon">&#x1F514;</div>
-                    <div class="boa-text">
-                        <strong>Ative as notifica&ccedil;&otilde;es</strong>
-                        <span>Configure o Classroom e o SUAP para enviar avisos por e-mail. Assim voc&ecirc; n&atilde;o perde prazos nem comunicados importantes.</span>
-                    </div>
-                </div>
-                <div class="boa-item">
-                    <div class="boa-icon">&#x1F4E7;</div>
-                    <div class="boa-text">
-                        <strong>Use o e-mail institucional</strong>
-                        <span>O Google Classroom e o SUAP devem ser acessados com a conta escolar. Misturar com e-mail pessoal pode causar problemas de acesso.</span>
-                    </div>
-                </div>
-                <div class="boa-item">
-                    <div class="boa-icon">&#x23F0;</div>
-                    <div class="boa-text">
-                        <strong>Respeite os prazos</strong>
-                        <span>Organize-se para n&atilde;o deixar atividades para a &uacute;ltima hora. Problemas t&eacute;cnicos n&atilde;o justificam entrega com atraso se voc&ecirc; deixou para o &uacute;ltimo minuto.</span>
-                    </div>
-                </div>
-                <div class="boa-item">
-                    <div class="boa-icon">&#x1F4CE;</div>
-                    <div class="boa-text">
-                        <strong>Nomeie os arquivos corretamente</strong>
-                        <span>Ao entregar atividades, nomeie os arquivos com: <em>Nome_Turma_Atividade</em>. Facilita a identifica&ccedil;&atilde;o pelo professor.</span>
-                    </div>
-                </div>
-                <div class="boa-item">
-                    <div class="boa-icon">&#x1F4F1;</div>
-                    <div class="boa-text">
-                        <strong>Acesse por dispositivos diferentes</strong>
-                        <span>Se o computador apresentar problema, use o celular como alternativa. Aplicativos do SUAP e Classroom est&atilde;o dispon&iacute;veis para Android e iOS.</span>
-                    </div>
-                </div>
-                <div class="boa-item">
-                    <div class="boa-icon">&#x1F4CB;</div>
-                    <div class="boa-text">
-                        <strong>Confirme a entrega</strong>
-                        <span>Ap&oacute;s clicar em <em>Entregar</em>, verifique se o status da atividade mudou para <strong>"Entregue"</strong>. Uma entrega incompleta &eacute; como n&atilde;o ter entregue.</span>
-                    </div>
-                </div>
+            <div class="module-item">
+                <div class="mod-title">&#x1F4F0; Mural de Not&iacute;cias</div>
+                <div class="mod-desc">Comunicados oficiais da institui&ccedil;&atilde;o: editais, eventos, prazos e avisos gerais.</div>
+            </div>
+            <div class="module-item">
+                <div class="mod-title">&#x1F4CB; Di&aacute;rio de Aula</div>
+                <div class="mod-desc">Conte&uacute;dos ministrados, observa&ccedil;&otilde;es do professor e registro das aulas dadas.</div>
+            </div>
+            <div class="module-item">
+                <div class="mod-title">&#x1F4C4; Requisi&ccedil;&otilde;es</div>
+                <div class="mod-desc">Solicita&ccedil;&atilde;o de documentos: declara&ccedil;&atilde;o de matr&iacute;cula, hist&oacute;rico escolar e outros.</div>
+            </div>
+            <div class="module-item">
+                <div class="mod-title">&#x1F4E7; Mensagens</div>
+                <div class="mod-desc">Envio e recebimento de mensagens internas entre alunos, professores e servidores.</div>
             </div>
         </div>
 
-        <!-- CARD 8 — RECAPITULANDO -->
-        <div class="content-card">
-            <h2>&#x1F4CB; Recapitulando</h2>
-            <ul>
-                <li>Um <strong>AVA</strong> &eacute; uma sala de aula digital que centraliza materiais, atividades, comunica&ccedil;&atilde;o e registros acad&ecirc;micos</li>
-                <li>No IFRN, o <strong>SUAP</strong> &eacute; o sistema oficial para notas, frequ&ecirc;ncia e comunicados institucionais</li>
-                <li>O <strong>Google Classroom</strong> &eacute; usado para atividades did&aacute;ticas: o professor distribui tarefas e o aluno entrega com prazo</li>
-                <li>O fluxo no Classroom &eacute;: entrar com c&oacute;digo &rarr; verificar atividades &rarr; realizar &rarr; entregar antes do prazo</li>
-                <li>F&oacute;runs exigem <strong>netiqueta</strong>: escrita formal, identifica&ccedil;&atilde;o, sem CAIXA ALTA, sem coment&aacute;rios desnecessários</li>
-                <li>Boas pr&aacute;ticas: ativar notifica&ccedil;&otilde;es, usar e-mail institucional, nomear arquivos e confirmar a entrega</li>
-            </ul>
+        <div class="highlight-box">
+            <p>&#x26A0;&#xFE0F; <strong>Dica importante:</strong> Verifique o SUAP pelo menos uma vez por semana. Comunicados sobre prazos de matr&iacute;cula, atividades complementares e eventos importantes s&atilde;o publicados ali com anteced&ecirc;ncia.</p>
+        </div>
+    </div>
 
-            <div class="highlight-box">
-                <p>&#x1F4DA; <strong>Na pr&oacute;xima aula</strong> entraremos na se&ccedil;&atilde;o de <strong>Seguran&ccedil;a da Informa&ccedil;&atilde;o</strong>. Estudaremos os conceitos fundamentais: confidencialidade, integridade e disponibilidade (CID), tipos de amea&ccedil;as e por que proteger dados &eacute; responsabilidade de todos.</p>
+    <!-- SLIDE 4: Google Classroom -->
+    <div class="content-card">
+        <h2>&#x1F4D6; Google Classroom</h2>
+
+        <!-- SVG: fluxo animado -->
+        <div class="svg-wrap">
+        <svg viewBox="0 0 680 120" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
+            <defs>
+                <marker id="arr2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                    <path d="M0,0 L0,6 L8,3 z" fill="#1565c0"/>
+                </marker>
+            </defs>
+            <!-- Passo 1 -->
+            <rect x="10" y="30" width="100" height="60" rx="10" fill="#1565c0" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="0s" fill="freeze"/>
+            </rect>
+            <text x="60" y="55" text-anchor="middle" font-size="18" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="0s" fill="freeze"/>&#x1F511;</text>
+            <text x="60" y="73" text-anchor="middle" font-size="9" fill="white" font-weight="700" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="0s" fill="freeze"/>C&oacute;digo</text>
+            <text x="60" y="84" text-anchor="middle" font-size="8" fill="#90caf9" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="0s" fill="freeze"/>da turma</text>
+            <line x1="112" y1="60" x2="138" y2="60" stroke="#1565c0" stroke-width="2" marker-end="url(#arr2)" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="0.4s" fill="freeze"/>
+            </line>
+            <!-- Passo 2 -->
+            <rect x="140" y="30" width="100" height="60" rx="10" fill="#1565c0" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="0.5s" fill="freeze"/>
+            </rect>
+            <text x="190" y="55" text-anchor="middle" font-size="18" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="0.5s" fill="freeze"/>&#x1F4E2;</text>
+            <text x="190" y="73" text-anchor="middle" font-size="9" fill="white" font-weight="700" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="0.5s" fill="freeze"/>Mural</text>
+            <text x="190" y="84" text-anchor="middle" font-size="8" fill="#90caf9" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="0.5s" fill="freeze"/>do professor</text>
+            <line x1="242" y1="60" x2="268" y2="60" stroke="#1565c0" stroke-width="2" marker-end="url(#arr2)" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="0.9s" fill="freeze"/>
+            </line>
+            <!-- Passo 3 -->
+            <rect x="270" y="30" width="100" height="60" rx="10" fill="#1565c0" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="1.0s" fill="freeze"/>
+            </rect>
+            <text x="320" y="55" text-anchor="middle" font-size="18" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="1.0s" fill="freeze"/>&#x1F4DD;</text>
+            <text x="320" y="73" text-anchor="middle" font-size="9" fill="white" font-weight="700" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="1.0s" fill="freeze"/>Atividade</text>
+            <text x="320" y="84" text-anchor="middle" font-size="8" fill="#90caf9" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="1.0s" fill="freeze"/>fazer e anexar</text>
+            <line x1="372" y1="60" x2="398" y2="60" stroke="#1565c0" stroke-width="2" marker-end="url(#arr2)" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="1.4s" fill="freeze"/>
+            </line>
+            <!-- Passo 4 -->
+            <rect x="400" y="30" width="100" height="60" rx="10" fill="#15803d" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="1.5s" fill="freeze"/>
+            </rect>
+            <text x="450" y="55" text-anchor="middle" font-size="18" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="1.5s" fill="freeze"/>&#x1F4E4;</text>
+            <text x="450" y="73" text-anchor="middle" font-size="9" fill="white" font-weight="700" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="1.5s" fill="freeze"/>Entregar</text>
+            <text x="450" y="84" text-anchor="middle" font-size="8" fill="#86efac" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="1.5s" fill="freeze"/>antes do prazo</text>
+            <line x1="502" y1="60" x2="528" y2="60" stroke="#15803d" stroke-width="2" marker-end="url(#arr2)" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="1.9s" fill="freeze"/>
+            </line>
+            <!-- Passo 5 -->
+            <rect x="530" y="30" width="140" height="60" rx="10" fill="#15803d" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="2.0s" fill="freeze"/>
+            </rect>
+            <text x="600" y="55" text-anchor="middle" font-size="18" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="2.0s" fill="freeze"/>&#x2705;</text>
+            <text x="600" y="73" text-anchor="middle" font-size="9" fill="white" font-weight="700" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="2.0s" fill="freeze"/>Nota + Feedback</text>
+            <text x="600" y="84" text-anchor="middle" font-size="8" fill="#86efac" opacity="0">
+                <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="2.0s" fill="freeze"/>professor corrige</text>
+        </svg>
+        </div>
+
+        <p>O <strong>Google Classroom</strong> &eacute; a plataforma onde os professores distribuem materiais, postam atividades, d&atilde;o devolutivas e se comunicam com a turma. &Eacute; acessado em <strong>classroom.google.com</strong> com a conta Google institucional.</p>
+
+        <h3>Abas do Classroom</h3>
+        <div class="classroom-tabs">
+            <div class="ct-tab mural">
+                <div class="ct-icon">&#x1F4E2;</div>
+                <div class="ct-title">Mural</div>
+                <div class="ct-desc">An&uacute;ncios, links e arquivos postados pelo professor para a turma</div>
+            </div>
+            <div class="ct-tab atividades">
+                <div class="ct-icon">&#x1F4CB;</div>
+                <div class="ct-title">Atividades</div>
+                <div class="ct-desc">Lista de todas as tarefas, quiz e materiais com prazos e status</div>
+            </div>
+            <div class="ct-tab pessoas">
+                <div class="ct-icon">&#x1F465;</div>
+                <div class="ct-title">Pessoas</div>
+                <div class="ct-desc">Lista de professores e alunos matriculados na turma</div>
+            </div>
+            <div class="ct-tab notas">
+                <div class="ct-icon">&#x1F4C8;</div>
+                <div class="ct-title">Notas</div>
+                <div class="ct-desc">Resumo das pontua&ccedil;&otilde;es obtidas em cada atividade entregue</div>
             </div>
         </div>
 
-        <!-- EXERCÍCIO: Arrastar e Soltar -->
-        <div class="content-card exercise-card">
-            <h2>&#x1F3AF; Exerc&iacute;cio &mdash; Arraste e Conecte</h2>
-            <p style="color:#475569;font-size:0.9em;margin-bottom:4px;">Arraste cada descri&ccedil;&atilde;o para a plataforma ou conceito correspondente. Em dispositivos m&oacute;veis, toque na descri&ccedil;&atilde;o e depois na zona de destino.</p>
+        <div class="alert-box">
+            <p>&#x23F0; <strong>Aten&ccedil;&atilde;o aos prazos!</strong> Ao clicar em <strong>Entregar</strong> ap&oacute;s o prazo definido pelo professor, a atividade fica marcada como <em>entregue com atraso</em>. Verifique o Google Classroom diariamente para n&atilde;o perder nenhuma entrega.</p>
+        </div>
+    </div>
 
-            <div class="ex-drag-root" data-ex="ex23">
-                <div class="ex-drag">
-                    <div>
-                        <div class="ex-col-title">Descri&ccedil;&atilde;o</div>
-                        <div class="ex-pool" data-pool="ex23">
-                            <div class="drag-chip" data-id="suap">Sistema oficial do IFRN para consultar boletim, frequ&ecirc;ncia e solicitar documentos</div>
-                            <div class="drag-chip" data-id="classroom">Plataforma do Google onde o professor cria a turma por c&oacute;digo e distribui atividades com prazo</div>
-                            <div class="drag-chip" data-id="moodle">Plataforma open source usada em universidades com quiz, banco de quest&otilde;es e f&oacute;runs avan&ccedil;ados</div>
-                            <div class="drag-chip" data-id="forum">Espa&ccedil;o p&uacute;blico dentro do AVA onde alunos e professores debatem temas e tiram d&uacute;vidas</div>
-                            <div class="drag-chip" data-id="netiq">Conjunto de boas maneiras e regras de comunica&ccedil;&atilde;o respeitosa no ambiente digital</div>
+    <!-- SLIDE 5: Moodle e comparativo -->
+    <div class="content-card">
+        <h2>&#x1F4BB; Moodle e Comparativo das Plataformas</h2>
+        <p>O <strong>Moodle</strong> (<em>Modular Object-Oriented Dynamic Learning Environment</em>) &eacute; uma plataforma open source amplamente adotada em universidades e institutos federais. Oferece recursos avan&ccedil;ados como quiz com tempo, banco de quest&otilde;es, videoaulas integradas e relat&oacute;rios de progresso detalhados.</p>
+
+        <table class="compare-table">
+            <tr>
+                <th>Recurso</th>
+                <th>SUAP</th>
+                <th>Google Classroom</th>
+                <th>Moodle</th>
+            </tr>
+            <tr>
+                <td>Boletim / notas</td>
+                <td class="tag-yes">&#x2714; Oficial</td>
+                <td class="tag-yes">&#x2714; Parcial</td>
+                <td class="tag-yes">&#x2714; Sim</td>
+            </tr>
+            <tr>
+                <td>Frequ&ecirc;ncia oficial</td>
+                <td class="tag-yes">&#x2714; Sim</td>
+                <td class="tag-no">&#x2715; N&atilde;o</td>
+                <td class="tag-no">&#x2715; N&atilde;o</td>
+            </tr>
+            <tr>
+                <td>Distribui&ccedil;&atilde;o de atividades</td>
+                <td class="tag-no">&#x2715; N&atilde;o</td>
+                <td class="tag-yes">&#x2714; Excelente</td>
+                <td class="tag-yes">&#x2714; Avan&ccedil;ado</td>
+            </tr>
+            <tr>
+                <td>Quiz / avalia&ccedil;&atilde;o online</td>
+                <td class="tag-no">&#x2715; N&atilde;o</td>
+                <td class="tag-yes">&#x2714; Sim (Forms)</td>
+                <td class="tag-yes">&#x2714; Completo</td>
+            </tr>
+            <tr>
+                <td>F&oacute;rum de discuss&atilde;o</td>
+                <td class="tag-no">&#x2715; N&atilde;o</td>
+                <td class="tag-yes">&#x2714; Mural / t&oacute;picos</td>
+                <td class="tag-yes">&#x2714; Avan&ccedil;ado</td>
+            </tr>
+            <tr>
+                <td>Requer instala&ccedil;&atilde;o</td>
+                <td class="tag-no">&#x2715; Apenas navegador</td>
+                <td class="tag-no">&#x2715; Apenas navegador</td>
+                <td class="tag-no">&#x2715; Apenas navegador</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- SLIDE 6: Fóruns e Netiqueta -->
+    <div class="content-card">
+        <h2>&#x1F4AC; F&oacute;runs e Netiqueta Digital</h2>
+        <p>Os <strong>f&oacute;runs</strong> s&atilde;o espa&ccedil;os de discuss&atilde;o p&uacute;blica dentro dos AVAs onde alunos e professores debatem temas, tiram d&uacute;vidas e trocam experi&ecirc;ncias. Diferente de uma mensagem privada, tudo que &eacute; postado no f&oacute;rum fica vis&iacute;vel para toda a turma.</p>
+
+        <div class="highlight-box">
+            <p>&#x1F4A1; Prefira d&uacute;vidas t&eacute;cnicas e did&aacute;ticas no <strong>f&oacute;rum</strong> (toda a turma se beneficia da resposta) e assuntos pessoais ou sigilosos em <strong>mensagem privada</strong> para o professor.</p>
+        </div>
+
+        <h3>Netiqueta &mdash; Boas maneiras online</h3>
+        <p>A <strong>netiqueta</strong> &eacute; o conjunto de boas pr&aacute;ticas de comunica&ccedil;&atilde;o no ambiente digital. No contexto escolar, ela &eacute; ainda mais importante, pois o AVA &eacute; um espa&ccedil;o formal de aprendizagem.</p>
+
+        <div class="netiq-grid">
+            <div class="netiq-item ok">
+                <div class="netiq-icon">&#x2705;</div>
+                <div class="netiq-text">
+                    <strong>Identifique-se sempre</strong>
+                    <span>Ao postar uma d&uacute;vida ou comentar, diga quem &eacute; voc&ecirc;. Mesmo logado, contextualize: &ldquo;Sou aluno do 1&ordm; Ano A&hellip;&rdquo;</span>
+                </div>
+            </div>
+            <div class="netiq-item ok">
+                <div class="netiq-icon">&#x2705;</div>
+                <div class="netiq-text">
+                    <strong>Escreva com cuidado</strong>
+                    <span>Use portugu&ecirc;s correto, sem grias ou abrevia&ccedil;&otilde;es de WhatsApp. O tom deve ser respeitoso e claro.</span>
+                </div>
+            </div>
+            <div class="netiq-item ok">
+                <div class="netiq-icon">&#x2705;</div>
+                <div class="netiq-text">
+                    <strong>Leia antes de perguntar</strong>
+                    <span>Verifique se a d&uacute;vida j&aacute; foi respondida em outro t&oacute;pico. Evite perguntas duplicadas no f&oacute;rum.</span>
+                </div>
+            </div>
+            <div class="netiq-item nok">
+                <div class="netiq-icon">&#x1F6AB;</div>
+                <div class="netiq-text">
+                    <strong>N&atilde;o use CAIXA ALTA</strong>
+                    <span>Escrever tudo em mai&uacute;sculas equivale a GRITAR na internet. &Eacute; considerado grosseiro.</span>
+                </div>
+            </div>
+            <div class="netiq-item nok">
+                <div class="netiq-icon">&#x1F6AB;</div>
+                <div class="netiq-text">
+                    <strong>Evite coment&aacute;rios desnecess&aacute;rios</strong>
+                    <span>Postagens como &ldquo;eu tb tenho essa d&uacute;vida&rdquo; sem acrescentar nada poluem o f&oacute;rum.</span>
+                </div>
+            </div>
+            <div class="netiq-item nok">
+                <div class="netiq-icon">&#x1F6AB;</div>
+                <div class="netiq-text">
+                    <strong>N&atilde;o divulgue dados de colegas</strong>
+                    <span>N&atilde;o divulgue notas, situa&ccedil;&otilde;es pessoais ou dados de outros alunos sem permiss&atilde;o.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 7: Boas Práticas -->
+    <div class="content-card">
+        <h2>&#x2705; Boas Pr&aacute;ticas no Uso de AVAs</h2>
+
+        <div class="boas-grid">
+            <div class="boa-item">
+                <div class="boa-icon">&#x1F514;</div>
+                <div class="boa-text">
+                    <strong>Ative as notifica&ccedil;&otilde;es</strong>
+                    <span>Configure o Classroom e o SUAP para enviar avisos por e-mail. Assim voc&ecirc; n&atilde;o perde prazos nem comunicados importantes.</span>
+                </div>
+            </div>
+            <div class="boa-item">
+                <div class="boa-icon">&#x1F4E7;</div>
+                <div class="boa-text">
+                    <strong>Use o e-mail institucional</strong>
+                    <span>O Google Classroom e o SUAP devem ser acessados com a conta escolar. Misturar com e-mail pessoal pode causar problemas de acesso.</span>
+                </div>
+            </div>
+            <div class="boa-item">
+                <div class="boa-icon">&#x23F0;</div>
+                <div class="boa-text">
+                    <strong>Respeite os prazos</strong>
+                    <span>Organize-se para n&atilde;o deixar atividades para a &uacute;ltima hora. Problemas t&eacute;cnicos n&atilde;o justificam entrega com atraso se voc&ecirc; deixou para o &uacute;ltimo minuto.</span>
+                </div>
+            </div>
+            <div class="boa-item">
+                <div class="boa-icon">&#x1F4CE;</div>
+                <div class="boa-text">
+                    <strong>Nomeie os arquivos corretamente</strong>
+                    <span>Ao entregar atividades, nomeie os arquivos com: <em>Nome_Turma_Atividade</em>. Facilita a identifica&ccedil;&atilde;o pelo professor.</span>
+                </div>
+            </div>
+            <div class="boa-item">
+                <div class="boa-icon">&#x1F4F1;</div>
+                <div class="boa-text">
+                    <strong>Acesse por dispositivos diferentes</strong>
+                    <span>Se o computador apresentar problema, use o celular como alternativa. Aplicativos do SUAP e Classroom est&atilde;o dispon&iacute;veis para Android e iOS.</span>
+                </div>
+            </div>
+            <div class="boa-item">
+                <div class="boa-icon">&#x1F4CB;</div>
+                <div class="boa-text">
+                    <strong>Confirme a entrega</strong>
+                    <span>Ap&oacute;s clicar em <em>Entregar</em>, verifique se o status da atividade mudou para <strong>&ldquo;Entregue&rdquo;</strong>. Uma entrega incompleta &eacute; como n&atilde;o ter entregue.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 8: Recapitulando -->
+    <div class="content-card">
+        <h2>&#x1F4CB; Recapitulando</h2>
+        <ul>
+            <li>Um <strong>AVA</strong> &eacute; uma sala de aula digital que centraliza materiais, atividades, comunica&ccedil;&atilde;o e registros acad&ecirc;micos</li>
+            <li>No IFRN, o <strong>SUAP</strong> &eacute; o sistema oficial para notas, frequ&ecirc;ncia e comunicados institucionais</li>
+            <li>O <strong>Google Classroom</strong> &eacute; usado para atividades did&aacute;ticas: o professor distribui tarefas e o aluno entrega com prazo</li>
+            <li>O fluxo no Classroom &eacute;: entrar com c&oacute;digo &rarr; verificar atividades &rarr; realizar &rarr; entregar antes do prazo</li>
+            <li>F&oacute;runs exigem <strong>netiqueta</strong>: escrita formal, identifica&ccedil;&atilde;o, sem CAIXA ALTA, sem coment&aacute;rios desnecess&aacute;rios</li>
+            <li>Boas pr&aacute;ticas: ativar notifica&ccedil;&otilde;es, usar e-mail institucional, nomear arquivos e confirmar a entrega</li>
+        </ul>
+
+        <div class="highlight-box">
+            <p>&#x1F4DA; <strong>Na pr&oacute;xima aula</strong> entraremos na se&ccedil;&atilde;o de <strong>Seguran&ccedil;a da Informa&ccedil;&atilde;o</strong>. Estudaremos os conceitos fundamentais: confidencialidade, integridade e disponibilidade (CID), tipos de amea&ccedil;as e por que proteger dados &eacute; responsabilidade de todos.</p>
+        </div>
+    </div>
+
+    <!-- EXERCÍCIO: Arrastar e Soltar -->
+    <div class="content-card exercise-card">
+        <h2>&#x1F3AF; Exerc&iacute;cio &mdash; Arraste e Conecte</h2>
+        <p style="color:#475569;font-size:0.9em;margin-bottom:4px;">Arraste cada descri&ccedil;&atilde;o para a plataforma ou conceito correspondente. Em dispositivos m&oacute;veis, toque na descri&ccedil;&atilde;o e depois na zona de destino.</p>
+
+        <div class="ex-drag-root" data-ex="ex23">
+            <div class="ex-drag">
+                <div>
+                    <div class="ex-col-title">Descri&ccedil;&atilde;o</div>
+                    <div class="ex-pool" data-pool="ex23">
+                        <div class="drag-chip" data-id="suap">Sistema oficial do IFRN para consultar boletim, frequ&ecirc;ncia e solicitar documentos</div>
+                        <div class="drag-chip" data-id="classroom">Plataforma do Google onde o professor cria a turma por c&oacute;digo e distribui atividades com prazo</div>
+                        <div class="drag-chip" data-id="moodle">Plataforma open source usada em universidades com quiz, banco de quest&otilde;es e f&oacute;runs avan&ccedil;ados</div>
+                        <div class="drag-chip" data-id="forum">Espa&ccedil;o p&uacute;blico dentro do AVA onde alunos e professores debatem temas e tiram d&uacute;vidas</div>
+                        <div class="drag-chip" data-id="netiq">Conjunto de boas maneiras e regras de comunica&ccedil;&atilde;o respeitosa no ambiente digital</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="ex-col-title">Plataforma / Conceito</div>
+                    <div class="ex-zones" data-zones="ex23">
+                        <div class="drop-zone" data-zone="ex23-z1" data-accept="suap">
+                            <span class="zone-name">SUAP</span>
+                            <div class="zone-slot"></div>
+                            <div class="zone-feedback"></div>
+                        </div>
+                        <div class="drop-zone" data-zone="ex23-z2" data-accept="classroom">
+                            <span class="zone-name">Google Classroom</span>
+                            <div class="zone-slot"></div>
+                            <div class="zone-feedback"></div>
+                        </div>
+                        <div class="drop-zone" data-zone="ex23-z3" data-accept="moodle">
+                            <span class="zone-name">Moodle</span>
+                            <div class="zone-slot"></div>
+                            <div class="zone-feedback"></div>
+                        </div>
+                        <div class="drop-zone" data-zone="ex23-z4" data-accept="forum">
+                            <span class="zone-name">F&oacute;rum</span>
+                            <div class="zone-slot"></div>
+                            <div class="zone-feedback"></div>
+                        </div>
+                        <div class="drop-zone" data-zone="ex23-z5" data-accept="netiq">
+                            <span class="zone-name">Netiqueta</span>
+                            <div class="zone-slot"></div>
+                            <div class="zone-feedback"></div>
                         </div>
                     </div>
-                    <div>
-                        <div class="ex-col-title">Plataforma / Conceito</div>
-                        <div class="ex-zones" data-zones="ex23">
-                            <div class="drop-zone" data-zone="ex23-z1" data-accept="suap">
-                                <span class="zone-name">SUAP</span>
-                                <div class="zone-slot"></div>
-                                <div class="zone-feedback"></div>
-                            </div>
-                            <div class="drop-zone" data-zone="ex23-z2" data-accept="classroom">
-                                <span class="zone-name">Google Classroom</span>
-                                <div class="zone-slot"></div>
-                                <div class="zone-feedback"></div>
-                            </div>
-                            <div class="drop-zone" data-zone="ex23-z3" data-accept="moodle">
-                                <span class="zone-name">Moodle</span>
-                                <div class="zone-slot"></div>
-                                <div class="zone-feedback"></div>
-                            </div>
-                            <div class="drop-zone" data-zone="ex23-z4" data-accept="forum">
-                                <span class="zone-name">F&oacute;rum</span>
-                                <div class="zone-slot"></div>
-                                <div class="zone-feedback"></div>
-                            </div>
-                            <div class="drop-zone" data-zone="ex23-z5" data-accept="netiq">
-                                <span class="zone-name">Netiqueta</span>
-                                <div class="zone-slot"></div>
-                                <div class="zone-feedback"></div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
-            </div>
-
-            <div class="ex-actions">
-                <button class="btn-verificar" onclick="dragVerify('ex23')">Verificar</button>
-                <button class="btn-refazer"  onclick="dragReset('ex23')">Refazer</button>
-            </div>
-            <div class="ex-result" id="ex23-result"></div>
-        </div>
-
-        <!-- ATIVIDADE PRÁTICA 2.3 -->
-        <div class="content-card practical-card" id="prat-23">
-            <h2>&#x1F6E0;&#xFE0F; Atividade Pr&aacute;tica &mdash; Explorando o SUAP e o Google Classroom</h2>
-            <div class="prat-meta">
-                <span class="prat-tag">&#x23F1; ~30 min</span>
-                <span class="prat-tag">&#x1F310; Requer internet</span>
-                <span class="prat-tag">&#x1F4E7; Precisa de login institucional</span>
-            </div>
-
-            <div class="prat-steps">
-                <div class="prat-step">
-                    <div class="step-num">1</div>
-                    <div class="step-body">
-                        <div class="step-label">Acesse o SUAP e localize seu boletim</div>
-                        <div class="step-desc">Entre em <strong>suap.ifrn.edu.br</strong> com suas credenciais institucionais. V&aacute; em <strong>Ensino &rarr; Minha &Aacute;rea &rarr; Boletim</strong>. Anote: em qual disciplina sua maior nota? Em qual &eacute; a sua frequ&ecirc;ncia mais baixa? Certifique-se de que est&aacute; acima dos 75% obrigat&oacute;rios em todas.</div>
-                    </div>
-                </div>
-                <div class="prat-step">
-                    <div class="step-num">2</div>
-                    <div class="step-body">
-                        <div class="step-label">Explore o mural de not&iacute;cias do SUAP</div>
-                        <div class="step-desc">Na p&aacute;gina inicial do SUAP, localize o <strong>Mural de Not&iacute;cias</strong>. Leia as 3 not&iacute;cias mais recentes e anote: h&aacute; algum prazo importante chegando? Algum evento que voc&ecirc; n&atilde;o sabia? Isso simula o h&aacute;bito de verificar o sistema regularmente.</div>
-                    </div>
-                </div>
-                <div class="prat-step">
-                    <div class="step-num">3</div>
-                    <div class="step-body">
-                        <div class="step-label">Acesse o Google Classroom</div>
-                        <div class="step-desc">Entre em <strong>classroom.google.com</strong> com sua conta escolar. Voc&ecirc; ver&aacute; as turmas nas quais est&aacute; matriculado. Entre na turma de Inform&aacute;tica e acesse a aba <strong>Atividades</strong>. Identifique: h&aacute; alguma atividade pendente? Qual &eacute; o prazo da mais pr&oacute;xima?</div>
-                    </div>
-                </div>
-                <div class="prat-step">
-                    <div class="step-num">4</div>
-                    <div class="step-body">
-                        <div class="step-label">Simule uma entrega de atividade</div>
-                        <div class="step-desc">Abra qualquer atividade dispon&iacute;vel no Classroom (se houver). Observe o campo de entrega: onde voc&ecirc; clicaria para anexar um arquivo? Como vincula um arquivo do Google Drive? Onde fica o bot&atilde;o <strong>Entregar</strong>? Apenas observe &mdash; n&atilde;o entregue se n&atilde;o for o momento.</div>
-                    </div>
-                </div>
-                <div class="prat-step">
-                    <div class="step-num">5</div>
-                    <div class="step-body">
-                        <div class="step-label">Poste uma mensagem no mural da turma</div>
-                        <div class="step-desc">Na aba <strong>Mural</strong> do Classroom, clique em <em>Compartilhe algo com sua turma&hellip;</em>. Escreva uma mensagem apresentando uma coisa que voc&ecirc; aprendeu hoje nesta aula, utilizando as regras de netiqueta: sem abreviaturas, com sauda&ccedil;&atilde;o e seu nome ao final. Clique em <strong>Publicar</strong>.</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="prat-observe">
-                <strong>&#x1F4CC; Para saber:</strong> O SUAP e o Google Classroom s&atilde;o ferramentas complementares: o SUAP guarda os registros oficiais (notas e frequ&ecirc;ncia que valem legalmente), enquanto o Classroom &eacute; o espa&ccedil;o did&aacute;tico e colaborativo. Ambos devem ser consultados com regularidade.
-            </div>
-
-            <div class="ex-actions">
-                <button class="btn-print" onclick="printPractical('prat-23', 'Aula 2.3 \u2014 Ambientes Virtuais de Aprendizagem')">&#x1F5A8;&#xFE0F; Imprimir roteiro</button>
             </div>
         </div>
 
-        <div class="nav-footer">
-            <a href="uni2-02-armazenamento-nuvem.html" class="nav-link">&#x2B05; Anterior: Armazenamento em Nuvem</a>
-            <a href="uni2-04-seguranca-conceitos.html" class="nav-link">Pr&oacute;xima: Seguran&ccedil;a da Informa&ccedil;&atilde;o &#x27A1;</a>
+        <div class="ex-actions">
+            <button class="btn-verificar" onclick="dragVerify('ex23')">Verificar</button>
+            <button class="btn-refazer"  onclick="dragReset('ex23')">Refazer</button>
+        </div>
+        <div class="ex-result" id="ex23-result"></div>
+    </div>
+
+    <!-- QUIZ: Múltipla Escolha -->
+    <div class="content-card exercise-card">
+        <h2>&#x1F9E0; Quiz &mdash; M&uacute;ltipla Escolha</h2>
+        <p style="color:#475569;font-size:0.9em;margin-bottom:18px;">Selecione a alternativa correta em cada quest&atilde;o.</p>
+
+        <div class="mc-root" data-ex="mc23">
+
+            <!-- Q1 -->
+            <div class="mc-question" data-correct="b">
+                <div class="mc-q-text">1. O que melhor define um AVA (Ambiente Virtual de Aprendizagem)?</div>
+                <div class="mc-options">
+                    <div class="mc-option" data-opt="a"><span class="mc-letter">A</span> Um aplicativo de videoconfer&ecirc;ncia para transmitir aulas ao vivo</div>
+                    <div class="mc-option" data-opt="b"><span class="mc-letter">B</span> Uma plataforma que centraliza materiais, atividades, comunica&ccedil;&atilde;o e registros acad&ecirc;micos em um ambiente digital</div>
+                    <div class="mc-option" data-opt="c"><span class="mc-letter">C</span> Um sistema de backup autom&aacute;tico para arquivos escolares na nuvem</div>
+                    <div class="mc-option" data-opt="d"><span class="mc-letter">D</span> Um gerenciador de e-mails exclusivo para comunica&ccedil;&atilde;o entre professores</div>
+                </div>
+                <div class="mc-explanation ok" data-for="b">&#x2714; Correto! O AVA &eacute; exatamente isso &mdash; uma sala de aula digital que re&uacute;ne tudo em um s&oacute; lugar: materiais, tarefas, comunica&ccedil;&atilde;o e registros acad&ecirc;micos.</div>
+                <div class="mc-explanation err" data-for="a">&#x2716; Errado. Videoconfer&ecirc;ncia &eacute; apenas um dos recursos que pode existir dentro de um AVA, mas n&atilde;o define o que ele &eacute;.</div>
+                <div class="mc-explanation err" data-for="c">&#x2716; Errado. Backup &eacute; uma fun&ccedil;&atilde;o de armazenamento em nuvem, n&atilde;o de um AVA.</div>
+                <div class="mc-explanation err" data-for="d">&#x2716; Errado. Um AVA centraliza todo o processo educacional, n&atilde;o apenas a comunica&ccedil;&atilde;o.</div>
+            </div>
+
+            <hr class="mc-sep">
+
+            <!-- Q2 -->
+            <div class="mc-question" data-correct="c">
+                <div class="mc-q-text">2. Qual sistema do IFRN &eacute; respons&aacute;vel pelos registros <strong>oficiais</strong> de notas e frequ&ecirc;ncia?</div>
+                <div class="mc-options">
+                    <div class="mc-option" data-opt="a"><span class="mc-letter">A</span> Google Classroom</div>
+                    <div class="mc-option" data-opt="b"><span class="mc-letter">B</span> Moodle</div>
+                    <div class="mc-option" data-opt="c"><span class="mc-letter">C</span> SUAP</div>
+                    <div class="mc-option" data-opt="d"><span class="mc-letter">D</span> Microsoft Teams</div>
+                </div>
+                <div class="mc-explanation ok" data-for="c">&#x2714; Correto! O SUAP &eacute; o sistema oficial para gest&atilde;o acad&ecirc;mica no IFRN &mdash; as notas e frequ&ecirc;ncia que valem legalmente ficam registradas nele.</div>
+                <div class="mc-explanation err" data-for="a">&#x2716; Errado. O Google Classroom &eacute; usado para atividades did&aacute;ticas, mas os registros oficiais s&atilde;o do SUAP.</div>
+                <div class="mc-explanation err" data-for="b">&#x2716; Errado. O Moodle &eacute; muito usado em universidades, mas n&atilde;o &eacute; o sistema oficial do IFRN.</div>
+                <div class="mc-explanation err" data-for="d">&#x2716; Errado. O Microsoft Teams &Eacute;duca&ccedil;&atilde;o &eacute; um AVA comercial da Microsoft, n&atilde;o o sistema oficial do IFRN.</div>
+            </div>
+
+            <hr class="mc-sep">
+
+            <!-- Q3 -->
+            <div class="mc-question" data-correct="c">
+                <div class="mc-q-text">3. No Google Classroom, o que deve ser feito ap&oacute;s finalizar uma atividade?</div>
+                <div class="mc-options">
+                    <div class="mc-option" data-opt="a"><span class="mc-letter">A</span> Enviar um e-mail para o professor com o arquivo anexado</div>
+                    <div class="mc-option" data-opt="b"><span class="mc-letter">B</span> Salvar no Google Drive e aguardar o professor acessar automaticamente</div>
+                    <div class="mc-option" data-opt="c"><span class="mc-letter">C</span> Clicar em &ldquo;Entregar&rdquo; e confirmar se o status mudou para &ldquo;Entregue&rdquo;</div>
+                    <div class="mc-option" data-opt="d"><span class="mc-letter">D</span> Publicar no mural da turma com o link do arquivo</div>
+                </div>
+                <div class="mc-explanation ok" data-for="c">&#x2714; Correto! Sem clicar em &ldquo;Entregar&rdquo; e confirmar o status, o professor n&atilde;o recebe a atividade &mdash; uma entrega incompleta &eacute; como n&atilde;o ter entregue.</div>
+                <div class="mc-explanation err" data-for="a">&#x2716; Errado. O Classroom tem fluxo pr&oacute;prio de entrega &mdash; mandar por e-mail n&atilde;o substitui o bot&atilde;o &ldquo;Entregar&rdquo;.</div>
+                <div class="mc-explanation err" data-for="b">&#x2716; Errado. Apenas salvar no Drive n&atilde;o notifica o professor nem registra a entrega no Classroom.</div>
+                <div class="mc-explanation err" data-for="d">&#x2716; Errado. Publicar no mural n&atilde;o &eacute; uma entrega formal &mdash; a atividade pode ficar como n&atilde;o entregue.</div>
+            </div>
+
+            <hr class="mc-sep">
+
+            <!-- Q4 -->
+            <div class="mc-question" data-correct="d">
+                <div class="mc-q-text">4. Qual &eacute; o percentual m&aacute;ximo de faltas permitido no IFRN antes da reprova&ccedil;&atilde;o por frequ&ecirc;ncia?</div>
+                <div class="mc-options">
+                    <div class="mc-option" data-opt="a"><span class="mc-letter">A</span> 10%</div>
+                    <div class="mc-option" data-opt="b"><span class="mc-letter">B</span> 15%</div>
+                    <div class="mc-option" data-opt="c"><span class="mc-letter">C</span> 20%</div>
+                    <div class="mc-option" data-opt="d"><span class="mc-letter">D</span> 25%</div>
+                </div>
+                <div class="mc-explanation ok" data-for="d">&#x2714; Correto! O limite legal &eacute; 75% de frequ&ecirc;ncia m&iacute;nima, ou seja, at&eacute; 25% de faltas. Acompanhe regularmente no m&oacute;dulo de Frequ&ecirc;ncia do SUAP.</div>
+                <div class="mc-explanation err" data-for="a">&#x2716; Errado. 10% seria muito rigoroso. A legisla&ccedil;&atilde;o exige frequ&ecirc;ncia m&iacute;nima de 75%, portanto o m&aacute;ximo de faltas &eacute; 25%.</div>
+                <div class="mc-explanation err" data-for="b">&#x2716; Errado. 15% de faltas ainda est&aacute; dentro do permitido, mas o limite correto &eacute; 25%.</div>
+                <div class="mc-explanation err" data-for="c">&#x2716; Errado. 20% tamb&eacute;m est&aacute; dentro do limite, mas o valor correto &eacute; 25% (75% de frequ&ecirc;ncia m&iacute;nima).</div>
+            </div>
+
+            <hr class="mc-sep">
+
+            <!-- Q5 -->
+            <div class="mc-question" data-correct="a">
+                <div class="mc-q-text">5. O que &eacute; <strong>netiqueta</strong> no contexto dos AVAs?</div>
+                <div class="mc-options">
+                    <div class="mc-option" data-opt="a"><span class="mc-letter">A</span> Conjunto de boas pr&aacute;ticas de comunica&ccedil;&atilde;o respeitosa no ambiente digital escolar</div>
+                    <div class="mc-option" data-opt="b"><span class="mc-letter">B</span> Um filtro autom&aacute;tico de spam para mensagens em f&oacute;runs do Moodle</div>
+                    <div class="mc-option" data-opt="c"><span class="mc-letter">C</span> A pol&iacute;tica de uso aceit&aacute;vel dos laborat&oacute;rios de inform&aacute;tica do IFRN</div>
+                    <div class="mc-option" data-opt="d"><span class="mc-letter">D</span> Um recurso do Moodle para moderar automaticamente os f&oacute;runs</div>
+                </div>
+                <div class="mc-explanation ok" data-for="a">&#x2714; Correto! Netiqueta = etiqueta na rede. Inclui escrever em portugu&ecirc;s correto, sem CAIXA ALTA, identificar-se e evitar coment&aacute;rios desnecess&aacute;rios.</div>
+                <div class="mc-explanation err" data-for="b">&#x2716; Errado. Filtro de spam &eacute; uma fun&ccedil;&atilde;o t&eacute;cnica de e-mail, n&atilde;o tem rela&ccedil;&atilde;o com netiqueta.</div>
+                <div class="mc-explanation err" data-for="c">&#x2716; Errado. Pol&iacute;tica de uso de laborat&oacute;rio &eacute; um documento institucional. Netiqueta &eacute; sobre comportamento humano online.</div>
+                <div class="mc-explanation err" data-for="d">&#x2716; Errado. Netiqueta &eacute; praticada pelas pessoas, n&atilde;o &eacute; uma fun&ccedil;&atilde;o autom&aacute;tica de nenhum sistema.</div>
+            </div>
+
+            <hr class="mc-sep">
+
+            <!-- Q6 -->
+            <div class="mc-question" data-correct="d">
+                <div class="mc-q-text">6. Qual das op&ccedil;&otilde;es representa uma pr&aacute;tica <strong>inadequada</strong> no uso de AVAs?</div>
+                <div class="mc-options">
+                    <div class="mc-option" data-opt="a"><span class="mc-letter">A</span> Ativar notifica&ccedil;&otilde;es por e-mail no Google Classroom</div>
+                    <div class="mc-option" data-opt="b"><span class="mc-letter">B</span> Confirmar o status &ldquo;Entregue&rdquo; ap&oacute;s submeter uma atividade</div>
+                    <div class="mc-option" data-opt="c"><span class="mc-letter">C</span> Usar a conta institucional para acessar o SUAP e o Classroom</div>
+                    <div class="mc-option" data-opt="d"><span class="mc-letter">D</span> Usar abrevia&ccedil;&otilde;es de WhatsApp e caixa alta ao postar no f&oacute;rum da turma</div>
+                </div>
+                <div class="mc-explanation ok" data-for="d">&#x2714; Correto! Mensagens em caixa alta e abrevia&ccedil;&otilde;es informais s&atilde;o inadequadas em ambientes escolares formais &mdash; violam a netiqueta.</div>
+                <div class="mc-explanation err" data-for="a">&#x2716; Errado. Ativar notifica&ccedil;&otilde;es &eacute; uma boa pr&aacute;tica: evita perder prazos e comunicados importantes.</div>
+                <div class="mc-explanation err" data-for="b">&#x2716; Errado. Confirmar o status &ldquo;Entregue&rdquo; &eacute; essencial &mdash; sem confirma&ccedil;&atilde;o a atividade pode n&atilde;o ter sido registrada.</div>
+                <div class="mc-explanation err" data-for="c">&#x2716; Errado. Usar a conta institucional &eacute; obrigat&oacute;rio e correto.</div>
+            </div>
+
+        </div><!-- fim .mc-root -->
+
+        <div class="ex-actions">
+            <button class="btn-verificar" onclick="mcVerify('mc23')">Verificar</button>
+            <button class="btn-refazer"  onclick="mcReset('mc23')">Refazer</button>
+        </div>
+        <div class="ex-result" id="mc23-result"></div>
+    </div>
+
+    <!-- ATIVIDADE PRÁTICA -->
+    <div class="content-card practical-card" id="prat-23">
+        <h2>&#x1F6E0;&#xFE0F; Atividade Pr&aacute;tica &mdash; Explorando o SUAP e o Google Classroom</h2>
+        <div class="prat-meta">
+            <span class="prat-tag">&#x23F1; ~30 min</span>
+            <span class="prat-tag">&#x1F310; Requer internet</span>
+            <span class="prat-tag">&#x1F4E7; Precisa de login institucional</span>
         </div>
 
-    </div><!-- fim .content-wrapper -->
+        <div class="prat-steps">
+            <div class="prat-step">
+                <div class="step-num">1</div>
+                <div class="step-body">
+                    <div class="step-label">Acesse o SUAP e localize seu boletim</div>
+                    <div class="step-desc">Entre em <strong>suap.ifrn.edu.br</strong> com suas credenciais institucionais. V&aacute; em <strong>Ensino &rarr; Minha &Aacute;rea &rarr; Boletim</strong>. Anote: em qual disciplina voc&ecirc; tem a maior nota? Em qual est&aacute; a frequ&ecirc;ncia mais baixa? Certifique-se de que est&aacute; acima dos 75% obrigat&oacute;rios em todas.</div>
+                </div>
+            </div>
+            <div class="prat-step">
+                <div class="step-num">2</div>
+                <div class="step-body">
+                    <div class="step-label">Explore o mural de not&iacute;cias do SUAP</div>
+                    <div class="step-desc">Na p&aacute;gina inicial do SUAP, localize o <strong>Mural de Not&iacute;cias</strong>. Leia as 3 not&iacute;cias mais recentes e anote: h&aacute; algum prazo importante chegando? Algum evento que voc&ecirc; n&atilde;o sabia? Isso simula o h&aacute;bito de verificar o sistema regularmente.</div>
+                </div>
+            </div>
+            <div class="prat-step">
+                <div class="step-num">3</div>
+                <div class="step-body">
+                    <div class="step-label">Acesse o Google Classroom</div>
+                    <div class="step-desc">Entre em <strong>classroom.google.com</strong> com sua conta escolar. Voc&ecirc; ver&aacute; as turmas nas quais est&aacute; matriculado. Entre na turma de Inform&aacute;tica e acesse a aba <strong>Atividades</strong>. Identifique: h&aacute; alguma atividade pendente? Qual &eacute; o prazo da mais pr&oacute;xima?</div>
+                </div>
+            </div>
+            <div class="prat-step">
+                <div class="step-num">4</div>
+                <div class="step-body">
+                    <div class="step-label">Explore o fluxo de entrega de uma atividade</div>
+                    <div class="step-desc">Abra qualquer atividade dispon&iacute;vel no Classroom. Observe o campo de entrega: onde voc&ecirc; clicaria para anexar um arquivo? Como vincula um arquivo do Google Drive? Onde fica o bot&atilde;o <strong>Entregar</strong>? Apenas observe &mdash; n&atilde;o entregue se n&atilde;o for o momento certo.</div>
+                </div>
+            </div>
+            <div class="prat-step">
+                <div class="step-num">5</div>
+                <div class="step-body">
+                    <div class="step-label">Poste uma mensagem no mural da turma</div>
+                    <div class="step-desc">Na aba <strong>Mural</strong> do Classroom, clique em <em>Compartilhe algo com sua turma&hellip;</em>. Escreva uma mensagem apresentando algo que voc&ecirc; aprendeu nesta aula, aplicando as regras de netiqueta: sem abreviaturas, com sauda&ccedil;&atilde;o e seu nome ao final. Clique em <strong>Publicar</strong>.</div>
+                </div>
+            </div>
+        </div>
 
-    <script src="slide-mode.js"></script>
-    <script src="exercise-drag.js"></script>
-    <script src="exercise-print.js"></script>
+        <div class="prat-observe">
+            <strong>&#x1F4CC; Para saber:</strong> O SUAP e o Google Classroom s&atilde;o ferramentas complementares: o SUAP guarda os registros oficiais (notas e frequ&ecirc;ncia que valem legalmente), enquanto o Classroom &eacute; o espa&ccedil;o did&aacute;tico e colaborativo. Ambos devem ser consultados com regularidade.
+        </div>
+
+        <div class="ex-actions">
+            <button class="btn-print" onclick="printPractical('prat-23', 'Aula 2.3 \u2014 Ambientes Virtuais de Aprendizagem')">&#x1F5A8;&#xFE0F; Imprimir roteiro</button>
+        </div>
+    </div>
+
+    <!-- NAVEGAÇÃO -->
+    <div class="nav-footer">
+        <a href="uni2-02-armazenamento-nuvem.html" class="nav-link">&#x2B05; Anterior: Armazenamento em Nuvem</a>
+        <a href="uni2-04-seguranca-conceitos.html" class="nav-link">Pr&oacute;xima: Seguran&ccedil;a da Informa&ccedil;&atilde;o &#x27A1;</a>
+    </div>
+
+</div><!-- fim .content-wrapper -->
+
+<script src="slide-mode.js"></script>
+<script src="exercise-mc.js"></script>
+<script src="exercise-drag.js"></script>
+<script src="exercise-print.js"></script>
 </body>
 </html>
