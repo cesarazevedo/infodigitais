@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aula 1.1 - Fundamentos e Funções do S.O.</title>
+    <title>Aula 1.1 - Fundamentos e Fun&ccedil;&otilde;es do S.O.</title>
     <link rel="stylesheet" href="slide-mode.css">
     <link rel="stylesheet" href="exercise.css">
     <style>
@@ -46,7 +46,6 @@
             border-radius: 8px;
             transition: background 0.3s;
         }
-
         .back-btn:hover { background: rgba(21,101,192,0.08); }
 
         .page-badge {
@@ -72,17 +71,8 @@
             margin-bottom: 30px;
             border-top: 4px solid var(--primary);
         }
-
-        .lesson-hero h1 {
-            font-size: 2em;
-            margin-bottom: 10px;
-            color: var(--primary);
-        }
-
-        .lesson-hero .subtitle {
-            font-size: 1.05em;
-            color: #718096;
-        }
+        .lesson-hero h1 { font-size: 2em; margin-bottom: 10px; color: var(--primary); }
+        .lesson-hero .subtitle { font-size: 1.05em; color: #718096; }
 
         .content-card {
             background: white;
@@ -91,7 +81,6 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             margin-bottom: 25px;
         }
-
         .content-card h2 {
             font-size: 1.4em;
             color: var(--primary);
@@ -100,14 +89,8 @@
             align-items: center;
             gap: 10px;
         }
-
-        .content-card h3 {
-            font-size: 1.1em;
-            color: #2d5a9e;
-            margin: 20px 0 10px;
-        }
-
-        .content-card p { margin-bottom: 15px; text-align: justify; }
+        .content-card h3 { font-size: 1.05em; color: #2d5a9e; margin: 20px 0 10px; }
+        .content-card p  { margin-bottom: 15px; text-align: justify; }
 
         .highlight-box {
             background: linear-gradient(135deg, rgba(21,101,192,0.05), rgba(0,137,123,0.06));
@@ -116,117 +99,131 @@
             border-radius: 0 12px 12px 0;
             margin: 20px 0;
         }
-
         .highlight-box p { margin-bottom: 0; font-style: italic; }
 
-        /* Grid de funções */
-        .funcoes-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
-            margin: 20px 0;
-        }
-
-        .funcao-item {
-            background: #f8fafc;
-            border-radius: 12px;
-            padding: 20px;
-            border-top: 3px solid var(--primary);
-            text-align: center;
-        }
-
-        .funcao-icon { font-size: 2em; margin-bottom: 10px; }
-
-        .funcao-item strong {
-            display: block;
-            font-size: 0.95em;
-            color: var(--primary);
-            margin-bottom: 6px;
-        }
-
-        .funcao-item span {
-            font-size: 0.85em;
-            color: #718096;
-        }
-
-        /* Tabela comparativa */
+        /* ── Compare table ── */
         .compare-table {
             width: 100%;
             border-collapse: collapse;
             margin: 20px 0;
-            font-size: 0.95em;
+            font-size: 0.93em;
         }
-
         .compare-table th {
             background: var(--primary);
             color: white;
-            padding: 12px 16px;
+            padding: 11px 15px;
             text-align: left;
         }
-
         .compare-table th:first-child { border-radius: 8px 0 0 0; }
         .compare-table th:last-child  { border-radius: 0 8px 0 0; }
-
         .compare-table td {
-            padding: 11px 16px;
+            padding: 10px 15px;
             border-bottom: 1px solid #e2e8f0;
             vertical-align: top;
         }
-
         .compare-table tr:nth-child(even) td { background: #f8fafc; }
         .compare-table tr:last-child td { border-bottom: none; }
 
-        /* Diagrama camadas */
-        .camadas {
+        /* ── SVG wrapper ── */
+        .svg-wrap {
+            width: 100%;
+            margin: 22px 0;
             display: flex;
-            flex-direction: column;
-            gap: 6px;
+            justify-content: center;
+        }
+        .svg-wrap svg { max-width: 100%; height: auto; display: block; }
+
+        /* ── YouTube embed ── */
+        .yt-wrap {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 12px;
             margin: 20px 0;
+            background: #0f172a;
+        }
+        .yt-wrap iframe {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border: none;
         }
 
-        .camada {
-            padding: 14px 22px;
-            border-radius: 10px;
-            text-align: center;
-            font-weight: 600;
-            font-size: 0.95em;
-        }
-
-        .camada-hardware  { background: #e3f2fd; color: #0d47a1; border: 2px solid #90caf9; }
-        .camada-kernel    { background: #1565c0; color: white; }
-        .camada-so        { background: #1976d2; color: white; }
-        .camada-apps      { background: #e8f5e9; color: #1b5e20; border: 2px solid #a5d6a7; }
-        .camada-usuario   { background: #f3e5f5; color: #4a148c; border: 2px solid #ce93d8; }
-
-        .camada small {
-            display: block;
-            font-weight: 400;
-            font-size: 0.82em;
-            margin-top: 3px;
-            opacity: 0.85;
-        }
-
-        /* Exemplos de S.O. */
-        .so-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 14px;
-            margin: 20px 0;
-        }
-
-        .so-item {
+        /* ── Activity materials list ── */
+        .prat-materiais {
             background: #f8fafc;
             border-radius: 12px;
-            padding: 20px 16px;
-            text-align: center;
-            border: 1px solid #e2e8f0;
-            transition: all 0.2s;
+            padding: 16px 20px;
+            margin: 16px 0;
         }
+        .prat-materiais h3 {
+            font-size: 0.88em;
+            font-weight: 700;
+            color: #6d28d9;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+        }
+        .prat-materiais ul { margin: 0 0 0 18px; }
+        .prat-materiais li { font-size: 0.88em; color: #475569; margin-bottom: 3px; }
 
-        .so-item:hover { border-color: var(--primary); transform: translateY(-3px); }
-        .so-icon { font-size: 2.2em; margin-bottom: 8px; }
-        .so-item strong { display: block; color: var(--primary); margin-bottom: 4px; }
-        .so-item span { font-size: 0.82em; color: #718096; }
+        /* ── Steps SVG grid ── */
+        .steps-svg-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 14px;
+            margin: 18px 0;
+        }
+        .step-svg-card {
+            background: #f5f3ff;
+            border-radius: 12px;
+            padding: 16px;
+            border-top: 3px solid #6d28d9;
+        }
+        .step-svg-card .ssc-num {
+            background: #6d28d9;
+            color: white;
+            width: 24px; height: 24px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.78em;
+            margin-bottom: 6px;
+        }
+        .step-svg-card strong {
+            display: block;
+            font-size: 0.86em;
+            color: #4c1d95;
+            margin-bottom: 6px;
+        }
+        .step-svg-card p { font-size: 0.8em; color: #475569; margin: 0; text-align: left; }
+        .step-svg-card svg { width: 100%; height: auto; margin-top: 10px; }
+
+        /* ── Slide 1 title card ── */
+        .title-card-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 8px;
+        }
+        .title-card-inner .badge {
+            background: rgba(21,101,192,0.1);
+            color: var(--primary);
+            font-size: 0.82em;
+            font-weight: 700;
+            padding: 4px 14px;
+            border-radius: 20px;
+            margin-bottom: 4px;
+        }
+        .title-card-inner h2 {
+            font-size: 1.8em !important;
+            display: block !important;
+        }
+        .title-card-inner p { text-align: center; color: #475569; font-size: 1em; margin: 0; }
 
         ul, ol { margin: 10px 0 15px 25px; }
         li { margin-bottom: 8px; }
@@ -237,7 +234,6 @@
             margin-top: 40px;
             padding-bottom: 40px;
         }
-
         .nav-link {
             text-decoration: none;
             color: var(--primary);
@@ -248,17 +244,12 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
             transition: all 0.3s;
         }
-
-        .nav-link:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
+        .nav-link:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
 
         @media (max-width: 768px) {
             .content-wrapper { padding: 0 15px; }
             .lesson-hero, .content-card { padding: 25px; }
             .lesson-hero h1 { font-size: 1.5em; }
-            .funcoes-grid { grid-template-columns: 1fr 1fr; }
         }
     </style>
 </head>
@@ -277,93 +268,507 @@
             <p class="subtitle">Aula 1.1 &mdash; O que &eacute; um sistema operacional e como ele gerencia os recursos do computador</p>
         </div>
 
-        <!-- CARD 1 -->
+        <!-- ══════════════════════════════════════════════
+             SLIDE 1 — TÍTULO
+        ═══════════════════════════════════════════════ -->
         <div class="content-card">
-            <h2>&#x1F4AC; O que &eacute; um Sistema Operacional?</h2>
-            <p>Quando voc&ecirc; liga o computador, a primeira coisa que aparece na tela n&atilde;o &eacute; um programa que voc&ecirc; instalou &mdash; &eacute; o <strong>Sistema Operacional (S.O.)</strong>. Ele &eacute; o software mais fundamental de qualquer computador, tablet ou smartphone.</p>
-            <p>O S.O. funciona como um <strong>intermedi&aacute;rio</strong> entre o hardware (a parte f&iacute;sica da m&aacute;quina) e o usu&aacute;rio (ou os programas que ele usa). Sem ele, seria imposs&iacute;vel usar o computador de forma pr&aacute;tica.</p>
+            <div class="title-card-inner">
+                <span class="badge">Aula 1.1 &mdash; Unidade 1</span>
+                <h2>&#x1F5A5;&#xFE0F; Fundamentos e Fun&ccedil;&otilde;es do S.O.</h2>
+                <p>O que &eacute; um Sistema Operacional, como ele funciona e por que existe em todo dispositivo que usamos.</p>
+            </div>
+
+            <!-- SVG: computador ligando -->
+            <div class="svg-wrap">
+                <svg viewBox="0 0 520 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Computador ligando e exibindo o Sistema Operacional">
+                    <style>
+                        @keyframes boot-glow { 0%,100%{opacity:.3} 50%{opacity:1} }
+                        @keyframes bar-fill  { 0%{width:0} 60%{width:220px} 100%{width:220px} }
+                        @keyframes txt-fade  { 0%,45%{opacity:0} 70%,100%{opacity:1} }
+                        @keyframes ico-pop   { 0%,55%{opacity:0;transform:scale(.5)} 80%,100%{opacity:1;transform:scale(1)} }
+                        @keyframes cursor-blink { 0%,100%{opacity:1} 50%{opacity:0} }
+                        .boot-glow { animation: boot-glow 2s ease-in-out infinite; }
+                        .bar-fill  { animation: bar-fill 3s ease forwards; }
+                        .txt-fade  { animation: txt-fade 3s ease forwards; }
+                        .ico-pop   { animation: ico-pop 3s ease forwards; transform-origin: center; }
+                        .cursor    { animation: cursor-blink 1s step-end infinite 3s; }
+                    </style>
+
+                    <!-- monitor -->
+                    <rect x="100" y="10" width="320" height="185" rx="14" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+                    <rect x="113" y="23" width="294" height="159" rx="7" fill="#0f172a"/>
+                    <!-- stand -->
+                    <rect x="228" y="195" width="64" height="18" rx="4" fill="#334155"/>
+                    <rect x="200" y="211" width="120" height="10" rx="5" fill="#475569"/>
+
+                    <!-- screen glow -->
+                    <rect x="113" y="23" width="294" height="159" rx="7" fill="#1d4ed8" opacity="0" class="boot-glow"/>
+
+                    <!-- boot text line 1 -->
+                    <text x="260" y="70" text-anchor="middle" fill="#22d3ee" font-family="Consolas, monospace" font-size="11" opacity="0">
+                        <animate attributeName="opacity" values="0;1;1;1" dur="3s" fill="freeze"/>
+                        Iniciando Sistema Operacional...
+                    </text>
+
+                    <!-- progress bar track -->
+                    <rect x="150" y="88" width="220" height="12" rx="6" fill="#1e40af" opacity="0">
+                        <animate attributeName="opacity" values="0;1;1;1" dur="3s" fill="freeze"/>
+                    </rect>
+                    <!-- progress bar fill -->
+                    <rect x="150" y="88" width="0" height="12" rx="6" fill="#3b82f6">
+                        <animate attributeName="width" values="0;0;220" keyTimes="0;0.2;1" dur="3s" fill="freeze"/>
+                        <animate attributeName="opacity" values="0;1;1" keyTimes="0;0.2;1" dur="3s" fill="freeze"/>
+                    </rect>
+
+                    <!-- S.O. label -->
+                    <text x="260" y="128" text-anchor="middle" fill="white" font-family="Segoe UI, sans-serif" font-size="28" font-weight="700" class="txt-fade">S.O.</text>
+                    <text x="260" y="148" text-anchor="middle" fill="#93c5fd" font-family="Segoe UI, sans-serif" font-size="10" class="txt-fade">Sistema Operacional</text>
+
+                    <!-- small icons appearing -->
+                    <g class="ico-pop" style="animation-delay:.2s">
+                        <rect x="140" y="158" width="28" height="20" rx="4" fill="#1d4ed8"/>
+                        <text x="154" y="172" text-anchor="middle" fill="white" font-size="9">&#x1F9E0;</text>
+                    </g>
+                    <g class="ico-pop" style="animation-delay:.4s">
+                        <rect x="176" y="158" width="28" height="20" rx="4" fill="#15803d"/>
+                        <text x="190" y="172" text-anchor="middle" fill="white" font-size="9">&#x1F4C1;</text>
+                    </g>
+                    <g class="ico-pop" style="animation-delay:.6s">
+                        <rect x="212" y="158" width="28" height="20" rx="4" fill="#7c3aed"/>
+                        <text x="226" y="172" text-anchor="middle" fill="white" font-size="9">&#x1F512;</text>
+                    </g>
+                    <g class="ico-pop" style="animation-delay:.8s">
+                        <rect x="248" y="158" width="28" height="20" rx="4" fill="#b45309"/>
+                        <text x="262" y="172" text-anchor="middle" fill="white" font-size="9">&#x1F5A8;</text>
+                    </g>
+                    <g class="ico-pop" style="animation-delay:1s">
+                        <rect x="284" y="158" width="28" height="20" rx="4" fill="#0e7490"/>
+                        <text x="298" y="172" text-anchor="middle" fill="white" font-size="9">&#x1F4BE;</text>
+                    </g>
+                    <g class="ico-pop" style="animation-delay:1.2s">
+                        <rect x="320" y="158" width="28" height="20" rx="4" fill="#be185d"/>
+                        <text x="334" y="172" text-anchor="middle" fill="white" font-size="9">&#x1F5A5;</text>
+                    </g>
+
+                    <!-- blinking cursor after boot -->
+                    <rect x="260" y="148" width="6" height="9" rx="1" fill="#22d3ee" class="cursor"/>
+                </svg>
+            </div>
 
             <div class="highlight-box">
-                <p>&#x1F4A1; <strong>Analogia:</strong> Pense no S.O. como o <em>gerente de um hotel</em>. Ele organiza os quartos (mem&oacute;ria), coordena a equipe (processador), recebe os h&oacute;spedes (usu&aacute;rios e programas) e cuida da infraestrutura (hardware) &mdash; tudo ao mesmo tempo.</p>
+                <p>&#x1F4A1; O Sistema Operacional &eacute; o <strong>primeiro software a ligar</strong> e o <strong>&uacute;ltimo a desligar</strong>. Ele est&aacute; presente em computadores, celulares, smart TVs, carros e muito mais.</p>
+            </div>
+        </div>
+
+        <!-- ══════════════════════════════════════════════
+             SLIDE 2 — O QUE É UM S.O.?
+        ═══════════════════════════════════════════════ -->
+        <div class="content-card">
+            <h2>&#x1F4AC; O que &eacute; um Sistema Operacional?</h2>
+            <p>Quando voc&ecirc; liga o computador, a primeira coisa que aparece n&atilde;o &eacute; um programa que voc&ecirc; instalou &mdash; &eacute; o <strong>Sistema Operacional (S.O.)</strong>. Ele &eacute; o software mais fundamental de qualquer computador, tablet ou smartphone.</p>
+            <p>O S.O. funciona como um <strong>intermedi&aacute;rio</strong> entre o hardware (a parte f&iacute;sica da m&aacute;quina) e o usu&aacute;rio. Sem ele, seria imposs&iacute;vel usar o computador de forma pr&aacute;tica.</p>
+
+            <div class="highlight-box">
+                <p>&#x1F4A1; <strong>Analogia do hotel:</strong> O S.O. &eacute; como o <em>gerente de um hotel</em>. Ele organiza os quartos (mem&oacute;ria), coordena a equipe (processador), recebe os h&oacute;spedes (usu&aacute;rios e programas) e cuida da infraestrutura (hardware) &mdash; tudo ao mesmo tempo.</p>
+            </div>
+
+            <!-- SVG: Hotel analogy -->
+            <div class="svg-wrap">
+                <svg viewBox="0 0 520 290" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Analogia do hotel: S.O. como gerente">
+                    <style>
+                        @keyframes arrow-dash-down { from{stroke-dashoffset:60} to{stroke-dashoffset:0} }
+                        @keyframes arrow-dash-up   { from{stroke-dashoffset:-60} to{stroke-dashoffset:0} }
+                        @keyframes float-person    { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
+                        @keyframes fade-in-label   { from{opacity:0} to{opacity:1} }
+                        .arr-down { stroke-dasharray:8 4; animation: arrow-dash-down 1.2s linear infinite; }
+                        .arr-up   { stroke-dasharray:8 4; animation: arrow-dash-up   1.2s linear infinite; }
+                        .float-p  { animation: float-person 2.5s ease-in-out infinite; transform-origin:180px 145px; }
+                        .lbl-fade { animation: fade-in-label 0.8s ease both; }
+                        .lbl-1 { animation-delay:0.1s }
+                        .lbl-2 { animation-delay:0.4s }
+                        .lbl-3 { animation-delay:0.7s }
+                    </style>
+
+                    <!-- building outline -->
+                    <rect x="60" y="20" width="240" height="250" rx="8" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="2"/>
+                    <!-- roof / top band -->
+                    <rect x="60" y="20" width="240" height="30" rx="8" fill="#1565c0"/>
+                    <rect x="60" y="36" width="240" height="14" fill="#1565c0"/>
+                    <text x="180" y="40" text-anchor="middle" fill="white" font-family="Segoe UI, sans-serif" font-size="11" font-weight="700">HOTEL S.O.</text>
+
+                    <!-- floor dividers -->
+                    <line x1="60" y1="120" x2="300" y2="120" stroke="#cbd5e1" stroke-width="1.5"/>
+                    <line x1="60" y1="200" x2="300" y2="200" stroke="#cbd5e1" stroke-width="1.5"/>
+
+                    <!-- top floor: Users / Apps -->
+                    <rect x="70" y="55" width="220" height="58" rx="6" fill="#e8f5e9" opacity="0" class="lbl-fade lbl-1">
+                        <animate attributeName="opacity" values="0;1" dur="0.6s" begin="0.1s" fill="freeze"/>
+                    </rect>
+                    <text x="180" y="79" text-anchor="middle" fill="#1b5e20" font-family="Segoe UI, sans-serif" font-size="11" font-weight="700" opacity="0">
+                        <animate attributeName="opacity" values="0;1" dur="0.6s" begin="0.1s" fill="freeze"/>
+                        &#x1F464; H&oacute;spedes (Usu&aacute;rios &amp; Programas)
+                    </text>
+                    <text x="180" y="97" text-anchor="middle" fill="#2e7d32" font-family="Segoe UI, sans-serif" font-size="9" opacity="0">
+                        <animate attributeName="opacity" values="0;1" dur="0.6s" begin="0.1s" fill="freeze"/>
+                        Navegador, jogos, editor, planilha...
+                    </text>
+
+                    <!-- middle floor: S.O. Manager -->
+                    <rect x="70" y="128" width="220" height="64" rx="6" fill="#dbeafe" opacity="0">
+                        <animate attributeName="opacity" values="0;1" dur="0.6s" begin="0.4s" fill="freeze"/>
+                    </rect>
+                    <text x="180" y="153" text-anchor="middle" fill="#1d4ed8" font-family="Segoe UI, sans-serif" font-size="11" font-weight="700" opacity="0">
+                        <animate attributeName="opacity" values="0;1" dur="0.6s" begin="0.4s" fill="freeze"/>
+                        &#x1F6E1;&#xFE0F; Gerente (Sistema Operacional)
+                    </text>
+                    <text x="180" y="170" text-anchor="middle" fill="#1e40af" font-family="Segoe UI, sans-serif" font-size="9" opacity="0">
+                        <animate attributeName="opacity" values="0;1" dur="0.6s" begin="0.4s" fill="freeze"/>
+                        Coordena recursos e media o acesso
+                    </text>
+
+                    <!-- bottom floor: Hardware -->
+                    <rect x="70" y="208" width="220" height="54" rx="6" fill="#fce7f3" opacity="0">
+                        <animate attributeName="opacity" values="0;1" dur="0.6s" begin="0.7s" fill="freeze"/>
+                    </rect>
+                    <text x="180" y="232" text-anchor="middle" fill="#831843" font-family="Segoe UI, sans-serif" font-size="11" font-weight="700" opacity="0">
+                        <animate attributeName="opacity" values="0;1" dur="0.6s" begin="0.7s" fill="freeze"/>
+                        &#x1F4BB; Infraestrutura (Hardware)
+                    </text>
+                    <text x="180" y="249" text-anchor="middle" fill="#9d174d" font-family="Segoe UI, sans-serif" font-size="9" opacity="0">
+                        <animate attributeName="opacity" values="0;1" dur="0.6s" begin="0.7s" fill="freeze"/>
+                        CPU, RAM, Disco, Placa de v&iacute;deo...
+                    </text>
+
+                    <!-- animated arrows between S.O. and floors -->
+                    <line x1="295" y1="88" x2="295" y2="128" stroke="#1565c0" stroke-width="2.5" class="arr-down"/>
+                    <polygon points="295,125 290,115 300,115" fill="#1565c0"/>
+                    <line x1="305" y1="200" x2="305" y2="155" stroke="#1565c0" stroke-width="2.5" class="arr-up"/>
+                    <polygon points="305,158 300,168 310,168" fill="#1565c0"/>
+
+                    <!-- labels for arrows -->
+                    <text x="330" y="112" fill="#1565c0" font-family="Segoe UI, sans-serif" font-size="9" font-weight="600">recebe</text>
+                    <text x="313" y="183" fill="#1565c0" font-family="Segoe UI, sans-serif" font-size="9" font-weight="600">acessa</text>
+
+                    <!-- right side labels -->
+                    <rect x="340" y="55" width="140" height="58" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+                    <text x="410" y="76" text-anchor="middle" fill="#166534" font-family="Segoe UI, sans-serif" font-size="9" font-weight="700">3&ordm; Andar</text>
+                    <text x="410" y="90" text-anchor="middle" fill="#475569" font-family="Segoe UI, sans-serif" font-size="8">Quarto = mem&oacute;ria</text>
+                    <text x="410" y="103" text-anchor="middle" fill="#475569" font-family="Segoe UI, sans-serif" font-size="8">H&oacute;spede = programa</text>
+
+                    <rect x="340" y="128" width="140" height="64" rx="8" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5"/>
+                    <text x="410" y="150" text-anchor="middle" fill="#1d4ed8" font-family="Segoe UI, sans-serif" font-size="9" font-weight="700">Recep&ccedil;&atilde;o</text>
+                    <text x="410" y="165" text-anchor="middle" fill="#475569" font-family="Segoe UI, sans-serif" font-size="8">Gerente = S.O.</text>
+                    <text x="410" y="179" text-anchor="middle" fill="#475569" font-family="Segoe UI, sans-serif" font-size="8">Coordena tudo</text>
+
+                    <rect x="340" y="208" width="140" height="54" rx="8" fill="#fdf2f8" stroke="#f0abfc" stroke-width="1.5"/>
+                    <text x="410" y="230" text-anchor="middle" fill="#86198f" font-family="Segoe UI, sans-serif" font-size="9" font-weight="700">Por&atilde;o</text>
+                    <text x="410" y="245" text-anchor="middle" fill="#475569" font-family="Segoe UI, sans-serif" font-size="8">Elétrica = hardware</text>
+                    <text x="410" y="258" text-anchor="middle" fill="#475569" font-family="Segoe UI, sans-serif" font-size="8">Estrutura f&iacute;sica</text>
+                </svg>
             </div>
 
             <p>Tecnicamente, o Sistema Operacional &eacute; um conjunto de programas que <strong>controla e gerencia todos os recursos do computador</strong>, permitindo que outros softwares sejam executados de forma eficiente e segura.</p>
         </div>
 
-        <!-- CARD 2 -->
+        <!-- ══════════════════════════════════════════════
+             SLIDE 3 — AS CAMADAS DO COMPUTADOR
+        ═══════════════════════════════════════════════ -->
         <div class="content-card">
             <h2>&#x2699;&#xFE0F; As Camadas do Computador</h2>
-            <p>Para entender o papel do S.O., &eacute; importante visualizar como um computador &eacute; organizado em camadas. Cada camada depende da anterior e serve &agrave; seguinte:</p>
+            <p>Um computador &eacute; organizado em <strong>camadas</strong>. Cada camada depende da anterior e serve &agrave; seguinte &mdash; como os andares de um pr&eacute;dio, onde cada um apoia o de cima.</p>
 
-            <div class="camadas">
-                <div class="camada camada-usuario">
-                    &#x1F464; Usu&aacute;rio
-                    <small>Pessoa que usa o computador</small>
-                </div>
-                <div class="camada camada-apps">
-                    &#x1F4E6; Aplicativos
-                    <small>Navegador, editor de texto, jogos&hellip;</small>
-                </div>
-                <div class="camada camada-so">
-                    &#x1F6E1;&#xFE0F; Sistema Operacional
-                    <small>Gerencia recursos e media o acesso ao hardware</small>
-                </div>
-                <div class="camada camada-kernel">
-                    &#x1F9E0; Kernel (N&uacute;cleo)
-                    <small>Parte central do S.O. &mdash; acesso direto ao hardware</small>
-                </div>
-                <div class="camada camada-hardware">
-                    &#x1F4BB; Hardware
-                    <small>Processador, mem&oacute;ria RAM, disco r&iacute;gido, placa de v&iacute;deo&hellip;</small>
-                </div>
+            <!-- SVG: stacking layers animation -->
+            <div class="svg-wrap">
+                <svg viewBox="0 0 520 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Camadas do computador aparecendo de baixo para cima">
+                    <style>
+                        @keyframes slide-up-fade {
+                            from { transform: translateY(25px); opacity: 0; }
+                            to   { transform: translateY(0);    opacity: 1; }
+                        }
+                        @keyframes pulse-border {
+                            0%,100%{ stroke-width:2; }
+                            50%    { stroke-width:4; }
+                        }
+                        .su1 { animation: slide-up-fade 0.55s ease both 0.0s; }
+                        .su2 { animation: slide-up-fade 0.55s ease both 0.4s; }
+                        .su3 { animation: slide-up-fade 0.55s ease both 0.8s; }
+                        .su4 { animation: slide-up-fade 0.55s ease both 1.2s; }
+                        .su5 { animation: slide-up-fade 0.55s ease both 1.6s; }
+                        .pulse-so { animation: pulse-border 2s ease-in-out infinite 2s; }
+                    </style>
+
+                    <!-- Layer 1: Hardware (bottom) -->
+                    <g class="su1">
+                        <rect x="30" y="248" width="460" height="44" rx="9" fill="#e3f2fd" stroke="#90caf9" stroke-width="2"/>
+                        <text x="260" y="267" text-anchor="middle" fill="#0d47a1" font-family="Segoe UI, sans-serif" font-size="11" font-weight="700">&#x1F4BB; Hardware</text>
+                        <text x="260" y="282" text-anchor="middle" fill="#1565c0" font-family="Segoe UI, sans-serif" font-size="9.5">Processador, RAM, Disco, Placa de v&iacute;deo, Dispositivos f&iacute;sicos</text>
+                    </g>
+
+                    <!-- Layer 2: Kernel -->
+                    <g class="su2">
+                        <rect x="55" y="197" width="410" height="44" rx="9" fill="#1565c0" class="pulse-so"/>
+                        <text x="260" y="216" text-anchor="middle" fill="white" font-family="Segoe UI, sans-serif" font-size="11" font-weight="700">&#x1F9E0; Kernel (N&uacute;cleo)</text>
+                        <text x="260" y="231" text-anchor="middle" fill="#bfdbfe" font-family="Segoe UI, sans-serif" font-size="9.5">Parte central do S.O. &mdash; conversa diretamente com o hardware</text>
+                    </g>
+
+                    <!-- Layer 3: S.O. -->
+                    <g class="su3">
+                        <rect x="80" y="146" width="360" height="44" rx="9" fill="#1976d2"/>
+                        <text x="260" y="165" text-anchor="middle" fill="white" font-family="Segoe UI, sans-serif" font-size="11" font-weight="700">&#x1F6E1;&#xFE0F; Sistema Operacional</text>
+                        <text x="260" y="180" text-anchor="middle" fill="#bfdbfe" font-family="Segoe UI, sans-serif" font-size="9.5">Gerencia recursos e media o acesso ao hardware</text>
+                    </g>
+
+                    <!-- Layer 4: Apps -->
+                    <g class="su4">
+                        <rect x="105" y="95" width="310" height="44" rx="9" fill="#e8f5e9" stroke="#a5d6a7" stroke-width="2"/>
+                        <text x="260" y="114" text-anchor="middle" fill="#1b5e20" font-family="Segoe UI, sans-serif" font-size="11" font-weight="700">&#x1F4E6; Aplicativos</text>
+                        <text x="260" y="129" text-anchor="middle" fill="#2e7d32" font-family="Segoe UI, sans-serif" font-size="9.5">Navegador, editor de texto, jogos, streaming...</text>
+                    </g>
+
+                    <!-- Layer 5: User (top) -->
+                    <g class="su5">
+                        <rect x="150" y="44" width="220" height="44" rx="9" fill="#f3e5f5" stroke="#ce93d8" stroke-width="2"/>
+                        <text x="260" y="63" text-anchor="middle" fill="#4a148c" font-family="Segoe UI, sans-serif" font-size="11" font-weight="700">&#x1F464; Usu&aacute;rio</text>
+                        <text x="260" y="78" text-anchor="middle" fill="#6a1b9a" font-family="Segoe UI, sans-serif" font-size="9.5">Voc&ecirc; &mdash; a pessoa que usa o computador</text>
+                    </g>
+
+                    <!-- connecting arrows (appear last) -->
+                    <g opacity="0">
+                        <animate attributeName="opacity" values="0;1" dur="0.4s" begin="2s" fill="freeze"/>
+                        <!-- arrows between layers -->
+                        <line x1="490" y1="248" x2="490" y2="241" stroke="#64748b" stroke-width="1.5" marker-end="url(#arr)"/>
+                        <line x1="490" y1="197" x2="490" y2="190" stroke="#64748b" stroke-width="1.5"/>
+                        <line x1="490" y1="146" x2="490" y2="139" stroke="#64748b" stroke-width="1.5"/>
+                        <line x1="490" y1="95"  x2="490" y2="88"  stroke="#64748b" stroke-width="1.5"/>
+                    </g>
+                    <defs>
+                        <marker id="arr" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                            <path d="M0,0 L6,3 L0,6 Z" fill="#64748b"/>
+                        </marker>
+                    </defs>
+                </svg>
             </div>
 
-            <p>O <strong>Kernel</strong> &eacute; o n&uacute;cleo do sistema operacional &mdash; a parte que conversa diretamente com o hardware. Ele &eacute; carregado primeiro quando o computador liga e permanece em mem&oacute;ria o tempo todo.</p>
+            <p>O <strong>Kernel</strong> &eacute; o n&uacute;cleo do sistema operacional &mdash; a parte que conversa diretamente com o hardware. Ele &eacute; carregado primeiro quando o computador liga e permanece em mem&oacute;ria o tempo todo. As camadas superiores dependem dele para funcionar.</p>
         </div>
 
-        <!-- CARD 3 -->
+        <!-- ══════════════════════════════════════════════
+             SLIDE 4 — FUNÇÕES PRINCIPAIS DO S.O.
+        ═══════════════════════════════════════════════ -->
         <div class="content-card">
             <h2>&#x1F3AF; Fun&ccedil;&otilde;es Principais do S.O.</h2>
-            <p>O sistema operacional realiza diversas fun&ccedil;&otilde;es essenciais simultaneamente. As principais s&atilde;o:</p>
+            <p>O sistema operacional faz muitas coisas ao mesmo tempo. Pense nele como um <strong>maestro de orquestra</strong>: ele n&atilde;o toca nenhum instrumento, mas sem ele a m&uacute;sica vira cao&ccedil;. As seis fun&ccedil;&otilde;es principais s&atilde;o:</p>
 
-            <div class="funcoes-grid">
-                <div class="funcao-item">
-                    <div class="funcao-icon">&#x1F9E0;</div>
-                    <strong>Gerenciamento de Processos</strong>
-                    <span>Controla quais programas usam o processador e por quanto tempo</span>
-                </div>
-                <div class="funcao-item">
-                    <div class="funcao-icon">&#x1F4BE;</div>
-                    <strong>Gerenciamento de Mem&oacute;ria</strong>
-                    <span>Distribui a RAM entre os programas em execu&ccedil;&atilde;o</span>
-                </div>
-                <div class="funcao-item">
-                    <div class="funcao-icon">&#x1F4C1;</div>
-                    <strong>Gerenciamento de Arquivos</strong>
-                    <span>Organiza, cria, move e exclui arquivos e pastas</span>
-                </div>
-                <div class="funcao-item">
-                    <div class="funcao-icon">&#x1F5A8;&#xFE0F;</div>
-                    <strong>Gerenciamento de Dispositivos</strong>
-                    <span>Controla impressoras, pen drives, teclado, mouse&hellip;</span>
-                </div>
-                <div class="funcao-item">
-                    <div class="funcao-icon">&#x1F512;</div>
-                    <strong>Seguran&ccedil;a e Acesso</strong>
-                    <span>Controla usu&aacute;rios, senhas e permiss&otilde;es de acesso</span>
-                </div>
-                <div class="funcao-item">
-                    <div class="funcao-icon">&#x1F5A5;&#xFE0F;</div>
-                    <strong>Interface com o Usu&aacute;rio</strong>
-                    <span>Oferece a tela, janelas e menus para interagir com o sistema</span>
-                </div>
+            <!-- SVG: radial hub diagram -->
+            <div class="svg-wrap">
+                <svg viewBox="0 0 520 350" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagrama radial das funções do Sistema Operacional">
+                    <style>
+                        @keyframes node-pop {
+                            0%   { transform: scale(0); opacity: 0; }
+                            70%  { transform: scale(1.08); opacity: 1; }
+                            100% { transform: scale(1); opacity: 1; }
+                        }
+                        @keyframes line-grow {
+                            from { stroke-dashoffset: 100; }
+                            to   { stroke-dashoffset: 0; }
+                        }
+                        @keyframes center-pulse {
+                            0%,100%{ r: 42; }
+                            50%    { r: 45; }
+                        }
+                        .node-1 { animation: node-pop 0.45s cubic-bezier(.34,1.56,.64,1) both 0.3s; transform-origin: 260px 57px; }
+                        .node-2 { animation: node-pop 0.45s cubic-bezier(.34,1.56,.64,1) both 0.6s; transform-origin: 420px 122px; }
+                        .node-3 { animation: node-pop 0.45s cubic-bezier(.34,1.56,.64,1) both 0.9s; transform-origin: 420px 232px; }
+                        .node-4 { animation: node-pop 0.45s cubic-bezier(.34,1.56,.64,1) both 1.2s; transform-origin: 260px 295px; }
+                        .node-5 { animation: node-pop 0.45s cubic-bezier(.34,1.56,.64,1) both 1.5s; transform-origin: 100px 232px; }
+                        .node-6 { animation: node-pop 0.45s cubic-bezier(.34,1.56,.64,1) both 1.8s; transform-origin: 100px 122px; }
+                        .ln1,.ln2,.ln3,.ln4,.ln5,.ln6 {
+                            stroke-dasharray: 100;
+                            animation: line-grow 0.4s ease both;
+                        }
+                        .ln1{ animation-delay:0.3s } .ln2{ animation-delay:0.6s }
+                        .ln3{ animation-delay:0.9s } .ln4{ animation-delay:1.2s }
+                        .ln5{ animation-delay:1.5s } .ln6{ animation-delay:1.8s }
+                        .center-c { animation: center-pulse 2.5s ease-in-out infinite 2s; }
+                    </style>
+
+                    <!-- connecting lines (behind nodes) -->
+                    <line x1="260" y1="175" x2="260" y2="95"  stroke="#93c5fd" stroke-width="1.8" class="ln1"/>
+                    <line x1="260" y1="175" x2="370" y2="135" stroke="#93c5fd" stroke-width="1.8" class="ln2"/>
+                    <line x1="260" y1="175" x2="370" y2="218" stroke="#93c5fd" stroke-width="1.8" class="ln3"/>
+                    <line x1="260" y1="175" x2="260" y2="258" stroke="#93c5fd" stroke-width="1.8" class="ln4"/>
+                    <line x1="260" y1="175" x2="150" y2="218" stroke="#93c5fd" stroke-width="1.8" class="ln5"/>
+                    <line x1="260" y1="175" x2="150" y2="135" stroke="#93c5fd" stroke-width="1.8" class="ln6"/>
+
+                    <!-- center: S.O. -->
+                    <circle cx="260" cy="175" r="42" fill="#1565c0" class="center-c"/>
+                    <text x="260" y="170" text-anchor="middle" fill="white" font-family="Segoe UI, sans-serif" font-size="13" font-weight="700">S.O.</text>
+                    <text x="260" y="185" text-anchor="middle" fill="#bfdbfe" font-family="Segoe UI, sans-serif" font-size="8.5">Maestro</text>
+
+                    <!-- Node 1: Processos (top) -->
+                    <g class="node-1">
+                        <rect x="205" y="26" width="110" height="62" rx="10" fill="#eff6ff" stroke="#3b82f6" stroke-width="2"/>
+                        <text x="260" y="47" text-anchor="middle" font-size="16">&#x1F9E0;</text>
+                        <text x="260" y="61" text-anchor="middle" fill="#1d4ed8" font-family="Segoe UI, sans-serif" font-size="9" font-weight="700">Processos</text>
+                        <text x="260" y="74" text-anchor="middle" fill="#475569" font-family="Segoe UI, sans-serif" font-size="8">Quem usa o CPU</text>
+                    </g>
+
+                    <!-- Node 2: Memória (top-right) -->
+                    <g class="node-2">
+                        <rect x="365" y="91" width="110" height="62" rx="10" fill="#f0fdf4" stroke="#22c55e" stroke-width="2"/>
+                        <text x="420" y="112" text-anchor="middle" font-size="16">&#x1F4BE;</text>
+                        <text x="420" y="126" text-anchor="middle" fill="#15803d" font-family="Segoe UI, sans-serif" font-size="9" font-weight="700">Mem&oacute;ria</text>
+                        <text x="420" y="139" text-anchor="middle" fill="#475569" font-family="Segoe UI, sans-serif" font-size="8">Distribui a RAM</text>
+                    </g>
+
+                    <!-- Node 3: Arquivos (bottom-right) -->
+                    <g class="node-3">
+                        <rect x="365" y="201" width="110" height="62" rx="10" fill="#fff7ed" stroke="#f59e0b" stroke-width="2"/>
+                        <text x="420" y="222" text-anchor="middle" font-size="16">&#x1F4C1;</text>
+                        <text x="420" y="236" text-anchor="middle" fill="#92400e" font-family="Segoe UI, sans-serif" font-size="9" font-weight="700">Arquivos</text>
+                        <text x="420" y="249" text-anchor="middle" fill="#475569" font-family="Segoe UI, sans-serif" font-size="8">Organiza dados</text>
+                    </g>
+
+                    <!-- Node 4: Dispositivos (bottom) -->
+                    <g class="node-4">
+                        <rect x="205" y="264" width="110" height="62" rx="10" fill="#fdf4ff" stroke="#a855f7" stroke-width="2"/>
+                        <text x="260" y="285" text-anchor="middle" font-size="16">&#x1F5A8;&#xFE0F;</text>
+                        <text x="260" y="299" text-anchor="middle" fill="#7e22ce" font-family="Segoe UI, sans-serif" font-size="9" font-weight="700">Dispositivos</text>
+                        <text x="260" y="312" text-anchor="middle" fill="#475569" font-family="Segoe UI, sans-serif" font-size="8">Mouse, teclado...</text>
+                    </g>
+
+                    <!-- Node 5: Segurança (bottom-left) -->
+                    <g class="node-5">
+                        <rect x="45" y="201" width="110" height="62" rx="10" fill="#fef2f2" stroke="#ef4444" stroke-width="2"/>
+                        <text x="100" y="222" text-anchor="middle" font-size="16">&#x1F512;</text>
+                        <text x="100" y="236" text-anchor="middle" fill="#dc2626" font-family="Segoe UI, sans-serif" font-size="9" font-weight="700">Seguran&ccedil;a</text>
+                        <text x="100" y="249" text-anchor="middle" fill="#475569" font-family="Segoe UI, sans-serif" font-size="8">Senhas e acesso</text>
+                    </g>
+
+                    <!-- Node 6: Interface (top-left) -->
+                    <g class="node-6">
+                        <rect x="45" y="91" width="110" height="62" rx="10" fill="#f0f9ff" stroke="#0ea5e9" stroke-width="2"/>
+                        <text x="100" y="112" text-anchor="middle" font-size="16">&#x1F5A5;&#xFE0F;</text>
+                        <text x="100" y="126" text-anchor="middle" fill="#0369a1" font-family="Segoe UI, sans-serif" font-size="9" font-weight="700">Interface</text>
+                        <text x="100" y="139" text-anchor="middle" fill="#475569" font-family="Segoe UI, sans-serif" font-size="8">Tela e janelas</text>
+                    </g>
+                </svg>
             </div>
+
+            <p>Todas essas fun&ccedil;&otilde;es acontecem <strong>ao mesmo tempo</strong>, enquanto voc&ecirc; usa o computador. Por isso o S.O. precisa ser r&aacute;pido, est&aacute;vel e muito bem organizado internamente.</p>
         </div>
 
-        <!-- CARD 4 -->
+        <!-- ══════════════════════════════════════════════
+             SLIDE 5 — INTERFACES: CLI E GUI
+        ═══════════════════════════════════════════════ -->
         <div class="content-card">
             <h2>&#x1F4BB; Interfaces: CLI e GUI</h2>
-            <p>Um sistema operacional pode oferecer dois tipos principais de interface para o usu&aacute;rio interagir com o computador:</p>
+            <p>Um sistema operacional pode oferecer dois tipos principais de interface. Imagine dois balc&otilde;es de atendimento do mesmo hotel: um exige que voc&ecirc; conhe&ccedil;a os c&oacute;digos internos; o outro tem bot&otilde;es visuais para tudo.</p>
+
+            <!-- SVG: CLI vs GUI split screen -->
+            <div class="svg-wrap">
+                <svg viewBox="0 0 520 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Comparação entre CLI e GUI">
+                    <style>
+                        @keyframes type-cursor { 0%,100%{opacity:1} 50%{opacity:0} }
+                        @keyframes type-text {
+                            0%  { clip-path: inset(0 100% 0 0); }
+                            100%{ clip-path: inset(0 0% 0 0); }
+                        }
+                        @keyframes win-open {
+                            from { transform: scaleY(0); opacity: 0; transform-origin: top center; }
+                            to   { transform: scaleY(1); opacity: 1; transform-origin: top center; }
+                        }
+                        @keyframes icon-appear { from{opacity:0;transform:scale(0)} to{opacity:1;transform:scale(1)} }
+                        .cli-cursor { animation: type-cursor 1s step-end infinite; }
+                        .win-a { animation: win-open 0.4s ease both 0.3s; }
+                        .win-b { animation: win-open 0.4s ease both 0.7s; }
+                        .win-c { animation: win-open 0.4s ease both 1.1s; }
+                        .ic-1  { animation: icon-appear 0.3s ease both 1.5s; transform-origin:390px 170px; }
+                        .ic-2  { animation: icon-appear 0.3s ease both 1.7s; transform-origin:415px 170px; }
+                        .ic-3  { animation: icon-appear 0.3s ease both 1.9s; transform-origin:440px 170px; }
+                    </style>
+
+                    <!-- divider -->
+                    <line x1="262" y1="10" x2="262" y2="210" stroke="#e2e8f0" stroke-width="2" stroke-dasharray="6 4"/>
+                    <text x="131" y="20" text-anchor="middle" fill="#1565c0" font-family="Segoe UI, sans-serif" font-size="11" font-weight="700">&#x2328;&#xFE0F; CLI — Linha de Comando</text>
+                    <text x="393" y="20" text-anchor="middle" fill="#15803d" font-family="Segoe UI, sans-serif" font-size="11" font-weight="700">&#x1F5A5;&#xFE0F; GUI — Interface Gr&aacute;fica</text>
+
+                    <!-- CLI screen -->
+                    <rect x="10" y="28" width="242" height="178" rx="8" fill="#0f172a"/>
+                    <rect x="10" y="28" width="242" height="18" rx="8" fill="#1e293b"/>
+                    <rect x="10" y="36" width="242" height="10" fill="#1e293b"/>
+                    <circle cx="24" cy="37" r="5" fill="#ef4444" opacity="0.8"/>
+                    <circle cx="38" cy="37" r="5" fill="#f59e0b" opacity="0.8"/>
+                    <circle cx="52" cy="37" r="5" fill="#22c55e" opacity="0.8"/>
+                    <text x="131" y="48" text-anchor="middle" fill="#94a3b8" font-family="Consolas, monospace" font-size="8">Terminal</text>
+
+                    <!-- CLI text lines -->
+                    <text x="20" y="68" fill="#22d3ee" font-family="Consolas, monospace" font-size="9">C:\&gt; dir</text>
+                    <text x="20" y="82" fill="#94a3b8" font-family="Consolas, monospace" font-size="8">Volume: DISCO_C</text>
+                    <text x="20" y="94" fill="#94a3b8" font-family="Consolas, monospace" font-size="8">Documents    Arquivos</text>
+                    <text x="20" y="106" fill="#94a3b8" font-family="Consolas, monospace" font-size="8">Downloads    Pastas</text>
+                    <text x="20" y="120" fill="#22d3ee" font-family="Consolas, monospace" font-size="9">C:\&gt; systeminfo</text>
+                    <text x="20" y="134" fill="#94a3b8" font-family="Consolas, monospace" font-size="8">Nome do host: PC-ALUNO</text>
+                    <text x="20" y="146" fill="#94a3b8" font-family="Consolas, monospace" font-size="8">S.O.: Windows 11 Pro</text>
+                    <text x="20" y="160" fill="#94a3b8" font-family="Consolas, monospace" font-size="8">RAM: 16 GB</text>
+                    <text x="20" y="186" fill="#22d3ee" font-family="Consolas, monospace" font-size="9">C:\&gt; <tspan fill="#f8fafc">_</tspan></text>
+                    <!-- blinking cursor -->
+                    <rect x="78" y="178" width="6" height="9" rx="1" fill="#22d3ee" class="cli-cursor"/>
+
+                    <!-- GUI screen -->
+                    <rect x="270" y="28" width="242" height="178" rx="8" fill="#e0f2fe"/>
+                    <!-- taskbar -->
+                    <rect x="270" y="184" width="242" height="22" rx="0" fill="#1565c0"/>
+                    <rect x="270" y="184" width="242" height="22" rx="0" fill="none" stroke="none"/>
+                    <!-- start button -->
+                    <rect x="275" y="187" width="30" height="16" rx="3" fill="white" opacity="0.2"/>
+                    <text x="290" y="198" text-anchor="middle" fill="white" font-family="Segoe UI, sans-serif" font-size="8" font-weight="700">&#x229E;</text>
+                    <!-- clock -->
+                    <text x="500" y="198" text-anchor="end" fill="white" font-family="Segoe UI, sans-serif" font-size="7.5">15:30</text>
+
+                    <!-- desktop icon -->
+                    <text x="285" y="55" text-anchor="middle" font-size="14">&#x1F4C1;</text>
+                    <text x="285" y="66" text-anchor="middle" fill="#1e3a5f" font-family="Segoe UI, sans-serif" font-size="7.5">Documentos</text>
+                    <text x="310" y="55" text-anchor="middle" font-size="14">&#x1F4E5;</text>
+                    <text x="310" y="66" text-anchor="middle" fill="#1e3a5f" font-family="Segoe UI, sans-serif" font-size="7.5">Downloads</text>
+
+                    <!-- app windows -->
+                    <g class="win-a">
+                        <rect x="280" y="72" width="140" height="90" rx="6" fill="white" stroke="#93c5fd" stroke-width="1.5" filter="url(#shadow)"/>
+                        <rect x="280" y="72" width="140" height="18" rx="6" fill="#1565c0"/>
+                        <rect x="280" y="80" width="140" height="10" fill="#1565c0"/>
+                        <text x="340" y="84" text-anchor="middle" fill="white" font-family="Segoe UI, sans-serif" font-size="7.5" font-weight="600">&#x1F4DD; Editor de Texto</text>
+                        <line x1="288" y1="100" x2="412" y2="100" stroke="#e2e8f0" stroke-width="1"/>
+                        <line x1="288" y1="110" x2="395" y2="110" stroke="#e2e8f0" stroke-width="1"/>
+                        <line x1="288" y1="120" x2="400" y2="120" stroke="#e2e8f0" stroke-width="1"/>
+                        <line x1="288" y1="130" x2="388" y2="130" stroke="#e2e8f0" stroke-width="1"/>
+                        <line x1="288" y1="140" x2="405" y2="140" stroke="#e2e8f0" stroke-width="1"/>
+                        <line x1="288" y1="150" x2="370" y2="150" stroke="#e2e8f0" stroke-width="1"/>
+                    </g>
+
+                    <g class="win-b">
+                        <rect x="340" y="90" width="160" height="80" rx="6" fill="white" stroke="#a5f3fc" stroke-width="1.5"/>
+                        <rect x="340" y="90" width="160" height="18" rx="6" fill="#0891b2"/>
+                        <rect x="340" y="98" width="160" height="10" fill="#0891b2"/>
+                        <text x="415" y="102" text-anchor="middle" fill="white" font-family="Segoe UI, sans-serif" font-size="7.5" font-weight="600">&#x1F4C8; Planilha</text>
+                        <rect x="348" y="112" width="20" height="12" rx="2" fill="#e0f2fe"/>
+                        <rect x="372" y="112" width="32" height="12" rx="2" fill="#e0f2fe"/>
+                        <rect x="408" y="112" width="28" height="12" rx="2" fill="#e0f2fe"/>
+                        <rect x="348" y="128" width="20" height="12" rx="2" fill="#f0fdf4"/>
+                        <rect x="372" y="128" width="32" height="12" rx="2" fill="#f0fdf4"/>
+                        <rect x="408" y="128" width="28" height="12" rx="2" fill="#f0fdf4"/>
+                        <rect x="348" y="144" width="20" height="12" rx="2" fill="#e0f2fe"/>
+                        <rect x="372" y="144" width="32" height="12" rx="2" fill="#e0f2fe"/>
+                        <rect x="408" y="144" width="28" height="12" rx="2" fill="#e0f2fe"/>
+                    </g>
+
+                    <defs>
+                        <filter id="shadow">
+                            <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.1"/>
+                        </filter>
+                    </defs>
+                </svg>
+            </div>
 
             <table class="compare-table">
                 <tr>
@@ -378,12 +783,12 @@
                 </tr>
                 <tr>
                     <td><strong>Exemplo</strong></td>
-                    <td>Prompt de Comando (Windows), Terminal (Linux)</td>
+                    <td>CMD / PowerShell (Windows), Terminal (Linux)</td>
                     <td>Windows 11, macOS, Ubuntu com GNOME</td>
                 </tr>
                 <tr>
                     <td><strong>Vantagens</strong></td>
-                    <td>R&aacute;pido, poderoso, consome poucos recursos</td>
+                    <td>R&aacute;pido, poderoso, usa poucos recursos</td>
                     <td>F&aacute;cil de aprender, intuitivo, visual</td>
                 </tr>
                 <tr>
@@ -394,171 +799,425 @@
             </table>
 
             <div class="highlight-box">
-                <p>&#x1F4A1; Atualmente, a maioria dos sistemas operacionais oferece <strong>as duas interfaces</strong>. O Windows 11, por exemplo, tem a interface gr&aacute;fica que conhecemos e tamb&eacute;m o PowerShell/CMD para quem prefere digitar comandos.</p>
+                <p>&#x1F4A1; A maioria dos sistemas operacionais modernos oferece <strong>as duas interfaces</strong>. O Windows 11, por exemplo, tem a &aacute;rea de trabalho visual (GUI) e tamb&eacute;m o PowerShell/CMD para quem prefere digitar comandos.</p>
             </div>
         </div>
 
-        <!-- CARD 5 -->
+        <!-- ══════════════════════════════════════════════
+             SLIDE 6 — EXEMPLOS DE SISTEMAS OPERACIONAIS
+        ═══════════════════════════════════════════════ -->
         <div class="content-card">
             <h2>&#x1F30D; Exemplos de Sistemas Operacionais</h2>
-            <p>Os sistemas operacionais est&atilde;o presentes em todos os dispositivos que usamos. Cada tipo de equipamento tem seus S.O. mais comuns:</p>
+            <p>Os sistemas operacionais est&atilde;o em <strong>todos os dispositivos ao nosso redor</strong>. Cada tipo de equipamento tem seus S.O. mais comuns:</p>
 
-            <div class="so-grid">
-                <div class="so-item">
-                    <div class="so-icon">&#x1F5A5;&#xFE0F;</div>
-                    <strong>Windows</strong>
-                    <span>O mais usado em desktops e notebooks no mundo</span>
-                </div>
-                <div class="so-item">
-                    <div class="so-icon">&#x1F427;</div>
-                    <strong>Linux</strong>
-                    <span>Open source, usado em servidores e por profissionais de TI</span>
-                </div>
-                <div class="so-item">
-                    <div class="so-icon">&#x1F34E;</div>
-                    <strong>macOS</strong>
-                    <span>Exclusivo dos computadores Apple (MacBook, iMac)</span>
-                </div>
-                <div class="so-item">
-                    <div class="so-icon">&#x1F4F1;</div>
-                    <strong>Android</strong>
-                    <span>O S.O. m&oacute;vel mais popular do mundo (Google)</span>
-                </div>
-                <div class="so-item">
-                    <div class="so-icon">&#x1F34F;</div>
-                    <strong>iOS</strong>
-                    <span>Sistema exclusivo dos iPhones e iPads (Apple)</span>
-                </div>
-                <div class="so-item">
-                    <div class="so-icon">&#x2601;&#xFE0F;</div>
-                    <strong>Chrome OS</strong>
-                    <span>S.O. leve do Google, focado em servi&ccedil;os na nuvem</span>
-                </div>
+            <!-- SVG: OS examples appearing -->
+            <div class="svg-wrap">
+                <svg viewBox="0 0 520 290" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Exemplos de sistemas operacionais em diferentes dispositivos">
+                    <style>
+                        @keyframes card-reveal {
+                            from { opacity: 0; transform: translateY(18px) scale(0.95); }
+                            to   { opacity: 1; transform: translateY(0) scale(1); }
+                        }
+                        .os-c1 { animation: card-reveal 0.45s ease both 0.1s; transform-origin: 87px 78px; }
+                        .os-c2 { animation: card-reveal 0.45s ease both 0.3s; transform-origin: 260px 78px; }
+                        .os-c3 { animation: card-reveal 0.45s ease both 0.5s; transform-origin: 433px 78px; }
+                        .os-c4 { animation: card-reveal 0.45s ease both 0.7s; transform-origin: 87px 208px; }
+                        .os-c5 { animation: card-reveal 0.45s ease both 0.9s; transform-origin: 260px 208px; }
+                        .os-c6 { animation: card-reveal 0.45s ease both 1.1s; transform-origin: 433px 208px; }
+                    </style>
+
+                    <!-- Row 1 -->
+                    <!-- Windows -->
+                    <g class="os-c1">
+                        <rect x="10" y="10" width="154" height="136" rx="12" fill="#eff6ff" stroke="#bfdbfe" stroke-width="2"/>
+                        <text x="87" y="52" text-anchor="middle" font-size="32">&#x1F5A5;&#xFE0F;</text>
+                        <text x="87" y="74" text-anchor="middle" fill="#1d4ed8" font-family="Segoe UI, sans-serif" font-size="12" font-weight="700">Windows</text>
+                        <text x="87" y="90" text-anchor="middle" fill="#475569" font-family="Segoe UI, sans-serif" font-size="8.5">O mais usado em</text>
+                        <text x="87" y="102" text-anchor="middle" fill="#475569" font-family="Segoe UI, sans-serif" font-size="8.5">desktops e notebooks</text>
+                        <rect x="22" y="118" width="130" height="18" rx="6" fill="#dbeafe"/>
+                        <text x="87" y="130" text-anchor="middle" fill="#1d4ed8" font-family="Segoe UI, sans-serif" font-size="8" font-weight="600">&#x1F4BB; Desktop / Notebook</text>
+                    </g>
+
+                    <!-- Linux -->
+                    <g class="os-c2">
+                        <rect x="183" y="10" width="154" height="136" rx="12" fill="#f0fdf4" stroke="#86efac" stroke-width="2"/>
+                        <text x="260" y="52" text-anchor="middle" font-size="32">&#x1F427;</text>
+                        <text x="260" y="74" text-anchor="middle" fill="#15803d" font-family="Segoe UI, sans-serif" font-size="12" font-weight="700">Linux</text>
+                        <text x="260" y="90" text-anchor="middle" fill="#475569" font-family="Segoe UI, sans-serif" font-size="8.5">Open source, gratuito,</text>
+                        <text x="260" y="102" text-anchor="middle" fill="#475569" font-family="Segoe UI, sans-serif" font-size="8.5">poderoso e flex&iacute;vel</text>
+                        <rect x="195" y="118" width="130" height="18" rx="6" fill="#dcfce7"/>
+                        <text x="260" y="130" text-anchor="middle" fill="#15803d" font-family="Segoe UI, sans-serif" font-size="8" font-weight="600">&#x1F5A7;&#xFE0F; Servidores / TI</text>
+                    </g>
+
+                    <!-- macOS -->
+                    <g class="os-c3">
+                        <rect x="356" y="10" width="154" height="136" rx="12" fill="#fdf4ff" stroke="#e9d5ff" stroke-width="2"/>
+                        <text x="433" y="52" text-anchor="middle" font-size="32">&#x1F34E;</text>
+                        <text x="433" y="74" text-anchor="middle" fill="#7e22ce" font-family="Segoe UI, sans-serif" font-size="12" font-weight="700">macOS</text>
+                        <text x="433" y="90" text-anchor="middle" fill="#475569" font-family="Segoe UI, sans-serif" font-size="8.5">Exclusivo da Apple,</text>
+                        <text x="433" y="102" text-anchor="middle" fill="#475569" font-family="Segoe UI, sans-serif" font-size="8.5">MacBook e iMac</text>
+                        <rect x="368" y="118" width="130" height="18" rx="6" fill="#f3e8ff"/>
+                        <text x="433" y="130" text-anchor="middle" fill="#7e22ce" font-family="Segoe UI, sans-serif" font-size="8" font-weight="600">&#x1F4BB; MacBook / iMac</text>
+                    </g>
+
+                    <!-- Row 2 -->
+                    <!-- Android -->
+                    <g class="os-c4">
+                        <rect x="10" y="155" width="154" height="126" rx="12" fill="#f0fdf4" stroke="#6ee7b7" stroke-width="2"/>
+                        <text x="87" y="192" text-anchor="middle" font-size="32">&#x1F4F1;</text>
+                        <text x="87" y="214" text-anchor="middle" fill="#065f46" font-family="Segoe UI, sans-serif" font-size="12" font-weight="700">Android</text>
+                        <text x="87" y="230" text-anchor="middle" fill="#475569" font-family="Segoe UI, sans-serif" font-size="8.5">S.O. m&oacute;vel mais popular</text>
+                        <rect x="22" y="247" width="130" height="18" rx="6" fill="#d1fae5"/>
+                        <text x="87" y="259" text-anchor="middle" fill="#065f46" font-family="Segoe UI, sans-serif" font-size="8" font-weight="600">&#x1F4F1; Smartphones</text>
+                    </g>
+
+                    <!-- iOS -->
+                    <g class="os-c5">
+                        <rect x="183" y="155" width="154" height="126" rx="12" fill="#fff1f2" stroke="#fda4af" stroke-width="2"/>
+                        <text x="260" y="192" text-anchor="middle" font-size="32">&#x1F34F;</text>
+                        <text x="260" y="214" text-anchor="middle" fill="#9f1239" font-family="Segoe UI, sans-serif" font-size="12" font-weight="700">iOS</text>
+                        <text x="260" y="230" text-anchor="middle" fill="#475569" font-family="Segoe UI, sans-serif" font-size="8.5">Exclusivo do iPhone</text>
+                        <rect x="195" y="247" width="130" height="18" rx="6" fill="#ffe4e6"/>
+                        <text x="260" y="259" text-anchor="middle" fill="#9f1239" font-family="Segoe UI, sans-serif" font-size="8" font-weight="600">&#x1F34E; iPhone / iPad</text>
+                    </g>
+
+                    <!-- Chrome OS -->
+                    <g class="os-c6">
+                        <rect x="356" y="155" width="154" height="126" rx="12" fill="#fefce8" stroke="#fde047" stroke-width="2"/>
+                        <text x="433" y="192" text-anchor="middle" font-size="32">&#x2601;&#xFE0F;</text>
+                        <text x="433" y="214" text-anchor="middle" fill="#713f12" font-family="Segoe UI, sans-serif" font-size="12" font-weight="700">Chrome OS</text>
+                        <text x="433" y="230" text-anchor="middle" fill="#475569" font-family="Segoe UI, sans-serif" font-size="8.5">Leve, focado na nuvem</text>
+                        <rect x="368" y="247" width="130" height="18" rx="6" fill="#fef9c3"/>
+                        <text x="433" y="259" text-anchor="middle" fill="#713f12" font-family="Segoe UI, sans-serif" font-size="8" font-weight="600">&#x1F4D3; Chromebook</text>
+                    </g>
+                </svg>
             </div>
 
-            <p>Al&eacute;m desses, sistemas operacionais est&atilde;o presentes em smart TVs, ve&iacute;culos, rel&oacute;gios inteligentes, roteadores e at&eacute; em eletrodom&eacute;sticos modernos. O S.O. &eacute; a base de qualquer dispositivo computacional.</p>
+            <p>Al&eacute;m desses, sistemas operacionais est&atilde;o presentes em smart TVs, ve&iacute;culos, rel&oacute;gios inteligentes, roteadores e at&eacute; em eletrodom&eacute;sticos modernos. <strong>O S.O. &eacute; a base de qualquer dispositivo computacional.</strong></p>
         </div>
 
-        <!-- CARD 6 -->
-        <div class="content-card">
-            <h2>&#x1F4CB; Recapitulando</h2>
-            <ul>
-                <li>O <strong>Sistema Operacional</strong> &eacute; o software fundamental que gerencia todos os recursos do computador</li>
-                <li>Ele atua como <strong>intermedi&aacute;rio</strong> entre o hardware e os programas/usu&aacute;rios</li>
-                <li>O <strong>Kernel</strong> &eacute; o n&uacute;cleo do S.O. &mdash; a parte que tem acesso direto ao hardware</li>
-                <li>As principais fun&ccedil;&otilde;es s&atilde;o: gerenciar processos, mem&oacute;ria, arquivos, dispositivos, seguran&ccedil;a e interface</li>
-                <li>Existem dois tipos de interface: <strong>CLI</strong> (linha de comando) e <strong>GUI</strong> (gr&aacute;fica)</li>
-                <li>Exemplos de S.O.: Windows, Linux, macOS (computadores), Android e iOS (celulares)</li>
-            </ul>
-
-            <div class="highlight-box">
-                <p>&#x1F4DA; <strong>Na pr&oacute;xima aula</strong> vamos conhecer em detalhes os principais sistemas operacionais do mercado &mdash; Windows, Linux e macOS &mdash; comparando suas caracter&iacute;sticas, vantagens e contextos de uso.</p>
-            </div>
-        </div>
-
-        <!-- EXERCÍCIO: Arrastar e Soltar -->
+        <!-- ══════════════════════════════════════════════
+             SLIDE 7 — QUIZ
+        ═══════════════════════════════════════════════ -->
         <div class="content-card exercise-card">
-            <h2>&#x1F3AF; Exerc&iacute;cio &mdash; Arraste e Conecte</h2>
-            <p style="color:#475569;font-size:0.9em;margin-bottom:4px;">Arraste cada descri&ccedil;&atilde;o para o componente correspondente do Sistema Operacional. Em dispositivos m&oacute;veis, toque na descri&ccedil;&atilde;o e depois na zona de destino.</p>
+            <h2>&#x1F4DD; Verifique seu Conhecimento</h2>
+            <p style="color:#475569;font-size:0.9em;margin-bottom:18px;">Leia cada pergunta, escolha a melhor resposta e clique em <strong>Verificar</strong>.</p>
 
-            <div class="ex-drag-root" data-ex="ex11">
-                <div class="ex-drag">
-                    <div>
-                        <div class="ex-col-title">Descri&ccedil;&otilde;es</div>
-                        <div class="ex-pool" data-pool="ex11">
-                            <div class="drag-chip" data-id="kernel">N&uacute;cleo central com acesso direto ao hardware</div>
-                            <div class="drag-chip" data-id="proc">Controla a execu&ccedil;&atilde;o de todos os programas</div>
-                            <div class="drag-chip" data-id="gui">Interface gr&aacute;fica com janelas e &iacute;cones</div>
-                            <div class="drag-chip" data-id="drv">Faz o hardware funcionar com o S.O.</div>
-                        </div>
+            <div class="mc-root" data-ex="mc11">
+
+                <div class="mc-question" data-q="q1" data-correct="b">
+                    <p class="mc-q-text">1. O que melhor descreve um Sistema Operacional?</p>
+                    <div class="mc-options">
+                        <div class="mc-option" data-opt="a"><span class="mc-letter">A</span><span>Um jogo instalado no computador</span></div>
+                        <div class="mc-option" data-opt="b"><span class="mc-letter">B</span><span>Software que gerencia todos os recursos do computador e conecta hardware ao usu&aacute;rio</span></div>
+                        <div class="mc-option" data-opt="c"><span class="mc-letter">C</span><span>Um antiv&iacute;rus que protege o computador</span></div>
+                        <div class="mc-option" data-opt="d"><span class="mc-letter">D</span><span>O mesmo que um navegador de internet</span></div>
                     </div>
-                    <div>
-                        <div class="ex-col-title">Componente do S.O.</div>
-                        <div class="ex-zones" data-zones="ex11">
-                            <div class="drop-zone" data-zone="ex11-z1" data-accept="kernel">
-                                <span class="zone-name">Kernel</span>
-                                <div class="zone-slot"></div>
-                                <div class="zone-feedback"></div>
-                            </div>
-                            <div class="drop-zone" data-zone="ex11-z2" data-accept="proc">
-                                <span class="zone-name">Gerenciador de Processos</span>
-                                <div class="zone-slot"></div>
-                                <div class="zone-feedback"></div>
-                            </div>
-                            <div class="drop-zone" data-zone="ex11-z4" data-accept="gui">
-                                <span class="zone-name">GUI / Shell Gr&aacute;fico</span>
-                                <div class="zone-slot"></div>
-                                <div class="zone-feedback"></div>
-                            </div>
-                            <div class="drop-zone" data-zone="ex11-z5" data-accept="drv">
-                                <span class="zone-name">Gerenciamento de Dispositivos</span>
-                                <div class="zone-slot"></div>
-                                <div class="zone-feedback"></div>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="mc-explanation ok">&#x2714; Correto! O S.O. &eacute; o software fundamental que gerencia hardware, mem&oacute;ria, processos e serve de base para todos os outros programas.</div>
+                    <div class="mc-explanation err">&#x2716; N&atilde;o &eacute; isso. O Sistema Operacional &eacute; o software fundamental que gerencia todos os recursos do computador &mdash; não &eacute; um jogo, antiv&iacute;rus nem navegador.</div>
                 </div>
+
+                <hr class="mc-sep">
+
+                <div class="mc-question" data-q="q2" data-correct="c">
+                    <p class="mc-q-text">2. Como se chama o n&uacute;cleo do Sistema Operacional, que tem acesso direto ao hardware?</p>
+                    <div class="mc-options">
+                        <div class="mc-option" data-opt="a"><span class="mc-letter">A</span><span>Shell</span></div>
+                        <div class="mc-option" data-opt="b"><span class="mc-letter">B</span><span>Driver</span></div>
+                        <div class="mc-option" data-opt="c"><span class="mc-letter">C</span><span>Kernel</span></div>
+                        <div class="mc-option" data-opt="d"><span class="mc-letter">D</span><span>BIOS</span></div>
+                    </div>
+                    <div class="mc-explanation ok">&#x2714; Correto! O Kernel &eacute; o n&uacute;cleo do S.O. &mdash; a camada que conversa diretamente com o hardware e &eacute; carregada primeiro na inicializa&ccedil;&atilde;o.</div>
+                    <div class="mc-explanation err" data-for="a">&#x2716; Shell &eacute; a interface (CLI ou GUI) pela qual o usu&aacute;rio interage com o S.O. O n&uacute;cleo se chama Kernel.</div>
+                    <div class="mc-explanation err" data-for="b">&#x2716; Driver &eacute; um software que permite o S.O. se comunicar com dispositivos espec&iacute;ficos. O n&uacute;cleo se chama Kernel.</div>
+                    <div class="mc-explanation err" data-for="d">&#x2716; BIOS/UEFI &eacute; o firmware da placa-m&atilde;e que inicializa o hardware antes do S.O. O n&uacute;cleo do S.O. se chama Kernel.</div>
+                </div>
+
+                <hr class="mc-sep">
+
+                <div class="mc-question" data-q="q3" data-correct="a">
+                    <p class="mc-q-text">3. Maria usa o terminal digitando comandos para mover arquivos. Que tipo de interface ela est&aacute; usando?</p>
+                    <div class="mc-options">
+                        <div class="mc-option" data-opt="a"><span class="mc-letter">A</span><span>CLI (Command Line Interface) &mdash; interface de linha de comando</span></div>
+                        <div class="mc-option" data-opt="b"><span class="mc-letter">B</span><span>GUI (Graphical User Interface) &mdash; interface gr&aacute;fica</span></div>
+                        <div class="mc-option" data-opt="c"><span class="mc-letter">C</span><span>API (Application Programming Interface)</span></div>
+                        <div class="mc-option" data-opt="d"><span class="mc-letter">D</span><span>BIOS Interface</span></div>
+                    </div>
+                    <div class="mc-explanation ok">&#x2714; Correto! CLI &eacute; a interface de texto onde o usu&aacute;rio digita comandos &mdash; exemplos: CMD, PowerShell, Terminal Linux.</div>
+                    <div class="mc-explanation err">&#x2716; N&atilde;o. Digitar comandos no terminal &eacute; usar a CLI (Command Line Interface), n&atilde;o a interface gr&aacute;fica (GUI).</div>
+                </div>
+
+                <hr class="mc-sep">
+
+                <div class="mc-question" data-q="q4" data-correct="d">
+                    <p class="mc-q-text">4. Jo&atilde;o tem um iPhone. Qual Sistema Operacional o aparelho usa?</p>
+                    <div class="mc-options">
+                        <div class="mc-option" data-opt="a"><span class="mc-letter">A</span><span>Android</span></div>
+                        <div class="mc-option" data-opt="b"><span class="mc-letter">B</span><span>Windows Mobile</span></div>
+                        <div class="mc-option" data-opt="c"><span class="mc-letter">C</span><span>Chrome OS</span></div>
+                        <div class="mc-option" data-opt="d"><span class="mc-letter">D</span><span>iOS</span></div>
+                    </div>
+                    <div class="mc-explanation ok">&#x2714; Correto! O iPhone usa o iOS, sistema operacional exclusivo da Apple para dispositivos m&oacute;veis (iPhone e iPad).</div>
+                    <div class="mc-explanation err" data-for="a">&#x2716; Android &eacute; do Google e &eacute; usado em Samsung, Motorola, Xiaomi etc. O iPhone usa iOS (Apple).</div>
+                    <div class="mc-explanation err">&#x2716; O iPhone usa iOS, sistema exclusivo da Apple. Windows Mobile foi descontinuado e Chrome OS &eacute; para Chromebooks.</div>
+                </div>
+
+                <hr class="mc-sep">
+
+                <div class="mc-question" data-q="q5" data-correct="b">
+                    <p class="mc-q-text">5. Qual &eacute; a fun&ccedil;&atilde;o do S.O. respons&aacute;vel por decidir qual programa usa o processador e por quanto tempo?</p>
+                    <div class="mc-options">
+                        <div class="mc-option" data-opt="a"><span class="mc-letter">A</span><span>Gerenciamento de arquivos</span></div>
+                        <div class="mc-option" data-opt="b"><span class="mc-letter">B</span><span>Gerenciamento de processos</span></div>
+                        <div class="mc-option" data-opt="c"><span class="mc-letter">C</span><span>Gerenciamento de dispositivos</span></div>
+                        <div class="mc-option" data-opt="d"><span class="mc-letter">D</span><span>Gerenciamento de seguran&ccedil;a</span></div>
+                    </div>
+                    <div class="mc-explanation ok">&#x2714; Correto! O gerenciamento de processos controla quais programas est&atilde;o em execu&ccedil;&atilde;o, o tempo de CPU de cada um e a prioridade entre eles.</div>
+                    <div class="mc-explanation err">&#x2716; Essa fun&ccedil;&atilde;o &eacute; o <strong>gerenciamento de processos</strong>. Arquivos cuida de pastas e documentos; dispositivos cuida de hardware perif&eacute;rico; seguran&ccedil;a cuida de senhas e permiss&otilde;es.</div>
+                </div>
+
+                <hr class="mc-sep">
+
+                <div class="mc-question" data-q="q6" data-correct="c">
+                    <p class="mc-q-text">6. Qual Sistema Operacional &eacute; <em>open source</em> (c&oacute;digo aberto), gratuito e amplamente usado em servidores?</p>
+                    <div class="mc-options">
+                        <div class="mc-option" data-opt="a"><span class="mc-letter">A</span><span>Windows 11</span></div>
+                        <div class="mc-option" data-opt="b"><span class="mc-letter">B</span><span>macOS</span></div>
+                        <div class="mc-option" data-opt="c"><span class="mc-letter">C</span><span>Linux</span></div>
+                        <div class="mc-option" data-opt="d"><span class="mc-letter">D</span><span>iOS</span></div>
+                    </div>
+                    <div class="mc-explanation ok">&#x2714; Correto! O Linux &eacute; open source (qualquer um pode ver e modificar o c&oacute;digo), gratuito e domina o mercado de servidores web no mundo inteiro.</div>
+                    <div class="mc-explanation err" data-for="a">&#x2716; Windows 11 &eacute; pago e de c&oacute;digo fechado (Microsoft). O sistema open source e gratuito &eacute; o Linux.</div>
+                    <div class="mc-explanation err" data-for="b">&#x2716; macOS &eacute; exclusivo da Apple e de c&oacute;digo fechado. O sistema open source e gratuito &eacute; o Linux.</div>
+                    <div class="mc-explanation err" data-for="d">&#x2716; iOS &eacute; o sistema m&oacute;vel da Apple, exclusivo e fechado. O sistema open source e gratuito &eacute; o Linux.</div>
+                </div>
+
             </div>
 
             <div class="ex-actions">
-                <button class="btn-verificar" onclick="dragVerify('ex11')">Verificar</button>
-                <button class="btn-refazer"  onclick="dragReset('ex11')">Refazer</button>
+                <button class="btn-verificar" onclick="mcVerify('mc11')">Verificar</button>
+                <button class="btn-refazer"  onclick="mcReset('mc11')">Refazer</button>
             </div>
-            <div class="ex-result" id="ex11-result"></div>
+            <div class="ex-result" id="mc11-result"></div>
         </div>
 
-        <!-- ATIVIDADE PRÁTICA 1.1 -->
+        <!-- ══════════════════════════════════════════════
+             SLIDE 8 — ATIVIDADE PRÁTICA
+        ═══════════════════════════════════════════════ -->
         <div class="content-card practical-card" id="prat-11">
             <h2>&#x1F6E0;&#xFE0F; Atividade Pr&aacute;tica &mdash; Explorando o S.O.</h2>
+
             <div class="prat-meta">
                 <span class="prat-tag">&#x23F1; ~20 min</span>
-                <span class="prat-tag">&#x1F4BB; Sem instala&ccedil;&atilde;o</span>
-                <span class="prat-tag">&#x1F4CD; Windows nativo</span>
+                <span class="prat-tag">&#x1F4BB; Windows nativo</span>
+                <span class="prat-tag">&#x1F4CD; Sem instala&ccedil;&atilde;o</span>
             </div>
 
-            <div class="prat-steps">
-                <div class="prat-step">
-                    <div class="step-num">1</div>
-                    <div class="step-body">
-                        <div class="step-label">Abra o Gerenciador de Tarefas</div>
-                        <div class="step-desc">Pressione <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Esc</kbd>. Na aba <strong>Processos</strong>, observe a lista. Anote: quantos processos est&atilde;o rodando? Qual programa est&aacute; usando mais CPU neste momento?</div>
-                    </div>
+            <!-- YouTube video -->
+            <div class="yt-wrap">
+                <iframe
+                    src="https://www.youtube.com/embed/nLuKMJiBkxM"
+                    title="O que é um Sistema Operacional — vídeo educativo"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+                </iframe>
+            </div>
+
+            <!-- Materials list -->
+            <div class="prat-materiais">
+                <h3>&#x1F4CB; Materiais necess&aacute;rios</h3>
+                <ul>
+                    <li>Computador com Windows 10 ou 11</li>
+                    <li>Acesso ao Gerenciador de Tarefas (j&aacute; instalado)</li>
+                    <li>Acesso ao Prompt de Comando &mdash; CMD (j&aacute; instalado)</li>
+                    <li>Caderno ou documento de texto para anotar as respostas</li>
+                </ul>
+            </div>
+
+            <!-- 6 steps with mini SVGs -->
+            <div class="steps-svg-grid">
+
+                <!-- Step 1 -->
+                <div class="step-svg-card">
+                    <div class="ssc-num">1</div>
+                    <strong>Abrir o Gerenciador de Tarefas</strong>
+                    <p>Pressione <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Esc</kbd>. Na aba <em>Processos</em>, anote quantos processos est&atilde;o rodando e qual usa mais CPU.</p>
+                    <svg viewBox="0 0 160 80" xmlns="http://www.w3.org/2000/svg">
+                        <style>
+                            @keyframes key-press { 0%,80%,100%{fill:#e2e8f0} 40%{fill:#93c5fd} }
+                            .kp1 { animation: key-press 2s ease-in-out infinite 0s; }
+                            .kp2 { animation: key-press 2s ease-in-out infinite 0.3s; }
+                            .kp3 { animation: key-press 2s ease-in-out infinite 0.6s; }
+                        </style>
+                        <!-- keyboard keys -->
+                        <rect x="5"  y="30" width="38" height="26" rx="4" fill="#e2e8f0" class="kp1"/>
+                        <text x="24" y="47" text-anchor="middle" fill="#1e293b" font-family="Consolas,monospace" font-size="8" font-weight="700">Ctrl</text>
+                        <text x="46" y="47" text-anchor="middle" fill="#94a3b8" font-family="Segoe UI,sans-serif" font-size="9">+</text>
+                        <rect x="52" y="30" width="40" height="26" rx="4" fill="#e2e8f0" class="kp2"/>
+                        <text x="72" y="47" text-anchor="middle" fill="#1e293b" font-family="Consolas,monospace" font-size="7.5" font-weight="700">Shift</text>
+                        <text x="95" y="47" text-anchor="middle" fill="#94a3b8" font-family="Segoe UI,sans-serif" font-size="9">+</text>
+                        <rect x="100" y="30" width="28" height="26" rx="4" fill="#e2e8f0" class="kp3"/>
+                        <text x="114" y="47" text-anchor="middle" fill="#1e293b" font-family="Consolas,monospace" font-size="8" font-weight="700">Esc</text>
+                        <!-- arrow down -->
+                        <text x="80" y="70" text-anchor="middle" fill="#1565c0" font-family="Segoe UI,sans-serif" font-size="8.5" font-weight="600">&#x2B07; Gerenciador de Tarefas</text>
+                    </svg>
                 </div>
-                <div class="prat-step">
-                    <div class="step-num">2</div>
-                    <div class="step-body">
-                        <div class="step-label">Aba Desempenho &mdash; mem&oacute;ria RAM</div>
-                        <div class="step-desc">Clique na aba <strong>Desempenho</strong> e selecione <strong>Mem&oacute;ria</strong>. Anote: quantidade total de RAM instalada e quanto est&aacute; sendo usado agora. Isso &eacute; o gerenciamento de mem&oacute;ria em tempo real.</div>
-                    </div>
+
+                <!-- Step 2 -->
+                <div class="step-svg-card">
+                    <div class="ssc-num">2</div>
+                    <strong>Aba Desempenho &mdash; Mem&oacute;ria</strong>
+                    <p>Clique em <em>Desempenho</em> &rarr; <em>Mem&oacute;ria</em>. Anote: total de RAM instalada e quanto est&aacute; em uso agora.</p>
+                    <svg viewBox="0 0 160 80" xmlns="http://www.w3.org/2000/svg">
+                        <style>
+                            @keyframes bar-anim { 0%{height:0;y:60} 100%{height:28;y:32} }
+                            @keyframes bar-anim2 { 0%{height:0;y:60} 100%{height:20;y:40} }
+                            @keyframes bar-anim3 { 0%{height:0;y:60} 100%{height:35;y:25} }
+                            @keyframes bar-anim4 { 0%{height:0;y:60} 100%{height:16;y:44} }
+                            .ba { animation: bar-anim  1.2s ease both 0.2s; }
+                            .ba2{ animation: bar-anim2 1.2s ease both 0.4s; }
+                            .ba3{ animation: bar-anim3 1.2s ease both 0.6s; }
+                            .ba4{ animation: bar-anim4 1.2s ease both 0.8s; }
+                        </style>
+                        <rect x="5" y="5" width="150" height="70" rx="5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+                        <text x="12" y="16" fill="#475569" font-family="Segoe UI,sans-serif" font-size="7" font-weight="600">RAM em uso</text>
+                        <!-- bars -->
+                        <rect x="15" y="32" width="18" height="28" rx="2" fill="#3b82f6" class="ba"/>
+                        <rect x="38" y="40" width="18" height="20" rx="2" fill="#3b82f6" class="ba2"/>
+                        <rect x="61" y="25" width="18" height="35" rx="2" fill="#1d4ed8" class="ba3"/>
+                        <rect x="84" y="44" width="18" height="16" rx="2" fill="#3b82f6" class="ba4"/>
+                        <line x1="10" y1="62" x2="150" y2="62" stroke="#e2e8f0" stroke-width="1"/>
+                        <text x="115" y="35" fill="#1d4ed8" font-family="Segoe UI,sans-serif" font-size="9" font-weight="700">8 GB</text>
+                        <text x="115" y="46" fill="#475569" font-family="Segoe UI,sans-serif" font-size="7.5">de 16 GB</text>
+                        <text x="115" y="58" fill="#94a3b8" font-family="Segoe UI,sans-serif" font-size="7">50%</text>
+                    </svg>
                 </div>
-                <div class="prat-step">
-                    <div class="step-num">3</div>
-                    <div class="step-body">
-                        <div class="step-label">Aba Inicializa&ccedil;&atilde;o</div>
-                        <div class="step-desc">Clique na aba <strong>Inicializa&ccedil;&atilde;o</strong>. Liste 3 programas que iniciam junto ao Windows e o impacto de cada um (Baixo, M&eacute;dio ou Alto). Quem controla isso? O gerenciador de processos do S.O.</div>
-                    </div>
+
+                <!-- Step 3 -->
+                <div class="step-svg-card">
+                    <div class="ssc-num">3</div>
+                    <strong>Aba Inicializa&ccedil;&atilde;o</strong>
+                    <p>Clique em <em>Inicializa&ccedil;&atilde;o</em>. Liste 3 programas que iniciam com o Windows e o impacto de cada um (Baixo, M&eacute;dio, Alto).</p>
+                    <svg viewBox="0 0 160 80" xmlns="http://www.w3.org/2000/svg">
+                        <style>
+                            @keyframes row-slide { from{transform:translateX(-10px);opacity:0} to{transform:translateX(0);opacity:1} }
+                            .rs1 { animation: row-slide 0.4s ease both 0.2s; }
+                            .rs2 { animation: row-slide 0.4s ease both 0.5s; }
+                            .rs3 { animation: row-slide 0.4s ease both 0.8s; }
+                        </style>
+                        <rect x="5" y="5" width="150" height="70" rx="5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+                        <rect x="5" y="5" width="150" height="16" rx="5" fill="#e2e8f0"/>
+                        <rect x="5" y="13" width="150" height="8" fill="#e2e8f0"/>
+                        <text x="12" y="16" fill="#64748b" font-family="Segoe UI,sans-serif" font-size="6.5" font-weight="600">Programa</text>
+                        <text x="118" y="16" fill="#64748b" font-family="Segoe UI,sans-serif" font-size="6.5" font-weight="600">Impacto</text>
+                        <!-- rows -->
+                        <g class="rs1">
+                            <rect x="5" y="21" width="150" height="13" fill="white"/>
+                            <text x="12" y="30" fill="#1e293b" font-family="Segoe UI,sans-serif" font-size="7">&#x1F4AC; Teams</text>
+                            <rect x="110" y="23" width="38" height="9" rx="3" fill="#fef3c7"/>
+                            <text x="129" y="30" text-anchor="middle" fill="#92400e" font-family="Segoe UI,sans-serif" font-size="6.5" font-weight="600">M&eacute;dio</text>
+                        </g>
+                        <g class="rs2">
+                            <rect x="5" y="34" width="150" height="13" fill="#f8fafc"/>
+                            <text x="12" y="43" fill="#1e293b" font-family="Segoe UI,sans-serif" font-size="7">&#x1F510; Antiv&iacute;rus</text>
+                            <rect x="110" y="36" width="38" height="9" rx="3" fill="#fee2e2"/>
+                            <text x="129" y="43" text-anchor="middle" fill="#dc2626" font-family="Segoe UI,sans-serif" font-size="6.5" font-weight="600">Alto</text>
+                        </g>
+                        <g class="rs3">
+                            <rect x="5" y="47" width="150" height="13" fill="white"/>
+                            <text x="12" y="56" fill="#1e293b" font-family="Segoe UI,sans-serif" font-size="7">&#x1F3B5; Spotify</text>
+                            <rect x="110" y="49" width="38" height="9" rx="3" fill="#dcfce7"/>
+                            <text x="129" y="56" text-anchor="middle" fill="#15803d" font-family="Segoe UI,sans-serif" font-size="6.5" font-weight="600">Baixo</text>
+                        </g>
+                        <line x1="5" y1="60" x2="155" y2="60" stroke="#e2e8f0" stroke-width="0.8"/>
+                        <text x="80" y="70" text-anchor="middle" fill="#94a3b8" font-family="Segoe UI,sans-serif" font-size="6">Anote 3 programas da sua lista</text>
+                    </svg>
                 </div>
-                <div class="prat-step">
-                    <div class="step-num">4</div>
-                    <div class="step-body">
-                        <div class="step-label">Informa&ccedil;&otilde;es do sistema via cmd</div>
-                        <div class="step-desc">Pressione <kbd>Windows</kbd>+<kbd>R</kbd>, digite <kbd>cmd</kbd> e pressione <kbd>Enter</kbd>. No terminal, digite <kbd>systeminfo</kbd> e pressione <kbd>Enter</kbd>. Anote: nome e vers&atilde;o do S.O., quantidade de RAM e tempo de execu&ccedil;&atilde;o do sistema.</div>
-                    </div>
+
+                <!-- Step 4 -->
+                <div class="step-svg-card">
+                    <div class="ssc-num">4</div>
+                    <strong>CMD &mdash; systeminfo</strong>
+                    <p>Pressione <kbd>Win</kbd>+<kbd>R</kbd>, digite <kbd>cmd</kbd> e pressione Enter. No terminal, digite <kbd>systeminfo</kbd> e anote: S.O., RAM e tempo de execu&ccedil;&atilde;o.</p>
+                    <svg viewBox="0 0 160 80" xmlns="http://www.w3.org/2000/svg">
+                        <style>
+                            @keyframes blink2 { 0%,100%{opacity:1} 50%{opacity:0} }
+                            .cur2 { animation: blink2 1s step-end infinite; }
+                        </style>
+                        <rect x="5" y="5" width="150" height="70" rx="5" fill="#0f172a"/>
+                        <rect x="5" y="5" width="150" height="12" rx="5" fill="#1e293b"/>
+                        <rect x="5" y="11" width="150" height="6" fill="#1e293b"/>
+                        <text x="80" y="14" text-anchor="middle" fill="#94a3b8" font-family="Segoe UI,sans-serif" font-size="6.5">Prompt de Comando</text>
+                        <text x="10" y="28" fill="#22d3ee" font-family="Consolas,monospace" font-size="7">C:\&gt; systeminfo</text>
+                        <text x="10" y="38" fill="#94a3b8" font-family="Consolas,monospace" font-size="6.5">Nome do host:  PC-ALUNO</text>
+                        <text x="10" y="47" fill="#94a3b8" font-family="Consolas,monospace" font-size="6.5">S.O.:  Windows 11 Pro</text>
+                        <text x="10" y="56" fill="#94a3b8" font-family="Consolas,monospace" font-size="6.5">RAM:  16.384 MB</text>
+                        <text x="10" y="65" fill="#22d3ee" font-family="Consolas,monospace" font-size="7">C:\&gt; <tspan fill="white">&#x258C;</tspan></text>
+                        <rect x="56" y="60" width="5" height="7" rx="1" fill="#22d3ee" class="cur2"/>
+                    </svg>
                 </div>
-                <div class="prat-step">
-                    <div class="step-num">5</div>
-                    <div class="step-body">
-                        <div class="step-label">Identifique e pesquise processos do S.O.</div>
-                        <div class="step-desc">
-                            No mesmo cmd, digite <kbd>tasklist | more</kbd> e pressione <kbd>Enter</kbd>. Role a lista com <kbd>Espa&ccedil;o</kbd> e localize os tr&ecirc;s processos abaixo (use <kbd>Ctrl</kbd>+<kbd>C</kbd> para sair quando quiser):
-                            <ul style="margin:10px 0 10px 20px;">
-                                <li><strong>svchost.exe</strong></li>
-                                <li><strong>csrss.exe</strong></li>
-                            </ul>
-                            Ap&oacute;s localiz&aacute;-los, <strong>pesquise no navegador</strong> para que serve cada um e anote com suas palavras.
-                        </div>
-                    </div>
+
+                <!-- Step 5 -->
+                <div class="step-svg-card">
+                    <div class="ssc-num">5</div>
+                    <strong>tasklist &mdash; Processos do S.O.</strong>
+                    <p>No CMD, digite <kbd>tasklist | more</kbd>. Localize <strong>svchost.exe</strong> e <strong>csrss.exe</strong>. Pesquise no navegador o que cada um faz.</p>
+                    <svg viewBox="0 0 160 80" xmlns="http://www.w3.org/2000/svg">
+                        <style>
+                            @keyframes highlight-row { 0%,70%,100%{fill:transparent} 35%{fill:rgba(59,130,246,0.2)} }
+                            .hl { animation: highlight-row 3s ease-in-out infinite; }
+                            .hl2 { animation: highlight-row 3s ease-in-out infinite 1.5s; }
+                        </style>
+                        <rect x="5" y="5" width="150" height="70" rx="5" fill="#0f172a"/>
+                        <text x="10" y="18" fill="#22d3ee" font-family="Consolas,monospace" font-size="6.5">C:\&gt; tasklist | more</text>
+                        <text x="10" y="27" fill="#64748b" font-family="Consolas,monospace" font-size="6">Nome Imagem    PID  Mem</text>
+                        <line x1="10" y1="29" x2="150" y2="29" stroke="#334155" stroke-width="0.8"/>
+                        <rect x="10" y="31" width="140" height="10" rx="1" class="hl"/>
+                        <text x="12" y="39" fill="#a3e635" font-family="Consolas,monospace" font-size="6.5">svchost.exe   972  24MB</text>
+                        <rect x="10" y="42" width="140" height="10" rx="1" class="hl2"/>
+                        <text x="12" y="50" fill="#a3e635" font-family="Consolas,monospace" font-size="6.5">csrss.exe     580   8MB</text>
+                        <text x="12" y="60" fill="#94a3b8" font-family="Consolas,monospace" font-size="6">explorer.exe 2088  52MB</text>
+                        <text x="10" y="70" fill="#475569" font-family="Consolas,monospace" font-size="6">-- Mais --  (Espa&ccedil;o para continuar)</text>
+                    </svg>
                 </div>
+
+                <!-- Step 6 -->
+                <div class="step-svg-card">
+                    <div class="ssc-num">6</div>
+                    <strong>Registrar as Descobertas</strong>
+                    <p>Anote tudo em um documento. Inclua: n&uacute;mero de processos, RAM usada, 3 programas de inicializa&ccedil;&atilde;o e o que s&atilde;o svchost e csrss.</p>
+                    <svg viewBox="0 0 160 80" xmlns="http://www.w3.org/2000/svg">
+                        <style>
+                            @keyframes pen-write { 0%{transform:translateX(0)} 50%{transform:translateX(30px)} 100%{transform:translateX(0)} }
+                            .pen { animation: pen-write 3s ease-in-out infinite; transform-origin: 30px 30px; }
+                            @keyframes line-appear { from{width:0} to{width:100px} }
+                            .la1 { animation: line-appear 0.6s ease both 0.3s; }
+                            .la2 { animation: line-appear 0.6s ease both 0.7s; }
+                            .la3 { animation: line-appear 0.6s ease both 1.1s; }
+                        </style>
+                        <rect x="25" y="5" width="120" height="70" rx="5" fill="white" stroke="#e2e8f0" stroke-width="1.5"/>
+                        <rect x="25" y="5" width="120" height="14" rx="5" fill="#dbeafe"/>
+                        <rect x="25" y="12" width="120" height="7" fill="#dbeafe"/>
+                        <text x="85" y="15" text-anchor="middle" fill="#1d4ed8" font-family="Segoe UI,sans-serif" font-size="7" font-weight="700">Minhas Descobertas</text>
+                        <text x="33" y="28" fill="#475569" font-family="Segoe UI,sans-serif" font-size="6.5">&#x2705; Processos rodando:</text>
+                        <rect x="33" y="32" height="5" rx="1" fill="#bfdbfe" class="la1"/>
+                        <text x="33" y="42" fill="#475569" font-family="Segoe UI,sans-serif" font-size="6.5">&#x2705; RAM em uso:</text>
+                        <rect x="33" y="46" height="5" rx="1" fill="#bfdbfe" class="la2"/>
+                        <text x="33" y="56" fill="#475569" font-family="Segoe UI,sans-serif" font-size="6.5">&#x2705; svchost.exe &eacute;:</text>
+                        <rect x="33" y="60" height="5" rx="1" fill="#bfdbfe" class="la3"/>
+                        <!-- pencil -->
+                        <g class="pen">
+                            <polygon points="8,22 16,14 20,18 12,26" fill="#fbbf24"/>
+                            <polygon points="8,22 12,26 9,28" fill="#92400e"/>
+                            <line x1="16" y1="14" x2="14" y2="12" stroke="#d97706" stroke-width="1.5"/>
+                        </g>
+                    </svg>
+                </div>
+
+            </div>
+
+            <div class="prat-observe">
+                &#x1F50D; <strong>Dica:</strong> Para sair do comando <kbd>tasklist | more</kbd> antes do fim, pressione <kbd>Ctrl</kbd>+<kbd>C</kbd>. Para pesquisar o significado de svchost.exe e csrss.exe, use o Google ou o Bing com &ldquo;o que &eacute; svchost.exe&rdquo;.
             </div>
 
             <div class="ex-actions">
@@ -575,6 +1234,7 @@
 
     <script src="slide-mode.js"></script>
     <script src="exercise-drag.js"></script>
+    <script src="exercise-mc.js"></script>
     <script src="exercise-print.js"></script>
 </body>
 </html>
