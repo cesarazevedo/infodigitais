@@ -13,16 +13,13 @@
             --bg-light: #f0f4f8;
             --text-dark: #1a202c;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--bg-light);
             color: var(--text-dark);
             line-height: 1.7;
         }
-
         .top-bar {
             background: white;
             padding: 15px 30px;
@@ -34,7 +31,6 @@
             top: 0;
             z-index: 10;
         }
-
         .back-btn {
             text-decoration: none;
             color: var(--primary);
@@ -46,24 +42,20 @@
             border-radius: 8px;
             transition: background 0.3s;
         }
-
         .back-btn:hover { background: rgba(21,101,192,0.08); }
-
         .page-badge {
             font-size: 0.8em;
             padding: 4px 12px;
             border-radius: 20px;
-            background: rgba(21, 101, 192, 0.12);
+            background: rgba(21,101,192,0.12);
             color: #1565c0;
             font-weight: 600;
         }
-
         .content-wrapper {
             max-width: 800px;
             margin: 40px auto;
             padding: 0 30px;
         }
-
         .lesson-hero {
             background: white;
             border-radius: 16px;
@@ -72,18 +64,8 @@
             margin-bottom: 30px;
             border-top: 4px solid var(--primary);
         }
-
-        .lesson-hero h1 {
-            font-size: 2em;
-            margin-bottom: 10px;
-            color: var(--primary);
-        }
-
-        .lesson-hero .subtitle {
-            font-size: 1.05em;
-            color: #718096;
-        }
-
+        .lesson-hero h1 { font-size: 2em; margin-bottom: 10px; color: var(--primary); }
+        .lesson-hero .subtitle { font-size: 1.05em; color: #718096; }
         .content-card {
             background: white;
             border-radius: 16px;
@@ -91,7 +73,6 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             margin-bottom: 25px;
         }
-
         .content-card h2 {
             font-size: 1.4em;
             color: var(--primary);
@@ -100,102 +81,34 @@
             align-items: center;
             gap: 10px;
         }
-
-        .content-card h3 {
-            font-size: 1.05em;
-            color: #2d5a9e;
-            margin: 20px 0 10px;
-        }
-
         .content-card p { margin-bottom: 15px; text-align: justify; }
 
-        .highlight-box {
-            background: linear-gradient(135deg, rgba(21,101,192,0.05), rgba(0,137,123,0.06));
-            border-left: 4px solid var(--primary);
-            padding: 20px 25px;
-            border-radius: 0 12px 12px 0;
-            margin: 20px 0;
+        /* SVG wrapper */
+        .svg-wrap {
+            display: flex;
+            justify-content: center;
+            margin: 24px 0;
         }
+        .svg-wrap svg { max-width: 100%; height: auto; }
 
-        .highlight-box p { margin-bottom: 0; font-style: italic; }
-
-        /* Árvore de diretórios */
-        .dir-tree {
-            background: #1e293b;
-            color: #e2e8f0;
-            border-radius: 12px;
-            padding: 24px 28px;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 0.95em;
-            line-height: 2;
-            margin: 20px 0;
-        }
-
-        .dir-tree .folder { color: #60a5fa; font-weight: 700; }
-        .dir-tree .file   { color: #94a3b8; }
-        .dir-tree .root   { color: #34d399; font-weight: 700; }
-        .dir-tree .indent1 { padding-left: 20px; }
-        .dir-tree .indent2 { padding-left: 40px; }
-        .dir-tree .indent3 { padding-left: 60px; }
-
-        /* Grid de operações */
-        .ops-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 14px;
-            margin: 20px 0;
-        }
-
-        .op-item {
-            background: #f8fafc;
-            border-radius: 12px;
-            padding: 18px;
-            border-left: 4px solid var(--primary);
-        }
-
-        .op-item .op-icon { font-size: 1.8em; margin-bottom: 8px; }
-        .op-item strong { display: block; color: var(--primary); margin-bottom: 4px; font-size: 0.95em; }
-        .op-item p { font-size: 0.85em; color: #718096; margin: 0; text-align: left; }
-
-        .op-item .shortcut {
-            display: inline-block;
-            margin-top: 8px;
-            font-size: 0.78em;
-            background: #e2e8f0;
-            color: #475569;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-family: 'Courier New', monospace;
-            font-weight: 700;
-        }
-
-        /* Tabela de extensões */
+        /* Ext table */
         .ext-table {
             width: 100%;
             border-collapse: collapse;
             margin: 20px 0;
             font-size: 0.9em;
         }
-
         .ext-table th {
             background: var(--primary);
             color: white;
             padding: 11px 14px;
             text-align: left;
         }
-
         .ext-table th:first-child { border-radius: 8px 0 0 0; }
         .ext-table th:last-child  { border-radius: 0 8px 0 0; }
-
-        .ext-table td {
-            padding: 10px 14px;
-            border-bottom: 1px solid #e2e8f0;
-            vertical-align: middle;
-        }
-
+        .ext-table td { padding: 10px 14px; border-bottom: 1px solid #e2e8f0; vertical-align: middle; }
         .ext-table tr:nth-child(even) td { background: #f8fafc; }
         .ext-table tr:last-child td { border-bottom: none; }
-
         .ext-badge {
             display: inline-block;
             font-family: 'Courier New', monospace;
@@ -205,7 +118,6 @@
             border-radius: 5px;
             margin: 2px 3px 2px 0;
         }
-
         .ext-doc  { background: #dbeafe; color: #1e40af; }
         .ext-img  { background: #d1fae5; color: #065f46; }
         .ext-vid  { background: #ede9fe; color: #5b21b6; }
@@ -214,40 +126,59 @@
         .ext-sys  { background: #fee2e2; color: #991b1b; }
         .ext-code { background: #f0fdf4; color: #14532d; }
 
-        /* Dicas de organização */
-        .dicas-list {
+        /* step cards slide 8 */
+        .step-svg-card {
             display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin: 16px 0;
-        }
-
-        .dica-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 14px;
+            align-items: center;
+            gap: 18px;
             background: #f8fafc;
-            border-radius: 10px;
-            padding: 14px 16px;
+            border-radius: 12px;
+            padding: 16px 18px;
+            margin-bottom: 14px;
         }
+        .step-svg-card .step-num {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 1em;
+        }
+        .step-svg-card .step-text strong { display: block; color: var(--primary); margin-bottom: 3px; }
+        .step-svg-card .step-text span  { font-size: 0.88em; color: #4a5568; }
+        .step-svg-card svg { flex-shrink: 0; }
 
-        .dica-icon { font-size: 1.5em; flex-shrink: 0; margin-top: 2px; }
-        .dica-item strong { display: block; color: var(--primary); margin-bottom: 3px; font-size: 0.95em; }
-        .dica-item span { font-size: 0.88em; color: #4a5568; }
-
-        /* Alerta lixeira */
-        .alert-box {
-            background: #fff8e1;
-            border-left: 4px solid #f59e0b;
-            padding: 18px 22px;
-            border-radius: 0 12px 12px 0;
+        /* YouTube */
+        .yt-wrap {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 12px;
             margin: 20px 0;
         }
+        .yt-wrap iframe {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border: none;
+            border-radius: 12px;
+        }
 
-        .alert-box p { margin: 0; color: #78350f; font-size: 0.93em; }
-
-        ul, ol { margin: 10px 0 15px 25px; }
-        li { margin-bottom: 8px; }
+        .mat-list { list-style: none; margin: 0 0 20px 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+        .mat-list li {
+            background: #e8f0fe;
+            color: #1a56db;
+            border-radius: 20px;
+            padding: 6px 14px;
+            font-size: 0.88em;
+            font-weight: 600;
+        }
 
         .nav-footer {
             display: flex;
@@ -255,7 +186,6 @@
             margin-top: 40px;
             padding-bottom: 40px;
         }
-
         .nav-link {
             text-decoration: none;
             color: var(--primary);
@@ -266,420 +196,759 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
             transition: all 0.3s;
         }
-
-        .nav-link:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
+        .nav-link:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
 
         @media (max-width: 768px) {
             .content-wrapper { padding: 0 15px; }
             .lesson-hero, .content-card { padding: 25px; }
             .lesson-hero h1 { font-size: 1.5em; }
-            .ops-grid { grid-template-columns: 1fr 1fr; }
         }
     </style>
 </head>
 <body>
 
-    <div class="top-bar">
-        <a href="index.html" class="back-btn">&#x2B05; Voltar ao Dashboard</a>
-        <span class="page-badge">Unidade 1 &mdash; S.O. e Utilit&aacute;rios</span>
-        <button class="slide-toggle" id="slideToggleBtn">&#x1F4FA; Modo Slide</button>
+<div class="top-bar">
+    <a href="index.html" class="back-btn">&#x2B05; Voltar ao Dashboard</a>
+    <span class="page-badge">Unidade 1 &mdash; S.O. e Utilit&aacute;rios</span>
+    <button class="slide-toggle" id="slideToggleBtn">&#x1F4FA; Modo Slide</button>
+</div>
+
+<div class="content-wrapper">
+
+    <div class="lesson-hero">
+        <h1>&#x1F4C1; Gerenciamento de Pastas e Arquivos</h1>
+        <p class="subtitle">Aula 1.3 &mdash; Organize, crie, mova e gerencie seus arquivos como um profissional</p>
     </div>
 
-    <div class="content-wrapper">
+    <!-- SLIDE 1: Título -->
+    <div class="content-card">
+        <h2>&#x1F4C1; O que vamos aprender?</h2>
+        <p>Tudo que o computador guarda &mdash; fotos, documentos, v&iacute;deos, programas &mdash; existe na forma de <strong>arquivos</strong>. Saber organizar esses arquivos em <strong>pastas</strong> &eacute; uma habilidade essencial para trabalhar com efici&ecirc;ncia no computador.</p>
 
-        <div class="lesson-hero">
-            <h1>&#x1F4C1; Gerenciamento de Pastas e Arquivos</h1>
-            <p class="subtitle">Aula 1.3 &mdash; Organize, crie, mova e gerencie seus arquivos como um profissional</p>
+        <!-- SVG: arquivos caindo organizadamente em pastas -->
+        <div class="svg-wrap">
+            <svg width="520" height="200" viewBox="0 0 520 200" xmlns="http://www.w3.org/2000/svg">
+                <style>
+                    @keyframes fall1 { 0%{transform:translateY(-60px);opacity:0} 60%{opacity:1} 100%{transform:translateY(0);opacity:1} }
+                    @keyframes fall2 { 0%{transform:translateY(-60px);opacity:0} 60%{opacity:1} 100%{transform:translateY(0);opacity:1} }
+                    @keyframes fall3 { 0%{transform:translateY(-60px);opacity:0} 60%{opacity:1} 100%{transform:translateY(0);opacity:1} }
+                    @keyframes folder-glow { 0%,100%{filter:drop-shadow(0 0 0 #1565c0)} 50%{filter:drop-shadow(0 0 8px #1565c088)} }
+                    .f1 { animation: fall1 0.7s 0.3s ease-out both; }
+                    .f2 { animation: fall2 0.7s 0.7s ease-out both; }
+                    .f3 { animation: fall3 0.7s 1.1s ease-out both; }
+                    .folder-body { animation: folder-glow 2.5s 2s ease-in-out infinite; }
+                </style>
+                <!-- pasta principal -->
+                <g class="folder-body">
+                    <rect x="170" y="100" width="180" height="80" rx="8" fill="#1565c0"/>
+                    <rect x="170" y="88" width="80" height="20" rx="6" fill="#1976d2"/>
+                    <rect x="175" y="108" width="170" height="66" rx="6" fill="#42a5f5"/>
+                </g>
+                <!-- label -->
+                <text x="260" y="152" text-anchor="middle" fill="white" font-size="13" font-weight="700">Documentos</text>
+
+                <!-- arquivo 1: .docx -->
+                <g class="f1" transform="translate(190,58)">
+                    <rect width="44" height="54" rx="5" fill="#dbeafe"/>
+                    <polyline points="30,0 44,14 44,54" fill="none" stroke="#93c5fd" stroke-width="1.5"/>
+                    <polygon points="30,0 44,14 30,14" fill="#93c5fd"/>
+                    <text x="22" y="38" text-anchor="middle" font-size="9" fill="#1e40af" font-weight="700">.docx</text>
+                </g>
+                <!-- arquivo 2: .jpg -->
+                <g class="f2" transform="translate(238,52)">
+                    <rect width="44" height="54" rx="5" fill="#d1fae5"/>
+                    <polyline points="30,0 44,14 44,54" fill="none" stroke="#6ee7b7" stroke-width="1.5"/>
+                    <polygon points="30,0 44,14 30,14" fill="#6ee7b7"/>
+                    <text x="22" y="38" text-anchor="middle" font-size="9" fill="#065f46" font-weight="700">.jpg</text>
+                </g>
+                <!-- arquivo 3: .pdf -->
+                <g class="f3" transform="translate(286,58)">
+                    <rect width="44" height="54" rx="5" fill="#fee2e2"/>
+                    <polyline points="30,0 44,14 44,54" fill="none" stroke="#fca5a5" stroke-width="1.5"/>
+                    <polygon points="30,0 44,14 30,14" fill="#fca5a5"/>
+                    <text x="22" y="38" text-anchor="middle" font-size="9" fill="#991b1b" font-weight="700">.pdf</text>
+                </g>
+
+                <!-- setas -->
+                <line x1="212" y1="114" x2="212" y2="108" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="3,2"/>
+                <line x1="260" y1="108" x2="260" y2="108" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="3,2"/>
+                <line x1="308" y1="114" x2="308" y2="108" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="3,2"/>
+
+                <!-- disco -->
+                <rect x="60" y="140" width="120" height="40" rx="8" fill="#e2e8f0"/>
+                <text x="120" y="158" text-anchor="middle" fill="#475569" font-size="11" font-weight="600">&#x1F4BE; Disco C:\</text>
+                <text x="120" y="172" text-anchor="middle" fill="#94a3b8" font-size="10">raiz do sistema</text>
+                <line x1="180" y1="160" x2="200" y2="155" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arr)"/>
+
+                <!-- disco direito -->
+                <rect x="340" y="140" width="120" height="40" rx="8" fill="#e2e8f0"/>
+                <text x="400" y="158" text-anchor="middle" fill="#475569" font-size="11" font-weight="600">&#x2601;&#xFE0F; Nuvem</text>
+                <text x="400" y="172" text-anchor="middle" fill="#94a3b8" font-size="10">backup seguro</text>
+                <line x1="340" y1="155" x2="320" y2="155" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arr)"/>
+
+                <defs>
+                    <marker id="arr" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                        <path d="M0,0 L6,3 L0,6 Z" fill="#94a3b8"/>
+                    </marker>
+                </defs>
+            </svg>
         </div>
-
-        <!-- CARD 1 -->
-        <div class="content-card">
-            <h2>&#x1F4AC; Arquivos e Pastas: conceitos b&aacute;sicos</h2>
-            <p>Tudo que armazenamos no computador &mdash; documentos, fotos, v&iacute;deos, programas &mdash; existe na forma de <strong>arquivos</strong>. Um arquivo &eacute; uma unidade de informa&ccedil;&atilde;o com nome, conte&uacute;do e um tipo (definido pela extens&atilde;o).</p>
-            <p>Para organizar esses arquivos, o sistema operacional utiliza <strong>pastas</strong> (tamb&eacute;m chamadas de <em>diret&oacute;rios</em>). Pastas funcionam como gavetas: voc&ecirc; pode colocar arquivos dentro delas e at&eacute; criar pastas dentro de pastas, formando uma <strong>hierarquia</strong>.</p>
-
-            <div class="highlight-box">
-                <p>&#x1F4A1; <strong>Analogia:</strong> Pense no disco r&iacute;gido como um grande armário. As <strong>pastas</strong> s&atilde;o as gavetas e divis&otilde;rias. Os <strong>arquivos</strong> s&atilde;o os documentos dentro de cada gaveta. Sem organiza&ccedil;&atilde;o, encontrar algo vira um caos.</p>
-            </div>
-
-            <p>Todo arquivo possui tr&ecirc;s informa&ccedil;&otilde;es essenciais:</p>
-            <ul>
-                <li><strong>Nome</strong> &mdash; identifica o arquivo (ex.: <em>relatorio-final</em>)</li>
-                <li><strong>Extens&atilde;o</strong> &mdash; define o tipo e o programa associado (ex.: <em>.docx</em>, <em>.pdf</em>)</li>
-                <li><strong>Local</strong> &mdash; o caminho de pastas onde ele est&aacute; guardado</li>
-            </ul>
-        </div>
-
-        <!-- CARD 2 -->
-        <div class="content-card">
-            <h2>&#x1F333; A &Aacute;rvore de Diret&oacute;rios</h2>
-            <p>O sistema de arquivos &eacute; organizado em forma de <strong>&aacute;rvore</strong>: existe uma <strong>pasta raiz</strong> principal e, a partir dela, todas as demais pastas e arquivos se ramificam. No Windows, a raiz &eacute; o disco <code>C:\</code>; no Linux e macOS, &eacute; a barra <code>/</code>.</p>
-
-            <div class="dir-tree">
-                <div class="root">&#x1F4BB; C:\ (raiz)</div>
-                <div class="indent1"><span class="folder">&#x1F4C2; Usu&aacute;rios\</span></div>
-                <div class="indent2"><span class="folder">&#x1F4C2; César\</span></div>
-                <div class="indent3"><span class="folder">&#x1F4C2; Documentos\</span></div>
-                <div class="indent3"><span class="file">&#x1F4C4; relatorio.docx</span></div>
-                <div class="indent3"><span class="folder">&#x1F4C2; Imagens\</span></div>
-                <div class="indent3"><span class="file">&#x1F5BC;&#xFE0F; foto-turma.jpg</span></div>
-                <div class="indent3"><span class="folder">&#x1F4C2; Downloads\</span></div>
-                <div class="indent1"><span class="folder">&#x1F4C2; Windows\</span></div>
-                <div class="indent1"><span class="folder">&#x1F4C2; Arquivos de Programas\</span></div>
-            </div>
-
-            <p>O <strong>caminho</strong> (path) de um arquivo indica exatamente onde ele est&aacute; nessa &aacute;rvore. Por exemplo:</p>
-            <ul>
-                <li>Windows: <code>C:\Usu&aacute;rios\C&eacute;sar\Documentos\relatorio.docx</code></li>
-                <li>Linux/macOS: <code>/home/cesar/documentos/relatorio.pdf</code></li>
-            </ul>
-
-            <div class="highlight-box">
-                <p>&#x1F4A1; Quanto mais organizada for sua &aacute;rvore de pastas, mais f&aacute;cil ser&aacute; encontrar arquivos e fazer backups. Uma estrutura bagunçada gera retrabalho e perda de tempo.</p>
-            </div>
-        </div>
-
-        <!-- CARD 3 -->
-        <div class="content-card">
-            <h2>&#x2699;&#xFE0F; Opera&ccedil;&otilde;es com Arquivos e Pastas</h2>
-            <p>O sistema operacional oferece um conjunto de opera&ccedil;&otilde;es para gerenciar arquivos e pastas. Todas podem ser feitas pela interface gr&aacute;fica (cliques) ou por atalhos de teclado:</p>
-
-            <div class="ops-grid">
-                <div class="op-item">
-                    <div class="op-icon">&#x2795;</div>
-                    <strong>Criar</strong>
-                    <p>Cria um novo arquivo ou pasta vazia no local escolhido.</p>
-                    <span class="shortcut">Ctrl + Shift + N</span>
-                </div>
-                <div class="op-item">
-                    <div class="op-icon">&#x270F;&#xFE0F;</div>
-                    <strong>Renomear</strong>
-                    <p>Altera o nome de um arquivo ou pasta sem mover seu conte&uacute;do.</p>
-                    <span class="shortcut">F2</span>
-                </div>
-                <div class="op-item">
-                    <div class="op-icon">&#x1F4CB;</div>
-                    <strong>Copiar</strong>
-                    <p>Duplica o arquivo. O original permanece no lugar.</p>
-                    <span class="shortcut">Ctrl + C / Ctrl + V</span>
-                </div>
-                <div class="op-item">
-                    <div class="op-icon">&#x2702;&#xFE0F;</div>
-                    <strong>Mover (Recortar)</strong>
-                    <p>Transfere o arquivo para outro local. O original &eacute; removido.</p>
-                    <span class="shortcut">Ctrl + X / Ctrl + V</span>
-                </div>
-                <div class="op-item">
-                    <div class="op-icon">&#x1F5D1;&#xFE0F;</div>
-                    <strong>Excluir</strong>
-                    <p>Remove o arquivo, enviando-o primeiro para a Lixeira.</p>
-                    <span class="shortcut">Delete</span>
-                </div>
-                <div class="op-item">
-                    <div class="op-icon">&#x1F50D;</div>
-                    <strong>Pesquisar</strong>
-                    <p>Localiza arquivos pelo nome, tipo ou conte&uacute;do.</p>
-                    <span class="shortcut">Ctrl + F / Win + S</span>
-                </div>
-            </div>
-
-            <div class="alert-box">
-                <p>&#x26A0;&#xFE0F; <strong>Aten&ccedil;&atilde;o com a Lixeira!</strong> Ao excluir um arquivo, ele vai para a Lixeira &mdash; ainda &eacute; poss&iacute;vel recuper&aacute;-lo. Por&eacute;m, ao esvaziar a Lixeira ou usar <strong>Shift + Delete</strong>, o arquivo &eacute; removido permanentemente e n&atilde;o pode ser recuperado facilmente.</p>
-            </div>
-        </div>
-
-        <!-- CARD 4 -->
-        <div class="content-card">
-            <h2>&#x1F3F7;&#xFE0F; Extens&otilde;es e Tipos de Arquivo</h2>
-            <p>A <strong>extens&atilde;o</strong> &eacute; a parte do nome do arquivo que vem ap&oacute;s o ponto final. Ela indica o <strong>formato</strong> do arquivo e qual programa deve abri-lo. Conhecer as principais extens&otilde;es &eacute; essencial para trabalhar com arquivos no dia a dia.</p>
-
-            <table class="ext-table">
-                <tr>
-                    <th>Categoria</th>
-                    <th>Extens&otilde;es comuns</th>
-                    <th>Abre com</th>
-                </tr>
-                <tr>
-                    <td>&#x1F4DD; Documentos</td>
-                    <td>
-                        <span class="ext-badge ext-doc">.docx</span>
-                        <span class="ext-badge ext-doc">.pdf</span>
-                        <span class="ext-badge ext-doc">.odt</span>
-                        <span class="ext-badge ext-doc">.txt</span>
-                    </td>
-                    <td>Word, LibreOffice, Acrobat</td>
-                </tr>
-                <tr>
-                    <td>&#x1F4CA; Planilhas</td>
-                    <td>
-                        <span class="ext-badge ext-doc">.xlsx</span>
-                        <span class="ext-badge ext-doc">.csv</span>
-                        <span class="ext-badge ext-doc">.ods</span>
-                    </td>
-                    <td>Excel, LibreOffice Calc</td>
-                </tr>
-                <tr>
-                    <td>&#x1F5BC;&#xFE0F; Imagens</td>
-                    <td>
-                        <span class="ext-badge ext-img">.jpg</span>
-                        <span class="ext-badge ext-img">.png</span>
-                        <span class="ext-badge ext-img">.gif</span>
-                        <span class="ext-badge ext-img">.svg</span>
-                        <span class="ext-badge ext-img">.webp</span>
-                    </td>
-                    <td>Visualizador de fotos, Photoshop</td>
-                </tr>
-                <tr>
-                    <td>&#x1F3AC; V&iacute;deos</td>
-                    <td>
-                        <span class="ext-badge ext-vid">.mp4</span>
-                        <span class="ext-badge ext-vid">.mkv</span>
-                        <span class="ext-badge ext-vid">.avi</span>
-                        <span class="ext-badge ext-vid">.mov</span>
-                    </td>
-                    <td>VLC, Windows Media Player</td>
-                </tr>
-                <tr>
-                    <td>&#x1F3B5; &Aacute;udios</td>
-                    <td>
-                        <span class="ext-badge ext-audio">.mp3</span>
-                        <span class="ext-badge ext-audio">.wav</span>
-                        <span class="ext-badge ext-audio">.flac</span>
-                        <span class="ext-badge ext-audio">.ogg</span>
-                    </td>
-                    <td>VLC, Spotify, Windows Media</td>
-                </tr>
-                <tr>
-                    <td>&#x1F4E6; Compactados</td>
-                    <td>
-                        <span class="ext-badge ext-zip">.zip</span>
-                        <span class="ext-badge ext-zip">.rar</span>
-                        <span class="ext-badge ext-zip">.7z</span>
-                        <span class="ext-badge ext-zip">.tar.gz</span>
-                    </td>
-                    <td>WinRAR, 7-Zip, WinZip</td>
-                </tr>
-                <tr>
-                    <td>&#x1F5A5;&#xFE0F; Sistema/Execut&aacute;vel</td>
-                    <td>
-                        <span class="ext-badge ext-sys">.exe</span>
-                        <span class="ext-badge ext-sys">.msi</span>
-                        <span class="ext-badge ext-sys">.bat</span>
-                        <span class="ext-badge ext-sys">.dll</span>
-                    </td>
-                    <td>Sistema operacional (cuidado!)</td>
-                </tr>
-                <tr>
-                    <td>&#x1F4BB; C&oacute;digo-fonte</td>
-                    <td>
-                        <span class="ext-badge ext-code">.py</span>
-                        <span class="ext-badge ext-code">.html</span>
-                        <span class="ext-badge ext-code">.js</span>
-                        <span class="ext-badge ext-code">.java</span>
-                    </td>
-                    <td>VS Code, Bloco de Notas, IDEs</td>
-                </tr>
-            </table>
-
-            <div class="alert-box">
-                <p>&#x26A0;&#xFE0F; <strong>Cuidado com arquivos .exe e .bat</strong> recebidos por e-mail ou baixados de sites desconhecidos. Arquivos execut&aacute;veis podem conter v&iacute;rus ou malware.</p>
-            </div>
-        </div>
-
-        <!-- CARD 5 -->
-        <div class="content-card">
-            <h2>&#x1F4A1; Boas Pr&aacute;ticas de Organiza&ccedil;&atilde;o</h2>
-            <p>Manter os arquivos bem organizados economiza tempo, evita perda de dados e facilita o compartilhamento. Veja as principais boas pr&aacute;ticas:</p>
-
-            <div class="dicas-list">
-                <div class="dica-item">
-                    <div class="dica-icon">&#x1F4C2;</div>
-                    <div>
-                        <strong>Crie uma estrutura de pastas l&oacute;gica</strong>
-                        <span>Organize por projeto, disciplina ou data. Exemplo: <em>Escola &gt; 2025 &gt; Inform&aacute;tica &gt; Trabalhos</em></span>
-                    </div>
-                </div>
-                <div class="dica-item">
-                    <div class="dica-icon">&#x270F;&#xFE0F;</div>
-                    <div>
-                        <strong>Use nomes descritivos e sem espa&ccedil;os</strong>
-                        <span>Prefira <em>relatorio-final-2025.docx</em> a <em>doc1.docx</em>. Evite acentos e espa&ccedil;os nos nomes de arquivo.</span>
-                    </div>
-                </div>
-                <div class="dica-item">
-                    <div class="dica-icon">&#x1F4C5;</div>
-                    <div>
-                        <strong>Inclua datas no nome quando relevante</strong>
-                        <span>Use o formato <em>AAAA-MM-DD</em> no in&iacute;cio para facilitar a ordena&ccedil;&atilde;o. Ex.: <em>2025-06-10-ata-reuniao.pdf</em></span>
-                    </div>
-                </div>
-                <div class="dica-item">
-                    <div class="dica-icon">&#x1F5D1;&#xFE0F;</div>
-                    <div>
-                        <strong>Esvazie a Lixeira regularmente</strong>
-                        <span>Arquivos na Lixeira ainda ocupam espa&ccedil;o no disco. Esvazie periodicamente para liberar armazenamento.</span>
-                    </div>
-                </div>
-                <div class="dica-item">
-                    <div class="dica-icon">&#x2601;&#xFE0F;</div>
-                    <div>
-                        <strong>Fa&ccedil;a backup na nuvem</strong>
-                        <span>Guarde c&oacute;pias importantes no Google Drive, OneDrive ou Dropbox. Um arquivo s&oacute; no computador &eacute; um arquivo em risco.</span>
-                    </div>
-                </div>
-                <div class="dica-item">
-                    <div class="dica-icon">&#x1F50D;</div>
-                    <div>
-                        <strong>Use a pesquisa do S.O.</strong>
-                        <span>Se n&atilde;o encontrar um arquivo, use a busca (<strong>Win + S</strong> no Windows) antes de procurar manualmente.</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- CARD 6 -->
-        <div class="content-card">
-            <h2>&#x1F4CB; Recapitulando</h2>
-            <ul>
-                <li><strong>Arquivos</strong> armazenam informa&ccedil;&otilde;es e possuem nome, extens&atilde;o e localiza&ccedil;&atilde;o</li>
-                <li><strong>Pastas</strong> organizam os arquivos em uma estrutura hier&aacute;rquica chamada &aacute;rvore de diret&oacute;rios</li>
-                <li>O <strong>caminho</strong> indica onde o arquivo est&aacute; na &aacute;rvore (ex.: <code>C:\Usu&aacute;rios\César\Documentos</code>)</li>
-                <li>Opera&ccedil;&otilde;es essenciais: <strong>criar, renomear, copiar, mover e excluir</strong></li>
-                <li>A <strong>extens&atilde;o</strong> (.pdf, .jpg, .mp4&hellip;) define o tipo do arquivo e qual programa o abre</li>
-                <li>Cuidado com arquivos <strong>.exe de fontes desconhecidas</strong> &mdash; podem ser malware</li>
-                <li>Boas pr&aacute;ticas: pastas l&oacute;gicas, nomes descritivos, backup na nuvem e Lixeira limpa</li>
-            </ul>
-
-            <div class="highlight-box">
-                <p>&#x1F4DA; <strong>Na pr&oacute;xima aula</strong> vamos conhecer os principais <strong>softwares utilit&aacute;rios</strong> &mdash; ferramentas que complementam o sistema operacional para tarefas como compress&atilde;o de arquivos, prote&ccedil;&atilde;o contra v&iacute;rus e manuten&ccedil;&atilde;o do computador.</p>
-            </div>
-        </div>
-
-        <!-- EXERCÍCIO: Arrastar e Soltar -->
-        <div class="content-card exercise-card">
-            <h2>&#x1F3AF; Exerc&iacute;cio &mdash; Arraste e Conecte</h2>
-            <p style="color:#475569;font-size:0.9em;margin-bottom:4px;">Arraste cada descri&ccedil;&atilde;o para a extens&atilde;o de arquivo correspondente. Em dispositivos m&oacute;veis, toque na descri&ccedil;&atilde;o e depois na zona de destino.</p>
-
-            <div class="ex-drag-root" data-ex="ex13">
-                <div class="ex-drag">
-                    <div>
-                        <div class="ex-col-title">Descri&ccedil;&atilde;o do arquivo</div>
-                        <div class="ex-pool" data-pool="ex13">
-                            <div class="drag-chip" data-id="jpg">Foto tirada com c&acirc;mera digital ou celular</div>
-                            <div class="drag-chip" data-id="pdf">Documento formatado para envio e impress&atilde;o</div>
-                            <div class="drag-chip" data-id="zip">Pasta compactada para economizar espa&ccedil;o</div>
-                            <div class="drag-chip" data-id="mp4">V&iacute;deo gravado em alta defini&ccedil;&atilde;o</div>
-                            <div class="drag-chip" data-id="xlsx">Planilha com dados, f&oacute;rmulas e gr&aacute;ficos</div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="ex-col-title">Extens&atilde;o</div>
-                        <div class="ex-zones" data-zones="ex13">
-                            <div class="drop-zone" data-zone="ex13-z1" data-accept="jpg">
-                                <span class="zone-name">.jpg</span>
-                                <div class="zone-slot"></div>
-                                <div class="zone-feedback"></div>
-                            </div>
-                            <div class="drop-zone" data-zone="ex13-z2" data-accept="pdf">
-                                <span class="zone-name">.pdf</span>
-                                <div class="zone-slot"></div>
-                                <div class="zone-feedback"></div>
-                            </div>
-                            <div class="drop-zone" data-zone="ex13-z3" data-accept="zip">
-                                <span class="zone-name">.zip</span>
-                                <div class="zone-slot"></div>
-                                <div class="zone-feedback"></div>
-                            </div>
-                            <div class="drop-zone" data-zone="ex13-z4" data-accept="mp4">
-                                <span class="zone-name">.mp4</span>
-                                <div class="zone-slot"></div>
-                                <div class="zone-feedback"></div>
-                            </div>
-                            <div class="drop-zone" data-zone="ex13-z5" data-accept="xlsx">
-                                <span class="zone-name">.xlsx</span>
-                                <div class="zone-slot"></div>
-                                <div class="zone-feedback"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="ex-actions">
-                <button class="btn-verificar" onclick="dragVerify('ex13')">Verificar</button>
-                <button class="btn-refazer"  onclick="dragReset('ex13')">Refazer</button>
-            </div>
-            <div class="ex-result" id="ex13-result"></div>
-        </div>
-
-        <!-- ATIVIDADE PRÁTICA 1.3 -->
-        <div class="content-card practical-card" id="prat-13">
-            <h2>&#x1F6E0;&#xFE0F; Atividade Pr&aacute;tica &mdash; Organizando Arquivos</h2>
-            <div class="prat-meta">
-                <span class="prat-tag">&#x23F1; ~25 min</span>
-                <span class="prat-tag">&#x1F4BB; Sem instala&ccedil;&atilde;o</span>
-                <span class="prat-tag">&#x1F4CD; Explorador de Arquivos</span>
-            </div>
-
-            <div class="prat-steps">
-                <div class="prat-step">
-                    <div class="step-num">1</div>
-                    <div class="step-body">
-                        <div class="step-label">Crie uma estrutura de pastas organizada</div>
-                        <div class="step-desc">Abra o Explorador de Arquivos (<kbd>Windows</kbd>+<kbd>E</kbd>) e navegue at&eacute; <strong>Documentos</strong>. Crie a seguinte hierarquia: <strong>Escola &rarr; 2025 &rarr; Inform&aacute;tica &rarr; Aulas</strong>. Use bot&atilde;o direito &rarr; Novo &rarr; Pasta em cada n&iacute;vel.</div>
-                    </div>
-                </div>
-                <div class="prat-step">
-                    <div class="step-num">2</div>
-                    <div class="step-body">
-                        <div class="step-label">Ative a exibi&ccedil;&atilde;o de extens&otilde;es</div>
-                        <div class="step-desc">No Explorador de Arquivos, clique em <strong>Exibir</strong> (ou na aba Exibir) e marque <strong>"Extens&otilde;es de nome de arquivo"</strong>. Agora voc&ecirc; ver&aacute; o <em>.pdf</em>, <em>.jpg</em>, <em>.docx</em> no nome de cada arquivo. Liste 5 extens&otilde;es diferentes que encontrar na sua pasta de Downloads.</div>
-                    </div>
-                </div>
-                <div class="prat-step">
-                    <div class="step-num">3</div>
-                    <div class="step-body">
-                        <div class="step-label">Organize sua pasta de Downloads</div>
-                        <div class="step-desc">Abra a pasta <strong>Downloads</strong>. Dentro dela, crie 4 subpastas: <strong>Imagens</strong>, <strong>Documentos</strong>, <strong>V&iacute;deos</strong> e <strong>Outros</strong>. Mova pelo menos 5 arquivos para as pastas corretas usando <kbd>Ctrl</kbd>+<kbd>X</kbd> e <kbd>Ctrl</kbd>+<kbd>V</kbd>.</div>
-                    </div>
-                </div>
-                <div class="prat-step">
-                    <div class="step-num">4</div>
-                    <div class="step-body">
-                        <div class="step-label">Inspecione as propriedades de um arquivo</div>
-                        <div class="step-desc">Selecione qualquer arquivo e pressione <kbd>Alt</kbd>+<kbd>Enter</kbd> para abrir as propriedades. Anote: tipo do arquivo, tamanho, data de cria&ccedil;&atilde;o e data de modifica&ccedil;&atilde;o. Esses metadados ficam registrados pelo S.O.</div>
-                    </div>
-                </div>
-                <div class="prat-step">
-                    <div class="step-num">5</div>
-                    <div class="step-body">
-                        <div class="step-label">Pratique os atalhos essenciais</div>
-                        <div class="step-desc">Execute cada opera&ccedil;&atilde;o com o atalho correspondente: <kbd>Ctrl</kbd>+<kbd>C</kbd> (copiar), <kbd>Ctrl</kbd>+<kbd>V</kbd> (colar), <kbd>Ctrl</kbd>+<kbd>Z</kbd> (desfazer), <kbd>F2</kbd> (renomear um arquivo), <kbd>Delete</kbd> (mover para Lixeira). Marque cada um ap&oacute;s realizar.</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="prat-observe">
-                <strong>&#x1F4CC; Para saber:</strong> O S.O. registra automaticamente data de cria&ccedil;&atilde;o, modifica&ccedil;&atilde;o e acesso de cada arquivo. Isso &eacute; parte do <strong>gerenciamento do sistema de arquivos</strong> &mdash; uma das fun&ccedil;&otilde;es essenciais que estudamos na Aula 1.1.
-            </div>
-
-            <div class="ex-actions">
-                <button class="btn-print" onclick="printPractical('prat-13', 'Aula 1.3 \u2014 Gerenciamento de Pastas e Arquivos')">&#x1F5A8;&#xFE0F; Imprimir roteiro</button>
-            </div>
-        </div>
-
-        <div class="nav-footer">
-            <a href="uni1-03-sistemas-operacionais.html" class="nav-link">&#x2B05; Anterior: Principais S.O.</a>
-            <a href="uni1-05-revisao.html" class="nav-link">Pr&oacute;xima: Revis&atilde;o da Unidade 1 &#x27A1;</a>
-        </div>
-
+        <p>Nesta aula voc&ecirc; vai entender como funciona a <strong>&aacute;rvore de diret&oacute;rios</strong>, aprender as principais <strong>opera&ccedil;&otilde;es com arquivos</strong> e conhecer as <strong>extens&otilde;es</strong> mais comuns. Tudo com dicas pr&aacute;ticas de organiza&ccedil;&atilde;o.</p>
     </div>
 
-    <script src="slide-mode.js"></script>
-    <script src="exercise-drag.js"></script>
-    <script src="exercise-print.js"></script>
+    <!-- SLIDE 2: Arquivos e Pastas -->
+    <div class="content-card">
+        <h2>&#x1F4AC; Arquivos e Pastas: o arm&aacute;rio digital</h2>
+        <p>Pense no computador como um grande <strong>arm&aacute;rio</strong>. As <strong>pastas</strong> s&atilde;o as gavetas e divis&oacute;rias. Os <strong>arquivos</strong> s&atilde;o os documentos dentro de cada gaveta. Sem organiza&ccedil;&atilde;o, encontrar algo vira um caos.</p>
+
+        <!-- SVG: armário animado -->
+        <div class="svg-wrap">
+            <svg width="520" height="220" viewBox="0 0 520 220" xmlns="http://www.w3.org/2000/svg">
+                <style>
+                    @keyframes drawer-open { 0%{transform:translateX(0)} 50%{transform:translateX(30px)} 100%{transform:translateX(30px)} }
+                    @keyframes file-appear { 0%,40%{opacity:0;transform:translateX(-10px)} 100%{opacity:1;transform:translateX(0)} }
+                    @keyframes label-pop { 0%{opacity:0;transform:scale(0.8)} 100%{opacity:1;transform:scale(1)} }
+                    .d1 { animation: drawer-open 1.5s 0.5s ease-in-out forwards; }
+                    .d2 { animation: drawer-open 1.5s 1.1s ease-in-out forwards; }
+                    .file-in { animation: file-appear 0.5s 1.8s both; }
+                    .lbl { animation: label-pop 0.4s 0.3s both; }
+                </style>
+
+                <!-- Armário -->
+                <rect x="30" y="20" width="160" height="180" rx="10" fill="#334155" stroke="#1e293b" stroke-width="2"/>
+                <!-- dobradiças -->
+                <circle cx="68" cy="55" r="4" fill="#94a3b8"/>
+                <circle cx="68" cy="115" r="4" fill="#94a3b8"/>
+                <circle cx="68" cy="175" r="4" fill="#94a3b8"/>
+
+                <!-- gaveta 1 -->
+                <g class="d1">
+                    <rect x="35" y="28" width="148" height="55" rx="6" fill="#1e40af"/>
+                    <rect x="85" y="52" width="48" height="8" rx="4" fill="#93c5fd"/>
+                    <text x="109" y="47" text-anchor="middle" fill="#bfdbfe" font-size="10" font-weight="600">Documentos</text>
+                </g>
+                <!-- gaveta 2 -->
+                <g class="d2">
+                    <rect x="35" y="88" width="148" height="55" rx="6" fill="#065f46"/>
+                    <rect x="85" y="112" width="48" height="8" rx="4" fill="#6ee7b7"/>
+                    <text x="109" y="107" text-anchor="middle" fill="#a7f3d0" font-size="10" font-weight="600">Imagens</text>
+                </g>
+                <!-- gaveta 3 -->
+                <rect x="35" y="148" width="148" height="46" rx="6" fill="#7c3aed"/>
+                <rect x="85" y="168" width="48" height="8" rx="4" fill="#c4b5fd"/>
+                <text x="109" y="163" text-anchor="middle" fill="#ede9fe" font-size="10" font-weight="600">V&iacute;deos</text>
+
+                <!-- Arquivos aparecendo -->
+                <g class="file-in">
+                    <rect x="220" y="35" width="38" height="48" rx="4" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+                    <polyline points="252,35 265,48 265,83" fill="none" stroke="#93c5fd" stroke-width="1.2"/>
+                    <polygon points="252,35 265,48 252,48" fill="#93c5fd"/>
+                    <text x="242" y="70" text-anchor="middle" font-size="8" fill="#1e40af" font-weight="700">.docx</text>
+
+                    <rect x="272" y="35" width="38" height="48" rx="4" fill="#d1fae5" stroke="#6ee7b7" stroke-width="1"/>
+                    <polyline points="304,35 317,48 317,83" fill="none" stroke="#6ee7b7" stroke-width="1.2"/>
+                    <polygon points="304,35 317,48 304,48" fill="#6ee7b7"/>
+                    <text x="294" y="70" text-anchor="middle" font-size="8" fill="#065f46" font-weight="700">.jpg</text>
+                </g>
+
+                <!-- Propriedades -->
+                <g class="lbl">
+                    <rect x="350" y="25" width="155" height="100" rx="10" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+                    <text x="427" y="48" text-anchor="middle" fill="#1565c0" font-size="11" font-weight="700">Todo arquivo tem:</text>
+                    <circle cx="368" cy="65" r="4" fill="#1565c0"/>
+                    <text x="378" y="69" fill="#374151" font-size="10"><tspan font-weight="600">Nome</tspan> — relatorio-final</text>
+                    <circle cx="368" cy="82" r="4" fill="#1565c0"/>
+                    <text x="378" y="86" fill="#374151" font-size="10"><tspan font-weight="600">Extensão</tspan> — .docx</text>
+                    <circle cx="368" cy="99" r="4" fill="#1565c0"/>
+                    <text x="378" y="103" fill="#374151" font-size="10"><tspan font-weight="600">Local</tspan> — C:\Docs\</text>
+                </g>
+
+                <!-- Seta da gaveta para os arquivos -->
+                <line x1="183" y1="56" x2="218" y2="56" stroke="#60a5fa" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arb)"/>
+                <defs>
+                    <marker id="arb" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+                        <path d="M0,0 L6,3 L0,6 Z" fill="#60a5fa"/>
+                    </marker>
+                </defs>
+            </svg>
+        </div>
+
+        <p>Todo arquivo possui tr&ecirc;s informa&ccedil;&otilde;es essenciais: <strong>nome</strong> (identifica o arquivo), <strong>extens&atilde;o</strong> (define o tipo e o programa associado) e <strong>local</strong> (o caminho de pastas onde est&aacute; guardado).</p>
+    </div>
+
+    <!-- SLIDE 3: Árvore de Diretórios -->
+    <div class="content-card">
+        <h2>&#x1F333; A &Aacute;rvore de Diret&oacute;rios</h2>
+        <p>O sistema de arquivos &eacute; organizado como uma <strong>&aacute;rvore</strong>: existe uma <strong>pasta raiz</strong> e, a partir dela, tudo se ramifica. No Windows, a raiz &eacute; <code>C:\</code>; no Linux e macOS, &eacute; <code>/</code>.</p>
+
+        <!-- SVG: árvore construindo-se -->
+        <div class="svg-wrap">
+            <svg width="520" height="220" viewBox="0 0 520 220" xmlns="http://www.w3.org/2000/svg">
+                <style>
+                    @keyframes grow-line { from{stroke-dashoffset:80} to{stroke-dashoffset:0} }
+                    @keyframes node-in { from{opacity:0;transform:scale(0)} to{opacity:1;transform:scale(1)} }
+                    .ln1{stroke-dasharray:80;animation:grow-line 0.5s 0.2s both;}
+                    .ln2{stroke-dasharray:80;animation:grow-line 0.5s 0.5s both;}
+                    .ln3{stroke-dasharray:80;animation:grow-line 0.5s 0.8s both;}
+                    .ln4{stroke-dasharray:80;animation:grow-line 0.5s 1.0s both;}
+                    .ln5{stroke-dasharray:80;animation:grow-line 0.5s 1.2s both;}
+                    .ln6{stroke-dasharray:80;animation:grow-line 0.5s 1.4s both;}
+                    .nd1{animation:node-in 0.4s 0.2s both;transform-origin:260px 30px;}
+                    .nd2{animation:node-in 0.4s 0.5s both;transform-origin:130px 90px;}
+                    .nd3{animation:node-in 0.4s 0.8s both;transform-origin:390px 90px;}
+                    .nd4{animation:node-in 0.4s 1.0s both;transform-origin:70px 160px;}
+                    .nd5{animation:node-in 0.4s 1.2s both;transform-origin:190px 160px;}
+                    .nd6{animation:node-in 0.4s 1.4s both;transform-origin:340px 160px;}
+                    .nd7{animation:node-in 0.4s 1.6s both;transform-origin:450px 160px;}
+                </style>
+                <!-- Linhas -->
+                <line class="ln1" x1="260" y1="46" x2="130" y2="76" stroke="#94a3b8" stroke-width="2"/>
+                <line class="ln2" x1="260" y1="46" x2="390" y2="76" stroke="#94a3b8" stroke-width="2"/>
+                <line class="ln3" x1="130" y1="106" x2="70" y2="145" stroke="#94a3b8" stroke-width="2"/>
+                <line class="ln4" x1="130" y1="106" x2="190" y2="145" stroke="#94a3b8" stroke-width="2"/>
+                <line class="ln5" x1="390" y1="106" x2="340" y2="145" stroke="#94a3b8" stroke-width="2"/>
+                <line class="ln6" x1="390" y1="106" x2="450" y2="145" stroke="#94a3b8" stroke-width="2"/>
+
+                <!-- Nó raiz -->
+                <g class="nd1">
+                    <rect x="210" y="14" width="100" height="32" rx="8" fill="#1565c0"/>
+                    <text x="260" y="34" text-anchor="middle" fill="white" font-size="11" font-weight="700">&#x1F4BB; C:\</text>
+                </g>
+                <!-- Nível 2 -->
+                <g class="nd2">
+                    <rect x="80" y="76" width="100" height="30" rx="7" fill="#1976d2"/>
+                    <text x="130" y="95" text-anchor="middle" fill="white" font-size="10" font-weight="600">&#x1F4C2; Usuários\</text>
+                </g>
+                <g class="nd3">
+                    <rect x="340" y="76" width="100" height="30" rx="7" fill="#0277bd"/>
+                    <text x="390" y="95" text-anchor="middle" fill="white" font-size="10" font-weight="600">&#x1F4C2; Windows\</text>
+                </g>
+                <!-- Nível 3 -->
+                <g class="nd4">
+                    <rect x="28" y="145" width="84" height="30" rx="7" fill="#42a5f5"/>
+                    <text x="70" y="164" text-anchor="middle" fill="white" font-size="9" font-weight="600">&#x1F4C2; César\</text>
+                </g>
+                <g class="nd5">
+                    <rect x="148" y="145" width="84" height="30" rx="7" fill="#42a5f5"/>
+                    <text x="190" y="164" text-anchor="middle" fill="white" font-size="9" font-weight="600">&#x1F4C4; config</text>
+                </g>
+                <g class="nd6">
+                    <rect x="298" y="145" width="84" height="30" rx="7" fill="#1565c0" opacity="0.6"/>
+                    <text x="340" y="164" text-anchor="middle" fill="white" font-size="9">&#x1F4C2; System32</text>
+                </g>
+                <g class="nd7">
+                    <rect x="408" y="145" width="84" height="30" rx="7" fill="#1565c0" opacity="0.6"/>
+                    <text x="450" y="164" text-anchor="middle" fill="white" font-size="9">&#x1F4C2; Temp</text>
+                </g>
+
+                <!-- caminho embaixo -->
+                <rect x="20" y="195" width="480" height="22" rx="6" fill="#1e293b"/>
+                <text x="30" y="210" fill="#34d399" font-size="10" font-family="Courier New">C:\Usuários\César\Documentos\relatorio.docx</text>
+            </svg>
+        </div>
+
+        <p>O <strong>caminho</strong> (path) indica exatamente onde um arquivo est&aacute;. Cada pasta no caminho &eacute; separada por <code>\</code> (Windows) ou <code>/</code> (Linux/macOS). Quanto mais organizada a &aacute;rvore, mais f&aacute;cil &eacute; encontrar arquivos e fazer backups.</p>
+    </div>
+
+    <!-- SLIDE 4: Operações -->
+    <div class="content-card">
+        <h2>&#x2699;&#xFE0F; Opera&ccedil;&otilde;es com Arquivos</h2>
+        <p>O sistema operacional oferece seis opera&ccedil;&otilde;es essenciais para gerenciar arquivos. Todas podem ser feitas via menu ou atalho de teclado:</p>
+
+        <!-- SVG: 6 operações aparecendo em sequência -->
+        <div class="svg-wrap">
+            <svg width="520" height="200" viewBox="0 0 520 200" xmlns="http://www.w3.org/2000/svg">
+                <style>
+                    @keyframes op-pop { from{opacity:0;transform:scale(0.7)} to{opacity:1;transform:scale(1)} }
+                    .op1{animation:op-pop 0.4s 0.2s both;transform-origin:57px 60px;}
+                    .op2{animation:op-pop 0.4s 0.5s both;transform-origin:177px 60px;}
+                    .op3{animation:op-pop 0.4s 0.8s both;transform-origin:297px 60px;}
+                    .op4{animation:op-pop 0.4s 1.1s both;transform-origin:417px 60px;}
+                    .op5{animation:op-pop 0.4s 1.4s both;transform-origin:117px 150px;}
+                    .op6{animation:op-pop 0.4s 1.7s both;transform-origin:357px 150px;}
+                </style>
+                <!-- linha 1 -->
+                <g class="op1">
+                    <rect x="10" y="18" width="94" height="84" rx="10" fill="#e8f5e9" stroke="#a5d6a7" stroke-width="1.5"/>
+                    <text x="57" y="48" text-anchor="middle" font-size="22">&#x2795;</text>
+                    <text x="57" y="70" text-anchor="middle" fill="#2e7d32" font-size="11" font-weight="700">Criar</text>
+                    <rect x="22" y="78" width="70" height="16" rx="4" fill="#c8e6c9"/>
+                    <text x="57" y="90" text-anchor="middle" fill="#1b5e20" font-size="9" font-family="Courier New">Ctrl+Shift+N</text>
+                </g>
+                <g class="op2">
+                    <rect x="130" y="18" width="94" height="84" rx="10" fill="#e3f2fd" stroke="#90caf9" stroke-width="1.5"/>
+                    <text x="177" y="48" text-anchor="middle" font-size="22">&#x270F;&#xFE0F;</text>
+                    <text x="177" y="70" text-anchor="middle" fill="#1565c0" font-size="11" font-weight="700">Renomear</text>
+                    <rect x="148" y="78" width="58" height="16" rx="4" fill="#bbdefb"/>
+                    <text x="177" y="90" text-anchor="middle" fill="#0d47a1" font-size="9" font-family="Courier New">F2</text>
+                </g>
+                <g class="op3">
+                    <rect x="250" y="18" width="94" height="84" rx="10" fill="#fff8e1" stroke="#ffe082" stroke-width="1.5"/>
+                    <text x="297" y="48" text-anchor="middle" font-size="22">&#x1F4CB;</text>
+                    <text x="297" y="70" text-anchor="middle" fill="#e65100" font-size="11" font-weight="700">Copiar</text>
+                    <rect x="258" y="78" width="78" height="16" rx="4" fill="#fff9c4"/>
+                    <text x="297" y="90" text-anchor="middle" fill="#bf360c" font-size="9" font-family="Courier New">Ctrl+C/V</text>
+                </g>
+                <g class="op4">
+                    <rect x="370" y="18" width="94" height="84" rx="10" fill="#fce4ec" stroke="#f48fb1" stroke-width="1.5"/>
+                    <text x="417" y="48" text-anchor="middle" font-size="22">&#x2702;&#xFE0F;</text>
+                    <text x="417" y="70" text-anchor="middle" fill="#880e4f" font-size="11" font-weight="700">Mover</text>
+                    <rect x="378" y="78" width="78" height="16" rx="4" fill="#f8bbd0"/>
+                    <text x="417" y="90" text-anchor="middle" fill="#880e4f" font-size="9" font-family="Courier New">Ctrl+X/V</text>
+                </g>
+                <!-- linha 2 -->
+                <g class="op5">
+                    <rect x="70" y="108" width="94" height="84" rx="10" fill="#fbe9e7" stroke="#ffab91" stroke-width="1.5"/>
+                    <text x="117" y="138" text-anchor="middle" font-size="22">&#x1F5D1;&#xFE0F;</text>
+                    <text x="117" y="160" text-anchor="middle" fill="#bf360c" font-size="11" font-weight="700">Excluir</text>
+                    <rect x="82" y="168" width="70" height="16" rx="4" fill="#ffccbc"/>
+                    <text x="117" y="180" text-anchor="middle" fill="#bf360c" font-size="9" font-family="Courier New">Delete</text>
+                </g>
+                <g class="op6">
+                    <rect x="310" y="108" width="94" height="84" rx="10" fill="#ede7f6" stroke="#ce93d8" stroke-width="1.5"/>
+                    <text x="357" y="138" text-anchor="middle" font-size="22">&#x1F50D;</text>
+                    <text x="357" y="160" text-anchor="middle" fill="#4a148c" font-size="11" font-weight="700">Pesquisar</text>
+                    <rect x="318" y="168" width="78" height="16" rx="4" fill="#e1bee7"/>
+                    <text x="357" y="180" text-anchor="middle" fill="#4a148c" font-size="9" font-family="Courier New">Win+S</text>
+                </g>
+            </svg>
+        </div>
+
+        <p style="background:#fff8e1;border-left:4px solid #f59e0b;padding:14px 18px;border-radius:0 10px 10px 0;color:#78350f;font-size:0.93em;">
+            &#x26A0;&#xFE0F; <strong>Aten&ccedil;&atilde;o com a Lixeira!</strong> Ao excluir com <kbd>Delete</kbd>, o arquivo vai para a Lixeira e pode ser recuperado. Com <strong>Shift+Delete</strong>, a remo&ccedil;&atilde;o &eacute; permanente e n&atilde;o tem volta f&aacute;cil.
+        </p>
+    </div>
+
+    <!-- SLIDE 5: Extensões -->
+    <div class="content-card">
+        <h2>&#x1F3F7;&#xFE0F; Extens&otilde;es e Tipos de Arquivo</h2>
+        <p>A <strong>extens&atilde;o</strong> &eacute; a parte do nome ap&oacute;s o ponto (ex.: <code>.pdf</code>). Ela define o <strong>formato</strong> e qual programa deve abrir o arquivo. Conhecer as principais extens&otilde;es &eacute; essencial no dia a dia.</p>
+
+        <!-- SVG: ícones de arquivo brotando com labels -->
+        <div class="svg-wrap">
+            <svg width="520" height="100" viewBox="0 0 520 100" xmlns="http://www.w3.org/2000/svg">
+                <style>
+                    @keyframes icon-rise { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+                    .ic1{animation:icon-rise 0.5s 0.1s both;}
+                    .ic2{animation:icon-rise 0.5s 0.3s both;}
+                    .ic3{animation:icon-rise 0.5s 0.5s both;}
+                    .ic4{animation:icon-rise 0.5s 0.7s both;}
+                    .ic5{animation:icon-rise 0.5s 0.9s both;}
+                    .ic6{animation:icon-rise 0.5s 1.1s both;}
+                    .ic7{animation:icon-rise 0.5s 1.3s both;}
+                </style>
+                <!-- 7 tipos de arquivo -->
+                <!-- .docx -->
+                <g class="ic1" transform="translate(10,10)">
+                    <rect width="56" height="62" rx="6" fill="#dbeafe"/>
+                    <polyline points="38,0 56,18 56,62" fill="none" stroke="#93c5fd" stroke-width="1.5"/>
+                    <polygon points="38,0 56,18 38,18" fill="#93c5fd"/>
+                    <text x="28" y="46" text-anchor="middle" font-size="10" fill="#1e40af" font-weight="700">.docx</text>
+                    <text x="28" y="82" text-anchor="middle" font-size="9" fill="#475569">Documento</text>
+                </g>
+                <!-- .jpg -->
+                <g class="ic2" transform="translate(80,10)">
+                    <rect width="56" height="62" rx="6" fill="#d1fae5"/>
+                    <polyline points="38,0 56,18 56,62" fill="none" stroke="#6ee7b7" stroke-width="1.5"/>
+                    <polygon points="38,0 56,18 38,18" fill="#6ee7b7"/>
+                    <text x="28" y="46" text-anchor="middle" font-size="10" fill="#065f46" font-weight="700">.jpg</text>
+                    <text x="28" y="82" text-anchor="middle" font-size="9" fill="#475569">Imagem</text>
+                </g>
+                <!-- .mp4 -->
+                <g class="ic3" transform="translate(150,10)">
+                    <rect width="56" height="62" rx="6" fill="#ede9fe"/>
+                    <polyline points="38,0 56,18 56,62" fill="none" stroke="#c4b5fd" stroke-width="1.5"/>
+                    <polygon points="38,0 56,18 38,18" fill="#c4b5fd"/>
+                    <text x="28" y="46" text-anchor="middle" font-size="10" fill="#5b21b6" font-weight="700">.mp4</text>
+                    <text x="28" y="82" text-anchor="middle" font-size="9" fill="#475569">Vídeo</text>
+                </g>
+                <!-- .mp3 -->
+                <g class="ic4" transform="translate(220,10)">
+                    <rect width="56" height="62" rx="6" fill="#fce7f3"/>
+                    <polyline points="38,0 56,18 56,62" fill="none" stroke="#f9a8d4" stroke-width="1.5"/>
+                    <polygon points="38,0 56,18 38,18" fill="#f9a8d4"/>
+                    <text x="28" y="46" text-anchor="middle" font-size="10" fill="#9d174d" font-weight="700">.mp3</text>
+                    <text x="28" y="82" text-anchor="middle" font-size="9" fill="#475569">Áudio</text>
+                </g>
+                <!-- .zip -->
+                <g class="ic5" transform="translate(290,10)">
+                    <rect width="56" height="62" rx="6" fill="#fef3c7"/>
+                    <polyline points="38,0 56,18 56,62" fill="none" stroke="#fcd34d" stroke-width="1.5"/>
+                    <polygon points="38,0 56,18 38,18" fill="#fcd34d"/>
+                    <text x="28" y="46" text-anchor="middle" font-size="10" fill="#92400e" font-weight="700">.zip</text>
+                    <text x="28" y="82" text-anchor="middle" font-size="9" fill="#475569">Compactado</text>
+                </g>
+                <!-- .exe -->
+                <g class="ic6" transform="translate(360,10)">
+                    <rect width="56" height="62" rx="6" fill="#fee2e2"/>
+                    <polyline points="38,0 56,18 56,62" fill="none" stroke="#fca5a5" stroke-width="1.5"/>
+                    <polygon points="38,0 56,18 38,18" fill="#fca5a5"/>
+                    <text x="28" y="46" text-anchor="middle" font-size="10" fill="#991b1b" font-weight="700">.exe</text>
+                    <text x="28" y="82" text-anchor="middle" font-size="9" fill="#991b1b">Executável ⚠</text>
+                </g>
+                <!-- .py -->
+                <g class="ic7" transform="translate(430,10)">
+                    <rect width="56" height="62" rx="6" fill="#f0fdf4"/>
+                    <polyline points="38,0 56,18 56,62" fill="none" stroke="#86efac" stroke-width="1.5"/>
+                    <polygon points="38,0 56,18 38,18" fill="#86efac"/>
+                    <text x="28" y="46" text-anchor="middle" font-size="10" fill="#14532d" font-weight="700">.py</text>
+                    <text x="28" y="82" text-anchor="middle" font-size="9" fill="#475569">Código</text>
+                </g>
+            </svg>
+        </div>
+
+        <table class="ext-table">
+            <tr>
+                <th>Categoria</th>
+                <th>Extens&otilde;es comuns</th>
+                <th>Abre com</th>
+            </tr>
+            <tr>
+                <td>&#x1F4DD; Documentos</td>
+                <td>
+                    <span class="ext-badge ext-doc">.docx</span>
+                    <span class="ext-badge ext-doc">.pdf</span>
+                    <span class="ext-badge ext-doc">.txt</span>
+                </td>
+                <td>Word, Acrobat, Bloco de Notas</td>
+            </tr>
+            <tr>
+                <td>&#x1F5BC;&#xFE0F; Imagens</td>
+                <td>
+                    <span class="ext-badge ext-img">.jpg</span>
+                    <span class="ext-badge ext-img">.png</span>
+                    <span class="ext-badge ext-img">.gif</span>
+                </td>
+                <td>Visualizador de Fotos, Photoshop</td>
+            </tr>
+            <tr>
+                <td>&#x1F3AC; V&iacute;deos</td>
+                <td>
+                    <span class="ext-badge ext-vid">.mp4</span>
+                    <span class="ext-badge ext-vid">.mkv</span>
+                    <span class="ext-badge ext-vid">.avi</span>
+                </td>
+                <td>VLC, Windows Media Player</td>
+            </tr>
+            <tr>
+                <td>&#x1F3B5; &Aacute;udios</td>
+                <td>
+                    <span class="ext-badge ext-audio">.mp3</span>
+                    <span class="ext-badge ext-audio">.wav</span>
+                    <span class="ext-badge ext-audio">.flac</span>
+                </td>
+                <td>VLC, Spotify</td>
+            </tr>
+            <tr>
+                <td>&#x1F4E6; Compactados</td>
+                <td>
+                    <span class="ext-badge ext-zip">.zip</span>
+                    <span class="ext-badge ext-zip">.rar</span>
+                    <span class="ext-badge ext-zip">.7z</span>
+                </td>
+                <td>WinRAR, 7-Zip</td>
+            </tr>
+            <tr>
+                <td>&#x1F5A5;&#xFE0F; Execut&aacute;veis</td>
+                <td>
+                    <span class="ext-badge ext-sys">.exe</span>
+                    <span class="ext-badge ext-sys">.bat</span>
+                    <span class="ext-badge ext-sys">.msi</span>
+                </td>
+                <td>S.O. &mdash; <strong>cuidado com fontes desconhecidas!</strong></td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- SLIDE 6: Boas Práticas -->
+    <div class="content-card">
+        <h2>&#x1F4A1; Boas Pr&aacute;ticas de Organiza&ccedil;&atilde;o</h2>
+        <p>Manter arquivos bem organizados economiza tempo, evita perdas e facilita o compartilhamento. Veja as principais pr&aacute;ticas:</p>
+
+        <!-- SVG: checklist animado -->
+        <div class="svg-wrap">
+            <svg width="520" height="195" viewBox="0 0 520 195" xmlns="http://www.w3.org/2000/svg">
+                <style>
+                    @keyframes check-draw { from{stroke-dashoffset:30} to{stroke-dashoffset:0} }
+                    @keyframes row-in { from{opacity:0;transform:translateX(-16px)} to{opacity:1;transform:translateX(0)} }
+                    .row1{animation:row-in 0.5s 0.2s both;}
+                    .row2{animation:row-in 0.5s 0.5s both;}
+                    .row3{animation:row-in 0.5s 0.8s both;}
+                    .row4{animation:row-in 0.5s 1.1s both;}
+                    .row5{animation:row-in 0.5s 1.4s both;}
+                    .row6{animation:row-in 0.5s 1.7s both;}
+                    .ck{stroke-dasharray:30;animation:check-draw 0.4s 2s both;}
+                </style>
+                <!-- linhas de dicas -->
+                <g class="row1">
+                    <rect x="10" y="8" width="500" height="28" rx="7" fill="#e8f5e9"/>
+                    <text x="24" y="27" fill="#1b5e20" font-size="13">&#x1F4C2;</text>
+                    <text x="48" y="27" fill="#1b5e20" font-size="11"><tspan font-weight="700">Estrutura lógica de pastas</tspan> — Escola &gt; 2025 &gt; Informática &gt; Trabalhos</text>
+                </g>
+                <g class="row2">
+                    <rect x="10" y="42" width="500" height="28" rx="7" fill="#e3f2fd"/>
+                    <text x="24" y="61" fill="#0d47a1" font-size="13">&#x270F;&#xFE0F;</text>
+                    <text x="48" y="61" fill="#0d47a1" font-size="11"><tspan font-weight="700">Nomes descritivos, sem espaços</tspan> — relatorio-final-2025.docx</text>
+                </g>
+                <g class="row3">
+                    <rect x="10" y="76" width="500" height="28" rx="7" fill="#fff8e1"/>
+                    <text x="24" y="95" fill="#e65100" font-size="13">&#x1F4C5;</text>
+                    <text x="48" y="95" fill="#e65100" font-size="11"><tspan font-weight="700">Datas no formato AAAA-MM-DD</tspan> — 2025-06-10-ata-reuniao.pdf</text>
+                </g>
+                <g class="row4">
+                    <rect x="10" y="110" width="500" height="28" rx="7" fill="#fbe9e7"/>
+                    <text x="24" y="129" fill="#bf360c" font-size="13">&#x1F5D1;&#xFE0F;</text>
+                    <text x="48" y="129" fill="#bf360c" font-size="11"><tspan font-weight="700">Esvazie a Lixeira regularmente</tspan> — arquivos lá ainda ocupam espaço</text>
+                </g>
+                <g class="row5">
+                    <rect x="10" y="144" width="500" height="28" rx="7" fill="#ede7f6"/>
+                    <text x="24" y="163" fill="#4a148c" font-size="13">&#x2601;&#xFE0F;</text>
+                    <text x="48" y="163" fill="#4a148c" font-size="11"><tspan font-weight="700">Backup na nuvem</tspan> — Google Drive, OneDrive ou Dropbox</text>
+                </g>
+                <g class="row6">
+                    <rect x="10" y="178" width="500" height="28" rx="7" fill="#e8eaf6"/>
+                    <text x="24" y="197" fill="#1a237e" font-size="13">&#x1F50D;</text>
+                    <text x="48" y="197" fill="#1a237e" font-size="11"><tspan font-weight="700">Use a pesquisa do S.O.</tspan> — Win+S antes de procurar manualmente</text>
+                </g>
+            </svg>
+        </div>
+    </div>
+
+    <!-- SLIDE 7: Quiz -->
+    <div class="content-card">
+        <h2>&#x1F3AF; Verifique seu Conhecimento</h2>
+
+        <div class="mc-root" data-ex="mc13">
+
+            <div class="mc-question" data-correct="b">
+                <p><strong>1.</strong> O que &eacute; a extens&atilde;o de um arquivo?</p>
+                <div class="mc-option" data-opt="a">O tamanho em bytes do arquivo</div>
+                <div class="mc-option" data-opt="b">A parte do nome ap&oacute;s o ponto, que indica o tipo e o programa associado</div>
+                <div class="mc-option" data-opt="c">O local onde o arquivo est&aacute; guardado no disco</div>
+                <div class="mc-option" data-opt="d">A data de cria&ccedil;&atilde;o do arquivo</div>
+                <div class="mc-explanation ok">Correto! A extens&atilde;o (ex.: .pdf, .jpg) aparece ap&oacute;s o ponto e define o formato e o programa que deve abrir o arquivo.</div>
+                <div class="mc-explanation err">A extens&atilde;o &eacute; a sigla ap&oacute;s o ponto no nome do arquivo (ex.: .docx, .mp4) que define seu tipo e qual programa o abre.</div>
+            </div>
+
+            <div class="mc-question" data-correct="c">
+                <p><strong>2.</strong> Qual atalho de teclado move (recorta) um arquivo no Windows?</p>
+                <div class="mc-option" data-opt="a">Ctrl + C</div>
+                <div class="mc-option" data-opt="b">Ctrl + Z</div>
+                <div class="mc-option" data-opt="c">Ctrl + X</div>
+                <div class="mc-option" data-opt="d">F2</div>
+                <div class="mc-explanation ok">Correto! Ctrl+X recorta (move). Ctrl+C copia, Ctrl+V cola, F2 renomeia e Ctrl+Z desfaz.</div>
+                <div class="mc-explanation err">Ctrl+X &eacute; o atalho para mover/recortar. Ctrl+C copia sem remover o original.</div>
+            </div>
+
+            <div class="mc-question" data-correct="a">
+                <p><strong>3.</strong> No Windows, qual &eacute; a pasta raiz do sistema de arquivos?</p>
+                <div class="mc-option" data-opt="a">C:\</div>
+                <div class="mc-option" data-opt="b">/home</div>
+                <div class="mc-option" data-opt="c">Meus Documentos</div>
+                <div class="mc-option" data-opt="d">Desktop</div>
+                <div class="mc-explanation ok">Correto! No Windows, C:\ &eacute; a raiz do disco principal. No Linux/macOS, a raiz &eacute; representada por /.</div>
+                <div class="mc-explanation err">No Windows, a raiz &eacute; C:\. /home &eacute; um diret&oacute;rio t&iacute;pico do Linux, n&atilde;o a raiz do Windows.</div>
+            </div>
+
+            <div class="mc-question" data-correct="d">
+                <p><strong>4.</strong> Voc&ecirc; precisa abrir uma foto tirada com o celular. Qual extens&atilde;o &eacute; mais prov&aacute;vel?</p>
+                <div class="mc-option" data-opt="a">.docx</div>
+                <div class="mc-option" data-opt="b">.mp3</div>
+                <div class="mc-option" data-opt="c">.xlsx</div>
+                <div class="mc-option" data-opt="d">.jpg</div>
+                <div class="mc-explanation ok">Correto! .jpg (JPEG) &eacute; o formato de imagem mais comum em fotos de celular e c&acirc;meras digitais.</div>
+                <div class="mc-explanation err">.jpg &eacute; o formato correto para fotos. .docx &eacute; documento Word, .mp3 &eacute; &aacute;udio e .xlsx &eacute; planilha.</div>
+            </div>
+
+            <div class="mc-question" data-correct="b">
+                <p><strong>5.</strong> O que acontece quando voc&ecirc; usa <strong>Shift + Delete</strong> em um arquivo?</p>
+                <div class="mc-option" data-opt="a">O arquivo vai para a Lixeira e pode ser recuperado</div>
+                <div class="mc-option" data-opt="b">O arquivo &eacute; removido permanentemente, sem passar pela Lixeira</div>
+                <div class="mc-option" data-opt="c">O arquivo &eacute; movido para a pasta Downloads</div>
+                <div class="mc-option" data-opt="d">O arquivo &eacute; compactado automaticamente</div>
+                <div class="mc-explanation ok">Correto! Shift+Delete remove o arquivo definitivamente, pulando a Lixeira. Use com cuidado!</div>
+                <div class="mc-explanation err">Delete sozinho vai para a Lixeira (recuper&aacute;vel). Shift+Delete &eacute; permanente e n&atilde;o tem volta f&aacute;cil.</div>
+            </div>
+
+            <div class="mc-question" data-correct="c">
+                <p><strong>6.</strong> Qual &eacute; a boa pr&aacute;tica recomendada para nomear arquivos?</p>
+                <div class="mc-option" data-opt="a">Usar nomes curtos como "doc1", "img2", "arq3"</div>
+                <div class="mc-option" data-opt="b">Usar espa&ccedil;os e acentos para ficar mais leg&iacute;vel</div>
+                <div class="mc-option" data-opt="c">Usar nomes descritivos sem espa&ccedil;os, preferencialmente com data no formato AAAA-MM-DD</div>
+                <div class="mc-option" data-opt="d">Deixar o sistema escolher o nome automaticamente</div>
+                <div class="mc-explanation ok">Correto! Nomes descritivos com data facilitam a busca e a ordena&ccedil;&atilde;o. Evitar espa&ccedil;os previne erros em sistemas diferentes.</div>
+                <div class="mc-explanation err">Nomes gen&eacute;ricos dificultam encontrar o arquivo depois. Espa&ccedil;os podem causar problemas em alguns sistemas.</div>
+            </div>
+
+            <div class="mc-actions">
+                <button onclick="mcVerify('mc13')">Verificar</button>
+                <button onclick="mcReset('mc13')">Refazer</button>
+            </div>
+            <div class="mc-result" id="mc13-result"></div>
+        </div>
+    </div>
+
+    <!-- SLIDE 8: Atividade Prática -->
+    <div class="content-card">
+        <h2>&#x1F6E0;&#xFE0F; Atividade Pr&aacute;tica &mdash; Organizando Arquivos</h2>
+
+        <div class="yt-wrap">
+            <iframe src="https://www.youtube.com/embed/kCB8AuMah5c"
+                    title="Gerenciamento de Arquivos no Windows"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+        </div>
+
+        <p><strong>Materiais necess&aacute;rios:</strong></p>
+        <ul class="mat-list">
+            <li>&#x1F4BB; Computador com Windows</li>
+            <li>&#x1F4C1; Explorador de Arquivos</li>
+            <li>&#x270F;&#xFE0F; Papel e caneta para anotar</li>
+        </ul>
+
+        <!-- Passo 1 -->
+        <div class="step-svg-card">
+            <div class="step-num">1</div>
+            <svg width="64" height="56" viewBox="0 0 64 56" xmlns="http://www.w3.org/2000/svg">
+                <style>
+                    @keyframes key-press{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
+                    .kw{animation:key-press 1s 0.5s ease-in-out infinite;}
+                    .ke{animation:key-press 1s 0.7s ease-in-out infinite;}
+                </style>
+                <!-- Win+E -->
+                <rect x="4" y="18" width="26" height="22" rx="4" fill="#1565c0" class="kw"/>
+                <text x="17" y="33" text-anchor="middle" fill="white" font-size="10" font-weight="700">Win</text>
+                <text x="36" y="31" fill="#94a3b8" font-size="14" font-weight="700">+</text>
+                <rect x="42" y="18" width="18" height="22" rx="4" fill="#1976d2" class="ke"/>
+                <text x="51" y="33" text-anchor="middle" fill="white" font-size="11" font-weight="700">E</text>
+                <text x="32" y="52" text-anchor="middle" fill="#64748b" font-size="9">Explorador</text>
+            </svg>
+            <div class="step-text">
+                <strong>Abra o Explorador de Arquivos</strong>
+                <span>Pressione <kbd>Windows</kbd>+<kbd>E</kbd> para abrir o Explorador. Navegue at&eacute; a pasta <strong>Documentos</strong>.</span>
+            </div>
+        </div>
+
+        <!-- Passo 2 -->
+        <div class="step-svg-card">
+            <div class="step-num">2</div>
+            <svg width="64" height="56" viewBox="0 0 64 56" xmlns="http://www.w3.org/2000/svg">
+                <style>
+                    @keyframes folder-create{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+                    .fc{animation:folder-create 1.5s 1s ease-in-out infinite;}
+                </style>
+                <g class="fc" transform="translate(8,6)">
+                    <rect x="0" y="14" width="48" height="32" rx="5" fill="#1565c0"/>
+                    <rect x="0" y="6" width="22" height="12" rx="4" fill="#1976d2"/>
+                    <rect x="4" y="18" width="40" height="24" rx="3" fill="#42a5f5"/>
+                    <text x="24" y="34" text-anchor="middle" fill="white" font-size="16" font-weight="700">+</text>
+                </g>
+                <text x="32" y="52" text-anchor="middle" fill="#64748b" font-size="9">Nova pasta</text>
+            </svg>
+            <div class="step-text">
+                <strong>Crie uma estrutura de pastas</strong>
+                <span>Crie a hierarquia: <strong>Escola &rarr; 2025 &rarr; Inform&aacute;tica &rarr; Aulas</strong>. Use bot&atilde;o direito &rarr; Novo &rarr; Pasta em cada n&iacute;vel.</span>
+            </div>
+        </div>
+
+        <!-- Passo 3 -->
+        <div class="step-svg-card">
+            <div class="step-num">3</div>
+            <svg width="64" height="56" viewBox="0 0 64 56" xmlns="http://www.w3.org/2000/svg">
+                <style>@keyframes ext-blink{0%,100%{opacity:1}50%{opacity:0.4}}.extbl{animation:ext-blink 1.2s infinite;}</style>
+                <rect x="8" y="8" width="48" height="36" rx="5" fill="#1e293b"/>
+                <text x="32" y="20" text-anchor="middle" fill="#64748b" font-size="8">relatorio</text>
+                <text x="32" y="32" text-anchor="middle" fill="#34d399" font-size="11" font-weight="700" class="extbl">.docx</text>
+                <text x="32" y="42" text-anchor="middle" fill="#64748b" font-size="7">extensão visível</text>
+                <text x="32" y="52" text-anchor="middle" fill="#64748b" font-size="9">Extensões</text>
+            </svg>
+            <div class="step-text">
+                <strong>Ative a exibi&ccedil;&atilde;o de extens&otilde;es</strong>
+                <span>Em <strong>Exibir</strong>, marque <em>"Extens&otilde;es de nome de arquivo"</em>. Liste 5 extens&otilde;es diferentes que encontrar na pasta Downloads.</span>
+            </div>
+        </div>
+
+        <!-- Passo 4 -->
+        <div class="step-svg-card">
+            <div class="step-num">4</div>
+            <svg width="64" height="56" viewBox="0 0 64 56" xmlns="http://www.w3.org/2000/svg">
+                <style>
+                    @keyframes move-file{0%{transform:translateX(0)}60%{transform:translateX(22px)}100%{transform:translateX(22px)}}
+                    .mf{animation:move-file 1.5s 0.5s ease-in-out infinite;}
+                </style>
+                <g class="mf">
+                    <rect x="4" y="14" width="26" height="30" rx="4" fill="#dbeafe"/>
+                    <polyline points="22,14 30,22 30,44" fill="none" stroke="#93c5fd" stroke-width="1"/>
+                    <polygon points="22,14 30,22 22,22" fill="#93c5fd"/>
+                    <text x="16" y="36" text-anchor="middle" font-size="8" fill="#1e40af">.jpg</text>
+                </g>
+                <rect x="36" y="22" width="26" height="22" rx="4" fill="#1565c0" opacity="0.4"/>
+                <text x="49" y="36" text-anchor="middle" fill="white" font-size="8">Imgs</text>
+                <text x="32" y="52" text-anchor="middle" fill="#64748b" font-size="9">Mover</text>
+            </svg>
+            <div class="step-text">
+                <strong>Organize a pasta Downloads</strong>
+                <span>Crie subpastas <strong>Imagens</strong>, <strong>Documentos</strong>, <strong>V&iacute;deos</strong> e <strong>Outros</strong>. Mova pelo menos 5 arquivos com <kbd>Ctrl+X</kbd> / <kbd>Ctrl+V</kbd>.</span>
+            </div>
+        </div>
+
+        <!-- Passo 5 -->
+        <div class="step-svg-card">
+            <div class="step-num">5</div>
+            <svg width="64" height="56" viewBox="0 0 64 56" xmlns="http://www.w3.org/2000/svg">
+                <style>@keyframes prop-in{from{opacity:0}to{opacity:1}}.pi{animation:prop-in 0.8s 1s both;}</style>
+                <rect x="8" y="4" width="48" height="42" rx="5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+                <rect x="8" y="4" width="48" height="14" rx="5" fill="#1565c0"/>
+                <text x="32" y="14" text-anchor="middle" fill="white" font-size="8" font-weight="700">Propriedades</text>
+                <g class="pi">
+                    <text x="14" y="26" fill="#475569" font-size="7">Tipo: .docx</text>
+                    <text x="14" y="34" fill="#475569" font-size="7">Tam: 48 KB</text>
+                    <text x="14" y="42" fill="#475569" font-size="7">Data: 10/04/25</text>
+                </g>
+                <text x="32" y="52" text-anchor="middle" fill="#64748b" font-size="9">Alt+Enter</text>
+            </svg>
+            <div class="step-text">
+                <strong>Inspecione as propriedades</strong>
+                <span>Selecione um arquivo e pressione <kbd>Alt+Enter</kbd>. Anote: tipo, tamanho, data de cria&ccedil;&atilde;o e data de modifica&ccedil;&atilde;o.</span>
+            </div>
+        </div>
+
+        <!-- Passo 6 -->
+        <div class="step-svg-card">
+            <div class="step-num">6</div>
+            <svg width="64" height="56" viewBox="0 0 64 56" xmlns="http://www.w3.org/2000/svg">
+                <style>
+                    @keyframes check-seq{0%,100%{fill:#e2e8f0}50%{fill:#22c55e}}
+                    .cb1{animation:check-seq 1s 0.2s infinite;}
+                    .cb2{animation:check-seq 1s 0.5s infinite;}
+                    .cb3{animation:check-seq 1s 0.8s infinite;}
+                </style>
+                <rect x="8" y="6" width="48" height="42" rx="5" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+                <rect x="14" y="12" width="10" height="10" rx="2" class="cb1"/>
+                <text x="28" y="21" fill="#374151" font-size="8">Ctrl+C</text>
+                <rect x="14" y="25" width="10" height="10" rx="2" class="cb2"/>
+                <text x="28" y="34" fill="#374151" font-size="8">F2 rename</text>
+                <rect x="14" y="38" width="10" height="10" rx="2" class="cb3"/>
+                <text x="28" y="47" fill="#374151" font-size="8">Ctrl+Z</text>
+                <text x="32" y="54" text-anchor="middle" fill="#64748b" font-size="9">Atalhos</text>
+            </svg>
+            <div class="step-text">
+                <strong>Pratique os atalhos essenciais</strong>
+                <span>Execute: <kbd>Ctrl+C</kbd> (copiar), <kbd>Ctrl+V</kbd> (colar), <kbd>Ctrl+Z</kbd> (desfazer), <kbd>F2</kbd> (renomear), <kbd>Delete</kbd> (lixeira). Marque cada um ap&oacute;s realizar.</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-footer">
+        <a href="uni1-03-sistemas-operacionais.html" class="nav-link">&#x2B05; Anterior: Principais S.O.</a>
+        <a href="uni1-05-softwares-utilitarios.html" class="nav-link">Pr&oacute;xima: Softwares Utilit&aacute;rios &#x27A1;</a>
+    </div>
+
+</div>
+
+<script src="slide-mode.js"></script>
+<script src="exercise-drag.js"></script>
+<script src="exercise-mc.js"></script>
+<script src="exercise-print.js"></script>
 </body>
 </html>
