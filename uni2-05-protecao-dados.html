@@ -960,81 +960,98 @@
             <div class="mc-root" data-ex="mc25">
 
                 <!-- Q1 -->
-                <div class="mc-question" data-q="q1" data-correct="C">
-                    <p class="mc-enunciado"><strong>1.</strong> Qual das seguintes senhas é considerada <strong>mais forte</strong>?</p>
-                    <label class="mc-option"><input type="radio" name="mc25-q1" data-opt="A"> <span>A) senha123</span></label>
-                    <label class="mc-option"><input type="radio" name="mc25-q1" data-opt="B"> <span>B) Joao1990!</span></label>
-                    <label class="mc-option"><input type="radio" name="mc25-q1" data-opt="C"> <span>C) GolfinhoVioletaBicicleta42!</span></label>
-                    <label class="mc-option"><input type="radio" name="mc25-q1" data-opt="D"> <span>D) ifrn2025</span></label>
-                    <div class="mc-explanation ok" data-for="C">&#x2705; Correto! GolfinhoVioletaBicicleta42! é uma passphrase com 27 caracteres, palavras aleatórias e símbolo — extremamente difícil de quebrar.</div>
-                    <div class="mc-explanation err" data-for="A">&#x274C; senha123 está na lista das senhas mais usadas do mundo e seria quebrada instantaneamente.</div>
-                    <div class="mc-explanation err" data-for="B">&#x274C; Joao1990! combina nome e ano — previsível e quebrável em segundos com ataques de dicionário.</div>
-                    <div class="mc-explanation err" data-for="D">&#x274C; ifrn2025 é curta, sem símbolos e baseada em informação conhecida — muito fraca.</div>
+                <div class="mc-question" data-correct="c">
+                    <p class="mc-q-text"><strong>1.</strong> Qual das seguintes senhas &eacute; considerada <strong>mais forte</strong>?</p>
+                    <div class="mc-options">
+                        <div class="mc-option" data-opt="a"><span class="mc-letter">A</span> senha123</div>
+                        <div class="mc-option" data-opt="b"><span class="mc-letter">B</span> Joao1990!</div>
+                        <div class="mc-option" data-opt="c"><span class="mc-letter">C</span> GolfinhoVioletaBicicleta42!</div>
+                        <div class="mc-option" data-opt="d"><span class="mc-letter">D</span> ifrn2025</div>
+                    </div>
+                    <div class="mc-explanation ok">&#x2705; Correto! GolfinhoVioletaBicicleta42! &eacute; uma passphrase com 27 caracteres, palavras aleat&oacute;rias e s&iacute;mbolo &mdash; extremamente dif&iacute;cil de quebrar.</div>
+                    <div class="mc-explanation err" data-for="a">&#x274C; senha123 est&aacute; na lista das senhas mais usadas do mundo e seria quebrada instantaneamente.</div>
+                    <div class="mc-explanation err" data-for="b">&#x274C; Joao1990! combina nome e ano &mdash; previs&iacute;vel e quebr&aacute;vel em segundos com ataques de dicion&aacute;rio.</div>
+                    <div class="mc-explanation err" data-for="d">&#x274C; ifrn2025 &eacute; curta, sem s&iacute;mbolos e baseada em informa&ccedil;&atilde;o conhecida &mdash; muito fraca.</div>
                 </div>
+                <hr class="mc-sep">
 
                 <!-- Q2 -->
-                <div class="mc-question" data-q="q2" data-correct="B">
-                    <p class="mc-enunciado"><strong>2.</strong> O que é autenticação em dois fatores (2FA)?</p>
-                    <label class="mc-option"><input type="radio" name="mc25-q2" data-opt="A"> <span>A) Usar duas senhas diferentes para a mesma conta</span></label>
-                    <label class="mc-option"><input type="radio" name="mc25-q2" data-opt="B"> <span>B) Adicionar uma segunda verificação além da senha, como um código no celular</span></label>
-                    <label class="mc-option"><input type="radio" name="mc25-q2" data-opt="C"> <span>C) Criar uma conta de backup caso a principal seja invadida</span></label>
-                    <label class="mc-option"><input type="radio" name="mc25-q2" data-opt="D"> <span>D) Criptografar a senha antes de enviá-la ao servidor</span></label>
-                    <div class="mc-explanation ok" data-for="B">&#x2705; Exato! O 2FA exige um segundo fator (algo que você tem ou é) além da senha, tornando muito mais difícil o acesso não autorizado.</div>
-                    <div class="mc-explanation err" data-for="A">&#x274C; Duas senhas na mesma conta não é 2FA — o segundo fator precisa ser de uma categoria diferente (algo que você tem ou é).</div>
-                    <div class="mc-explanation err" data-for="C">&#x274C; Conta de backup é uma estratégia de recuperação, não autenticação em dois fatores.</div>
-                    <div class="mc-explanation err" data-for="D">&#x274C; Criptografia da senha é uma medida do servidor, não o conceito de 2FA.</div>
+                <div class="mc-question" data-correct="b">
+                    <p class="mc-q-text"><strong>2.</strong> O que &eacute; autentica&ccedil;&atilde;o em dois fatores (2FA)?</p>
+                    <div class="mc-options">
+                        <div class="mc-option" data-opt="a"><span class="mc-letter">A</span> Usar duas senhas diferentes para a mesma conta</div>
+                        <div class="mc-option" data-opt="b"><span class="mc-letter">B</span> Adicionar uma segunda verifica&ccedil;&atilde;o al&eacute;m da senha, como um c&oacute;digo no celular</div>
+                        <div class="mc-option" data-opt="c"><span class="mc-letter">C</span> Criar uma conta de backup caso a principal seja invadida</div>
+                        <div class="mc-option" data-opt="d"><span class="mc-letter">D</span> Criptografar a senha antes de envi&aacute;-la ao servidor</div>
+                    </div>
+                    <div class="mc-explanation ok">&#x2705; Exato! O 2FA exige um segundo fator (algo que voc&ecirc; tem ou &eacute;) al&eacute;m da senha, tornando muito mais dif&iacute;cil o acesso n&atilde;o autorizado.</div>
+                    <div class="mc-explanation err" data-for="a">&#x274C; Duas senhas na mesma conta n&atilde;o &eacute; 2FA &mdash; o segundo fator precisa ser de uma categoria diferente.</div>
+                    <div class="mc-explanation err" data-for="c">&#x274C; Conta de backup &eacute; uma estrat&eacute;gia de recupera&ccedil;&atilde;o, n&atilde;o autentica&ccedil;&atilde;o em dois fatores.</div>
+                    <div class="mc-explanation err" data-for="d">&#x274C; Criptografia da senha &eacute; uma medida do servidor, n&atilde;o o conceito de 2FA.</div>
                 </div>
+                <hr class="mc-sep">
 
                 <!-- Q3 -->
-                <div class="mc-question" data-q="q3" data-correct="A">
-                    <p class="mc-enunciado"><strong>3.</strong> Qual método de 2FA é considerado <strong>mais seguro</strong>?</p>
-                    <label class="mc-option"><input type="radio" name="mc25-q3" data-opt="A"> <span>A) App autenticador (Google Authenticator, Authy)</span></label>
-                    <label class="mc-option"><input type="radio" name="mc25-q3" data-opt="B"> <span>B) Código por SMS</span></label>
-                    <label class="mc-option"><input type="radio" name="mc25-q3" data-opt="C"> <span>C) Pergunta de segurança</span></label>
-                    <label class="mc-option"><input type="radio" name="mc25-q3" data-opt="D"> <span>D) E-mail de confirmação</span></label>
-                    <div class="mc-explanation ok" data-for="A">&#x2705; Correto! Apps autenticadores geram códigos offline a cada 30 segundos, sem depender de operadora — muito mais seguro que SMS.</div>
-                    <div class="mc-explanation err" data-for="B">&#x274C; SMS é vulnerável ao ataque SIM swap, onde o criminoso clona seu número de telefone junto à operadora.</div>
-                    <div class="mc-explanation err" data-for="C">&#x274C; Perguntas de segurança geralmente têm respostas previsíveis ou que podem ser descobertas em redes sociais.</div>
-                    <div class="mc-explanation err" data-for="D">&#x274C; E-mail de confirmação depende da segurança do próprio e-mail — se ele for invadido, o segundo fator cai junto.</div>
+                <div class="mc-question" data-correct="a">
+                    <p class="mc-q-text"><strong>3.</strong> Qual m&eacute;todo de 2FA &eacute; considerado <strong>mais seguro</strong>?</p>
+                    <div class="mc-options">
+                        <div class="mc-option" data-opt="a"><span class="mc-letter">A</span> App autenticador (Google Authenticator, Authy)</div>
+                        <div class="mc-option" data-opt="b"><span class="mc-letter">B</span> C&oacute;digo por SMS</div>
+                        <div class="mc-option" data-opt="c"><span class="mc-letter">C</span> Pergunta de seguran&ccedil;a</div>
+                        <div class="mc-option" data-opt="d"><span class="mc-letter">D</span> E-mail de confirma&ccedil;&atilde;o</div>
+                    </div>
+                    <div class="mc-explanation ok">&#x2705; Correto! Apps autenticadores geram c&oacute;digos offline a cada 30 segundos, sem depender de operadora &mdash; muito mais seguro que SMS.</div>
+                    <div class="mc-explanation err" data-for="b">&#x274C; SMS &eacute; vulner&aacute;vel ao ataque SIM swap, onde o criminoso clona seu n&uacute;mero junto &agrave; operadora.</div>
+                    <div class="mc-explanation err" data-for="c">&#x274C; Perguntas de seguran&ccedil;a geralmente t&ecirc;m respostas previs&iacute;veis ou descobr&iacute;veis em redes sociais.</div>
+                    <div class="mc-explanation err" data-for="d">&#x274C; E-mail de confirma&ccedil;&atilde;o depende da seguran&ccedil;a do pr&oacute;prio e-mail &mdash; se invadido, o segundo fator cai junto.</div>
                 </div>
+                <hr class="mc-sep">
 
                 <!-- Q4 -->
-                <div class="mc-question" data-q="q4" data-correct="D">
-                    <p class="mc-enunciado"><strong>4.</strong> Você está saindo de férias por 10 dias. O que <strong>NÃO</strong> deve fazer nas redes sociais?</p>
-                    <label class="mc-option"><input type="radio" name="mc25-q4" data-opt="A"> <span>A) Desativar a geolocalização automática de fotos</span></label>
-                    <label class="mc-option"><input type="radio" name="mc25-q4" data-opt="B"> <span>B) Revisar as configurações de privacidade do perfil</span></label>
-                    <label class="mc-option"><input type="radio" name="mc25-q4" data-opt="C"> <span>C) Publicar fotos da viagem apenas depois de voltar</span></label>
-                    <label class="mc-option"><input type="radio" name="mc25-q4" data-opt="D"> <span>D) Anunciar publicamente que a casa ficará vazia por 10 dias</span></label>
-                    <div class="mc-explanation ok" data-for="D">&#x2705; Correto! Anunciar que a casa ficará vazia é um convite a furtos — criminosos monitoram redes sociais para identificar oportunidades.</div>
-                    <div class="mc-explanation err" data-for="A">&#x274C; Desativar geolocalização é uma boa prática de privacidade — você DEVE fazer isso.</div>
-                    <div class="mc-explanation err" data-for="B">&#x274C; Revisar configurações de privacidade é recomendado — você DEVE fazer isso antes de viajar.</div>
-                    <div class="mc-explanation err" data-for="C">&#x274C; Publicar fotos após voltar é a atitude correta — evita divulgar sua ausência em tempo real.</div>
+                <div class="mc-question" data-correct="d">
+                    <p class="mc-q-text"><strong>4.</strong> Voc&ecirc; est&aacute; saindo de f&eacute;rias por 10 dias. O que <strong>N&Atilde;O</strong> deve fazer nas redes sociais?</p>
+                    <div class="mc-options">
+                        <div class="mc-option" data-opt="a"><span class="mc-letter">A</span> Desativar a geolocaliza&ccedil;&atilde;o autom&aacute;tica de fotos</div>
+                        <div class="mc-option" data-opt="b"><span class="mc-letter">B</span> Revisar as configura&ccedil;&otilde;es de privacidade do perfil</div>
+                        <div class="mc-option" data-opt="c"><span class="mc-letter">C</span> Publicar fotos da viagem apenas depois de voltar</div>
+                        <div class="mc-option" data-opt="d"><span class="mc-letter">D</span> Anunciar publicamente que a casa ficar&aacute; vazia por 10 dias</div>
+                    </div>
+                    <div class="mc-explanation ok">&#x2705; Correto! Anunciar que a casa ficar&aacute; vazia &eacute; um convite a furtos &mdash; criminosos monitoram redes sociais para identificar oportunidades.</div>
+                    <div class="mc-explanation err" data-for="a">&#x274C; Desativar geolocaliza&ccedil;&atilde;o &eacute; uma boa pr&aacute;tica &mdash; voc&ecirc; DEVE fazer isso.</div>
+                    <div class="mc-explanation err" data-for="b">&#x274C; Revisar configura&ccedil;&otilde;es de privacidade &eacute; recomendado &mdash; voc&ecirc; DEVE fazer isso antes de viajar.</div>
+                    <div class="mc-explanation err" data-for="c">&#x274C; Publicar fotos ap&oacute;s voltar &eacute; a atitude correta &mdash; evita divulgar sua aus&ecirc;ncia em tempo real.</div>
                 </div>
+                <hr class="mc-sep">
 
                 <!-- Q5 -->
-                <div class="mc-question" data-q="q5" data-correct="C">
-                    <p class="mc-enunciado"><strong>5.</strong> O que são cookies de rastreamento?</p>
-                    <label class="mc-option"><input type="radio" name="mc25-q5" data-opt="A"> <span>A) Vírus que os sites instalam para roubar senhas</span></label>
-                    <label class="mc-option"><input type="radio" name="mc25-q5" data-opt="B"> <span>B) Arquivos que mantêm você logado em sites</span></label>
-                    <label class="mc-option"><input type="radio" name="mc25-q5" data-opt="C"> <span>C) Arquivos que monitoram seu comportamento de navegação e compartilham com anunciantes</span></label>
-                    <label class="mc-option"><input type="radio" name="mc25-q5" data-opt="D"> <span>D) Extensões de navegador que bloqueiam anúncios</span></label>
-                    <div class="mc-explanation ok" data-for="C">&#x2705; Correto! Cookies de rastreamento (third-party cookies) monitoram sites visitados, criam perfil comportamental e compartilham com redes de anúncios.</div>
-                    <div class="mc-explanation err" data-for="A">&#x274C; Cookies não são vírus — são arquivos de texto armazenados pelo navegador. Podem comprometer privacidade, mas não roubam senhas diretamente.</div>
-                    <div class="mc-explanation err" data-for="B">&#x274C; Essa é a função dos cookies de sessão (úteis), não dos cookies de rastreamento.</div>
-                    <div class="mc-explanation err" data-for="D">&#x274C; Extensões como uBlock Origin bloqueiam rastreadores — elas são a proteção contra cookies de rastreamento, não a definição deles.</div>
+                <div class="mc-question" data-correct="c">
+                    <p class="mc-q-text"><strong>5.</strong> O que s&atilde;o cookies de rastreamento?</p>
+                    <div class="mc-options">
+                        <div class="mc-option" data-opt="a"><span class="mc-letter">A</span> V&iacute;rus que os sites instalam para roubar senhas</div>
+                        <div class="mc-option" data-opt="b"><span class="mc-letter">B</span> Arquivos que mant&ecirc;m voc&ecirc; logado em sites</div>
+                        <div class="mc-option" data-opt="c"><span class="mc-letter">C</span> Arquivos que monitoram seu comportamento de navega&ccedil;&atilde;o e compartilham com anunciantes</div>
+                        <div class="mc-option" data-opt="d"><span class="mc-letter">D</span> Extens&otilde;es de navegador que bloqueiam an&uacute;ncios</div>
+                    </div>
+                    <div class="mc-explanation ok">&#x2705; Correto! Cookies de rastreamento monitoram sites visitados, criam perfil comportamental e compartilham com redes de an&uacute;ncios.</div>
+                    <div class="mc-explanation err" data-for="a">&#x274C; Cookies n&atilde;o s&atilde;o v&iacute;rus &mdash; s&atilde;o arquivos de texto. Podem comprometer privacidade, mas n&atilde;o roubam senhas diretamente.</div>
+                    <div class="mc-explanation err" data-for="b">&#x274C; Essa &eacute; a fun&ccedil;&atilde;o dos cookies de sess&atilde;o (&uacute;teis), n&atilde;o dos cookies de rastreamento.</div>
+                    <div class="mc-explanation err" data-for="d">&#x274C; Extens&otilde;es como uBlock Origin bloqueiam rastreadores &mdash; s&atilde;o a prote&ccedil;&atilde;o, n&atilde;o a defini&ccedil;&atilde;o de cookie.</div>
                 </div>
+                <hr class="mc-sep">
 
                 <!-- Q6 -->
-                <div class="mc-question" data-q="q6" data-correct="B">
-                    <p class="mc-enunciado"><strong>6.</strong> Para que serve o site <em>haveibeenpwned.com</em>?</p>
-                    <label class="mc-option"><input type="radio" name="mc25-q6" data-opt="A"> <span>A) Criar senhas aleatórias fortes gratuitamente</span></label>
-                    <label class="mc-option"><input type="radio" name="mc25-q6" data-opt="B"> <span>B) Verificar se seu e-mail apareceu em algum banco de dados vazado</span></label>
-                    <label class="mc-option"><input type="radio" name="mc25-q6" data-opt="C"> <span>C) Armazenar senhas com criptografia na nuvem</span></label>
-                    <label class="mc-option"><input type="radio" name="mc25-q6" data-opt="D"> <span>D) Bloquear rastreadores e anúncios no navegador</span></label>
-                    <div class="mc-explanation ok" data-for="B">&#x2705; Exato! HaveIBeenPwned foi criado por Troy Hunt e verifica se seu e-mail consta em bases de dados de vazamentos conhecidos — gratuito e seguro.</div>
-                    <div class="mc-explanation err" data-for="A">&#x274C; Criação de senhas é feita por gerenciadores como Bitwarden ou sites como passwordsgenerator.net.</div>
-                    <div class="mc-explanation err" data-for="C">&#x274C; Armazenamento criptografado de senhas é função de gerenciadores como Bitwarden, 1Password ou Google Passwords.</div>
-                    <div class="mc-explanation err" data-for="D">&#x274C; Bloqueio de rastreadores é função de extensões como uBlock Origin ou navegadores como Brave e Firefox.</div>
+                <div class="mc-question" data-correct="b">
+                    <p class="mc-q-text"><strong>6.</strong> Para que serve o site <em>haveibeenpwned.com</em>?</p>
+                    <div class="mc-options">
+                        <div class="mc-option" data-opt="a"><span class="mc-letter">A</span> Criar senhas aleat&oacute;rias fortes gratuitamente</div>
+                        <div class="mc-option" data-opt="b"><span class="mc-letter">B</span> Verificar se seu e-mail apareceu em algum banco de dados vazado</div>
+                        <div class="mc-option" data-opt="c"><span class="mc-letter">C</span> Armazenar senhas com criptografia na nuvem</div>
+                        <div class="mc-option" data-opt="d"><span class="mc-letter">D</span> Bloquear rastreadores e an&uacute;ncios no navegador</div>
+                    </div>
+                    <div class="mc-explanation ok">&#x2705; Exato! HaveIBeenPwned foi criado por Troy Hunt e verifica se seu e-mail consta em bases de dados de vazamentos &mdash; gratuito e seguro.</div>
+                    <div class="mc-explanation err" data-for="a">&#x274C; Cria&ccedil;&atilde;o de senhas &eacute; feita por gerenciadores como Bitwarden ou sites espec&iacute;ficos.</div>
+                    <div class="mc-explanation err" data-for="c">&#x274C; Armazenamento criptografado de senhas &eacute; fun&ccedil;&atilde;o de gerenciadores como Bitwarden ou 1Password.</div>
+                    <div class="mc-explanation err" data-for="d">&#x274C; Bloqueio de rastreadores &eacute; fun&ccedil;&atilde;o de extens&otilde;es como uBlock Origin ou navegadores como Brave.</div>
                 </div>
 
             </div><!-- .mc-root -->
