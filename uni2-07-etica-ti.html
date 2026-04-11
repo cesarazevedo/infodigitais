@@ -13,16 +13,14 @@
             --bg-light: #f0f4f8;
             --text-dark: #1a202c;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--bg-light);
             color: var(--text-dark);
             line-height: 1.7;
         }
-
+        /* ── TOP BAR ── */
         .top-bar {
             background: white;
             padding: 15px 30px;
@@ -46,22 +44,20 @@
             transition: background 0.3s;
         }
         .back-btn:hover { background: rgba(0,131,143,0.08); }
-
         .page-badge {
             font-size: 0.8em;
             padding: 4px 12px;
             border-radius: 20px;
-            background: rgba(0, 131, 143, 0.12);
+            background: rgba(0,131,143,0.12);
             color: var(--primary);
             font-weight: 600;
         }
-
+        /* ── LAYOUT ── */
         .content-wrapper {
             max-width: 800px;
             margin: 40px auto;
             padding: 0 30px;
         }
-
         .lesson-hero {
             background: white;
             border-radius: 16px;
@@ -72,7 +68,6 @@
         }
         .lesson-hero h1 { font-size: 2em; margin-bottom: 10px; color: var(--primary); }
         .lesson-hero .subtitle { font-size: 1.05em; color: #718096; }
-
         .content-card {
             background: white;
             border-radius: 16px;
@@ -90,7 +85,6 @@
         }
         .content-card h3 { font-size: 1.05em; color: var(--secondary); margin: 20px 0 10px; }
         .content-card p  { margin-bottom: 15px; text-align: justify; }
-
         .highlight-box {
             background: linear-gradient(135deg, rgba(0,131,143,0.05), rgba(0,96,100,0.06));
             border-left: 4px solid var(--primary);
@@ -99,7 +93,6 @@
             margin: 20px 0;
         }
         .highlight-box p { margin-bottom: 0; font-style: italic; }
-
         .alert-box {
             background: #fff8e1;
             border-left: 4px solid #f59e0b;
@@ -108,7 +101,6 @@
             margin: 20px 0;
         }
         .alert-box p { margin: 0; color: #78350f; font-size: 0.93em; }
-
         .danger-box {
             background: #fef2f2;
             border-left: 4px solid #ef4444;
@@ -117,209 +109,9 @@
             margin: 20px 0;
         }
         .danger-box p { margin: 0; color: #7f1d1d; font-size: 0.93em; }
-
         ul, ol { margin: 10px 0 15px 25px; }
         li { margin-bottom: 8px; }
-
-        /* ── Ético vs Legal ── */
-        .etico-legal {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 14px;
-            margin: 18px 0;
-        }
-        .el-card {
-            border-radius: 12px;
-            padding: 20px;
-        }
-        .el-card.etico { background: #f0fdf4; border-top: 3px solid #22c55e; }
-        .el-card.legal { background: #eff6ff; border-top: 3px solid #3b82f6; }
-        .el-card .el-title { font-weight: 700; font-size: 0.9em; margin-bottom: 10px; }
-        .el-card.etico .el-title { color: #15803d; }
-        .el-card.legal .el-title { color: #1d4ed8; }
-        .el-card .el-def  { font-size: 0.83em; color: #374151; margin-bottom: 10px; line-height: 1.6; }
-        .el-card ul { margin: 0 0 0 16px; }
-        .el-card li { font-size: 0.8em; color: #475569; margin-bottom: 4px; }
-
-        /* ── Quadrantes ético/legal ── */
-        .quad-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin: 16px 0;
-        }
-        .quad-card {
-            border-radius: 10px;
-            padding: 16px;
-        }
-        .quad-card.ll { background: #f0fdf4; border: 2px solid #86efac; }
-        .quad-card.le { background: #fff7ed; border: 2px solid #fcd34d; }
-        .quad-card.el { background: #fff7ed; border: 2px solid #fcd34d; }
-        .quad-card.ee { background: #fef2f2; border: 2px solid #fca5a5; }
-        .quad-title { font-size: 0.82em; font-weight: 700; margin-bottom: 6px; }
-        .quad-card.ll .quad-title { color: #15803d; }
-        .quad-card.le .quad-title, .quad-card.el .quad-title { color: #92400e; }
-        .quad-card.ee .quad-title { color: #dc2626; }
-        .quad-ex { font-size: 0.79em; color: #475569; font-style: italic; }
-
-        /* ── Creative Commons ── */
-        .cc-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 10px;
-            margin: 16px 0;
-        }
-        .cc-card {
-            background: #f8fafc;
-            border-radius: 10px;
-            padding: 14px;
-            border-top: 3px solid var(--primary);
-            text-align: center;
-        }
-        .cc-icon  { font-size: 1.6em; margin-bottom: 4px; }
-        .cc-sigla { font-weight: 700; font-size: 0.85em; color: var(--primary); margin-bottom: 4px; }
-        .cc-nome  { font-size: 0.75em; color: #64748b; margin-bottom: 4px; }
-        .cc-desc  { font-size: 0.75em; color: #475569; line-height: 1.4; }
-
-        /* ── Tipos de cyberbullying ── */
-        .cb-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
-            gap: 10px;
-            margin: 16px 0;
-        }
-        .cb-item {
-            background: #fef2f2;
-            border-left: 4px solid #ef4444;
-            border-radius: 0 10px 10px 0;
-            padding: 14px;
-        }
-        .cb-tipo { font-weight: 700; font-size: 0.85em; color: #b91c1c; margin-bottom: 4px; }
-        .cb-desc { font-size: 0.8em; color: #374151; line-height: 1.5; }
-
-        /* ── Passo a passo ── */
-        .step-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin: 14px 0;
-        }
-        .step-item {
-            display: flex;
-            gap: 14px;
-            align-items: flex-start;
-            background: #f8fafc;
-            border-radius: 10px;
-            padding: 14px 16px;
-        }
-        .step-num {
-            width: 28px; height: 28px; min-width: 28px;
-            border-radius: 50%;
-            background: var(--primary);
-            color: white;
-            font-weight: 700;
-            font-size: 0.85em;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .step-body strong { display: block; font-size: 0.9em; color: var(--secondary); margin-bottom: 2px; }
-        .step-body span   { font-size: 0.83em; color: #475569; line-height: 1.5; }
-
-        /* ── Fake news: sinais de alerta ── */
-        .fakenews-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-            gap: 10px;
-            margin: 14px 0;
-        }
-        .fn-item {
-            display: flex;
-            gap: 10px;
-            align-items: flex-start;
-            background: #fff7ed;
-            border-radius: 8px;
-            padding: 12px 14px;
-            border-left: 3px solid #f59e0b;
-        }
-        .fn-icon { font-size: 1.2em; flex-shrink: 0; }
-        .fn-item p { margin: 0; font-size: 0.83em; color: #78350f; }
-
-        /* ── Leis: cards ── */
-        .lei-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin: 16px 0;
-        }
-        .lei-card {
-            display: flex;
-            gap: 16px;
-            align-items: flex-start;
-            background: #f0fdfa;
-            border-radius: 10px;
-            padding: 16px 18px;
-            border-left: 4px solid var(--primary);
-        }
-        .lei-num {
-            font-size: 0.72em;
-            font-weight: 700;
-            background: var(--primary);
-            color: white;
-            padding: 4px 10px;
-            border-radius: 20px;
-            white-space: nowrap;
-            flex-shrink: 0;
-            margin-top: 2px;
-        }
-        .lei-body strong { display: block; font-size: 0.9em; color: var(--secondary); margin-bottom: 3px; }
-        .lei-body p { margin: 0; font-size: 0.82em; color: #334155; line-height: 1.6; }
-
-        /* ── Comparativo tabela ── */
-        .compare-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 16px 0;
-            font-size: 0.88em;
-        }
-        .compare-table th {
-            background: var(--primary);
-            color: white;
-            padding: 11px 14px;
-            text-align: left;
-        }
-        .compare-table th:first-child { border-radius: 8px 0 0 0; }
-        .compare-table th:last-child  { border-radius: 0 8px 0 0; }
-        .compare-table td {
-            padding: 10px 14px;
-            border-bottom: 1px solid #e2e8f0;
-            vertical-align: top;
-        }
-        .compare-table tr:nth-child(even) td { background: #f8fafc; }
-        .compare-table tr:last-child td { border-bottom: none; }
-        .tag-crime { color: #dc2626; font-weight: 700; }
-        .tag-civil  { color: #d97706; font-weight: 700; }
-
-        /* ── Boas práticas ── */
-        .boas-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 12px;
-            margin: 16px 0;
-        }
-        .boa-item {
-            background: #f0fdfa;
-            border-radius: 10px;
-            padding: 16px;
-            display: flex;
-            gap: 12px;
-            align-items: flex-start;
-        }
-        .boa-icon { font-size: 1.6em; flex-shrink: 0; }
-        .boa-text strong { display: block; font-size: 0.88em; color: var(--primary); margin-bottom: 3px; }
-        .boa-text span   { font-size: 0.8em; color: #475569; }
-
-        /* ── nav ── */
+        /* ── NAV ── */
         .nav-footer {
             display: flex;
             justify-content: space-between;
@@ -337,36 +129,227 @@
             transition: all 0.3s;
         }
         .nav-link:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-
+        /* ── COMPONENTS ── */
+        .etico-legal {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin: 18px 0;
+        }
+        .el-card { border-radius: 12px; padding: 20px; }
+        .el-card.etico { background: #f0fdf4; border-top: 3px solid #22c55e; }
+        .el-card.legal { background: #eff6ff; border-top: 3px solid #3b82f6; }
+        .el-card .el-title { font-weight: 700; font-size: 0.9em; margin-bottom: 10px; }
+        .el-card.etico .el-title { color: #15803d; }
+        .el-card.legal .el-title { color: #1d4ed8; }
+        .el-card .el-def { font-size: 0.83em; color: #374151; margin-bottom: 10px; line-height: 1.6; }
+        .el-card ul { margin: 0 0 0 16px; }
+        .el-card li { font-size: 0.8em; color: #475569; margin-bottom: 4px; }
+        .quad-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 16px 0; }
+        .quad-card { border-radius: 10px; padding: 16px; }
+        .quad-card.ll { background: #f0fdf4; border: 2px solid #86efac; }
+        .quad-card.le { background: #fff7ed; border: 2px solid #fcd34d; }
+        .quad-card.el { background: #fff7ed; border: 2px solid #fcd34d; }
+        .quad-card.ee { background: #fef2f2; border: 2px solid #fca5a5; }
+        .quad-title { font-size: 0.82em; font-weight: 700; margin-bottom: 6px; }
+        .quad-card.ll .quad-title { color: #15803d; }
+        .quad-card.le .quad-title, .quad-card.el .quad-title { color: #92400e; }
+        .quad-card.ee .quad-title { color: #dc2626; }
+        .quad-ex { font-size: 0.79em; color: #475569; font-style: italic; }
+        .cc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin: 16px 0; }
+        .cc-card { background: #f8fafc; border-radius: 10px; padding: 14px; border-top: 3px solid var(--primary); text-align: center; }
+        .cc-icon  { font-size: 1.6em; margin-bottom: 4px; }
+        .cc-sigla { font-weight: 700; font-size: 0.85em; color: var(--primary); margin-bottom: 4px; }
+        .cc-nome  { font-size: 0.75em; color: #64748b; margin-bottom: 4px; }
+        .cc-desc  { font-size: 0.75em; color: #475569; line-height: 1.4; }
+        .cb-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: 10px; margin: 16px 0; }
+        .cb-item { background: #fef2f2; border-left: 4px solid #ef4444; border-radius: 0 10px 10px 0; padding: 14px; }
+        .cb-tipo { font-weight: 700; font-size: 0.85em; color: #b91c1c; margin-bottom: 4px; }
+        .cb-desc { font-size: 0.8em; color: #374151; line-height: 1.5; }
+        .step-list { display: flex; flex-direction: column; gap: 10px; margin: 14px 0; }
+        .step-item { display: flex; gap: 14px; align-items: flex-start; background: #f8fafc; border-radius: 10px; padding: 14px 16px; }
+        .step-num { width: 28px; height: 28px; min-width: 28px; border-radius: 50%; background: var(--primary); color: white; font-weight: 700; font-size: 0.85em; display: flex; align-items: center; justify-content: center; }
+        .step-body strong { display: block; font-size: 0.9em; color: var(--secondary); margin-bottom: 2px; }
+        .step-body span { font-size: 0.83em; color: #475569; line-height: 1.5; }
+        .fakenews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; margin: 14px 0; }
+        .fn-item { display: flex; gap: 10px; align-items: flex-start; background: #fff7ed; border-radius: 8px; padding: 12px 14px; border-left: 3px solid #f59e0b; }
+        .fn-icon { font-size: 1.2em; flex-shrink: 0; }
+        .fn-item p { margin: 0; font-size: 0.83em; color: #78350f; }
+        .lei-grid { display: flex; flex-direction: column; gap: 10px; margin: 16px 0; }
+        .lei-card { display: flex; gap: 16px; align-items: flex-start; background: #f0fdfa; border-radius: 10px; padding: 16px 18px; border-left: 4px solid var(--primary); }
+        .lei-num { font-size: 0.72em; font-weight: 700; background: var(--primary); color: white; padding: 4px 10px; border-radius: 20px; white-space: nowrap; flex-shrink: 0; margin-top: 2px; }
+        .lei-body strong { display: block; font-size: 0.9em; color: var(--secondary); margin-bottom: 3px; }
+        .lei-body p { margin: 0; font-size: 0.82em; color: #334155; line-height: 1.6; }
+        .compare-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88em; }
+        .compare-table th { background: var(--primary); color: white; padding: 11px 14px; text-align: left; }
+        .compare-table th:first-child { border-radius: 8px 0 0 0; }
+        .compare-table th:last-child  { border-radius: 0 8px 0 0; }
+        .compare-table td { padding: 10px 14px; border-bottom: 1px solid #e2e8f0; vertical-align: top; }
+        .compare-table tr:nth-child(even) td { background: #f8fafc; }
+        .compare-table tr:last-child td { border-bottom: none; }
+        .tag-crime { color: #dc2626; font-weight: 700; }
+        .tag-civil  { color: #d97706; font-weight: 700; }
+        .boas-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin: 16px 0; }
+        .boa-item { background: #f0fdfa; border-radius: 10px; padding: 16px; display: flex; gap: 12px; align-items: flex-start; }
+        .boa-icon { font-size: 1.6em; flex-shrink: 0; }
+        .boa-text strong { display: block; font-size: 0.88em; color: var(--primary); margin-bottom: 3px; }
+        .boa-text span { font-size: 0.8em; color: #475569; }
+        /* ── RESPONSIVE ── */
         @media (max-width: 768px) {
             .content-wrapper { padding: 0 15px; }
             .lesson-hero, .content-card { padding: 25px; }
             .lesson-hero h1 { font-size: 1.5em; }
             .etico-legal { grid-template-columns: 1fr; }
-            .quad-grid   { grid-template-columns: 1fr; }
+            .quad-grid { grid-template-columns: 1fr; }
         }
+        /* ── DARK MODE ── */
+        body.dark-mode { background: #0f172a; color: #e2e8f0; }
+        body.dark-mode .top-bar { background: #1e293b; box-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+        body.dark-mode .el-card.etico { background: #14532d22; border-color: #22c55e; }
+        body.dark-mode .el-card.legal { background: #1e3a5f22; border-color: #3b82f6; }
+        body.dark-mode .el-card .el-def { color: #94a3b8; }
+        body.dark-mode .el-card li { color: #94a3b8; }
+        body.dark-mode .quad-card.ll { background: #14532d22; border-color: #4ade80; }
+        body.dark-mode .quad-card.le, body.dark-mode .quad-card.el { background: #78350f22; border-color: #fbbf24; }
+        body.dark-mode .quad-card.ee { background: #7f1d1d22; border-color: #f87171; }
+        body.dark-mode .quad-ex { color: #94a3b8; }
+        body.dark-mode .cc-card { background: #1e293b; }
+        body.dark-mode .cc-nome, body.dark-mode .cc-desc { color: #94a3b8; }
+        body.dark-mode .cb-item { background: #7f1d1d22; }
+        body.dark-mode .cb-desc { color: #cbd5e1; }
+        body.dark-mode .step-item { background: #1e293b; }
+        body.dark-mode .step-body span { color: #94a3b8; }
+        body.dark-mode .fn-item { background: #78350f22; }
+        body.dark-mode .fn-item p { color: #fbbf24; }
+        body.dark-mode .lei-card { background: #134e4a22; }
+        body.dark-mode .lei-body p { color: #94a3b8; }
+        body.dark-mode .compare-table td { border-color: #334155; color: #cbd5e1; }
+        body.dark-mode .compare-table tr:nth-child(even) td { background: #1e293b; }
+        body.dark-mode .boa-item { background: #134e4a22; }
+        body.dark-mode .boa-text span { color: #94a3b8; }
+        body.dark-mode .danger-box { background: #7f1d1d22; }
+        body.dark-mode .danger-box p { color: #fca5a5; }
+        body.dark-mode .alert-box { background: #78350f22; }
+        body.dark-mode .alert-box p { color: #fbbf24; }
     </style>
 </head>
 <body>
 
-    <div class="top-bar">
-        <a href="index.html" class="back-btn">&#x2B05; Voltar ao Dashboard</a>
-        <span class="page-badge">Unidade 2 &mdash; Internet e Seguran&ccedil;a</span>
-        <button class="slide-toggle" id="slideToggleBtn">&#x1F4FA; Modo Slide</button>
-    </div>
+<div class="top-bar">
+    <a href="index.html" class="back-btn">&#x2B05; Voltar ao Dashboard</a>
+    <span class="page-badge">Unidade 2 &mdash; Internet e Seguran&ccedil;a</span>
+    <button class="slide-toggle" id="slideToggleBtn">&#x1F4FA; Modo Slide</button>
+</div>
 
-    <div class="content-wrapper">
+<div class="content-wrapper">
 
+    <!-- ══════════════════════════════════════════
+         SLIDE 1 — Hero + Ética Digital
+    ══════════════════════════════════════════ -->
+    <div class="slide-section">
         <div class="lesson-hero">
             <h1>&#x2696;&#xFE0F; Quest&otilde;es &Eacute;ticas e Legais em TI</h1>
             <p class="subtitle">Aula 2.7 &mdash; Direitos autorais, cyberbullying, fake news e responsabilidade no ambiente digital &mdash; o que a lei exige e o que a &eacute;tica pede</p>
         </div>
 
-        <!-- CARD 1 — Ética digital -->
         <div class="content-card">
             <h2>&#x1F4AC; &Eacute;tica Digital &mdash; O que &eacute; e por que importa</h2>
+
+            <!-- SVG 1: Quadrantes Ético × Legal -->
+            <svg viewBox="0 0 560 300" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:560px;display:block;margin:0 auto 24px;border-radius:12px;overflow:visible">
+                <!-- fundo -->
+                <rect width="560" height="300" fill="#f8fafc" rx="12"/>
+
+                <!-- eixo horizontal -->
+                <line x1="30" y1="150" x2="530" y2="150" stroke="#cbd5e1" stroke-width="1.5"/>
+                <!-- eixo vertical -->
+                <line x1="280" y1="30" x2="280" y2="270" stroke="#cbd5e1" stroke-width="1.5"/>
+
+                <!-- rótulos de eixo -->
+                <text x="280" y="18" text-anchor="middle" font-size="11" font-weight="700" fill="#64748b">← ÉTICO · ANTIÉTICO →</text>
+                <text x="16" y="154" text-anchor="middle" font-size="10" fill="#64748b" transform="rotate(-90,16,154)">LEGAL / ILEGAL</text>
+
+                <!-- Q1: Legal + Ético (verde) -->
+                <rect x="35" y="35" width="238" height="108" rx="10" fill="#dcfce7" opacity="0">
+                    <animate attributeName="opacity" from="0" to="1" dur="0.6s" begin="0.2s" fill="freeze"/>
+                </rect>
+                <text x="154" y="65" text-anchor="middle" font-size="13" font-weight="700" fill="#15803d" opacity="0">
+                    ✅ Legal e Ético
+                    <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="0.5s" fill="freeze"/>
+                </text>
+                <text x="154" y="84" text-anchor="middle" font-size="10" fill="#166534" opacity="0">
+                    Citar livro com referência
+                    <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="0.5s" fill="freeze"/>
+                </text>
+                <text x="154" y="100" text-anchor="middle" font-size="10" fill="#166534" opacity="0">
+                    em trabalho escolar
+                    <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="0.5s" fill="freeze"/>
+                </text>
+                <text x="154" y="132" text-anchor="middle" font-size="10" fill="#4ade80" font-weight="600" opacity="0">
+                    IDEAL — busque sempre este quadrante
+                    <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="0.5s" fill="freeze"/>
+                </text>
+
+                <!-- Q2: Legal + Antiético (âmbar) -->
+                <rect x="287" y="35" width="238" height="108" rx="10" fill="#fff7ed" opacity="0">
+                    <animate attributeName="opacity" from="0" to="1" dur="0.6s" begin="0.6s" fill="freeze"/>
+                </rect>
+                <text x="406" y="65" text-anchor="middle" font-size="13" font-weight="700" fill="#92400e" opacity="0">
+                    ⚠ Legal, Questionável
+                    <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="0.9s" fill="freeze"/>
+                </text>
+                <text x="406" y="84" text-anchor="middle" font-size="10" fill="#78350f" opacity="0">
+                    Divulgar info verdadeira
+                    <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="0.9s" fill="freeze"/>
+                </text>
+                <text x="406" y="100" text-anchor="middle" font-size="10" fill="#78350f" opacity="0">
+                    mas privada de alguém
+                    <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="0.9s" fill="freeze"/>
+                </text>
+
+                <!-- Q3: Ético + Ilegal (âmbar) -->
+                <rect x="35" y="157" width="238" height="108" rx="10" fill="#fff7ed" opacity="0">
+                    <animate attributeName="opacity" from="0" to="1" dur="0.6s" begin="1.0s" fill="freeze"/>
+                </rect>
+                <text x="154" y="187" text-anchor="middle" font-size="13" font-weight="700" fill="#92400e" opacity="0">
+                    ⚠ Ético, mas Ilegal
+                    <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="1.3s" fill="freeze"/>
+                </text>
+                <text x="154" y="206" text-anchor="middle" font-size="10" fill="#78350f" opacity="0">
+                    Denunciar falha de sistema
+                    <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="1.3s" fill="freeze"/>
+                </text>
+                <text x="154" y="222" text-anchor="middle" font-size="10" fill="#78350f" opacity="0">
+                    sem autorização prévia
+                    <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="1.3s" fill="freeze"/>
+                </text>
+
+                <!-- Q4: Antiético + Ilegal (vermelho) -->
+                <rect x="287" y="157" width="238" height="108" rx="10" fill="#fef2f2" opacity="0">
+                    <animate attributeName="opacity" from="0" to="1" dur="0.6s" begin="1.4s" fill="freeze"/>
+                </rect>
+                <text x="406" y="187" text-anchor="middle" font-size="13" font-weight="700" fill="#dc2626" opacity="0">
+                    ❌ Ilegal e Antiético
+                    <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="1.7s" fill="freeze"/>
+                </text>
+                <text x="406" y="206" text-anchor="middle" font-size="10" fill="#991b1b" opacity="0">
+                    Plagiar e vender trabalho
+                    <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="1.7s" fill="freeze"/>
+                </text>
+                <text x="406" y="222" text-anchor="middle" font-size="10" fill="#991b1b" opacity="0">
+                    acadêmico de outra pessoa
+                    <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="1.7s" fill="freeze"/>
+                </text>
+
+                <!-- setas dos eixos -->
+                <text x="50" y="145" text-anchor="start" font-size="10" fill="#94a3b8">← Ético</text>
+                <text x="510" y="145" text-anchor="end" font-size="10" fill="#94a3b8">Antiético →</text>
+                <text x="270" y="48" text-anchor="end" font-size="10" fill="#94a3b8">Legal ↑</text>
+                <text x="270" y="255" text-anchor="end" font-size="10" fill="#94a3b8">Ilegal ↓</text>
+            </svg>
+
             <p>A <strong>&eacute;tica digital</strong> &eacute; o conjunto de princ&iacute;pios que guiam o comportamento respons&aacute;vel no ambiente virtual. Assim como existem normas de conviv&ecirc;ncia na rua, na escola e no trabalho, existem normas &mdash; escritas e n&atilde;o escritas &mdash; para a intera&ccedil;&atilde;o online.</p>
-            <p>O ambiente digital cria a ilusão de anonimato e impunidade que pode levar pessoas a atos que jamais praticariam presencialmente. Mas <strong>o que acontece online tem consequ&ecirc;ncias reais</strong>: emocionais, sociais e jur&iacute;dicas.</p>
+            <p>O ambiente digital cria a ilus&atilde;o de anonimato e impunidade que pode levar pessoas a atos que jamais praticariam presencialmente. Mas <strong>o que acontece online tem consequ&ecirc;ncias reais</strong>: emocionais, sociais e jur&iacute;dicas.</p>
 
             <div class="etico-legal">
                 <div class="el-card etico">
@@ -389,42 +372,82 @@
                 </div>
             </div>
 
-            <h3>&#x1F9ED; Os quatro quadrantes: &eacute;tico e legal</h3>
-            <div class="quad-grid">
-                <div class="quad-card ll">
-                    <div class="quad-title">&#x2705; Legal e &Eacute;tico</div>
-                    <div class="quad-ex">Citar trecho de um livro com refer&ecirc;ncia completa em um trabalho escolar</div>
-                </div>
-                <div class="quad-card le">
-                    <div class="quad-title">&#x26AB; Legal, mas Question&aacute;vel</div>
-                    <div class="quad-ex">Divulgar legalmente uma informa&ccedil;&atilde;o verdadeira, mas privada, de outra pessoa</div>
-                </div>
-                <div class="quad-card el">
-                    <div class="quad-title">&#x26AB; &Eacute;tico, mas Ilegal</div>
-                    <div class="quad-ex">Acessar o sistema de uma empresa para denunciar uma falha, sem ter autoriza&ccedil;&atilde;o pr&eacute;via</div>
-                </div>
-                <div class="quad-card ee">
-                    <div class="quad-title">&#x274C; Ilegal e Anti&eacute;tico</div>
-                    <div class="quad-ex">Copiar e vender como seu o trabalho acad&ecirc;mico de outra pessoa</div>
-                </div>
-            </div>
-
             <div class="highlight-box">
                 <p>&#x1F4A1; Nem tudo que &eacute; legal &eacute; &eacute;tico, e nem tudo que &eacute; &eacute;tico &eacute; legal. O objetivo &eacute; agir de forma que respeite <strong>ambos</strong> os crit&eacute;rios. Quando houver conflito, o bom senso e o respeito ao pr&oacute;ximo devem guiar a decis&atilde;o.</p>
             </div>
         </div>
+    </div>
 
-        <!-- CARD 2 — Direitos Autorais -->
+    <!-- ══════════════════════════════════════════
+         SLIDE 2 — Direitos Autorais
+    ══════════════════════════════════════════ -->
+    <div class="slide-section">
         <div class="content-card">
             <h2>&#x1F4DC; Direitos Autorais Digitais</h2>
+
+            <!-- SVG 2: Licenças Creative Commons -->
+            <svg viewBox="0 0 560 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:560px;display:block;margin:0 auto 24px;border-radius:12px;overflow:visible">
+                <rect width="560" height="220" fill="#f0fdfa" rx="12"/>
+                <text x="280" y="24" text-anchor="middle" font-size="13" font-weight="700" fill="#006064">Licenças Creative Commons</text>
+                <text x="280" y="40" text-anchor="middle" font-size="10" fill="#64748b">Cada símbolo define o que pode ou não pode ser feito com a obra</text>
+
+                <!-- BY -->
+                <g opacity="0">
+                    <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.3s" fill="freeze"/>
+                    <rect x="30" y="55" width="115" height="150" rx="12" fill="white" stroke="#00838f" stroke-width="2"/>
+                    <circle cx="87" cy="95" r="28" fill="#00838f"/>
+                    <text x="87" y="101" text-anchor="middle" font-size="22" fill="white" font-weight="700">BY</text>
+                    <text x="87" y="138" text-anchor="middle" font-size="11" font-weight="700" fill="#006064">Atribuição</text>
+                    <text x="87" y="153" text-anchor="middle" font-size="9.5" fill="#475569">Obrigatório</text>
+                    <text x="87" y="167" text-anchor="middle" font-size="9.5" fill="#475569">citar o autor</text>
+                    <text x="87" y="196" text-anchor="middle" font-size="9" fill="#0d9488">Sempre exigida</text>
+                </g>
+
+                <!-- SA -->
+                <g opacity="0">
+                    <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.7s" fill="freeze"/>
+                    <rect x="155" y="55" width="115" height="150" rx="12" fill="white" stroke="#7c3aed" stroke-width="2"/>
+                    <circle cx="212" cy="95" r="28" fill="#7c3aed"/>
+                    <text x="212" y="101" text-anchor="middle" font-size="22" fill="white" font-weight="700">SA</text>
+                    <text x="212" y="138" text-anchor="middle" font-size="11" font-weight="700" fill="#6d28d9">Compartilha Igual</text>
+                    <text x="212" y="153" text-anchor="middle" font-size="9.5" fill="#475569">Derivados devem</text>
+                    <text x="212" y="167" text-anchor="middle" font-size="9.5" fill="#475569">usar mesma licença</text>
+                    <text x="212" y="196" text-anchor="middle" font-size="9" fill="#7c3aed">Opcional</text>
+                </g>
+
+                <!-- NC -->
+                <g opacity="0">
+                    <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="1.1s" fill="freeze"/>
+                    <rect x="280" y="55" width="115" height="150" rx="12" fill="white" stroke="#ea580c" stroke-width="2"/>
+                    <circle cx="337" cy="95" r="28" fill="#ea580c"/>
+                    <text x="337" y="101" text-anchor="middle" font-size="22" fill="white" font-weight="700">NC</text>
+                    <text x="337" y="138" text-anchor="middle" font-size="11" font-weight="700" fill="#c2410c">Não Comercial</text>
+                    <text x="337" y="153" text-anchor="middle" font-size="9.5" fill="#475569">Proibido uso</text>
+                    <text x="337" y="167" text-anchor="middle" font-size="9.5" fill="#475569">para fins comerciais</text>
+                    <text x="337" y="196" text-anchor="middle" font-size="9" fill="#ea580c">Opcional</text>
+                </g>
+
+                <!-- ND -->
+                <g opacity="0">
+                    <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="1.5s" fill="freeze"/>
+                    <rect x="405" y="55" width="115" height="150" rx="12" fill="white" stroke="#dc2626" stroke-width="2"/>
+                    <circle cx="462" cy="95" r="28" fill="#dc2626"/>
+                    <text x="462" y="101" text-anchor="middle" font-size="22" fill="white" font-weight="700">ND</text>
+                    <text x="462" y="138" text-anchor="middle" font-size="11" font-weight="700" fill="#b91c1c">Sem Derivados</text>
+                    <text x="462" y="153" text-anchor="middle" font-size="9.5" fill="#475569">Proibido modificar</text>
+                    <text x="462" y="167" text-anchor="middle" font-size="9.5" fill="#475569">ou adaptar a obra</text>
+                    <text x="462" y="196" text-anchor="middle" font-size="9" fill="#dc2626">Opcional</text>
+                </g>
+            </svg>
+
             <p>A <strong>Lei de Direitos Autorais</strong> (Lei 9.610/1998) protege cria&ccedil;&otilde;es intelectuais: textos, m&uacute;sicas, fotografias, v&iacute;deos, c&oacute;digos de software, ilustra&ccedil;&otilde;es e muito mais. No ambiente digital, essa prote&ccedil;&atilde;o &eacute; igualmente v&aacute;lida &mdash; mesmo que o conte&uacute;do esteja &ldquo;dispon&iacute;vel na internet&rdquo;.</p>
 
             <h3>O que &eacute; permitido e o que &eacute; proibido</h3>
             <ul>
                 <li>&#x2705; <strong>Uso para estudo ou pesquisa:</strong> citar trechos com refer&ecirc;ncia ao autor e fonte &eacute; permitido</li>
                 <li>&#x2705; <strong>Uso pessoal:</strong> guardar uma c&oacute;pia de m&uacute;sica que voc&ecirc; comprou para uso pr&oacute;prio</li>
-                <li>&#x2705; <strong>Paródia:</strong> recria&ccedil;&atilde;o com transforma&ccedil;&atilde;o criativa e sem concorr&ecirc;ncia comercial com o original</li>
-                <li>&#x274C; <strong>Reprodução total sem autoriza&ccedil;&atilde;o:</strong> copiar e publicar um artigo completo sem permiss&atilde;o &eacute; infra&ccedil;&atilde;o</li>
+                <li>&#x2705; <strong>Par&oacute;dia:</strong> recria&ccedil;&atilde;o com transforma&ccedil;&atilde;o criativa e sem concorr&ecirc;ncia comercial com o original</li>
+                <li>&#x274C; <strong>Reprodu&ccedil;&atilde;o total sem autoriza&ccedil;&atilde;o:</strong> copiar e publicar um artigo completo sem permiss&atilde;o &eacute; infra&ccedil;&atilde;o</li>
                 <li>&#x274C; <strong>Download pirata:</strong> baixar filmes, m&uacute;sicas ou softwares sem pagar ou ter licen&ccedil;a</li>
                 <li>&#x274C; <strong>Pl&aacute;gio:</strong> apresentar como seu o trabalho criativo de outra pessoa, mesmo que modificado</li>
             </ul>
@@ -433,43 +456,82 @@
                 <p>&#x26A0;&#xFE0F; <strong>Imagens do Google n&atilde;o s&atilde;o livres.</strong> Aparecer nos resultados de busca n&atilde;o significa que uma imagem pode ser usada livremente. Use sempre o filtro &ldquo;Licen&ccedil;as de uso&rdquo; no Google Imagens ou busque em bancos de imagens gratuitas como <em>Unsplash</em>, <em>Pexels</em> ou <em>Pixabay</em>.</p>
             </div>
 
-            <h3>&#x1F193; Licen&ccedil;as Creative Commons</h3>
-            <p>O <strong>Creative Commons</strong> &eacute; um sistema de licen&ccedil;as que permite aos criadores definir exatamente como sua obra pode ser usada &mdash; mantendo os direitos autorais, mas autorizando determinados usos:</p>
-
-            <div class="cc-grid">
-                <div class="cc-card">
-                    <div class="cc-icon">&#x1F464;</div>
-                    <div class="cc-sigla">BY</div>
-                    <div class="cc-nome">Atribui&ccedil;&atilde;o</div>
-                    <div class="cc-desc">Pode usar, mas precisa citar o autor</div>
-                </div>
-                <div class="cc-card">
-                    <div class="cc-icon">&#x1F504;</div>
-                    <div class="cc-sigla">SA</div>
-                    <div class="cc-nome">CompartilhaIgual</div>
-                    <div class="cc-desc">Derivados devem usar a mesma licen&ccedil;a</div>
-                </div>
-                <div class="cc-card">
-                    <div class="cc-icon">&#x1F6AB;</div>
-                    <div class="cc-sigla">ND</div>
-                    <div class="cc-nome">SemDerivados</div>
-                    <div class="cc-desc">Pode usar, mas n&atilde;o pode modificar</div>
-                </div>
-                <div class="cc-card">
-                    <div class="cc-icon">&#x1F4BC;</div>
-                    <div class="cc-sigla">NC</div>
-                    <div class="cc-nome">N&atilde;oComercial</div>
-                    <div class="cc-desc">Pode usar, mas n&atilde;o para fins comerciais</div>
-                </div>
-            </div>
-
             <p style="font-size:0.87em;color:#475569;">A licen&ccedil;a mais livre &eacute; a <strong>CC BY</strong> (s&oacute; citar o autor). A mais restritiva &eacute; <strong>CC BY-NC-ND</strong> (citar, sem modificar, sem uso comercial). Materiais sem licen&ccedil;a expl&iacute;cita s&atilde;o protegidos por direitos autorais plenos.</p>
         </div>
+    </div>
 
-        <!-- CARD 3 — Cyberbullying -->
+    <!-- ══════════════════════════════════════════
+         SLIDE 3 — Cyberbullying
+    ══════════════════════════════════════════ -->
+    <div class="slide-section">
         <div class="content-card">
             <h2>&#x1F6AB; Cyberbullying</h2>
-            <p>O <strong>cyberbullying</strong> &eacute; o uso de tecnologias digitais &mdash; redes sociais, aplicativos de mensagem, jogos online &mdash; para assediar, intimidar, humilhar ou ameaçar outra pessoa de forma repetida. Ao contr&aacute;rio do bullying presencial, o digital <strong>n&atilde;o tem hora de t&eacute;rmino</strong>: a v&iacute;tima &eacute; alcan&ccedil;ada em casa, a qualquer momento, e o conte&uacute;do ofensivo pode se espalhar para milhares de pessoas instantaneamente.</p>
+
+            <!-- SVG 3: Ciclo Agressor → Vítima → Denúncia -->
+            <svg viewBox="0 0 560 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:560px;display:block;margin:0 auto 24px;border-radius:12px;overflow:visible">
+                <rect width="560" height="200" fill="#fef2f2" rx="12"/>
+                <text x="280" y="22" text-anchor="middle" font-size="12" font-weight="700" fill="#991b1b">Ciclo do Cyberbullying e como interrompê-lo</text>
+
+                <!-- Agressor -->
+                <g opacity="0">
+                    <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.3s" fill="freeze"/>
+                    <circle cx="80" cy="110" r="38" fill="#fee2e2" stroke="#ef4444" stroke-width="2"/>
+                    <text x="80" y="105" text-anchor="middle" font-size="22">😈</text>
+                    <text x="80" y="123" text-anchor="middle" font-size="10" font-weight="700" fill="#b91c1c">Agressor</text>
+                    <text x="80" y="137" text-anchor="middle" font-size="9" fill="#991b1b">ataque repetido</text>
+                    <text x="80" y="149" text-anchor="middle" font-size="9" fill="#991b1b">e intencional</text>
+                </g>
+
+                <!-- seta Agressor → Vítima -->
+                <g opacity="0">
+                    <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="0.8s" fill="freeze"/>
+                    <line x1="122" y1="110" x2="196" y2="110" stroke="#ef4444" stroke-width="2" stroke-dasharray="6 3">
+                        <animate attributeName="stroke-dashoffset" from="18" to="0" dur="0.6s" begin="0.8s" fill="freeze"/>
+                    </line>
+                    <polygon points="196,105 208,110 196,115" fill="#ef4444"/>
+                    <text x="162" y="102" text-anchor="middle" font-size="9" fill="#dc2626">mensagens /</text>
+                    <text x="162" y="114" text-anchor="middle" font-size="9" fill="#dc2626">posts / fotos</text>
+                </g>
+
+                <!-- Vítima -->
+                <g opacity="0">
+                    <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="1.0s" fill="freeze"/>
+                    <circle cx="280" cy="110" r="38" fill="#fef9c3" stroke="#ca8a04" stroke-width="2"/>
+                    <text x="280" y="105" text-anchor="middle" font-size="22">😢</text>
+                    <text x="280" y="123" text-anchor="middle" font-size="10" font-weight="700" fill="#92400e">Vítima</text>
+                    <text x="280" y="137" text-anchor="middle" font-size="9" fill="#78350f">não reagir</text>
+                    <text x="280" y="149" text-anchor="middle" font-size="9" fill="#78350f">registrar prints</text>
+                </g>
+
+                <!-- seta Vítima → Denúncia -->
+                <g opacity="0">
+                    <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="1.4s" fill="freeze"/>
+                    <line x1="322" y1="110" x2="396" y2="110" stroke="#22c55e" stroke-width="2">
+                        <animate attributeName="stroke-dashoffset" from="18" to="0" dur="0.5s" begin="1.4s" fill="freeze"/>
+                    </line>
+                    <polygon points="396,105 408,110 396,115" fill="#22c55e"/>
+                    <text x="362" y="102" text-anchor="middle" font-size="9" fill="#15803d">bloquear</text>
+                    <text x="362" y="114" text-anchor="middle" font-size="9" fill="#15803d">+ denunciar</text>
+                </g>
+
+                <!-- Resolução -->
+                <g opacity="0">
+                    <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="1.7s" fill="freeze"/>
+                    <circle cx="475" cy="110" r="38" fill="#dcfce7" stroke="#22c55e" stroke-width="2"/>
+                    <text x="475" y="105" text-anchor="middle" font-size="22">🛡️</text>
+                    <text x="475" y="123" text-anchor="middle" font-size="10" font-weight="700" fill="#15803d">Resolução</text>
+                    <text x="475" y="137" text-anchor="middle" font-size="9" fill="#166534">adulto de confiança</text>
+                    <text x="475" y="149" text-anchor="middle" font-size="9" fill="#166534">+ autoridades</text>
+                </g>
+
+                <!-- rótulo "INTERROMPER O CICLO" -->
+                <text x="280" y="185" text-anchor="middle" font-size="10" font-weight="700" fill="#15803d" opacity="0">
+                    Interrompa o ciclo: não reagir ≠ aceitar — é estratégia
+                    <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="2.0s" fill="freeze"/>
+                </text>
+            </svg>
+
+            <p>O <strong>cyberbullying</strong> &eacute; o uso de tecnologias digitais &mdash; redes sociais, aplicativos de mensagem, jogos online &mdash; para assediar, intimidar, humilhar ou amea&ccedil;ar outra pessoa de forma repetida. Ao contr&aacute;rio do bullying presencial, o digital <strong>n&atilde;o tem hora de t&eacute;rmino</strong>: a v&iacute;tima &eacute; alcan&ccedil;ada em casa, a qualquer momento.</p>
 
             <h3>Tipos de cyberbullying</h3>
             <div class="cb-grid">
@@ -483,7 +545,7 @@
                 </div>
                 <div class="cb-item">
                     <div class="cb-tipo">&#x1F47F; Provoca&ccedil;&atilde;o (Trolling)</div>
-                    <div class="cb-desc">Postar coment&aacute;rios ofensivos propositalmente para provocar reações emocionais na v&iacute;tima</div>
+                    <div class="cb-desc">Postar coment&aacute;rios ofensivos propositalmente para provocar rea&ccedil;&otilde;es emocionais na v&iacute;tima</div>
                 </div>
                 <div class="cb-item">
                     <div class="cb-tipo">&#x1F510; Exposi&ccedil;&atilde;o</div>
@@ -501,9 +563,9 @@
 
             <h3>&#x2696;&#xFE0F; O que diz a lei</h3>
             <ul>
-                <li><strong>Lei 13.185/2015</strong> (Lei do Bullying): institui o Programa de Combate &agrave; Intimida&ccedil;&atilde;o Sistem&aacute;tica, incluindo o ambiente virtual. Obriga escolas a adotarem medidas de preven&ccedil;&atilde;o e acompanhamento</li>
-                <li><strong>Lei 14.811/2024</strong> (Lei Antibullying): endureceu as san&ccedil;&otilde;es, tornando o bullying crime com pena de 2 a 4 anos de reclus&atilde;o, podendo chegar a 6 anos se houver les&atilde;o grave</li>
-                <li>O compartilhamento de imagens &iacute;ntimas sem consentimento &eacute; crime previsto no <strong>C&oacute;digo Penal (Art. 218-C)</strong>, com pena de at&eacute; 5 anos de pris&atilde;o</li>
+                <li><strong>Lei 13.185/2015</strong> (Lei do Bullying): institui o Programa de Combate &agrave; Intimida&ccedil;&atilde;o Sistem&aacute;tica, incluindo o ambiente virtual</li>
+                <li><strong>Lei 14.811/2024</strong> (Lei Antibullying): tornou o bullying crime com pena de 2 a 4 anos, podendo chegar a 6 anos se houver les&atilde;o grave</li>
+                <li>Compartilhamento de imagens &iacute;ntimas sem consentimento: crime previsto no <strong>C&oacute;digo Penal (Art. 218-C)</strong>, pena de at&eacute; 5 anos</li>
             </ul>
 
             <div class="step-list">
@@ -537,11 +599,104 @@
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- CARD 4 — Fake News -->
+    <!-- ══════════════════════════════════════════
+         SLIDE 4 — Fake News
+    ══════════════════════════════════════════ -->
+    <div class="slide-section">
         <div class="content-card">
             <h2>&#x1F4F0; Fake News e Desinforma&ccedil;&atilde;o</h2>
-            <p><strong>Fake news</strong> s&atilde;o not&iacute;cias falsas ou deliberadamente distorcidas criadas para enganar, influenciar opini&otilde;es ou causar p&acirc;nico. Diferem de erros jornalísticos: s&atilde;o <strong>intencionalmente falsas</strong>. A desinforma&ccedil;&atilde;o se espalha pelas redes sociais muito mais r&aacute;pido que a informa&ccedil;&atilde;o verdadeira &mdash; porque tende a ser mais emocionante e provocar compartilhamento impulsivo.</p>
+
+            <!-- SVG 4: Propagação viral -->
+            <svg viewBox="0 0 560 240" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:560px;display:block;margin:0 auto 24px;border-radius:12px;overflow:visible">
+                <rect width="560" height="240" fill="#fff7ed" rx="12"/>
+                <text x="280" y="22" text-anchor="middle" font-size="12" font-weight="700" fill="#92400e">Como uma fake news se espalha</text>
+
+                <!-- Nível 1: fonte original -->
+                <g opacity="0">
+                    <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="0.3s" fill="freeze"/>
+                    <circle cx="280" cy="60" r="28" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
+                    <text x="280" y="55" text-anchor="middle" font-size="18">📰</text>
+                    <text x="280" y="72" text-anchor="middle" font-size="9" font-weight="700" fill="#b91c1c">Fake News</text>
+                    <text x="280" y="84" text-anchor="middle" font-size="9" fill="#991b1b">1 publicação</text>
+                </g>
+
+                <!-- Linhas nível 1→2 -->
+                <g opacity="0">
+                    <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="0.8s" fill="freeze"/>
+                    <line x1="255" y1="84" x2="140" y2="130" stroke="#f87171" stroke-width="1.5" stroke-dasharray="4 2"/>
+                    <line x1="280" y1="88" x2="280" y2="130" stroke="#f87171" stroke-width="1.5" stroke-dasharray="4 2"/>
+                    <line x1="305" y1="84" x2="420" y2="130" stroke="#f87171" stroke-width="1.5" stroke-dasharray="4 2"/>
+                </g>
+
+                <!-- Nível 2: 3 compartilhamentos -->
+                <g opacity="0">
+                    <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="1.0s" fill="freeze"/>
+                    <circle cx="100" cy="150" r="22" fill="#fef2f2" stroke="#f97316" stroke-width="1.5"/>
+                    <text x="100" y="145" text-anchor="middle" font-size="15">👤</text>
+                    <text x="100" y="162" text-anchor="middle" font-size="8" fill="#c2410c">+3 amigos</text>
+                    <circle cx="280" cy="150" r="22" fill="#fef2f2" stroke="#f97316" stroke-width="1.5"/>
+                    <text x="280" y="145" text-anchor="middle" font-size="15">👤</text>
+                    <text x="280" y="162" text-anchor="middle" font-size="8" fill="#c2410c">+3 amigos</text>
+                    <circle cx="460" cy="150" r="22" fill="#fef2f2" stroke="#f97316" stroke-width="1.5"/>
+                    <text x="460" y="145" text-anchor="middle" font-size="15">👤</text>
+                    <text x="460" y="162" text-anchor="middle" font-size="8" fill="#c2410c">+3 amigos</text>
+                </g>
+
+                <!-- Linhas nível 2→3 -->
+                <g opacity="0">
+                    <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="1.5s" fill="freeze"/>
+                    <line x1="82" y1="170" x2="52" y2="205" stroke="#fb923c" stroke-width="1" stroke-dasharray="3 2"/>
+                    <line x1="100" y1="172" x2="100" y2="205" stroke="#fb923c" stroke-width="1" stroke-dasharray="3 2"/>
+                    <line x1="118" y1="170" x2="148" y2="205" stroke="#fb923c" stroke-width="1" stroke-dasharray="3 2"/>
+                    <line x1="262" y1="170" x2="232" y2="205" stroke="#fb923c" stroke-width="1" stroke-dasharray="3 2"/>
+                    <line x1="280" y1="172" x2="280" y2="205" stroke="#fb923c" stroke-width="1" stroke-dasharray="3 2"/>
+                    <line x1="298" y1="170" x2="328" y2="205" stroke="#fb923c" stroke-width="1" stroke-dasharray="3 2"/>
+                    <line x1="442" y1="170" x2="412" y2="205" stroke="#fb923c" stroke-width="1" stroke-dasharray="3 2"/>
+                    <line x1="460" y1="172" x2="460" y2="205" stroke="#fb923c" stroke-width="1" stroke-dasharray="3 2"/>
+                    <line x1="478" y1="170" x2="508" y2="205" stroke="#fb923c" stroke-width="1" stroke-dasharray="3 2"/>
+                </g>
+
+                <!-- Nível 3: 9 compartilhamentos -->
+                <g opacity="0">
+                    <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="1.8s" fill="freeze"/>
+                    <circle cx="40" cy="218" r="12" fill="#fed7aa" stroke="#ea580c" stroke-width="1"/>
+                    <text x="40" y="222" text-anchor="middle" font-size="9">👤</text>
+                    <circle cx="100" cy="218" r="12" fill="#fed7aa" stroke="#ea580c" stroke-width="1"/>
+                    <text x="100" y="222" text-anchor="middle" font-size="9">👤</text>
+                    <circle cx="160" cy="218" r="12" fill="#fed7aa" stroke="#ea580c" stroke-width="1"/>
+                    <text x="160" y="222" text-anchor="middle" font-size="9">👤</text>
+                    <circle cx="220" cy="218" r="12" fill="#fed7aa" stroke="#ea580c" stroke-width="1"/>
+                    <text x="220" y="222" text-anchor="middle" font-size="9">👤</text>
+                    <circle cx="280" cy="218" r="12" fill="#fed7aa" stroke="#ea580c" stroke-width="1"/>
+                    <text x="280" y="222" text-anchor="middle" font-size="9">👤</text>
+                    <circle cx="340" cy="218" r="12" fill="#fed7aa" stroke="#ea580c" stroke-width="1"/>
+                    <text x="340" y="222" text-anchor="middle" font-size="9">👤</text>
+                    <circle cx="400" cy="218" r="12" fill="#fed7aa" stroke="#ea580c" stroke-width="1"/>
+                    <text x="400" y="222" text-anchor="middle" font-size="9">👤</text>
+                    <circle cx="460" cy="218" r="12" fill="#fed7aa" stroke="#ea580c" stroke-width="1"/>
+                    <text x="460" y="222" text-anchor="middle" font-size="9">👤</text>
+                    <circle cx="520" cy="218" r="12" fill="#fed7aa" stroke="#ea580c" stroke-width="1"/>
+                    <text x="520" y="222" text-anchor="middle" font-size="9">👤</text>
+                </g>
+
+                <!-- Etiqueta -->
+                <text x="490" y="60" text-anchor="middle" font-size="10" fill="#92400e" opacity="0">
+                    1 post
+                    <animate attributeName="opacity" from="0" to="1" dur="0.3s" begin="0.5s" fill="freeze"/>
+                </text>
+                <text x="510" y="150" text-anchor="middle" font-size="10" fill="#c2410c" opacity="0">
+                    3 pessoas
+                    <animate attributeName="opacity" from="0" to="1" dur="0.3s" begin="1.2s" fill="freeze"/>
+                </text>
+                <text x="545" y="218" text-anchor="middle" font-size="10" fill="#ea580c" opacity="0">
+                    9…
+                    <animate attributeName="opacity" from="0" to="1" dur="0.3s" begin="2.0s" fill="freeze"/>
+                </text>
+            </svg>
+
+            <p><strong>Fake news</strong> s&atilde;o not&iacute;cias falsas ou deliberadamente distorcidas criadas para enganar, influenciar opini&otilde;es ou causar p&acirc;nico. A desinforma&ccedil;&atilde;o se espalha pelas redes sociais muito mais r&aacute;pido que a informa&ccedil;&atilde;o verdadeira &mdash; porque tende a ser mais emocionante e provocar compartilhamento impulsivo.</p>
 
             <h3>&#x26A0;&#xFE0F; Sinais de que uma not&iacute;cia pode ser falsa</h3>
             <div class="fakenews-grid">
@@ -555,7 +710,7 @@
                 </div>
                 <div class="fn-item">
                     <div class="fn-icon">&#x1F4C5;</div>
-                    <p><strong>Data ausente ou antiga</strong> &mdash; not&iacute;cias velhas reaparecem como se fossem recentes para gerar alarme</p>
+                    <p><strong>Data ausente ou antiga</strong> &mdash; not&iacute;cias velhas reaparecem como se fossem recentes</p>
                 </div>
                 <div class="fn-item">
                     <div class="fn-icon">&#x1F4F7;</div>
@@ -563,31 +718,35 @@
                 </div>
                 <div class="fn-item">
                     <div class="fn-icon">&#x1F9D1;&#x200D;&#x1F4BC;</div>
-                    <p><strong>Sem autor identificado</strong> ou com fontes vagas como &ldquo;estudos mostram&rdquo; sem citar qual estudo</p>
+                    <p><strong>Sem autor identificado</strong> ou com fontes vagas como &ldquo;estudos mostram&rdquo; sem citar qual</p>
                 </div>
                 <div class="fn-item">
                     <div class="fn-icon">&#x2764;&#xFE0F;</div>
-                    <p><strong>Apelo emocional excessivo</strong> &mdash; conteúdo projetado para gerar raiva, medo ou indignação imediata</p>
+                    <p><strong>Apelo emocional excessivo</strong> &mdash; conte&uacute;do projetado para gerar raiva, medo ou indignação imediata</p>
                 </div>
             </div>
 
             <h3>&#x1F50D; Como verificar antes de compartilhar</h3>
             <ul>
-                <li><strong>Ag&ecirc;ncias de fact-checking brasileiras:</strong> Aos Fatos (aosfatos.org), Agência Lupa (lupa.uol.com.br) e Agência Pública (agenciapublica.org.br)</li>
-                <li><strong>Pesquise a not&iacute;cia em outros ve&iacute;culos:</strong> se for verdadeira, portais confi&aacute;veis tamb&eacute;m estar&atilde;o noticiando</li>
-                <li><strong>Busca reversa de imagem:</strong> arraste a foto para o Google Imagens ou use o TinEye para ver onde ela apareceu originalmente</li>
+                <li><strong>Ag&ecirc;ncias de fact-checking:</strong> Aos Fatos (aosfatos.org), Ag&ecirc;ncia Lupa (lupa.uol.com.br) e Ag&ecirc;ncia P&uacute;blica</li>
+                <li><strong>Pesquise em outros ve&iacute;culos:</strong> se for verdadeira, portais confi&aacute;veis tamb&eacute;m estar&atilde;o noticiando</li>
+                <li><strong>Busca reversa de imagem:</strong> arraste a foto para o Google Imagens ou use o TinEye</li>
                 <li><strong>Leia al&eacute;m do t&iacute;tulo:</strong> muitas desinforma&ccedil;&otilde;es dependem de as pessoas n&atilde;o lerem o texto completo</li>
             </ul>
 
             <h3>&#x1F916; Deepfakes</h3>
-            <p>Os <strong>deepfakes</strong> s&atilde;o v&iacute;deos, imagens ou &aacute;udios gerados por intelig&ecirc;ncia artificial que mostram pessoas dizendo ou fazendo coisas que nunca aconteceram. A tecnologia avan&ccedil;ou ao ponto em que fakes de alta qualidade podem ser criados por qualquer pessoa com um celular. Sinais de alerta: piscadas irregulares, bordas do rosto borradas, voz levemente robotizada e micro-express&otilde;es ausentes.</p>
+            <p>Os <strong>deepfakes</strong> s&atilde;o v&iacute;deos, imagens ou &aacute;udios gerados por intelig&ecirc;ncia artificial que mostram pessoas dizendo ou fazendo coisas que nunca aconteceram. Sinais de alerta: piscadas irregulares, bordas do rosto borradas, voz levemente robotizada e micro-express&otilde;es ausentes.</p>
 
             <div class="danger-box">
-                <p>&#x1F6AB; <strong>Compartilhar fake news tem consequ&ecirc;ncias legais.</strong> Quem propaga deliberadamente informa&ccedil;&otilde;es falsas que causam dano a pessoas pode responder por injúria, difa­ma&ccedil;&atilde;o ou cal&uacute;nia. O Supremo Tribunal Federal j&aacute; decidiu que a liberdade de express&atilde;o <strong>n&atilde;o protege a desinforma&ccedil;&atilde;o intencional</strong>.</p>
+                <p>&#x1F6AB; <strong>Compartilhar fake news tem consequ&ecirc;ncias legais.</strong> Quem propaga deliberadamente informa&ccedil;&otilde;es falsas que causam dano a pessoas pode responder por injúria, difama&ccedil;&atilde;o ou cal&uacute;nia. O STF j&aacute; decidiu que a liberdade de express&atilde;o <strong>n&atilde;o protege a desinforma&ccedil;&atilde;o intencional</strong>.</p>
             </div>
         </div>
+    </div>
 
-        <!-- CARD 5 — Legislação digital no Brasil -->
+    <!-- ══════════════════════════════════════════
+         SLIDE 5 — Leis Digitais
+    ══════════════════════════════════════════ -->
+    <div class="slide-section">
         <div class="content-card">
             <h2>&#x1F4CB; Principais Leis Digitais no Brasil</h2>
             <p>O Brasil tem um arcabou&ccedil;o legal s&oacute;lido para o ambiente digital. Conhecer as principais leis &eacute; essencial para entender direitos, deveres e riscos:</p>
@@ -597,7 +756,7 @@
                     <span class="lei-num">Lei 12.965/2014</span>
                     <div class="lei-body">
                         <strong>Marco Civil da Internet</strong>
-                        <p>A &ldquo;Constitui&ccedil;&atilde;o da internet brasileira&rdquo;. Garante neutralidade de rede, privacidade, liberdade de express&atilde;o e estabelece responsabilidades de usu&aacute;rios e plataformas. Toda atividade online no Brasil &eacute; regida por ela.</p>
+                        <p>A &ldquo;Constitui&ccedil;&atilde;o da internet brasileira&rdquo;. Garante neutralidade de rede, privacidade, liberdade de express&atilde;o e estabelece responsabilidades de usu&aacute;rios e plataformas.</p>
                     </div>
                 </div>
                 <div class="lei-card">
@@ -611,7 +770,7 @@
                     <span class="lei-num">Lei 13.709/2018</span>
                     <div class="lei-body">
                         <strong>LGPD &mdash; Lei Geral de Prote&ccedil;&atilde;o de Dados</strong>
-                        <p>Regula o tratamento de dados pessoais por empresas e &oacute;rg&atilde;os p&uacute;blicos. Garante direitos ao titular dos dados e imp&otilde;e obriga&ccedil;&otilde;es &agrave;s organizações. Ser&aacute; aprofundada na pr&oacute;xima aula.</p>
+                        <p>Regula o tratamento de dados pessoais por empresas e &oacute;rg&atilde;os p&uacute;blicos. Garante direitos ao titular dos dados e imp&otilde;e obriga&ccedil;&otilde;es &agrave;s organiza&ccedil;&otilde;es. Ser&aacute; aprofundada na pr&oacute;xima aula.</p>
                     </div>
                 </div>
                 <div class="lei-card">
@@ -658,18 +817,22 @@
                     <td>At&eacute; 4 anos</td>
                 </tr>
                 <tr>
-                    <td>Difa­ma&ccedil;&atilde;o em redes sociais</td>
+                    <td>Difama&ccedil;&atilde;o em redes sociais</td>
                     <td><span class="tag-civil">&#x1F7E1; Civil + Criminal</span></td>
                     <td>Indeniza&ccedil;&atilde;o + at&eacute; 2 anos</td>
                 </tr>
             </table>
 
             <div class="alert-box">
-                <p>&#x1F4CC; <strong>Menores de 18 anos tamb&eacute;m respondem.</strong> Embora n&atilde;o sejam imput&aacute;veis penalmente, adolescentes podem ser submetidos a medidas socioeducativas pelo Estatuto da Crian&ccedil;a e do Adolescente (ECA). Al&eacute;m disso, os <strong>pais ou respons&aacute;veis</strong> podem ser responsabilizados civilmente pelos danos causados.</p>
+                <p>&#x1F4CC; <strong>Menores de 18 anos tamb&eacute;m respondem.</strong> Embora n&atilde;o sejam imput&aacute;veis penalmente, adolescentes podem ser submetidos a medidas socioeducativas pelo ECA. Al&eacute;m disso, os <strong>pais ou respons&aacute;veis</strong> podem ser responsabilizados civilmente pelos danos causados.</p>
             </div>
         </div>
+    </div>
 
-        <!-- CARD 6 — Responsabilidade ao publicar -->
+    <!-- ══════════════════════════════════════════
+         SLIDE 6 — Responsabilidade ao Publicar
+    ══════════════════════════════════════════ -->
+    <div class="slide-section">
         <div class="content-card">
             <h2>&#x1F4F1; Responsabilidade ao Publicar e Compartilhar</h2>
             <p>Publicar conte&uacute;do online &eacute; simples &mdash; mas cada publica&ccedil;&atilde;o carrega responsabilidade legal e moral. O Marco Civil da Internet estabelece que o usu&aacute;rio &eacute; <strong>respons&aacute;vel pelo conte&uacute;do que publica</strong>, independentemente da plataforma.</p>
@@ -677,7 +840,7 @@
             <h3>Antes de publicar, pergunte-se:</h3>
             <ul>
                 <li>&#x1F4F7; Essa foto/v&iacute;deo mostra outra pessoa? <strong>Ela autorizou?</strong> Postar imagens de pessoas sem consentimento pode violar direito de imagem</li>
-                <li>&#x1F4AC; Esse coment&aacute;rio ataca a honra de algu&eacute;m? <strong>Pode ser injúria, difa­ma&ccedil;&atilde;o ou cal&uacute;nia</strong> &mdash; mesmo que seja &ldquo;s&oacute; uma brincadeira&rdquo;</li>
+                <li>&#x1F4AC; Esse coment&aacute;rio ataca a honra de algu&eacute;m? <strong>Pode ser injúria, difama&ccedil;&atilde;o ou cal&uacute;nia</strong> &mdash; mesmo que seja &ldquo;s&oacute; uma brincadeira&rdquo;</li>
                 <li>&#x1F4F0; Essa not&iacute;cia &eacute; verdadeira? <strong>Compartilhar fake news</strong> que cause dano pode gerar responsabilidade civil</li>
                 <li>&#x1F3A8; Esse conte&uacute;do &eacute; de outra pessoa? <strong>Reproduzir sem citar a fonte</strong> &eacute; pl&aacute;gio; reproduzir com fins comerciais sem licen&ccedil;a &eacute; crime</li>
                 <li>&#x1F512; Essa mensagem foi enviada de forma privada? <strong>Prints de conversas privadas</strong> n&atilde;o podem ser divulgados sem autoriza&ccedil;&atilde;o &mdash; viola o sigilo das comunica&ccedil;&otilde;es</li>
@@ -687,8 +850,12 @@
                 <p>&#x1F4A1; <strong>A internet nunca esquece.</strong> Uma publica&ccedil;&atilde;o deletada pode ter sido salva por outras pessoas. Antes de publicar qualquer coisa, imagine que ela poder&aacute; ser vista por seu professor, familiares, futuros empregadores e autoridades. Se isso te incomoda, n&atilde;o publique.</p>
             </div>
         </div>
+    </div>
 
-        <!-- CARD 7 — Boas práticas de ética digital -->
+    <!-- ══════════════════════════════════════════
+         SLIDE 7 — Boas Práticas
+    ══════════════════════════════════════════ -->
+    <div class="slide-section">
         <div class="content-card">
             <h2>&#x2705; Boas Pr&aacute;ticas de &Eacute;tica Digital</h2>
 
@@ -711,7 +878,7 @@
                     <div class="boa-icon">&#x1F4F7;</div>
                     <div class="boa-text">
                         <strong>Respeite a imagem das pessoas</strong>
-                        <span>Pea&ccedil;a permiss&atilde;o antes de fotografar ou filmar algu&eacute;m em situa&ccedil;&otilde;es privadas. N&atilde;o publique sem consentimento.</span>
+                        <span>Pe&ccedil;a permiss&atilde;o antes de fotografar ou filmar algu&eacute;m em situa&ccedil;&otilde;es privadas. N&atilde;o publique sem consentimento.</span>
                     </div>
                 </div>
                 <div class="boa-item">
@@ -737,13 +904,17 @@
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- CARD 8 — RECAPITULANDO -->
+    <!-- ══════════════════════════════════════════
+         SLIDE 8 — Recapitulando
+    ══════════════════════════════════════════ -->
+    <div class="slide-section">
         <div class="content-card">
             <h2>&#x1F4CB; Recapitulando</h2>
             <ul>
                 <li>&Eacute;tica digital e legalidade s&atilde;o conceitos distintos: o ideal &eacute; agir de forma <strong>ao mesmo tempo &eacute;tica e legal</strong></li>
-                <li>A <strong>Lei de Direitos Autorais</strong> protege obras digitais: reproduzir sem autoriza&ccedil;&atilde;o ou plagiar s&atilde;o infrações com consequ&ecirc;ncias civis e criminais</li>
+                <li>A <strong>Lei de Direitos Autorais</strong> protege obras digitais: reproduzir sem autoriza&ccedil;&atilde;o ou plagiar s&atilde;o infra&ccedil;&otilde;es com consequ&ecirc;ncias civis e criminais</li>
                 <li>Licen&ccedil;as <strong>Creative Commons</strong> definem exatamente como uma obra pode ser usada &mdash; sempre leia a licen&ccedil;a antes de usar</li>
                 <li><strong>Cyberbullying</strong> &eacute; crime desde 2024, com penas de at&eacute; 6 anos. A resposta correta &eacute;: n&atilde;o reagir, registrar prints e denunciar</li>
                 <li>Antes de compartilhar, verifique a not&iacute;cia em <strong>fact-checkers</strong>. Quem espalha fake news pode ser responsabilizado civilmente</li>
@@ -756,133 +927,250 @@
                 <p>&#x1F4DA; <strong>Na pr&oacute;xima e &uacute;ltima aula da Unidade 2</strong> estudaremos a <strong>LGPD &mdash; Lei Geral de Prote&ccedil;&atilde;o de Dados</strong>: o que ela &eacute;, quais s&atilde;o seus princ&iacute;pios, quais direitos ela garante ao titular e o que as organiza&ccedil;&otilde;es s&atilde;o obrigadas a fazer.</p>
             </div>
         </div>
+    </div>
 
-        <!-- EXERCÍCIO: Arrastar e Soltar -->
-        <div class="content-card exercise-card">
-            <h2>&#x1F3AF; Exerc&iacute;cio &mdash; Arraste e Conecte</h2>
-            <p style="color:#475569;font-size:0.9em;margin-bottom:4px;">Arraste cada situa&ccedil;&atilde;o para o conceito ou lei que ela representa. Em dispositivos m&oacute;veis, toque na descri&ccedil;&atilde;o e depois na zona de destino.</p>
+    <!-- ══════════════════════════════════════════
+         EXERCÍCIO: Múltipla Escolha
+    ══════════════════════════════════════════ -->
+    <div class="content-card exercise-card">
+        <h2>&#x1F9E0; Quiz &mdash; &Eacute;tica e Legisla&ccedil;&atilde;o Digital</h2>
 
-            <div class="ex-drag-root" data-ex="ex27">
-                <div class="ex-drag">
-                    <div>
-                        <div class="ex-col-title">Situa&ccedil;&atilde;o</div>
-                        <div class="ex-pool" data-pool="ex27">
-                            <div class="drag-chip" data-id="plagio">Aluno entrega trabalho copiado da internet como se fosse de sua autoria</div>
-                            <div class="drag-chip" data-id="cb">Grupo de alunos cria perfil falso de colega e posta fotos constrangedoras repetidamente</div>
-                            <div class="drag-chip" data-id="fakenews">Usu&aacute;rio compartilha v&iacute;deo falso sobre vacina sem verificar a fonte</div>
-                            <div class="drag-chip" data-id="marcocivil">Lei que regula direitos e deveres de usu&aacute;rios e plataformas na internet brasileira</div>
-                            <div class="drag-chip" data-id="carolina">Jovem acessa o e-mail da colega sem permiss&atilde;o para ler mensagens privadas</div>
+        <div class="mc-root" data-ex="mc27">
+
+            <div class="mc-question" data-correct="c">
+                <p class="mc-q-text"><strong>1.</strong> Qual das situa&ccedil;&otilde;es a seguir &eacute; considerada <em>&eacute;tica</em>, mas pode ser <em>ilegal</em>?</p>
+                <div class="mc-options">
+                    <div class="mc-option" data-opt="a"><span class="mc-letter">A</span> Citar um livro com refer&ecirc;ncia completa em um trabalho escolar</div>
+                    <div class="mc-option" data-opt="b"><span class="mc-letter">B</span> Baixar um filme pirata para assistir em casa sem pagar</div>
+                    <div class="mc-option" data-opt="c"><span class="mc-letter">C</span> Acessar o sistema vulner&aacute;vel de uma empresa para alertar sobre a falha, sem ter autoriza&ccedil;&atilde;o pr&eacute;via</div>
+                    <div class="mc-option" data-opt="d"><span class="mc-letter">D</span> Postar coment&aacute;rio ofensivo sobre algu&eacute;m nas redes sociais</div>
+                </div>
+                <div class="mc-explanation ok">&#x2705; Correto! Acessar um sistema sem autoriza&ccedil;&atilde;o &eacute; crime pela Lei Carolina Dieckmann (Lei 12.737/2012) &mdash; mesmo que a inten&ccedil;&atilde;o seja alertar. A &eacute;tica aqui &eacute; discutível (objetivo nobre), mas a ilegalidade &eacute; objetiva. O caminho correto seria notificar a empresa por e-mail sem acessar o sistema.</div>
+                <div class="mc-explanation err" data-for="a">&#x274C; Citar com refer&ecirc;ncia &eacute; legal <em>e</em> &eacute;tico &mdash; est&aacute; no quadrante ideal. N&atilde;o h&aacute; conflito aqui.</div>
+                <div class="mc-explanation err" data-for="b">&#x274C; Pirataria &eacute; ilegal <em>e</em> antiética &mdash; viola direitos autorais e prejudica criadores. N&atilde;o &eacute; o quadrante "ético mas ilegal".</div>
+                <div class="mc-explanation err" data-for="d">&#x274C; Coment&aacute;rio ofensivo &eacute; anti&eacute;tico <em>e</em> pode ser crime (injúria/difama&ccedil;&atilde;o). Tamb&eacute;m n&atilde;o &eacute; "ético mas ilegal".</div>
+            </div>
+
+            <hr class="mc-sep">
+
+            <div class="mc-question" data-correct="c">
+                <p class="mc-q-text"><strong>2.</strong> Uma obra com licen&ccedil;a <strong>CC BY-NC</strong> permite que voc&ecirc;:</p>
+                <div class="mc-options">
+                    <div class="mc-option" data-opt="a"><span class="mc-letter">A</span> Use para qualquer finalidade, inclusive vender, sem citar o autor</div>
+                    <div class="mc-option" data-opt="b"><span class="mc-letter">B</span> Modifique e publique como produto comercial pr&oacute;prio</div>
+                    <div class="mc-option" data-opt="c"><span class="mc-letter">C</span> Use em projetos n&atilde;o comerciais desde que cite o nome do autor</div>
+                    <div class="mc-option" data-opt="d"><span class="mc-letter">D</span> Use sem qualquer restri&ccedil;&atilde;o, pois &eacute; Creative Commons</div>
+                </div>
+                <div class="mc-explanation ok">&#x2705; Correto! CC BY-NC = Atribui&ccedil;&atilde;o (BY) + N&atilde;o Comercial (NC). Voc&ecirc; pode usar, mas precisa citar o autor (BY) e n&atilde;o pode usar para fins comerciais (NC).</div>
+                <div class="mc-explanation err" data-for="a">&#x274C; O elemento BY exige que o autor seja citado. Al&eacute;m disso, NC proíbe uso comercial.</div>
+                <div class="mc-explanation err" data-for="b">&#x274C; NC (N&atilde;o Comercial) proíbe exatamente isso: n&atilde;o &eacute; permitido publicar como produto comercial.</div>
+                <div class="mc-explanation err" data-for="d">&#x274C; Creative Commons n&atilde;o significa "sem restri&ccedil;&otilde;es". Cada licen&ccedil;a tem condi&ccedil;&otilde;es espec&iacute;ficas que devem ser respeitadas.</div>
+            </div>
+
+            <hr class="mc-sep">
+
+            <div class="mc-question" data-correct="b">
+                <p class="mc-q-text"><strong>3.</strong> Voc&ecirc; est&aacute; sofrendo cyberbullying. Qual deve ser a <strong>primeira a&ccedil;&atilde;o</strong>?</p>
+                <div class="mc-options">
+                    <div class="mc-option" data-opt="a"><span class="mc-letter">A</span> Responder com a mesma moeda para mostrar que n&atilde;o vai se intimidar</div>
+                    <div class="mc-option" data-opt="b"><span class="mc-letter">B</span> N&atilde;o reagir, registrar prints com data e hora vis&iacute;veis, e bloquear o agressor</div>
+                    <div class="mc-option" data-opt="c"><span class="mc-letter">C</span> Deletar sua conta nas redes sociais para o agressor n&atilde;o te encontrar</div>
+                    <div class="mc-option" data-opt="d"><span class="mc-letter">D</span> Esperar que o problema se resolva sozinho</div>
+                </div>
+                <div class="mc-explanation ok">&#x2705; Correto! N&atilde;o reagir interrompe o ciclo (reagir alimenta o agressor). Registrar prints &eacute; essencial para futuras den&uacute;ncias. Bloquear limita o acesso imediato do agressor.</div>
+                <div class="mc-explanation err" data-for="a">&#x274C; Reagir alimenta o ciclo e pode fazer o agressor escalar os ataques. &Eacute; a pior escolha inicial.</div>
+                <div class="mc-explanation err" data-for="c">&#x274C; Deletar a conta faz voc&ecirc; perder as evid&ecirc;ncias e n&atilde;o resolve o problema. O agressor pode criar outra conta ou migrar para outra plataforma.</div>
+                <div class="mc-explanation err" data-for="d">&#x274C; Cyberbullying raramente cessa sozinho &mdash; tende a escalar. Ignorar sem registrar tamb&eacute;m elimina as evid&ecirc;ncias.</div>
+            </div>
+
+            <hr class="mc-sep">
+
+            <div class="mc-question" data-correct="a">
+                <p class="mc-q-text"><strong>4.</strong> Qual lei brasileira tipifica como crime a <strong>invas&atilde;o de dispositivos e intercepta&ccedil;&atilde;o de dados</strong> sem autoriza&ccedil;&atilde;o?</p>
+                <div class="mc-options">
+                    <div class="mc-option" data-opt="a"><span class="mc-letter">A</span> Lei Carolina Dieckmann (Lei 12.737/2012)</div>
+                    <div class="mc-option" data-opt="b"><span class="mc-letter">B</span> Marco Civil da Internet (Lei 12.965/2014)</div>
+                    <div class="mc-option" data-opt="c"><span class="mc-letter">C</span> LGPD (Lei 13.709/2018)</div>
+                    <div class="mc-option" data-opt="d"><span class="mc-letter">D</span> Lei Antibullying (Lei 14.811/2024)</div>
+                </div>
+                <div class="mc-explanation ok">&#x2705; Correto! A Lei Carolina Dieckmann (Lei 12.737/2012) tipificou os crimes inform&aacute;ticos no Brasil, incluindo invas&atilde;o de dispositivos, e-mails e sistemas sem autoriza&ccedil;&atilde;o.</div>
+                <div class="mc-explanation err" data-for="b">&#x274C; O Marco Civil da Internet regula direitos e deveres de usu&aacute;rios e plataformas, mas n&atilde;o tipifica crimes inform&aacute;ticos espec&iacute;ficos.</div>
+                <div class="mc-explanation err" data-for="c">&#x274C; A LGPD regula o tratamento de dados pessoais por empresas e &oacute;rg&atilde;os p&uacute;blicos, n&atilde;o crimes de invas&atilde;o.</div>
+                <div class="mc-explanation err" data-for="d">&#x274C; A Lei Antibullying tipificou o bullying e cyberbullying como crime, mas n&atilde;o trata de invas&atilde;o de dispositivos.</div>
+            </div>
+
+            <hr class="mc-sep">
+
+            <div class="mc-question" data-correct="c">
+                <p class="mc-q-text"><strong>5.</strong> Um usu&aacute;rio compartilha uma not&iacute;cia falsa sobre sa&uacute;de p&uacute;blica que gera p&acirc;nico e causa danos a pessoas. Ele pode sofrer:</p>
+                <div class="mc-options">
+                    <div class="mc-option" data-opt="a"><span class="mc-letter">A</span> Apenas uma advert&ecirc;ncia informal, pois &eacute; liberdade de express&atilde;o</div>
+                    <div class="mc-option" data-opt="b"><span class="mc-letter">B</span> Nenhuma consequ&ecirc;ncia, pois n&atilde;o foi ele quem criou a not&iacute;cia</div>
+                    <div class="mc-option" data-opt="c"><span class="mc-letter">C</span> Responsabilidade civil pelos danos e, se intencional, responder por injúria ou cal&uacute;nia</div>
+                    <div class="mc-option" data-opt="d"><span class="mc-letter">D</span> Apenas o criador original da not&iacute;cia pode ser responsabilizado</div>
+                </div>
+                <div class="mc-explanation ok">&#x2705; Correto! Quem propaga deliberadamente desinforma&ccedil;&atilde;o que causa dano pode responder civilmente. O STF j&aacute; decidiu que a liberdade de express&atilde;o n&atilde;o protege a desinforma&ccedil;&atilde;o intencional.</div>
+                <div class="mc-explanation err" data-for="a">&#x274C; Liberdade de express&atilde;o n&atilde;o &eacute; absoluta. O STF estabeleceu que desinforma&ccedil;&atilde;o intencional que causa dano n&atilde;o est&aacute; protegida.</div>
+                <div class="mc-explanation err" data-for="b">&#x274C; Errado. Quem compartilha tem responsabilidade pelo conte&uacute;do que propaga, especialmente quando os danos s&atilde;o previs&iacute;veis.</div>
+                <div class="mc-explanation err" data-for="d">&#x274C; A responsabilidade pode ser compartilhada por toda a cadeia de propaga&ccedil;&atilde;o, n&atilde;o apenas o criador original.</div>
+            </div>
+
+            <hr class="mc-sep">
+
+            <div class="mc-question" data-correct="b">
+                <p class="mc-q-text"><strong>6.</strong> O que melhor descreve um <strong>deepfake</strong>?</p>
+                <div class="mc-options">
+                    <div class="mc-option" data-opt="a"><span class="mc-letter">A</span> Fotografia editada manualmente com Photoshop para alterar cores ou aparência</div>
+                    <div class="mc-option" data-opt="b"><span class="mc-letter">B</span> V&iacute;deo, imagem ou &aacute;udio gerado por IA mostrando pessoas fazendo ou dizendo algo que nunca aconteceu</div>
+                    <div class="mc-option" data-opt="c"><span class="mc-letter">C</span> Not&iacute;cia publicada em site sat&iacute;rico claramente identificado como humor</div>
+                    <div class="mc-option" data-opt="d"><span class="mc-letter">D</span> Print de conversa adulterado manualmente para incriminar algu&eacute;m</div>
+                </div>
+                <div class="mc-explanation ok">&#x2705; Correto! Deepfakes s&atilde;o conte&uacute;dos audiovisuais gerados ou manipulados por intelig&ecirc;ncia artificial (redes neurais) para mostrar pessoas em situa&ccedil;&otilde;es que nunca ocorreram, com grau de realismo muito superior a edi&ccedil;&otilde;es manuais.</div>
+                <div class="mc-explanation err" data-for="a">&#x274C; Edi&ccedil;&atilde;o manual com Photoshop n&atilde;o &eacute; deepfake. Deepfakes usam intelig&ecirc;ncia artificial para gerar conte&uacute;do sint&eacute;tico com alto realismo.</div>
+                <div class="mc-explanation err" data-for="c">&#x274C; Sites sat&iacute;ricos identificados como humor n&atilde;o s&atilde;o deepfakes &mdash; e geralmente n&atilde;o s&atilde;o considerados desinforma&ccedil;&atilde;o, pois o contexto &eacute; claro.</div>
+                <div class="mc-explanation err" data-for="d">&#x274C; Adultera&ccedil;&atilde;o manual de prints &eacute; uma forma de falsifica&ccedil;&atilde;o, mas n&atilde;o &eacute; deepfake. Deepfakes envolvem IA generativa para criar conte&uacute;do audiovisual.</div>
+            </div>
+
+        </div>
+
+        <div class="ex-actions">
+            <button class="btn-verificar" onclick="mcVerify('mc27')">Verificar</button>
+            <button class="btn-refazer"  onclick="mcReset('mc27')">Refazer</button>
+        </div>
+        <div class="ex-result" id="mc27-result"></div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         EXERCÍCIO: Arrastar e Soltar
+    ══════════════════════════════════════════ -->
+    <div class="content-card exercise-card">
+        <h2>&#x1F3AF; Exerc&iacute;cio &mdash; Arraste e Conecte</h2>
+        <p style="color:#475569;font-size:0.9em;margin-bottom:4px;">Arraste cada situa&ccedil;&atilde;o para o conceito ou lei que ela representa. Em dispositivos m&oacute;veis, toque na descri&ccedil;&atilde;o e depois na zona de destino.</p>
+
+        <div class="ex-drag-root" data-ex="ex27">
+            <div class="ex-drag">
+                <div>
+                    <div class="ex-col-title">Situa&ccedil;&atilde;o</div>
+                    <div class="ex-pool" data-pool="ex27">
+                        <div class="drag-chip" data-id="plagio">Aluno entrega trabalho copiado da internet como se fosse de sua autoria</div>
+                        <div class="drag-chip" data-id="cb">Grupo de alunos cria perfil falso de colega e posta fotos constrangedoras repetidamente</div>
+                        <div class="drag-chip" data-id="fakenews">Usu&aacute;rio compartilha v&iacute;deo falso sobre vacina sem verificar a fonte</div>
+                        <div class="drag-chip" data-id="marcocivil">Lei que regula direitos e deveres de usu&aacute;rios e plataformas na internet brasileira</div>
+                        <div class="drag-chip" data-id="carolina">Jovem acessa o e-mail da colega sem permiss&atilde;o para ler mensagens privadas</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="ex-col-title">Conceito / Lei</div>
+                    <div class="ex-zones" data-zones="ex27">
+                        <div class="drop-zone" data-zone="ex27-z1" data-accept="plagio">
+                            <span class="zone-name">Pl&aacute;gio / Direitos Autorais</span>
+                            <div class="zone-slot"></div>
+                            <div class="zone-feedback"></div>
+                        </div>
+                        <div class="drop-zone" data-zone="ex27-z2" data-accept="cb">
+                            <span class="zone-name">Cyberbullying</span>
+                            <div class="zone-slot"></div>
+                            <div class="zone-feedback"></div>
+                        </div>
+                        <div class="drop-zone" data-zone="ex27-z3" data-accept="fakenews">
+                            <span class="zone-name">Desinforma&ccedil;&atilde;o / Fake News</span>
+                            <div class="zone-slot"></div>
+                            <div class="zone-feedback"></div>
+                        </div>
+                        <div class="drop-zone" data-zone="ex27-z4" data-accept="marcocivil">
+                            <span class="zone-name">Marco Civil da Internet</span>
+                            <div class="zone-slot"></div>
+                            <div class="zone-feedback"></div>
+                        </div>
+                        <div class="drop-zone" data-zone="ex27-z5" data-accept="carolina">
+                            <span class="zone-name">Lei Carolina Dieckmann</span>
+                            <div class="zone-slot"></div>
+                            <div class="zone-feedback"></div>
                         </div>
                     </div>
-                    <div>
-                        <div class="ex-col-title">Conceito / Lei</div>
-                        <div class="ex-zones" data-zones="ex27">
-                            <div class="drop-zone" data-zone="ex27-z1" data-accept="plagio">
-                                <span class="zone-name">Pl&aacute;gio / Direitos Autorais</span>
-                                <div class="zone-slot"></div>
-                                <div class="zone-feedback"></div>
-                            </div>
-                            <div class="drop-zone" data-zone="ex27-z2" data-accept="cb">
-                                <span class="zone-name">Cyberbullying</span>
-                                <div class="zone-slot"></div>
-                                <div class="zone-feedback"></div>
-                            </div>
-                            <div class="drop-zone" data-zone="ex27-z3" data-accept="fakenews">
-                                <span class="zone-name">Desinforma&ccedil;&atilde;o / Fake News</span>
-                                <div class="zone-slot"></div>
-                                <div class="zone-feedback"></div>
-                            </div>
-                            <div class="drop-zone" data-zone="ex27-z4" data-accept="marcocivil">
-                                <span class="zone-name">Marco Civil da Internet</span>
-                                <div class="zone-slot"></div>
-                                <div class="zone-feedback"></div>
-                            </div>
-                            <div class="drop-zone" data-zone="ex27-z5" data-accept="carolina">
-                                <span class="zone-name">Lei Carolina Dieckmann</span>
-                                <div class="zone-slot"></div>
-                                <div class="zone-feedback"></div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
-            </div>
-
-            <div class="ex-actions">
-                <button class="btn-verificar" onclick="dragVerify('ex27')">Verificar</button>
-                <button class="btn-refazer"  onclick="dragReset('ex27')">Refazer</button>
-            </div>
-            <div class="ex-result" id="ex27-result"></div>
-        </div>
-
-        <!-- ATIVIDADE PRÁTICA 2.7 -->
-        <div class="content-card practical-card" id="prat-27">
-            <h2>&#x1F6E0;&#xFE0F; Atividade Pr&aacute;tica &mdash; &Eacute;tica em A&ccedil;&atilde;o</h2>
-            <div class="prat-meta">
-                <span class="prat-tag">&#x23F1; ~30 min</span>
-                <span class="prat-tag">&#x1F310; Requer internet</span>
-                <span class="prat-tag">&#x1F4DD; Individual ou em dupla</span>
-            </div>
-
-            <div class="prat-steps">
-                <div class="prat-step">
-                    <div class="step-num">1</div>
-                    <div class="step-body">
-                        <div class="step-label">Verifique uma not&iacute;cia suspeita</div>
-                        <div class="step-desc">O professor apresentar&aacute; uma not&iacute;cia (ou mensagem de WhatsApp) suspeita de ser falsa. Acesse <strong>aosfatos.org</strong> ou <strong>lupa.uol.com.br</strong> e pesquise o assunto. A not&iacute;cia foi verificada? Qual foi o resultado? Anote a classifica&ccedil;&atilde;o dada pela ag&ecirc;ncia (verdadeira, falsa, distorcida, etc.) e as evid&ecirc;ncias que levaram a essa conclus&atilde;o.</div>
-                    </div>
-                </div>
-                <div class="prat-step">
-                    <div class="step-num">2</div>
-                    <div class="step-body">
-                        <div class="step-label">Identifique a licen&ccedil;a de uma imagem</div>
-                        <div class="step-desc">Acesse <strong>images.google.com</strong>. Fa&ccedil;a uma busca por qualquer tema e clique em <em>Ferramentas &rarr; Direitos de uso</em>. Compare os resultados com e sem o filtro. Escolha uma imagem com licen&ccedil;a Creative Commons, anote qual licen&ccedil;a &eacute; e explique: o que voc&ecirc; <em>pode</em> e o que <em>n&atilde;o pode</em> fazer com essa imagem?</div>
-                    </div>
-                </div>
-                <div class="prat-step">
-                    <div class="step-num">3</div>
-                    <div class="step-body">
-                        <div class="step-label">Analise cen&aacute;rios &eacute;ticos</div>
-                        <div class="step-desc">Leia cada cen&aacute;rio e classifique como: (<strong>A</strong>) Legal e &eacute;tico, (<strong>B</strong>) Legal mas question&aacute;vel, (<strong>C</strong>) &Eacute;tico mas ilegal, ou (<strong>D</strong>) Ilegal e anti&eacute;tico. Justifique:<br>
-                        1. Copiar um poema para um cart&atilde;o de aniversário sem inten&ccedil;&atilde;o comercial.<br>
-                        2. Postar print de conversa privada de colega para &ldquo;defesa pr&oacute;pria&rdquo; em discuss&atilde;o online.<br>
-                        3. Usar m&uacute;sica com licen&ccedil;a CC BY em v&iacute;deo escolar citando o artista.<br>
-                        4. Criar meme zombando da apar&ecirc;ncia f&iacute;sica de um colega e enviar a amigos.</div>
-                    </div>
-                </div>
-                <div class="prat-step">
-                    <div class="step-num">4</div>
-                    <div class="step-body">
-                        <div class="step-label">Simule uma den&uacute;ncia de cyberbullying</div>
-                        <div class="step-desc">Acesse <strong>safernet.org.br/denuncie</strong> e explore o formul&aacute;rio de den&uacute;ncia (sem enviar). Observe: quais informa&ccedil;&otilde;es s&atilde;o pedidas? Por que a URL do conte&uacute;do ofensivo &eacute; importante? Que tipos de crimes podem ser denunciados? Anote o que descobriu sobre o processo de den&uacute;ncia.</div>
-                    </div>
-                </div>
-                <div class="prat-step">
-                    <div class="step-num">5</div>
-                    <div class="step-body">
-                        <div class="step-label">Redija um c&oacute;digo de conduta digital pessoal</div>
-                        <div class="step-desc">No Google Docs (na pasta da Unidade 2), crie um documento chamado <strong>&ldquo;Meu C&oacute;digo de Conduta Digital&rdquo;</strong>. Escreva ao menos <strong>8 regras pessoais</strong> que voc&ecirc; se compromete a seguir no ambiente digital &mdash; sobre privacidade, respeito, honestidade e responsabilidade. Compartilhe com o professor como <em>Comentarista</em>.</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="prat-observe">
-                <strong>&#x1F4CC; Para saber:</strong> A <strong>SaferNet Brasil</strong> &eacute; uma organiza&ccedil;&atilde;o da sociedade civil que mant&eacute;m, em parceria com o Minist&eacute;rio P&uacute;blico Federal, a Central Nacional de Den&uacute;ncias de Crimes Cibern&eacute;ticos. Desde 2006, j&aacute; recebeu mais de 5 milh&otilde;es de den&uacute;ncias. A den&uacute;ncia &eacute; an&ocirc;nima e gratuita.
-            </div>
-
-            <div class="ex-actions">
-                <button class="btn-print" onclick="printPractical('prat-27', 'Aula 2.7 \u2014 Quest\u00f5es \u00c9ticas e Legais em TI')">&#x1F5A8;&#xFE0F; Imprimir roteiro</button>
             </div>
         </div>
 
-        <div class="nav-footer">
-            <a href="uni2-06-prevencao-ameacas.html" class="nav-link">&#x2B05; Anterior: Preven&ccedil;&atilde;o de Amea&ccedil;as</a>
-            <a href="uni2-08-lgpd.html" class="nav-link">Pr&oacute;xima: LGPD &#x27A1;</a>
+        <div class="ex-actions">
+            <button class="btn-verificar" onclick="dragVerify('ex27')">Verificar</button>
+            <button class="btn-refazer"  onclick="dragReset('ex27')">Refazer</button>
+        </div>
+        <div class="ex-result" id="ex27-result"></div>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         ATIVIDADE PRÁTICA 2.7
+    ══════════════════════════════════════════ -->
+    <div class="content-card practical-card" id="prat-27">
+        <h2>&#x1F6E0;&#xFE0F; Atividade Pr&aacute;tica &mdash; &Eacute;tica em A&ccedil;&atilde;o</h2>
+        <div class="prat-meta">
+            <span class="prat-tag">&#x23F1; ~30 min</span>
+            <span class="prat-tag">&#x1F310; Requer internet</span>
+            <span class="prat-tag">&#x1F4DD; Individual ou em dupla</span>
         </div>
 
-    </div><!-- fim .content-wrapper -->
+        <div class="prat-steps">
+            <div class="prat-step">
+                <div class="step-num">1</div>
+                <div class="step-body">
+                    <div class="step-label">Verifique uma not&iacute;cia suspeita</div>
+                    <div class="step-desc">O professor apresentar&aacute; uma not&iacute;cia (ou mensagem de WhatsApp) suspeita de ser falsa. Acesse <strong>aosfatos.org</strong> ou <strong>lupa.uol.com.br</strong> e pesquise o assunto. A not&iacute;cia foi verificada? Qual foi o resultado? Anote a classifica&ccedil;&atilde;o dada pela ag&ecirc;ncia (verdadeira, falsa, distorcida, etc.) e as evid&ecirc;ncias que levaram a essa conclus&atilde;o.</div>
+                </div>
+            </div>
+            <div class="prat-step">
+                <div class="step-num">2</div>
+                <div class="step-body">
+                    <div class="step-label">Identifique a licen&ccedil;a de uma imagem</div>
+                    <div class="step-desc">Acesse <strong>images.google.com</strong>. Fa&ccedil;a uma busca por qualquer tema e clique em <em>Ferramentas &rarr; Direitos de uso</em>. Compare os resultados com e sem o filtro. Escolha uma imagem com licen&ccedil;a Creative Commons, anote qual licen&ccedil;a &eacute; e explique: o que voc&ecirc; <em>pode</em> e o que <em>n&atilde;o pode</em> fazer com essa imagem?</div>
+                </div>
+            </div>
+            <div class="prat-step">
+                <div class="step-num">3</div>
+                <div class="step-body">
+                    <div class="step-label">Analise cen&aacute;rios &eacute;ticos</div>
+                    <div class="step-desc">Leia cada cen&aacute;rio e classifique como: (<strong>A</strong>) Legal e &eacute;tico, (<strong>B</strong>) Legal mas question&aacute;vel, (<strong>C</strong>) &Eacute;tico mas ilegal, ou (<strong>D</strong>) Ilegal e anti&eacute;tico. Justifique:<br>
+                    1. Copiar um poema para um cart&atilde;o de aniversário sem inten&ccedil;&atilde;o comercial.<br>
+                    2. Postar print de conversa privada de colega para &ldquo;defesa pr&oacute;pria&rdquo; em discuss&atilde;o online.<br>
+                    3. Usar m&uacute;sica com licen&ccedil;a CC BY em v&iacute;deo escolar citando o artista.<br>
+                    4. Criar meme zombando da apar&ecirc;ncia f&iacute;sica de um colega e enviar a amigos.</div>
+                </div>
+            </div>
+            <div class="prat-step">
+                <div class="step-num">4</div>
+                <div class="step-body">
+                    <div class="step-label">Simule uma den&uacute;ncia de cyberbullying</div>
+                    <div class="step-desc">Acesse <strong>safernet.org.br/denuncie</strong> e explore o formul&aacute;rio de den&uacute;ncia (sem enviar). Observe: quais informa&ccedil;&otilde;es s&atilde;o pedidas? Por que a URL do conte&uacute;do ofensivo &eacute; importante? Que tipos de crimes podem ser denunciados? Anote o que descobriu sobre o processo de den&uacute;ncia.</div>
+                </div>
+            </div>
+            <div class="prat-step">
+                <div class="step-num">5</div>
+                <div class="step-body">
+                    <div class="step-label">Redija um c&oacute;digo de conduta digital pessoal</div>
+                    <div class="step-desc">No Google Docs (na pasta da Unidade 2), crie um documento chamado <strong>&ldquo;Meu C&oacute;digo de Conduta Digital&rdquo;</strong>. Escreva ao menos <strong>8 regras pessoais</strong> que voc&ecirc; se compromete a seguir no ambiente digital &mdash; sobre privacidade, respeito, honestidade e responsabilidade. Compartilhe com o professor como <em>Comentarista</em>.</div>
+                </div>
+            </div>
+        </div>
 
-    <script src="slide-mode.js"></script>
-    <script src="exercise-drag.js"></script>
-    <script src="exercise-print.js"></script>
+        <div class="prat-observe">
+            <strong>&#x1F4CC; Para saber:</strong> A <strong>SaferNet Brasil</strong> &eacute; uma organiza&ccedil;&atilde;o da sociedade civil que mant&eacute;m, em parceria com o Minist&eacute;rio P&uacute;blico Federal, a Central Nacional de Den&uacute;ncias de Crimes Cibern&eacute;ticos. Desde 2006, j&aacute; recebeu mais de 5 milh&otilde;es de den&uacute;ncias. A den&uacute;ncia &eacute; an&ocirc;nima e gratuita.
+        </div>
+
+        <div class="ex-actions">
+            <button class="btn-print" onclick="printPractical('prat-27', 'Aula 2.7 \u2014 Quest\u00f5es \u00c9ticas e Legais em TI')">&#x1F5A8;&#xFE0F; Imprimir roteiro</button>
+        </div>
+    </div>
+
+    <div class="nav-footer">
+        <a href="uni2-06-prevencao-ameacas.html" class="nav-link">&#x2B05; Anterior: Preven&ccedil;&atilde;o de Amea&ccedil;as</a>
+        <a href="uni2-08-lgpd.html" class="nav-link">Pr&oacute;xima: LGPD &#x27A1;</a>
+    </div>
+
+</div><!-- fim .content-wrapper -->
+
+<script src="slide-mode.js"></script>
+<script src="exercise-mc.js"></script>
+<script src="exercise-drag.js"></script>
+<script src="exercise-print.js"></script>
 </body>
 </html>
