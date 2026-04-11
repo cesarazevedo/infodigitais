@@ -271,76 +271,78 @@
             <h2>&#x1F4AC; O que &eacute; a LGPD e por que ela existe?</h2>
 
             <!-- SVG 1: Antes / Depois — LGPD -->
-            <svg viewBox="0 0 560 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:560px;display:block;margin:0 auto 24px;border-radius:12px;">
-                <rect width="560" height="200" fill="#f8fafc" rx="12"/>
+            <svg viewBox="0 0 560 222" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:560px;display:block;margin:0 auto 24px;border-radius:12px;">
+                <rect width="560" height="222" fill="#f8fafc" rx="12"/>
 
-                <!-- Faixa SEM LGPD -->
-                <rect x="10" y="10" width="540" height="82" rx="8" fill="#fef2f2" stroke="#fca5a5" stroke-width="1" opacity="0">
+                <!-- Faixa SEM LGPD — altura aumentada para caber 3 boxes espaçadas -->
+                <rect x="10" y="10" width="540" height="108" rx="8" fill="#fef2f2" stroke="#fca5a5" stroke-width="1" opacity="0">
                     <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="0.2s" fill="freeze"/>
                 </rect>
-                <text x="22" y="28" font-size="10" font-weight="700" fill="#dc2626" opacity="0">❌ Sem LGPD — dados sem controle<animate attributeName="opacity" from="0" to="1" dur="0.3s" begin="0.3s" fill="freeze"/></text>
+                <text x="22" y="26" font-size="10" font-weight="700" fill="#dc2626" opacity="0">❌ Sem LGPD — dados sem controle<animate attributeName="opacity" from="0" to="1" dur="0.3s" begin="0.3s" fill="freeze"/></text>
 
                 <!-- Titular linha 1 -->
                 <g opacity="0"><animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="0.4s" fill="freeze"/>
-                    <circle cx="65" cy="62" r="22" fill="white" stroke="#3b82f6" stroke-width="2"/>
-                    <text x="65" y="57" text-anchor="middle" font-size="17">👤</text>
-                    <text x="65" y="74" text-anchor="middle" font-size="9" font-weight="700" fill="#1d4ed8">Titular</text>
+                    <circle cx="65" cy="66" r="22" fill="white" stroke="#3b82f6" stroke-width="2"/>
+                    <text x="65" y="61" text-anchor="middle" font-size="17">👤</text>
+                    <text x="65" y="78" text-anchor="middle" font-size="9" font-weight="700" fill="#1d4ed8">Titular</text>
                 </g>
 
                 <!-- Seta vermelha + Empresa -->
                 <g opacity="0"><animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="0.7s" fill="freeze"/>
-                    <line x1="89" y1="62" x2="162" y2="62" stroke="#ef4444" stroke-width="2" stroke-dasharray="5 3"/>
-                    <polygon points="159,57 171,62 159,67" fill="#ef4444"/>
-                    <circle cx="195" cy="62" r="22" fill="white" stroke="#ef4444" stroke-width="2"/>
-                    <text x="195" y="57" text-anchor="middle" font-size="17">🏢</text>
-                    <text x="195" y="74" text-anchor="middle" font-size="9" font-weight="700" fill="#991b1b">Empresa</text>
+                    <line x1="89" y1="66" x2="162" y2="66" stroke="#ef4444" stroke-width="2" stroke-dasharray="5 3"/>
+                    <polygon points="159,61 171,66 159,71" fill="#ef4444"/>
+                    <circle cx="195" cy="66" r="22" fill="white" stroke="#ef4444" stroke-width="2"/>
+                    <text x="195" y="61" text-anchor="middle" font-size="17">🏢</text>
+                    <text x="195" y="78" text-anchor="middle" font-size="9" font-weight="700" fill="#991b1b">Empresa</text>
                 </g>
 
-                <!-- Vazamentos -->
+                <!-- Vazamentos — 3 boxes com 8px de espaço entre elas -->
                 <g opacity="0"><animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="1.0s" fill="freeze"/>
-                    <line x1="217" y1="54" x2="268" y2="38" stroke="#ef4444" stroke-width="1.5"/>
-                    <rect x="268" y="26" width="80" height="24" rx="6" fill="#fee2e2" stroke="#fca5a5" stroke-width="1"/>
-                    <text x="308" y="42" text-anchor="middle" font-size="9" fill="#b91c1c">🔓 Vazar dados</text>
-                    <line x1="218" y1="62" x2="268" y2="62" stroke="#ef4444" stroke-width="1.5"/>
-                    <rect x="268" y="50" width="88" height="24" rx="6" fill="#fee2e2" stroke="#fca5a5" stroke-width="1"/>
-                    <text x="312" y="66" text-anchor="middle" font-size="9" fill="#b91c1c">💸 Vender dados</text>
-                    <line x1="217" y1="70" x2="268" y2="76" stroke="#ef4444" stroke-width="1.5"/>
-                    <rect x="268" y="64" width="96" height="24" rx="6" fill="#fee2e2" stroke="#fca5a5" stroke-width="1"/>
-                    <text x="316" y="80" text-anchor="middle" font-size="9" fill="#b91c1c">🎯 Manipular usuário</text>
+                    <line x1="217" y1="58" x2="268" y2="40" stroke="#ef4444" stroke-width="1.5"/>
+                    <rect x="268" y="28" width="80" height="24" rx="6" fill="#fee2e2" stroke="#fca5a5" stroke-width="1"/>
+                    <text x="308" y="44" text-anchor="middle" font-size="9" fill="#b91c1c">🔓 Vazar dados</text>
+
+                    <line x1="218" y1="66" x2="268" y2="66" stroke="#ef4444" stroke-width="1.5"/>
+                    <rect x="268" y="54" width="88" height="24" rx="6" fill="#fee2e2" stroke="#fca5a5" stroke-width="1"/>
+                    <text x="312" y="70" text-anchor="middle" font-size="9" fill="#b91c1c">💸 Vender dados</text>
+
+                    <line x1="217" y1="74" x2="268" y2="90" stroke="#ef4444" stroke-width="1.5"/>
+                    <rect x="268" y="82" width="96" height="24" rx="6" fill="#fee2e2" stroke="#fca5a5" stroke-width="1"/>
+                    <text x="316" y="98" text-anchor="middle" font-size="9" fill="#b91c1c">🎯 Manipular usuário</text>
                 </g>
 
                 <!-- Faixa COM LGPD -->
-                <rect x="10" y="106" width="540" height="84" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1" opacity="0">
+                <rect x="10" y="128" width="540" height="84" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1" opacity="0">
                     <animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="1.3s" fill="freeze"/>
                 </rect>
-                <text x="22" y="124" font-size="10" font-weight="700" fill="#15803d" opacity="0">✅ Com LGPD — base legal + transparência + direitos garantidos<animate attributeName="opacity" from="0" to="1" dur="0.3s" begin="1.4s" fill="freeze"/></text>
+                <text x="22" y="144" font-size="10" font-weight="700" fill="#15803d" opacity="0">✅ Com LGPD — base legal + transparência + direitos garantidos<animate attributeName="opacity" from="0" to="1" dur="0.3s" begin="1.4s" fill="freeze"/></text>
 
                 <!-- Titular linha 2 -->
                 <g opacity="0"><animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="1.5s" fill="freeze"/>
-                    <circle cx="60" cy="158" r="20" fill="white" stroke="#3b82f6" stroke-width="2"/>
-                    <text x="60" y="153" text-anchor="middle" font-size="16">👤</text>
-                    <text x="60" y="168" text-anchor="middle" font-size="8" font-weight="700" fill="#1d4ed8">Titular</text>
+                    <circle cx="60" cy="178" r="20" fill="white" stroke="#3b82f6" stroke-width="2"/>
+                    <text x="60" y="173" text-anchor="middle" font-size="16">👤</text>
+                    <text x="60" y="188" text-anchor="middle" font-size="8" font-weight="700" fill="#1d4ed8">Titular</text>
                 </g>
 
                 <!-- LGPD shield + seta verde -->
                 <g opacity="0"><animate attributeName="opacity" from="0" to="1" dur="0.4s" begin="1.7s" fill="freeze"/>
-                    <line x1="81" y1="158" x2="118" y2="158" stroke="#22c55e" stroke-width="2"/>
-                    <polygon points="115,153 127,158 115,163" fill="#22c55e"/>
-                    <rect x="128" y="146" width="78" height="24" rx="12" fill="#dcfce7" stroke="#22c55e" stroke-width="1.5"/>
-                    <text x="167" y="162" text-anchor="middle" font-size="10" font-weight="700" fill="#15803d">🛡️ LGPD</text>
-                    <line x1="207" y1="158" x2="240" y2="158" stroke="#22c55e" stroke-width="2"/>
-                    <polygon points="237,153 249,158 237,163" fill="#22c55e"/>
-                    <circle cx="270" cy="158" r="20" fill="white" stroke="#22c55e" stroke-width="2"/>
-                    <text x="270" y="153" text-anchor="middle" font-size="16">🏢</text>
-                    <text x="270" y="168" text-anchor="middle" font-size="8" font-weight="700" fill="#15803d">Empresa</text>
-                    <line x1="291" y1="158" x2="330" y2="158" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="4 3"/>
-                    <polygon points="327,153 339,158 327,163" fill="#ef4444"/>
-                    <circle cx="360" cy="158" r="20" fill="#fef2f2" stroke="#ef4444" stroke-width="2"/>
-                    <text x="360" y="153" text-anchor="middle" font-size="16">🏛️</text>
-                    <text x="360" y="168" text-anchor="middle" font-size="8" font-weight="700" fill="#dc2626">ANPD</text>
-                    <rect x="395" y="146" width="140" height="24" rx="6" fill="#dcfce7" stroke="#22c55e" stroke-width="1"/>
-                    <text x="465" y="157" text-anchor="middle" font-size="8.5" fill="#15803d" font-weight="700">fiscaliza · multa até 2%</text>
-                    <text x="465" y="168" text-anchor="middle" font-size="8" fill="#15803d">do faturamento</text>
+                    <line x1="81" y1="178" x2="118" y2="178" stroke="#22c55e" stroke-width="2"/>
+                    <polygon points="115,173 127,178 115,183" fill="#22c55e"/>
+                    <rect x="128" y="166" width="78" height="24" rx="12" fill="#dcfce7" stroke="#22c55e" stroke-width="1.5"/>
+                    <text x="167" y="182" text-anchor="middle" font-size="10" font-weight="700" fill="#15803d">🛡️ LGPD</text>
+                    <line x1="207" y1="178" x2="240" y2="178" stroke="#22c55e" stroke-width="2"/>
+                    <polygon points="237,173 249,178 237,183" fill="#22c55e"/>
+                    <circle cx="270" cy="178" r="20" fill="white" stroke="#22c55e" stroke-width="2"/>
+                    <text x="270" y="173" text-anchor="middle" font-size="16">🏢</text>
+                    <text x="270" y="188" text-anchor="middle" font-size="8" font-weight="700" fill="#15803d">Empresa</text>
+                    <line x1="291" y1="178" x2="330" y2="178" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="4 3"/>
+                    <polygon points="327,173 339,178 327,183" fill="#ef4444"/>
+                    <circle cx="360" cy="178" r="20" fill="#fef2f2" stroke="#ef4444" stroke-width="2"/>
+                    <text x="360" y="173" text-anchor="middle" font-size="16">🏛️</text>
+                    <text x="360" y="188" text-anchor="middle" font-size="8" font-weight="700" fill="#dc2626">ANPD</text>
+                    <rect x="395" y="166" width="140" height="24" rx="6" fill="#dcfce7" stroke="#22c55e" stroke-width="1"/>
+                    <text x="465" y="177" text-anchor="middle" font-size="8.5" fill="#15803d" font-weight="700">fiscaliza · multa até 2%</text>
+                    <text x="465" y="188" text-anchor="middle" font-size="8" fill="#15803d">do faturamento</text>
                 </g>
             </svg>
 
