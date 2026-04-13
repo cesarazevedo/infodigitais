@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aula 3.2 - Principais Servi&ccedil;os de IA para Educa&ccedil;&atilde;o</title>
+    <title>Aula 3.2 - Principais Serviços de IA para Educação</title>
     <link rel="stylesheet" href="slide-mode.css">
     <link rel="stylesheet" href="exercise.css">
     <style>
@@ -13,16 +13,13 @@
             --bg-light: #f0f4f8;
             --text-dark: #1a202c;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--bg-light);
             color: var(--text-dark);
             line-height: 1.7;
         }
-
         .top-bar {
             background: white;
             padding: 15px 30px;
@@ -54,13 +51,11 @@
             color: var(--primary);
             font-weight: 600;
         }
-
         .content-wrapper {
             max-width: 800px;
             margin: 40px auto;
             padding: 0 30px;
         }
-
         .lesson-hero {
             background: white;
             border-radius: 16px;
@@ -71,7 +66,6 @@
         }
         .lesson-hero h1 { font-size: 2em; margin-bottom: 10px; color: var(--primary); }
         .lesson-hero .subtitle { font-size: 1.05em; color: #718096; }
-
         .content-card {
             background: white;
             border-radius: 16px;
@@ -87,190 +81,54 @@
             align-items: center;
             gap: 10px;
         }
-        .content-card h3 { font-size: 1.05em; color: var(--secondary); margin: 20px 0 10px; }
-        .content-card p  { margin-bottom: 15px; text-align: justify; }
+        .content-card p { margin-bottom: 15px; text-align: justify; }
 
-        .highlight-box {
-            background: linear-gradient(135deg, rgba(106,27,154,0.05), rgba(74,20,140,0.06));
-            border-left: 4px solid var(--primary);
-            padding: 20px 25px;
-            border-radius: 0 12px 12px 0;
-            margin: 20px 0;
-        }
-        .highlight-box p { margin-bottom: 0; font-style: italic; }
+        .svg-wrap { display: flex; justify-content: center; margin: 24px 0; }
+        .svg-wrap svg { max-width: 100%; height: auto; }
 
-        .alert-box {
-            background: #fff8e1;
-            border-left: 4px solid #f59e0b;
-            padding: 18px 22px;
-            border-radius: 0 12px 12px 0;
-            margin: 20px 0;
-        }
-        .alert-box p { margin: 0; color: #78350f; font-size: 0.93em; }
-
-        ul, ol { margin: 10px 0 15px 25px; }
-        li { margin-bottom: 8px; }
-
-        /* ── Card de ferramenta ── */
-        .tool-card {
-            border-radius: 14px;
-            padding: 24px;
-            margin: 16px 0;
-            border-left: 5px solid var(--primary);
-        }
-        .tool-card.openai  { background: #f0fdf4; border-color: #16a34a; }
-        .tool-card.google  { background: #eff6ff; border-color: #2563eb; }
-        .tool-card.msft    { background: #eff6ff; border-color: #0284c7; }
-        .tool-card-header {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            margin-bottom: 14px;
-        }
-        .tool-logo { font-size: 2.2em; }
-        .tool-name { font-size: 1.2em; font-weight: 700; color: var(--primary); }
-        .tool-sub  { font-size: 0.82em; color: #64748b; }
-        .tool-uses {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 12px;
-        }
-        .tool-use-tag {
-            background: rgba(106,27,154,0.1);
-            color: var(--primary);
-            border-radius: 20px;
-            padding: 4px 12px;
-            font-size: 0.78em;
-            font-weight: 600;
-        }
-
-        /* ── Grid de outras ferramentas ── */
-        .tools-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-            gap: 14px;
-            margin: 16px 0;
-        }
-        .tool-mini {
-            background: #fdf4ff;
-            border-radius: 12px;
-            padding: 18px 14px;
-            text-align: center;
-            border-top: 3px solid var(--primary);
-            transition: transform 0.2s;
-        }
-        .tool-mini:hover { transform: translateY(-3px); }
-        .tool-mini .tm-icon { font-size: 2em; margin-bottom: 8px; }
-        .tool-mini strong   { display: block; font-size: 0.88em; color: var(--primary); margin-bottom: 4px; }
-        .tool-mini em       { font-size: 0.78em; color: #718096; font-style: normal; }
-
-        /* ── Prompt builder ── */
-        .prompt-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin: 16px 0;
-        }
-        .prompt-col {
-            border-radius: 12px;
-            padding: 18px;
-        }
-        .prompt-col.bad  { background: #fef2f2; border-top: 3px solid #ef4444; }
-        .prompt-col.good { background: #f0fdf4; border-top: 3px solid #22c55e; }
-        .pc-label { font-size: 0.75em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px; }
-        .prompt-col.bad  .pc-label { color: #dc2626; }
-        .prompt-col.good .pc-label { color: #16a34a; }
-        .prompt-box {
-            background: white;
-            border-radius: 8px;
-            padding: 12px 14px;
-            font-family: 'Consolas', monospace;
-            font-size: 0.82em;
-            color: #334155;
-            border: 1px solid #e2e8f0;
-            margin-bottom: 8px;
-        }
-        .pc-why { font-size: 0.8em; color: #475569; }
-
-        /* ── Fórmula de prompt ── */
-        .prompt-formula {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            align-items: center;
-            margin: 16px 0;
-        }
-        .pf-part {
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-size: 0.85em;
-            font-weight: 600;
-        }
-        .pf-part.context  { background: #dbeafe; color: #1e40af; }
-        .pf-part.task     { background: #d1fae5; color: #065f46; }
-        .pf-part.format   { background: #fef3c7; color: #92400e; }
-        .pf-part.examples { background: #fce7f3; color: #9d174d; }
-        .pf-plus { font-size: 1.2em; color: #94a3b8; }
-
-        /* ── Tabela comparativa ── */
-        .compare-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 16px 0;
-            font-size: 0.88em;
-        }
-        .compare-table th {
-            background: var(--primary);
-            color: white;
-            padding: 11px 14px;
-            text-align: left;
-        }
+        /* compare table */
+        .compare-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88em; }
+        .compare-table th { background: var(--primary); color: white; padding: 11px 14px; text-align: left; }
         .compare-table th:first-child { border-radius: 8px 0 0 0; }
         .compare-table th:last-child  { border-radius: 0 8px 0 0; }
-        .compare-table td {
-            padding: 10px 14px;
-            border-bottom: 1px solid #e2e8f0;
-            vertical-align: middle;
-        }
+        .compare-table td { padding: 10px 14px; border-bottom: 1px solid #e2e8f0; vertical-align: middle; }
         .compare-table tr:nth-child(even) td { background: #f8fafc; }
         .compare-table tr:last-child td { border-bottom: none; }
 
-        /* ── Boas práticas ── */
-        .boas-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 12px;
-            margin: 16px 0;
-        }
-        .boa-item {
-            background: #fdf4ff;
-            border-radius: 10px;
-            padding: 16px;
+        /* step cards */
+        .step-svg-card {
             display: flex;
-            gap: 12px;
-            align-items: flex-start;
+            align-items: center;
+            gap: 18px;
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 16px 18px;
+            margin-bottom: 14px;
         }
-        .boa-icon { font-size: 1.6em; flex-shrink: 0; }
-        .boa-text strong { display: block; font-size: 0.88em; color: var(--primary); margin-bottom: 3px; }
-        .boa-text span   { font-size: 0.8em; color: #475569; }
+        .step-svg-card .step-num {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white; font-weight: 700;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        .step-svg-card .step-text strong { display: block; color: var(--primary); margin-bottom: 3px; }
+        .step-svg-card .step-text span  { font-size: 0.88em; color: #4a5568; }
+        .step-svg-card svg { flex-shrink: 0; }
 
-        /* ── nav ── */
-        .nav-footer {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 40px;
-            padding-bottom: 40px;
-        }
+        /* YouTube */
+        .yt-wrap { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px; margin: 20px 0; }
+        .yt-wrap iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; border-radius: 12px; }
+
+        .mat-list { list-style: none; margin: 0 0 20px 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+        .mat-list li { background: #f3e5f5; color: #6a1b9a; border-radius: 20px; padding: 6px 14px; font-size: 0.88em; font-weight: 600; }
+
+        .nav-footer { display: flex; justify-content: space-between; margin-top: 40px; padding-bottom: 40px; }
         .nav-link {
-            text-decoration: none;
-            color: var(--primary);
-            font-weight: 600;
-            padding: 12px 24px;
-            border-radius: 10px;
-            background: white;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            transition: all 0.3s;
+            text-decoration: none; color: var(--primary); font-weight: 600;
+            padding: 12px 24px; border-radius: 10px; background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05); transition: all 0.3s;
         }
         .nav-link:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
 
@@ -278,435 +136,615 @@
             .content-wrapper { padding: 0 15px; }
             .lesson-hero, .content-card { padding: 25px; }
             .lesson-hero h1 { font-size: 1.5em; }
-            .prompt-grid { grid-template-columns: 1fr; }
-            .compare-table { font-size: 0.78em; }
         }
     </style>
 </head>
 <body>
 
-    <div class="top-bar">
-        <a href="index.html" class="back-btn">&#x2B05; Voltar ao Dashboard</a>
-        <span class="page-badge">Unidade 3 &mdash; IA na Educa&ccedil;&atilde;o</span>
-        <button class="slide-toggle" id="slideToggleBtn">&#x1F4FA; Modo Slide</button>
+<div class="top-bar">
+    <a href="index.html" class="back-btn">&#x2B05; Voltar ao Dashboard</a>
+    <span class="page-badge">Unidade 3 &mdash; IA na Educa&ccedil;&atilde;o</span>
+    <button class="slide-toggle" id="slideToggleBtn">&#x1F4FA; Modo Slide</button>
+</div>
+
+<div class="content-wrapper">
+
+    <div class="lesson-hero">
+        <h1>&#x1F916; Principais Servi&ccedil;os de IA para Educa&ccedil;&atilde;o</h1>
+        <p class="subtitle">Aula 3.2 &mdash; ChatGPT, Gemini e Copilot: caracter&iacute;sticas, usos educacionais e como fazer boas perguntas</p>
     </div>
 
-    <div class="content-wrapper">
+    <!-- SLIDE 1: LLMs -->
+    <div class="content-card">
+        <h2>&#x1F4AC; A Era dos Modelos de Linguagem</h2>
+        <p>Os <strong>LLMs (Large Language Models)</strong> s&atilde;o sistemas de IA treinados em enormes volumes de texto para compreender e gerar linguagem humana. Eles funcionam prevendo, token a token, qual palavra &eacute; mais prov&aacute;vel a seguir.</p>
 
-        <div class="lesson-hero">
-            <h1>&#x1F916; Principais Servi&ccedil;os de IA para Educa&ccedil;&atilde;o</h1>
-            <p class="subtitle">Aula 3.2 &mdash; Ferramentas como ChatGPT, Gemini e Copilot: caracter&iacute;sticas, possibilidades de uso escolar e como fazer boas perguntas</p>
+        <!-- SVG: pipeline de um LLM (texto → tokens → vetores → resposta) -->
+        <div class="svg-wrap">
+            <svg width="520" height="195" viewBox="0 0 520 195" xmlns="http://www.w3.org/2000/svg">
+                <style>
+                    @keyframes token-split { 0%{opacity:0;transform:translateX(-10px)} 100%{opacity:1;transform:translateX(0)} }
+                    @keyframes arrow-draw  { from{stroke-dashoffset:60} to{stroke-dashoffset:0} }
+                    @keyframes box-glow    { 0%,100%{filter:drop-shadow(0 0 0 #6a1b9a)} 50%{filter:drop-shadow(0 0 8px #6a1b9a88)} }
+                    @keyframes text-type   { from{opacity:0} to{opacity:1} }
+                    .tk1{animation:token-split 0.4s 0.4s both;}
+                    .tk2{animation:token-split 0.4s 0.6s both;}
+                    .tk3{animation:token-split 0.4s 0.8s both;}
+                    .tk4{animation:token-split 0.4s 1.0s both;}
+                    .ar1{stroke-dasharray:60;animation:arrow-draw 0.4s 1.3s both;}
+                    .ar2{stroke-dasharray:60;animation:arrow-draw 0.4s 2.0s both;}
+                    .ar3{stroke-dasharray:60;animation:arrow-draw 0.4s 2.7s both;}
+                    .llm-box{animation:box-glow 2.5s 2s ease-in-out infinite;}
+                    .resp{animation:text-type 0.5s 3.2s both;}
+                </style>
+
+                <!-- Etapa 1: Input -->
+                <rect x="10" y="20" width="100" height="50" rx="8" fill="#f3e5f5" stroke="#ce93d8" stroke-width="1.5"/>
+                <text x="60" y="40" text-anchor="middle" fill="#6a1b9a" font-size="10" font-weight="700">Sua pergunta:</text>
+                <text x="60" y="56" text-anchor="middle" fill="#4a148c" font-size="9" font-family="Courier New">"O que é IA?"</text>
+
+                <!-- Seta 1 -->
+                <line class="ar1" x1="110" y1="45" x2="138" y2="45" stroke="#9c27b0" stroke-width="2"/>
+                <polygon points="132,40 142,45 132,50" fill="#9c27b0" opacity="0"/>
+                <text x="124" y="38" text-anchor="middle" fill="#9c27b0" font-size="8">tokens</text>
+
+                <!-- Etapa 2: Tokenização -->
+                <g class="tk1"><rect x="140" y="10" width="36" height="20" rx="4" fill="#dbeafe"/><text x="158" y="24" text-anchor="middle" fill="#1e40af" font-size="9" font-family="Courier New">O</text></g>
+                <g class="tk2"><rect x="140" y="34" width="36" height="20" rx="4" fill="#dbeafe"/><text x="158" y="48" text-anchor="middle" fill="#1e40af" font-size="9" font-family="Courier New">que</text></g>
+                <g class="tk3"><rect x="140" y="58" width="36" height="20" rx="4" fill="#dbeafe"/><text x="158" y="72" text-anchor="middle" fill="#1e40af" font-size="9" font-family="Courier New">é</text></g>
+                <g class="tk4"><rect x="140" y="82" width="36" height="20" rx="4" fill="#dbeafe"/><text x="158" y="96" text-anchor="middle" fill="#1e40af" font-size="9" font-family="Courier New">IA?</text></g>
+
+                <!-- Seta 2 -->
+                <line class="ar2" x1="180" y1="55" x2="208" y2="55" stroke="#9c27b0" stroke-width="2"/>
+                <text x="194" y="48" text-anchor="middle" fill="#9c27b0" font-size="8">vetores</text>
+
+                <!-- Etapa 3: LLM (caixa principal) -->
+                <g class="llm-box">
+                    <rect x="210" y="14" width="130" height="82" rx="10" fill="#4a148c"/>
+                    <text x="275" y="38" text-anchor="middle" fill="#ce93d8" font-size="11" font-weight="700">LLM</text>
+                    <text x="275" y="54" text-anchor="middle" fill="#9c27b0" font-size="8">Bilhões de parâmetros</text>
+                    <text x="275" y="66" text-anchor="middle" fill="#9c27b0" font-size="8">Atenção + Contexto</text>
+                    <text x="275" y="78" text-anchor="middle" fill="#ce93d8" font-size="9">→ próximo token</text>
+                    <text x="275" y="90" text-anchor="middle" fill="#7b1fa2" font-size="8">↺ repete até resposta</text>
+                </g>
+
+                <!-- Seta 3 -->
+                <line class="ar3" x1="340" y1="55" x2="368" y2="55" stroke="#9c27b0" stroke-width="2"/>
+                <text x="354" y="48" text-anchor="middle" fill="#9c27b0" font-size="8">resposta</text>
+
+                <!-- Etapa 4: Resposta -->
+                <g class="resp">
+                    <rect x="370" y="14" width="140" height="82" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+                    <text x="440" y="34" text-anchor="middle" fill="#166534" font-size="10" font-weight="700">Resposta gerada:</text>
+                    <text x="440" y="50" text-anchor="middle" fill="#15803d" font-size="8">"IA é a capacidade</text>
+                    <text x="440" y="62" text-anchor="middle" fill="#15803d" font-size="8">de máquinas aprenderem</text>
+                    <text x="440" y="74" text-anchor="middle" fill="#15803d" font-size="8">e tomarem decisões</text>
+                    <text x="440" y="86" text-anchor="middle" fill="#15803d" font-size="8">como humanos..."</text>
+                </g>
+
+                <!-- Aviso de alucinação -->
+                <rect x="10" y="118" width="500" height="68" rx="10" fill="#fff8e1" stroke="#fcd34d" stroke-width="1.5"/>
+                <text x="28" y="138" fill="#92400e" font-size="11" font-weight="700">⚠️ LLMs não "sabem" — eles preveem</text>
+                <text x="28" y="153" fill="#78350f" font-size="9">• Geram texto plausível com base em padrões aprendidos durante treinamento</text>
+                <text x="28" y="166" fill="#78350f" font-size="9">• Podem errar com total confiança (alucinação) — sempre verifique informações importantes</text>
+                <text x="28" y="179" fill="#78350f" font-size="9">• Não têm acesso à internet em tempo real (exceto quando integrado)</text>
+            </svg>
         </div>
 
-        <!-- CARD 1 -->
-        <div class="content-card">
-            <h2>&#x1F4AC; A Era dos Modelos de Linguagem</h2>
-            <p>Os <strong>Modelos de Linguagem de Grande Escala (LLMs &mdash; Large Language Models)</strong> s&atilde;o sistemas de IA treinados em enormes volumes de texto para compreender e gerar linguagem humana. Eles funcionam prevendo, token a token, qual palavra ou frase &eacute; mais prov&aacute;vel a seguir &mdash; um processo guiado por bilh&otilde;es de par&acirc;metros ajustados durante o treinamento.</p>
-            <p>Entre 2022 e 2024, a populariza&ccedil;&atilde;o dessas ferramentas transformou o acesso &agrave; IA: qualquer pessoa passou a interagir com sistemas de IA sofisticados simplesmente escrevendo em portugu&ecirc;s, sem precisar de conhecimento t&eacute;cnico.</p>
-
-            <div class="highlight-box">
-                <p>&#x1F4A1; LLMs n&atilde;o &ldquo;sabem&rdquo; informa&ccedil;&otilde;es da mesma forma que humanos. Eles geram texto plaus&iacute;vel com base em padr&otilde;es aprendidos. Por isso, podem errar &mdash; e errar com confian&ccedil;a.</p>
-            </div>
-
-            <h3>&#x1F501; Como um LLM processa sua pergunta</h3>
-            <ol>
-                <li><strong>Tokeniza&ccedil;&atilde;o:</strong> seu texto &eacute; dividido em partes (tokens &mdash; s&iacute;labas, palavras ou caracteres)</li>
-                <li><strong>Codifica&ccedil;&atilde;o:</strong> cada token vira um vetor num&eacute;rico num espa&ccedil;o de alta dimens&atilde;o</li>
-                <li><strong>Aten&ccedil;&atilde;o:</strong> o modelo identifica quais tokens do contexto s&atilde;o mais relevantes entre si</li>
-                <li><strong>Gera&ccedil;&atilde;o:</strong> o modelo prev&ecirc; o pr&oacute;ximo token mais prov&aacute;vel, repetindo at&eacute; completar a resposta</li>
-            </ol>
-        </div>
-
-        <!-- CARD 2 -->
-        <div class="content-card">
-            <h2>&#x1F7E2; ChatGPT &mdash; OpenAI</h2>
-            <div class="tool-card openai">
-                <div class="tool-card-header">
-                    <div class="tool-logo">&#x1F916;</div>
-                    <div>
-                        <div class="tool-name">ChatGPT</div>
-                        <div class="tool-sub">OpenAI &bull; chat.openai.com &bull; Gratuito (GPT-4o mini) e pago (Plus)</div>
-                    </div>
-                </div>
-                <p style="margin-bottom:10px;">O ChatGPT foi o respons&aacute;vel por popularizar a IA conversacional, atingindo 1 milh&atilde;o de usu&aacute;rios em apenas 5 dias ap&oacute;s o lan&ccedil;amento em novembro de 2022. Baseado nos modelos GPT (<em>Generative Pre-trained Transformer</em>), destaca-se pela qualidade de racioc&iacute;nio e versatilidade de usos.</p>
-                <div class="tool-uses">
-                    <span class="tool-use-tag">&#x1F4DD; Resumir textos longos</span>
-                    <span class="tool-use-tag">&#x1F4DA; Explicar conceitos dif&iacute;ceis</span>
-                    <span class="tool-use-tag">&#x270F;&#xFE0F; Revisar e melhorar redações</span>
-                    <span class="tool-use-tag">&#x1F4CB; Gerar exerc&iacute;cios e quiz</span>
-                    <span class="tool-use-tag">&#x1F4BB; Auxiliar na programa&ccedil;&atilde;o</span>
-                    <span class="tool-use-tag">&#x1F50D; Pesquisa inicial de temas</span>
-                </div>
-            </div>
-            <div class="alert-box">
-                <p>&#x26A0;&#xFE0F; O ChatGPT pode <strong>alucinar</strong> &mdash; inventar datas, cita&ccedil;&otilde;es e fatos. Sempre verifique informa&ccedil;&otilde;es importantes em fontes confi&aacute;veis antes de usar.</p>
-            </div>
-        </div>
-
-        <!-- CARD 3 -->
-        <div class="content-card">
-            <h2>&#x1F535; Gemini &mdash; Google</h2>
-            <div class="tool-card google">
-                <div class="tool-card-header">
-                    <div class="tool-logo">&#x1F48E;</div>
-                    <div>
-                        <div class="tool-name">Gemini</div>
-                        <div class="tool-sub">Google &bull; gemini.google.com &bull; Gratuito (Gemini 1.5 Flash) e pago (Advanced)</div>
-                    </div>
-                </div>
-                <p style="margin-bottom:10px;">O Gemini &eacute; a IA do Google, integrada ao ecossistema Google Workspace. Sua grande vantagem educacional &eacute; a integra&ccedil;&atilde;o com ferramentas j&aacute; usadas nas escolas: Gmail, Google Docs, Google Classroom e Google Drive.</p>
-                <div class="tool-uses">
-                    <span class="tool-use-tag">&#x1F4C4; Escrever no Google Docs com IA</span>
-                    <span class="tool-use-tag">&#x1F4E7; Redigir e-mails no Gmail</span>
-                    <span class="tool-use-tag">&#x1F4CA; Analisar dados em Planilhas</span>
-                    <span class="tool-use-tag">&#x1F4F7; Descrever imagens e gr&aacute;ficos</span>
-                    <span class="tool-use-tag">&#x1F4DA; Pesquisa integrada ao Google</span>
-                </div>
-            </div>
-
-            <h3>&#x1F4D3; NotebookLM &mdash; IA sobre seus documentos</h3>
-            <p>O <strong>NotebookLM</strong> (notebooklm.google.com) &eacute; uma ferramenta do Google que permite conversar com seus pr&oacute;prios documentos: PDFs, slides, artigos. Ideal para estudar apostilas, resumir mat&eacute;rial de aula e tirar d&uacute;vidas sobre o conte&uacute;do enviado &mdash; sem risco de alucinações sobre o que n&atilde;o est&aacute; no documento.</p>
-        </div>
-
-        <!-- CARD 4 -->
-        <div class="content-card">
-            <h2>&#x1F7E6; Microsoft Copilot</h2>
-            <div class="tool-card msft">
-                <div class="tool-card-header">
-                    <div class="tool-logo">&#x1F4BB;</div>
-                    <div>
-                        <div class="tool-name">Microsoft Copilot</div>
-                        <div class="tool-sub">Microsoft &bull; copilot.microsoft.com &bull; Gratuito e integrado ao Windows</div>
-                    </div>
-                </div>
-                <p style="margin-bottom:10px;">O Copilot &eacute; a IA da Microsoft, integrada ao Windows 11, ao Edge e ao pacote Microsoft 365. Para alunos com acesso ao Office, &eacute; uma ferramenta poderosa que atua diretamente dentro dos aplicativos conhecidos.</p>
-                <div class="tool-uses">
-                    <span class="tool-use-tag">&#x1F4CA; Gerar slides no PowerPoint</span>
-                    <span class="tool-use-tag">&#x1F4DD; Redigir e formatar no Word</span>
-                    <span class="tool-use-tag">&#x1F4C8; F&oacute;rmulas no Excel</span>
-                    <span class="tool-use-tag">&#x1F50D; Busca inteligente no Edge</span>
-                    <span class="tool-use-tag">&#x1F4DE; Resumos de reuni&otilde;es no Teams</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- CARD 5 -->
-        <div class="content-card">
-            <h2>&#x2728; Outras Ferramentas de IA &Uacute;teis</h2>
-            <p>Al&eacute;m dos grandes assistentes conversacionais, existem ferramentas especializadas que podem complementar o trabalho educacional:</p>
-
-            <div class="tools-grid">
-                <div class="tool-mini">
-                    <div class="tm-icon">&#x1F50D;</div>
-                    <strong>Perplexity</strong>
-                    <em>IA de busca que sempre cita as fontes das respostas. &Oacute;tima para pesquisa acad&ecirc;mica.</em>
-                </div>
-                <div class="tool-mini">
-                    <div class="tm-icon">&#x1F4CB;</div>
-                    <strong>Gamma</strong>
-                    <em>Gera apresenta&ccedil;&otilde;es profissionais automaticamente a partir de um texto ou prompt.</em>
-                </div>
-                <div class="tool-mini">
-                    <div class="tm-icon">&#x1F3A8;</div>
-                    <strong>Canva AI</strong>
-                    <em>Ferramentas de design com IA: gera imagens, remove fundos e sugere layouts.</em>
-                </div>
-                <div class="tool-mini">
-                    <div class="tm-icon">&#x270F;&#xFE0F;</div>
-                    <strong>Grammarly</strong>
-                    <em>Corre&ccedil;&atilde;o e melhoria de texto em ingl&ecirc;s com IA. &Uacute;til para e-mails e trabalhos.</em>
-                </div>
-                <div class="tool-mini">
-                    <div class="tm-icon">&#x1F399;&#xFE0F;</div>
-                    <strong>ElevenLabs</strong>
-                    <em>Gera voz artificial realista a partir de texto. Usado em podcast e acessibilidade.</em>
-                </div>
-                <div class="tool-mini">
-                    <div class="tm-icon">&#x1F9E0;</div>
-                    <strong>Claude</strong>
-                    <em>IA da Anthropic, excelente para leitura e an&aacute;lise de documentos longos com seguran&ccedil;a.</em>
-                </div>
-            </div>
-        </div>
-
-        <!-- CARD 6 -->
-        <div class="content-card">
-            <h2>&#x270D;&#xFE0F; Engenharia de Prompt: Como Fazer Boas Perguntas</h2>
-            <p>A qualidade da resposta de uma IA depende diretamente da qualidade da pergunta. <strong>Engenharia de prompt</strong> &eacute; a habilidade de elaborar instru&ccedil;&otilde;es claras e eficazes para obter os melhores resultados.</p>
-
-            <h3>&#x1F9F1; F&oacute;rmula b&aacute;sica</h3>
-            <div class="prompt-formula">
-                <div class="pf-part context">&#x1F3AD; Contexto</div>
-                <div class="pf-plus">+</div>
-                <div class="pf-part task">&#x1F4CC; Tarefa</div>
-                <div class="pf-plus">+</div>
-                <div class="pf-part format">&#x1F4C4; Formato</div>
-                <div class="pf-plus">+</div>
-                <div class="pf-part examples">&#x1F4A1; Exemplos</div>
-            </div>
-
-            <h3>&#x1F4CB; Prompts ruins vs. bons</h3>
-            <div class="prompt-grid">
-                <div class="prompt-col bad">
-                    <div class="pc-label">&#x274C; Prompt vago</div>
-                    <div class="prompt-box">"Fale sobre fotoss&iacute;ntese"</div>
-                    <div class="pc-why">Sem contexto, sem n&iacute;vel, sem formato. A IA n&atilde;o sabe o que voc&ecirc; quer.</div>
-                </div>
-                <div class="prompt-col good">
-                    <div class="pc-label">&#x2705; Prompt eficaz</div>
-                    <div class="prompt-box">"Explique fotoss&iacute;ntese para um aluno do 1&ordm; ano do ensino m&eacute;dio usando uma analogia simples. M&aacute;ximo de 150 palavras."</div>
-                    <div class="pc-why">Contexto (1&ordm; ano), tarefa (explicar), formato (analogia + limite de palavras).</div>
-                </div>
-            </div>
-            <div class="prompt-grid">
-                <div class="prompt-col bad">
-                    <div class="pc-label">&#x274C; Prompt vago</div>
-                    <div class="prompt-box">"Me ajuda com meu trabalho"</div>
-                    <div class="pc-why">Nenhuma informa&ccedil;&atilde;o sobre tema, n&iacute;vel ou tipo de ajuda esperada.</div>
-                </div>
-                <div class="prompt-col good">
-                    <div class="pc-label">&#x2705; Prompt eficaz</div>
-                    <div class="prompt-box">"Sou aluno do ensino m&eacute;dio t&eacute;cnico. Preciso de 3 argumentos para defender o uso consciente de redes sociais em um debate. Apresente em t&oacute;picos curtos."</div>
-                    <div class="pc-why">Contexto (aluno EM), tarefa (3 argumentos), formato (t&oacute;picos curtos).</div>
-                </div>
-            </div>
-
-            <h3>&#x1F4A1; Dicas pr&aacute;ticas</h3>
-            <ul>
-                <li><strong>Seja espec&iacute;fico:</strong> quanto mais detalhes, melhor a resposta</li>
-                <li><strong>D&ecirc; contexto:</strong> quem voc&ecirc; &eacute;, para qu&ecirc; vai usar</li>
-                <li><strong>Pe&ccedil;a formato:</strong> lista, tabela, texto, t&oacute;picos, exemplos</li>
-                <li><strong>Itere:</strong> se n&atilde;o gostou, peca para refazer ou melhore o prompt</li>
-                <li><strong>Assuma o papel:</strong> "Aja como um professor explicando para iniciantes..."</li>
-            </ul>
-        </div>
-
-        <!-- CARD 7 -->
-        <div class="content-card">
-            <h2>&#x1F4CA; Comparativo das Principais Ferramentas</h2>
-            <table class="compare-table">
-                <tr>
-                    <th>Ferramenta</th>
-                    <th>Desenvolvedor</th>
-                    <th>Ponto forte</th>
-                    <th>Melhor uso educacional</th>
-                </tr>
-                <tr>
-                    <td>&#x1F916; ChatGPT</td>
-                    <td>OpenAI</td>
-                    <td>Racioc&iacute;nio e versatilidade</td>
-                    <td>Explica&ccedil;&otilde;es, redações, exerc&iacute;cios</td>
-                </tr>
-                <tr>
-                    <td>&#x1F48E; Gemini</td>
-                    <td>Google</td>
-                    <td>Integra&ccedil;&atilde;o com Workspace</td>
-                    <td>Docs, Classroom, pesquisa</td>
-                </tr>
-                <tr>
-                    <td>&#x1F4BB; Copilot</td>
-                    <td>Microsoft</td>
-                    <td>Integra&ccedil;&atilde;o com Office</td>
-                    <td>Word, PowerPoint, Excel</td>
-                </tr>
-                <tr>
-                    <td>&#x1F50D; Perplexity</td>
-                    <td>Perplexity AI</td>
-                    <td>Busca com fontes citadas</td>
-                    <td>Pesquisa acad&ecirc;mica confi&aacute;vel</td>
-                </tr>
-                <tr>
-                    <td>&#x1F4D3; NotebookLM</td>
-                    <td>Google</td>
-                    <td>An&aacute;lise de documentos pr&oacute;prios</td>
-                    <td>Estudar apostilas e materiais</td>
-                </tr>
-                <tr>
-                    <td>&#x1F4CB; Gamma</td>
-                    <td>Gamma App</td>
-                    <td>Cria&ccedil;&atilde;o de apresenta&ccedil;&otilde;es</td>
-                    <td>Slides r&aacute;pidos e bem formatados</td>
-                </tr>
-            </table>
-        </div>
-
-        <!-- CARD 8 -->
-        <div class="content-card">
-            <h2>&#x2705; Boas Pr&aacute;ticas de Uso</h2>
-            <div class="boas-grid">
-                <div class="boa-item">
-                    <div class="boa-icon">&#x1F4DA;</div>
-                    <div class="boa-text">
-                        <strong>Use como ponto de partida</strong>
-                        <span>IA acelera a pesquisa, mas o aprendizado s&oacute; acontece quando voc&ecirc; processa e compreende o conte&uacute;do.</span>
-                    </div>
-                </div>
-                <div class="boa-item">
-                    <div class="boa-icon">&#x1F50D;</div>
-                    <div class="boa-text">
-                        <strong>Verifique sempre</strong>
-                        <span>Confirme datas, cita&ccedil;&otilde;es e dados em fontes prim&aacute;rias. IA pode inventar informa&ccedil;&otilde;es com confian&ccedil;a.</span>
-                    </div>
-                </div>
-                <div class="boa-item">
-                    <div class="boa-icon">&#x1F512;</div>
-                    <div class="boa-text">
-                        <strong>N&atilde;o compartilhe dados pessoais</strong>
-                        <span>Nunca informe CPF, senhas, endere&ccedil;os ou dados de terceiros em ferramentas de IA.</span>
-                    </div>
-                </div>
-                <div class="boa-item">
-                    <div class="boa-icon">&#x2696;&#xFE0F;</div>
-                    <div class="boa-text">
-                        <strong>Seja honesto academicamente</strong>
-                        <span>Use IA para aprender e apoiar seu trabalho &mdash; n&atilde;o para substituir sua produ&ccedil;&atilde;o intelectual.</span>
-                    </div>
-                </div>
-                <div class="boa-item">
-                    <div class="boa-icon">&#x1F504;</div>
-                    <div class="boa-text">
-                        <strong>Itere os prompts</strong>
-                        <span>Se a primeira resposta n&atilde;o foi boa, refine a pergunta. A qualidade da conversa melhora com pr&aacute;tica.</span>
-                    </div>
-                </div>
-                <div class="boa-item">
-                    <div class="boa-icon">&#x1F393;</div>
-                    <div class="boa-text">
-                        <strong>Documente o processo</strong>
-                        <span>Ao usar IA em trabalhos acad&ecirc;micos, registre como ela foi utilizada. Transpar&ecirc;ncia &eacute; fundamental.</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- EXERCÍCIO -->
-        <div class="content-card exercise-card">
-            <h2>&#x1F3AF; Exerc&iacute;cio &mdash; Arraste e Conecte</h2>
-            <p style="color:#475569;font-size:0.9em;margin-bottom:4px;">Arraste cada descri&ccedil;&atilde;o para a ferramenta de IA correspondente. Em dispositivos m&oacute;veis, toque na descri&ccedil;&atilde;o e depois na zona de destino.</p>
-
-            <div class="ex-drag-root" data-ex="ex32">
-                <div class="ex-drag">
-                    <div>
-                        <div class="ex-col-title">Descri&ccedil;&atilde;o</div>
-                        <div class="ex-pool" data-pool="ex32">
-                            <div class="drag-chip" data-id="c1">Chatbot da OpenAI, o mais popular do mundo, &oacute;timo para explica&ccedil;&otilde;es e exerc&iacute;cios</div>
-                            <div class="drag-chip" data-id="c2">IA do Google integrada ao Drive, Docs e Classroom</div>
-                            <div class="drag-chip" data-id="c3">Assistente da Microsoft integrado ao Teams, Word e PowerPoint</div>
-                            <div class="drag-chip" data-id="c4">Ferramenta de busca que sempre cita as fontes das respostas</div>
-                            <div class="drag-chip" data-id="c5">Gera apresenta&ccedil;&otilde;es profissionais automaticamente a partir de texto</div>
-                            <div class="drag-chip" data-id="c6">Analisa e responde perguntas sobre documentos enviados pelo usu&aacute;rio</div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="ex-col-title">Ferramenta</div>
-                        <div class="ex-zones" data-zones="ex32">
-                            <div class="drop-zone" data-zone="ex32-z1" data-accept="c1">
-                                <span class="zone-name">ChatGPT</span>
-                                <div class="zone-slot"></div>
-                                <div class="zone-feedback"></div>
-                            </div>
-                            <div class="drop-zone" data-zone="ex32-z2" data-accept="c2">
-                                <span class="zone-name">Gemini</span>
-                                <div class="zone-slot"></div>
-                                <div class="zone-feedback"></div>
-                            </div>
-                            <div class="drop-zone" data-zone="ex32-z3" data-accept="c3">
-                                <span class="zone-name">Microsoft Copilot</span>
-                                <div class="zone-slot"></div>
-                                <div class="zone-feedback"></div>
-                            </div>
-                            <div class="drop-zone" data-zone="ex32-z4" data-accept="c4">
-                                <span class="zone-name">Perplexity</span>
-                                <div class="zone-slot"></div>
-                                <div class="zone-feedback"></div>
-                            </div>
-                            <div class="drop-zone" data-zone="ex32-z5" data-accept="c5">
-                                <span class="zone-name">Gamma</span>
-                                <div class="zone-slot"></div>
-                                <div class="zone-feedback"></div>
-                            </div>
-                            <div class="drop-zone" data-zone="ex32-z6" data-accept="c6">
-                                <span class="zone-name">NotebookLM</span>
-                                <div class="zone-slot"></div>
-                                <div class="zone-feedback"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="ex-actions">
-                <button class="btn-verificar" onclick="dragVerify('ex32')">Verificar</button>
-                <button class="btn-refazer"  onclick="dragReset('ex32')">Refazer</button>
-            </div>
-            <div class="ex-result" id="ex32-result"></div>
-        </div>
-
-        <!-- ATIVIDADE PRÁTICA 3.2 -->
-        <div class="content-card practical-card" id="prat-32">
-            <h2>&#x1F6E0;&#xFE0F; Atividade Pr&aacute;tica &mdash; Explorando IA Educacional</h2>
-            <div class="prat-meta">
-                <span class="prat-tag">&#x23F1; ~25 min</span>
-                <span class="prat-tag">&#x1F310; Requer internet</span>
-                <span class="prat-tag">&#x1F4BB; PC ou celular</span>
-            </div>
-
-            <div class="prat-steps">
-                <div class="prat-step">
-                    <div class="step-num">1</div>
-                    <div class="step-body">
-                        <div class="step-label">Acesse o Gemini ou ChatGPT</div>
-                        <div class="step-desc">Abra gemini.google.com ou chat.openai.com no navegador. Crie uma conta gratuita se ainda n&atilde;o tiver. Fa&ccedil;a login e explore a interface: onde digitar, hist&oacute;rico de conversa, bot&atilde;o de nova conversa.</div>
-                    </div>
-                </div>
-                <div class="prat-step">
-                    <div class="step-num">2</div>
-                    <div class="step-body">
-                        <div class="step-label">Teste um prompt vago vs. um prompt eficaz</div>
-                        <div class="step-desc">Primeiro envie um prompt vago sobre um tema da disciplina (ex.: "Fale sobre sistemas operacionais"). Depois mande um prompt completo com contexto, tarefa e formato (ex.: "Sou aluno do 1&ordm; ano t&eacute;cnico. Explique a diferen&ccedil;a entre Windows e Linux em 5 t&oacute;picos simples"). Compare as respostas: qual foi mais &uacute;til?</div>
-                    </div>
-                </div>
-                <div class="prat-step">
-                    <div class="step-num">3</div>
-                    <div class="step-body">
-                        <div class="step-label">Crie um roteiro de estudos personalizado</div>
-                        <div class="step-desc">Pe&ccedil;a para a IA criar um <strong>plano de estudos de 1 semana</strong> para voc&ecirc; revisar o conte&uacute;do desta unidade. Informe o n&iacute;vel, o tempo dispon&iacute;vel por dia e os t&oacute;picos que deseja revisar. Avalie se o plano gerado &eacute; realmente &uacute;til e realista.</div>
-                    </div>
-                </div>
-                <div class="prat-step">
-                    <div class="step-num">4</div>
-                    <div class="step-body">
-                        <div class="step-label">Teste o NotebookLM (b&ocirc;nus)</div>
-                        <div class="step-desc">Acesse notebooklm.google.com e envie um PDF de uma apostila ou este roteiro impresso. Fa&ccedil;a perguntas sobre o conte&uacute;do enviado e compare com o ChatGPT normal. O NotebookLM cita onde encontrou a informa&ccedil;&atilde;o? O ChatGPT sim?</div>
-                    </div>
-                </div>
-                <div class="prat-step">
-                    <div class="step-num">5</div>
-                    <div class="step-body">
-                        <div class="step-label">Documente e avalie</div>
-                        <div class="step-desc">Anote: qual ferramenta voc&ecirc; achou mais &uacute;til? O que surpreendeu? Houve alguma resposta que voc&ecirc; suspeitou ser errada? Como verificou?</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="prat-observe">
-                <strong>&#x1F4CC; Para saber:</strong> Usar IA em estudos &eacute; l&iacute;cito e eficaz &mdash; desde que voc&ecirc; pense sobre o que ela gera. A IA que responde sem reflex&atilde;o cria <em>ilus&atilde;o de conhecimento</em>. Use-a para entender, questionar e aprofundar &mdash; n&atilde;o para copiar e colar.
-            </div>
-
-            <div class="ex-actions">
-                <button class="btn-print" onclick="printPractical('prat-32', 'Aula 3.2 \u2014 Principais Servi\u00e7os de IA para Educa\u00e7\u00e3o')">&#x1F5A8;&#xFE0F; Imprimir roteiro</button>
-            </div>
-        </div>
-
-        <div class="nav-footer">
-            <a href="uni3-01-fundamentos-ia.html" class="nav-link">&#x2B05; Anterior: Fundamentos de IA</a>
-            <a href="uni3-03-etica-ia.html" class="nav-link">Pr&oacute;xima: &Eacute;tica e Limita&ccedil;&otilde;es &#x27A1;</a>
-        </div>
-
+        <p>Entre 2022 e 2024, a populariza&ccedil;&atilde;o dessas ferramentas transformou o acesso &agrave; IA: qualquer pessoa passou a interagir com sistemas sofisticados simplesmente escrevendo em portugu&ecirc;s.</p>
     </div>
 
-    <script src="slide-mode.js"></script>
-    <script src="exercise-drag.js"></script>
-    <script src="exercise-print.js"></script>
+    <!-- SLIDE 2: ChatGPT + Gemini -->
+    <div class="content-card">
+        <h2>&#x1F7E2; ChatGPT e &#x1F48E; Gemini</h2>
+        <p>Os dois assistentes de IA mais usados no mundo, cada um com seus pontos fortes:</p>
+
+        <!-- SVG: ChatGPT vs Gemini lado a lado -->
+        <div class="svg-wrap">
+            <svg width="520" height="210" viewBox="0 0 520 210" xmlns="http://www.w3.org/2000/svg">
+                <style>
+                    @keyframes card-slide-l { from{opacity:0;transform:translateX(-20px)} to{opacity:1;transform:translateX(0)} }
+                    @keyframes card-slide-r { from{opacity:0;transform:translateX(20px)} to{opacity:1;transform:translateX(0)} }
+                    @keyframes tag-pop2 { from{opacity:0;transform:scale(0.6)} to{opacity:1;transform:scale(1)} }
+                    .csl{animation:card-slide-l 0.6s 0.2s both;}
+                    .csr{animation:card-slide-r 0.6s 0.2s both;}
+                    .tg1{animation:tag-pop2 0.3s 0.8s both;}
+                    .tg2{animation:tag-pop2 0.3s 1.0s both;}
+                    .tg3{animation:tag-pop2 0.3s 1.2s both;}
+                    .tg4{animation:tag-pop2 0.3s 1.4s both;}
+                    .tg5{animation:tag-pop2 0.3s 1.6s both;}
+                    .tg6{animation:tag-pop2 0.3s 1.8s both;}
+                    .tg7{animation:tag-pop2 0.3s 2.0s both;}
+                    .tg8{animation:tag-pop2 0.3s 2.2s both;}
+                </style>
+
+                <!-- ChatGPT card -->
+                <g class="csl">
+                    <rect x="10" y="10" width="238" height="190" rx="12" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+                    <circle cx="50" cy="46" r="20" fill="#16a34a"/>
+                    <text x="50" y="52" text-anchor="middle" font-size="20">🤖</text>
+                    <text x="120" y="36" fill="#166534" font-size="13" font-weight="700">ChatGPT</text>
+                    <text x="120" y="50" fill="#16a34a" font-size="9">OpenAI · chat.openai.com</text>
+                    <text x="120" y="62" fill="#15803d" font-size="9">Gratuito (GPT-4o mini)</text>
+                    <line x1="20" y1="74" x2="238" y2="74" stroke="#bbf7d0" stroke-width="1"/>
+                    <text x="124" y="90" text-anchor="middle" fill="#166534" font-size="9" font-weight="700">Usos educacionais:</text>
+                </g>
+                <g class="tg1"><rect x="18" y="96" width="108" height="17" rx="8" fill="#dcfce7"/><text x="72" y="108" text-anchor="middle" fill="#166534" font-size="8" font-weight="600">📝 Resumir textos</text></g>
+                <g class="tg2"><rect x="132" y="96" width="108" height="17" rx="8" fill="#dcfce7"/><text x="186" y="108" text-anchor="middle" fill="#166534" font-size="8" font-weight="600">📚 Explicar conceitos</text></g>
+                <g class="tg3"><rect x="18" y="117" width="108" height="17" rx="8" fill="#dcfce7"/><text x="72" y="129" text-anchor="middle" fill="#166534" font-size="8" font-weight="600">✏️ Revisar redações</text></g>
+                <g class="tg4"><rect x="132" y="117" width="108" height="17" rx="8" fill="#dcfce7"/><text x="186" y="129" text-anchor="middle" fill="#166534" font-size="8" font-weight="600">📋 Gerar exercícios</text></g>
+                <g class="csl">
+                    <text x="124" y="155" text-anchor="middle" fill="#dc2626" font-size="8">⚠️ Pode alucinar — sempre verifique!</text>
+                    <rect x="18" y="162" width="222" height="30" rx="6" fill="#fef2f2"/>
+                    <text x="129" y="177" text-anchor="middle" fill="#991b1b" font-size="8">Atingiu 1 milhão de usuários em 5 dias</text>
+                    <text x="129" y="188" text-anchor="middle" fill="#991b1b" font-size="8">após lançamento em nov/2022</text>
+                </g>
+
+                <!-- Gemini card -->
+                <g class="csr">
+                    <rect x="272" y="10" width="238" height="190" rx="12" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5"/>
+                    <circle cx="312" cy="46" r="20" fill="#2563eb"/>
+                    <text x="312" y="52" text-anchor="middle" font-size="20">💎</text>
+                    <text x="382" y="36" fill="#1e40af" font-size="13" font-weight="700">Gemini</text>
+                    <text x="382" y="50" fill="#2563eb" font-size="9">Google · gemini.google.com</text>
+                    <text x="382" y="62" fill="#1d4ed8" font-size="9">Gratuito (Gemini 1.5 Flash)</text>
+                    <line x1="282" y1="74" x2="500" y2="74" stroke="#bfdbfe" stroke-width="1"/>
+                    <text x="386" y="90" text-anchor="middle" fill="#1e40af" font-size="9" font-weight="700">Usos educacionais:</text>
+                </g>
+                <g class="tg5"><rect x="280" y="96" width="108" height="17" rx="8" fill="#dbeafe"/><text x="334" y="108" text-anchor="middle" fill="#1e40af" font-size="8" font-weight="600">📄 Escrever no Docs</text></g>
+                <g class="tg6"><rect x="394" y="96" width="108" height="17" rx="8" fill="#dbeafe"/><text x="448" y="108" text-anchor="middle" fill="#1e40af" font-size="8" font-weight="600">📊 Analisar planilhas</text></g>
+                <g class="tg7"><rect x="280" y="117" width="108" height="17" rx="8" fill="#dbeafe"/><text x="334" y="129" text-anchor="middle" fill="#1e40af" font-size="8" font-weight="600">📷 Descrever imagens</text></g>
+                <g class="tg8"><rect x="394" y="117" width="108" height="17" rx="8" fill="#dbeafe"/><text x="448" y="129" text-anchor="middle" fill="#1e40af" font-size="8" font-weight="600">📧 Redigir e-mails</text></g>
+                <g class="csr">
+                    <text x="386" y="155" text-anchor="middle" fill="#0284c7" font-size="8">✅ Integrado ao Google Workspace</text>
+                    <rect x="280" y="162" width="222" height="30" rx="6" fill="#f0f9ff"/>
+                    <text x="391" y="177" text-anchor="middle" fill="#0369a1" font-size="8">NotebookLM: converse com seus PDFs</text>
+                    <text x="391" y="188" text-anchor="middle" fill="#0369a1" font-size="8">sem risco de alucinações externas</text>
+                </g>
+            </svg>
+        </div>
+    </div>
+
+    <!-- SLIDE 3: Microsoft Copilot + Outras ferramentas -->
+    <div class="content-card">
+        <h2>&#x1F4BB; Microsoft Copilot e Outras Ferramentas</h2>
+        <p>O <strong>Copilot</strong> &eacute; a IA da Microsoft integrada ao Windows 11, Edge e Office 365. Para alunos com acesso ao Office, atua diretamente dentro dos aplicativos conhecidos.</p>
+
+        <!-- SVG: Copilot no centro + 5 outras ferramentas ao redor -->
+        <div class="svg-wrap">
+            <svg width="520" height="210" viewBox="0 0 520 210" xmlns="http://www.w3.org/2000/svg">
+                <style>
+                    @keyframes other-tool-in { from{opacity:0;transform:scale(0.6)} to{opacity:1;transform:scale(1)} }
+                    .ot1{animation:other-tool-in 0.4s 0.3s both;transform-origin:80px 40px;}
+                    .ot2{animation:other-tool-in 0.4s 0.6s both;transform-origin:80px 170px;}
+                    .ot3{animation:other-tool-in 0.4s 0.9s both;transform-origin:260px 10px;}
+                    .ot4{animation:other-tool-in 0.4s 1.2s both;transform-origin:440px 40px;}
+                    .ot5{animation:other-tool-in 0.4s 1.5s both;transform-origin:440px 170px;}
+                    .ot6{animation:other-tool-in 0.4s 1.8s both;transform-origin:260px 200px;}
+                    @keyframes copilot-pulse { 0%,100%{filter:drop-shadow(0 0 0 #0284c7)} 50%{filter:drop-shadow(0 0 10px #0284c799)} }
+                    .cop-center{animation:copilot-pulse 2.5s 2s ease-in-out infinite;}
+                </style>
+
+                <!-- Copilot centro -->
+                <g class="cop-center">
+                    <circle cx="260" cy="105" r="50" fill="#0c4a6e"/>
+                    <circle cx="260" cy="105" r="42" fill="#0284c7"/>
+                    <text x="260" y="98" text-anchor="middle" font-size="24">💻</text>
+                    <text x="260" y="117" text-anchor="middle" fill="white" font-size="10" font-weight="700">Copilot</text>
+                    <text x="260" y="129" text-anchor="middle" fill="#bae6fd" font-size="8">Microsoft</text>
+                </g>
+
+                <!-- Linhas para as ferramentas -->
+                <line x1="218" y1="70" x2="130" y2="52" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="4,3"/>
+                <line x1="218" y1="140" x2="130" y2="162" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="4,3"/>
+                <line x1="260" y1="55" x2="260" y2="26" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="4,3"/>
+                <line x1="302" y1="70" x2="390" y2="52" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="4,3"/>
+                <line x1="302" y1="140" x2="390" y2="162" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="4,3"/>
+                <line x1="260" y1="155" x2="260" y2="184" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="4,3"/>
+
+                <!-- Ferramentas ao redor -->
+                <g class="ot1">
+                    <rect x="30" y="14" width="100" height="56" rx="8" fill="#fdf4ff" stroke="#d8b4fe" stroke-width="1.2"/>
+                    <text x="80" y="36" text-anchor="middle" font-size="16">🔍</text>
+                    <text x="80" y="50" text-anchor="middle" fill="#6d28d9" font-size="9" font-weight="700">Perplexity</text>
+                    <text x="80" y="62" text-anchor="middle" fill="#7c3aed" font-size="8">Busca c/ fontes</text>
+                </g>
+                <g class="ot2">
+                    <rect x="30" y="142" width="100" height="56" rx="8" fill="#fdf4ff" stroke="#d8b4fe" stroke-width="1.2"/>
+                    <text x="80" y="164" text-anchor="middle" font-size="16">📋</text>
+                    <text x="80" y="178" text-anchor="middle" fill="#6d28d9" font-size="9" font-weight="700">Gamma</text>
+                    <text x="80" y="190" text-anchor="middle" fill="#7c3aed" font-size="8">Slides com IA</text>
+                </g>
+                <g class="ot3">
+                    <rect x="210" y="4" width="100" height="40" rx="8" fill="#fdf4ff" stroke="#d8b4fe" stroke-width="1.2"/>
+                    <text x="260" y="20" text-anchor="middle" font-size="14">📓</text>
+                    <text x="260" y="36" text-anchor="middle" fill="#6d28d9" font-size="9" font-weight="700">NotebookLM</text>
+                </g>
+                <g class="ot4">
+                    <rect x="390" y="14" width="100" height="56" rx="8" fill="#fdf4ff" stroke="#d8b4fe" stroke-width="1.2"/>
+                    <text x="440" y="36" text-anchor="middle" font-size="16">🎨</text>
+                    <text x="440" y="50" text-anchor="middle" fill="#6d28d9" font-size="9" font-weight="700">Canva AI</text>
+                    <text x="440" y="62" text-anchor="middle" fill="#7c3aed" font-size="8">Design c/ IA</text>
+                </g>
+                <g class="ot5">
+                    <rect x="390" y="142" width="100" height="56" rx="8" fill="#fdf4ff" stroke="#d8b4fe" stroke-width="1.2"/>
+                    <text x="440" y="164" text-anchor="middle" font-size="16">🧠</text>
+                    <text x="440" y="178" text-anchor="middle" fill="#6d28d9" font-size="9" font-weight="700">Claude</text>
+                    <text x="440" y="190" text-anchor="middle" fill="#7c3aed" font-size="8">Docs longos</text>
+                </g>
+                <g class="ot6">
+                    <rect x="210" y="168" width="100" height="40" rx="8" fill="#fdf4ff" stroke="#d8b4fe" stroke-width="1.2"/>
+                    <text x="260" y="184" text-anchor="middle" font-size="14">🎙️</text>
+                    <text x="260" y="198" text-anchor="middle" fill="#6d28d9" font-size="9" font-weight="700">ElevenLabs</text>
+                </g>
+            </svg>
+        </div>
+
+        <p>O Copilot &eacute; <strong>gratuito e integrado ao Windows 11</strong>. Para o Office 365, ajuda a gerar slides no PowerPoint, formatar textos no Word e criar f&oacute;rmulas no Excel. <strong>Perplexity</strong> cita as fontes de cada resposta, ideal para pesquisa acad&ecirc;mica.</p>
+    </div>
+
+    <!-- SLIDE 4: Engenharia de Prompt -->
+    <div class="content-card">
+        <h2>&#x270D;&#xFE0F; Engenharia de Prompt</h2>
+        <p>A qualidade da resposta de uma IA depende diretamente da qualidade da pergunta. <strong>Prompt engineering</strong> &eacute; a habilidade de elaborar instru&ccedil;&otilde;es claras para obter os melhores resultados.</p>
+
+        <!-- SVG: fórmula + exemplos bom/ruim -->
+        <div class="svg-wrap">
+            <svg width="520" height="215" viewBox="0 0 520 215" xmlns="http://www.w3.org/2000/svg">
+                <style>
+                    @keyframes formula-part { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+                    @keyframes bad-shake  { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-4px)} 75%{transform:translateX(4px)} }
+                    @keyframes good-glow2 { 0%,100%{filter:drop-shadow(0 0 0 #22c55e)} 50%{filter:drop-shadow(0 0 6px #22c55e99)} }
+                    .fp1{animation:formula-part 0.4s 0.2s both;}
+                    .fp2{animation:formula-part 0.4s 0.5s both;}
+                    .fp3{animation:formula-part 0.4s 0.8s both;}
+                    .fp4{animation:formula-part 0.4s 1.1s both;}
+                    .bad-card{animation:bad-shake 0.5s 1.5s ease-in-out 2;}
+                    .good-card{animation:good-glow2 2s 2s ease-in-out infinite;}
+                </style>
+
+                <!-- Fórmula -->
+                <text x="260" y="20" text-anchor="middle" fill="#6a1b9a" font-size="11" font-weight="700">Fórmula do Prompt Eficaz:</text>
+
+                <g class="fp1"><rect x="10" y="28" width="100" height="28" rx="8" fill="#dbeafe"/><text x="60" y="47" text-anchor="middle" fill="#1e40af" font-size="10" font-weight="700">🎭 Contexto</text></g>
+                <text x="116" y="47" fill="#94a3b8" font-size="16" font-weight="700">+</text>
+                <g class="fp2"><rect x="128" y="28" width="80" height="28" rx="8" fill="#d1fae5"/><text x="168" y="47" text-anchor="middle" fill="#065f46" font-size="10" font-weight="700">📌 Tarefa</text></g>
+                <text x="214" y="47" fill="#94a3b8" font-size="16" font-weight="700">+</text>
+                <g class="fp3"><rect x="226" y="28" width="90" height="28" rx="8" fill="#fef3c7"/><text x="271" y="47" text-anchor="middle" fill="#92400e" font-size="10" font-weight="700">📄 Formato</text></g>
+                <text x="322" y="47" fill="#94a3b8" font-size="16" font-weight="700">+</text>
+                <g class="fp4"><rect x="334" y="28" width="90" height="28" rx="8" fill="#fce7f3"/><text x="379" y="47" text-anchor="middle" fill="#9d174d" font-size="10" font-weight="700">💡 Exemplos</text></g>
+
+                <!-- Divisória -->
+                <line x1="10" y1="66" x2="510" y2="66" stroke="#e2e8f0" stroke-width="1"/>
+
+                <!-- Prompt ruim -->
+                <g class="bad-card">
+                    <rect x="10" y="74" width="240" height="130" rx="10" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5"/>
+                    <text x="130" y="94" text-anchor="middle" fill="#dc2626" font-size="10" font-weight="700">❌ Prompt vago</text>
+                    <rect x="20" y="100" width="220" height="36" rx="6" fill="white" stroke="#fca5a5" stroke-width="1"/>
+                    <text x="130" y="116" text-anchor="middle" fill="#334155" font-size="9" font-family="Courier New">"Fale sobre fotossíntese"</text>
+                    <text x="130" y="128" text-anchor="middle" fill="#334155" font-size="9" font-family="Courier New">"Me ajuda com meu trabalho"</text>
+                    <text x="130" y="150" text-anchor="middle" fill="#991b1b" font-size="8">Sem contexto, sem nível,</text>
+                    <text x="130" y="162" text-anchor="middle" fill="#991b1b" font-size="8">sem formato. A IA não sabe</text>
+                    <text x="130" y="174" text-anchor="middle" fill="#991b1b" font-size="8">o que você realmente precisa.</text>
+                    <text x="130" y="196" text-anchor="middle" fill="#ef4444" font-size="18">😕</text>
+                </g>
+
+                <!-- Prompt bom -->
+                <g class="good-card">
+                    <rect x="270" y="74" width="240" height="130" rx="10" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+                    <text x="390" y="94" text-anchor="middle" fill="#16a34a" font-size="10" font-weight="700">✅ Prompt eficaz</text>
+                    <rect x="280" y="100" width="220" height="68" rx="6" fill="white" stroke="#86efac" stroke-width="1"/>
+                    <text x="390" y="114" text-anchor="middle" fill="#334155" font-size="8" font-family="Courier New">"Sou aluno do 1º ano técnico.</text>
+                    <text x="390" y="126" text-anchor="middle" fill="#334155" font-size="8" font-family="Courier New">Explique fotossíntese com</text>
+                    <text x="390" y="138" text-anchor="middle" fill="#334155" font-size="8" font-family="Courier New">analogia simples, máx 150</text>
+                    <text x="390" y="150" text-anchor="middle" fill="#334155" font-size="8" font-family="Courier New">palavras, em 3 tópicos."</text>
+                    <text x="390" y="178" text-anchor="middle" fill="#166534" font-size="8">Contexto (1º ano) + Tarefa</text>
+                    <text x="390" y="190" text-anchor="middle" fill="#166534" font-size="8">(analogia) + Formato (150 palavras)</text>
+                    <text x="390" y="198" text-anchor="middle" fill="#22c55e" font-size="14">😊</text>
+                </g>
+            </svg>
+        </div>
+
+        <p><strong>Dica extra:</strong> Se n&atilde;o gostou da resposta, refine o prompt. Voc&ecirc; pode pedir: <em>"Refaça de forma mais simples"</em>, <em>"Adicione exemplos pr&aacute;ticos"</em> ou <em>"Seja mais conciso"</em>. A qualidade melhora com pr&aacute;tica.</p>
+    </div>
+
+    <!-- SLIDE 5: Comparativo + Boas práticas -->
+    <div class="content-card">
+        <h2>&#x1F4CA; Comparativo e Boas Pr&aacute;ticas</h2>
+
+        <!-- SVG: 6 boas práticas em cards animados -->
+        <div class="svg-wrap">
+            <svg width="520" height="200" viewBox="0 0 520 200" xmlns="http://www.w3.org/2000/svg">
+                <style>
+                    @keyframes bpr-in { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+                    .br1{animation:bpr-in 0.4s 0.2s both;}
+                    .br2{animation:bpr-in 0.4s 0.5s both;}
+                    .br3{animation:bpr-in 0.4s 0.8s both;}
+                    .br4{animation:bpr-in 0.4s 1.1s both;}
+                    .br5{animation:bpr-in 0.4s 1.4s both;}
+                    .br6{animation:bpr-in 0.4s 1.7s both;}
+                </style>
+                <g class="br1">
+                    <rect x="10" y="8" width="155" height="56" rx="9" fill="#fdf4ff" stroke="#d8b4fe" stroke-width="1.2"/>
+                    <text x="30" y="30" font-size="16">📚</text>
+                    <text x="48" y="28" fill="#6a1b9a" font-size="9" font-weight="700">Use como ponto de partida</text>
+                    <text x="20" y="42" fill="#7c3aed" font-size="8">IA acelera — mas o aprendizado</text>
+                    <text x="20" y="54" fill="#7c3aed" font-size="8">acontece quando você processa.</text>
+                </g>
+                <g class="br2">
+                    <rect x="183" y="8" width="155" height="56" rx="9" fill="#fdf4ff" stroke="#d8b4fe" stroke-width="1.2"/>
+                    <text x="203" y="30" font-size="16">🔍</text>
+                    <text x="221" y="28" fill="#6a1b9a" font-size="9" font-weight="700">Verifique sempre</text>
+                    <text x="193" y="42" fill="#7c3aed" font-size="8">Confirme datas e citações</text>
+                    <text x="193" y="54" fill="#7c3aed" font-size="8">em fontes primárias.</text>
+                </g>
+                <g class="br3">
+                    <rect x="356" y="8" width="154" height="56" rx="9" fill="#fdf4ff" stroke="#d8b4fe" stroke-width="1.2"/>
+                    <text x="376" y="30" font-size="16">🔒</text>
+                    <text x="394" y="28" fill="#6a1b9a" font-size="9" font-weight="700">Não compartilhe dados</text>
+                    <text x="366" y="42" fill="#7c3aed" font-size="8">Nunca informe CPF, senhas</text>
+                    <text x="366" y="54" fill="#7c3aed" font-size="8">ou dados de terceiros.</text>
+                </g>
+                <g class="br4">
+                    <rect x="10" y="72" width="155" height="56" rx="9" fill="#fdf4ff" stroke="#d8b4fe" stroke-width="1.2"/>
+                    <text x="30" y="94" font-size="16">⚖️</text>
+                    <text x="48" y="92" fill="#6a1b9a" font-size="9" font-weight="700">Seja honesto</text>
+                    <text x="20" y="106" fill="#7c3aed" font-size="8">Use IA para apoiar seu trabalho</text>
+                    <text x="20" y="118" fill="#7c3aed" font-size="8">— não para substituir você.</text>
+                </g>
+                <g class="br5">
+                    <rect x="183" y="72" width="155" height="56" rx="9" fill="#fdf4ff" stroke="#d8b4fe" stroke-width="1.2"/>
+                    <text x="203" y="94" font-size="16">🔄</text>
+                    <text x="221" y="92" fill="#6a1b9a" font-size="9" font-weight="700">Itere os prompts</text>
+                    <text x="193" y="106" fill="#7c3aed" font-size="8">Se não gostou, refine</text>
+                    <text x="193" y="118" fill="#7c3aed" font-size="8">a pergunta e tente de novo.</text>
+                </g>
+                <g class="br6">
+                    <rect x="356" y="72" width="154" height="56" rx="9" fill="#fdf4ff" stroke="#d8b4fe" stroke-width="1.2"/>
+                    <text x="376" y="94" font-size="16">🎓</text>
+                    <text x="394" y="92" fill="#6a1b9a" font-size="9" font-weight="700">Documente o uso</text>
+                    <text x="366" y="106" fill="#7c3aed" font-size="8">Em trabalhos acadêmicos,</text>
+                    <text x="366" y="118" fill="#7c3aed" font-size="8">registre como a IA foi usada.</text>
+                </g>
+
+                <!-- Alerta -->
+                <rect x="10" y="138" width="500" height="54" rx="10" fill="#fff8e1" stroke="#fcd34d" stroke-width="1.5"/>
+                <text x="28" y="156" fill="#92400e" font-size="10" font-weight="700">💡 Lembre-se: IA que responde sem reflexão cria ilusão de conhecimento</text>
+                <text x="28" y="170" fill="#78350f" font-size="9">Use IA para entender e questionar — não para copiar e colar sem pensar.</text>
+                <text x="28" y="184" fill="#78350f" font-size="9">A habilidade mais valiosa é saber avaliar se a resposta da IA está correta.</text>
+            </svg>
+        </div>
+
+        <table class="compare-table">
+            <tr>
+                <th>Ferramenta</th>
+                <th>Ponto forte</th>
+                <th>Melhor uso educacional</th>
+            </tr>
+            <tr><td>🤖 ChatGPT</td><td>Racioc&iacute;nio e versatilidade</td><td>Explica&ccedil;&otilde;es, reda&ccedil;&otilde;es, exerc&iacute;cios</td></tr>
+            <tr><td>💎 Gemini</td><td>Integra&ccedil;&atilde;o com Workspace</td><td>Docs, Classroom, pesquisa</td></tr>
+            <tr><td>💻 Copilot</td><td>Integra&ccedil;&atilde;o com Office</td><td>Word, PowerPoint, Excel</td></tr>
+            <tr><td>🔍 Perplexity</td><td>Busca com fontes citadas</td><td>Pesquisa acad&ecirc;mica confi&aacute;vel</td></tr>
+            <tr><td>📓 NotebookLM</td><td>An&aacute;lise de seus documentos</td><td>Estudar apostilas e materiais</td></tr>
+            <tr><td>📋 Gamma</td><td>Cria&ccedil;&atilde;o de slides</td><td>Apresenta&ccedil;&otilde;es r&aacute;pidas e bonitas</td></tr>
+        </table>
+    </div>
+
+    <!-- SLIDE 6: Quiz -->
+    <div class="content-card">
+        <h2>&#x1F3AF; Verifique seu Conhecimento</h2>
+
+        <div class="mc-root" data-ex="mc32">
+
+            <div class="mc-question" data-correct="b">
+                <p><strong>1.</strong> O que significa LLM?</p>
+                <div class="mc-option" data-opt="a">Linear Logic Machine</div>
+                <div class="mc-option" data-opt="b">Large Language Model — Modelo de Linguagem de Grande Escala</div>
+                <div class="mc-option" data-opt="c">Long Learning Method</div>
+                <div class="mc-option" data-opt="d">Language Learning Module</div>
+                <div class="mc-explanation ok">Correto! LLM = Large Language Model. São sistemas treinados em enormes volumes de texto para compreender e gerar linguagem humana.</div>
+                <div class="mc-explanation err">LLM significa Large Language Model (Modelo de Linguagem de Grande Escala) — sistemas treinados em texto para gerar linguagem.</div>
+            </div>
+
+            <div class="mc-question" data-correct="c">
+                <p><strong>2.</strong> O que &eacute; uma "alucina&ccedil;&atilde;o" de IA?</p>
+                <div class="mc-option" data-opt="a">Quando a IA fica lenta por excesso de usu&aacute;rios</div>
+                <div class="mc-option" data-opt="b">Quando a IA gera imagens distorcidas</div>
+                <div class="mc-option" data-opt="c">Quando a IA inventa informa&ccedil;&otilde;es incorretas com confian&ccedil;a</div>
+                <div class="mc-option" data-opt="d">Quando a IA recusa responder a pergunta</div>
+                <div class="mc-explanation ok">Correto! Alucinação é quando a IA gera informações falsas (datas, citações, fatos) de forma convincente. Por isso sempre verifique fontes.</div>
+                <div class="mc-explanation err">Alucinação é quando a IA inventa informações incorretas com confiança. É um dos principais riscos no uso de LLMs para pesquisa.</div>
+            </div>
+
+            <div class="mc-question" data-correct="a">
+                <p><strong>3.</strong> Qual ferramenta permite conversar diretamente com seus <strong>pr&oacute;prios documentos</strong> sem risco de alucina&ccedil;&otilde;es externas?</p>
+                <div class="mc-option" data-opt="a">NotebookLM</div>
+                <div class="mc-option" data-opt="b">ChatGPT</div>
+                <div class="mc-option" data-opt="c">Gamma</div>
+                <div class="mc-option" data-opt="d">ElevenLabs</div>
+                <div class="mc-explanation ok">Correto! O NotebookLM (Google) analisa documentos que você envia e responde baseando-se apenas neles, citando a fonte dentro do documento.</div>
+                <div class="mc-explanation err">O NotebookLM é a ferramenta que permite enviar PDFs e apostilas e fazer perguntas baseadas apenas nesse conteúdo.</div>
+            </div>
+
+            <div class="mc-question" data-correct="d">
+                <p><strong>4.</strong> Qual &eacute; a principal vantagem do <strong>Perplexity</strong> sobre o ChatGPT?</p>
+                <div class="mc-option" data-opt="a">&Eacute; mais barato</div>
+                <div class="mc-option" data-opt="b">Gera imagens melhores</div>
+                <div class="mc-option" data-opt="c">Tem integra&ccedil;&atilde;o com o Office</div>
+                <div class="mc-option" data-opt="d">Sempre cita as fontes das informa&ccedil;&otilde;es que fornece</div>
+                <div class="mc-explanation ok">Correto! O Perplexity é uma IA de busca que sempre apresenta as fontes usadas nas respostas, ideal para pesquisa acadêmica confiável.</div>
+                <div class="mc-explanation err">A grande vantagem do Perplexity é citar as fontes de cada resposta, facilitando a verificação das informações para pesquisa acadêmica.</div>
+            </div>
+
+            <div class="mc-question" data-correct="b">
+                <p><strong>5.</strong> Qual &eacute; o prompt mais eficaz para obter uma boa resposta da IA?</p>
+                <div class="mc-option" data-opt="a">"Explique IA"</div>
+                <div class="mc-option" data-opt="b">"Sou aluno do 1º ano técnico. Explique IA em 3 tópicos simples com exemplos do dia a dia"</div>
+                <div class="mc-option" data-opt="c">"Me fale tudo sobre inteligência artificial"</div>
+                <div class="mc-option" data-opt="d">"IA?"</div>
+                <div class="mc-explanation ok">Correto! O prompt B tem contexto (aluno 1º ano), tarefa (explicar IA), formato (3 tópicos simples) e tipo de exemplo — todos os elementos de um bom prompt.</div>
+                <div class="mc-explanation err">Um bom prompt inclui contexto (quem você é), tarefa (o que quer), formato (como quer a resposta) e exemplos quando possível.</div>
+            </div>
+
+            <div class="mc-question" data-correct="c">
+                <p><strong>6.</strong> Ao usar IA em um trabalho acad&ecirc;mico, o que &eacute; a pr&aacute;tica correta?</p>
+                <div class="mc-option" data-opt="a">Copiar e colar tudo sem mencionar que usou IA</div>
+                <div class="mc-option" data-opt="b">Nunca usar IA em nenhuma circunst&acirc;ncia</div>
+                <div class="mc-option" data-opt="c">Documentar como a IA foi usada e verificar as informa&ccedil;&otilde;es geradas</div>
+                <div class="mc-option" data-opt="d">Usar IA apenas para formatar o texto final</div>
+                <div class="mc-explanation ok">Correto! Transparência e verificação são fundamentais. Registre como a IA foi utilizada e sempre confira as informações em fontes confiáveis.</div>
+                <div class="mc-explanation err">A prática correta é documentar o uso da IA e verificar as informações. Usar IA de forma transparente e responsável é essencial na vida acadêmica.</div>
+            </div>
+
+            <div class="mc-actions">
+                <button onclick="mcVerify('mc32')">Verificar</button>
+                <button onclick="mcReset('mc32')">Refazer</button>
+            </div>
+            <div class="mc-result" id="mc32-result"></div>
+        </div>
+    </div>
+
+    <!-- SLIDE 7: Atividade Prática -->
+    <div class="content-card">
+        <h2>&#x1F6E0;&#xFE0F; Atividade Pr&aacute;tica &mdash; Explorando IA Educacional</h2>
+
+        <div class="yt-wrap">
+            <iframe src="https://www.youtube.com/embed/JTxsNm9IdYU"
+                    title="Como usar o ChatGPT e Gemini nos estudos"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+        </div>
+
+        <p><strong>Materiais necess&aacute;rios:</strong></p>
+        <ul class="mat-list">
+            <li>&#x1F4BB; Computador ou celular</li>
+            <li>&#x1F310; Conex&atilde;o com internet</li>
+            <li>&#x1F4E7; Conta Google (para Gemini/NotebookLM)</li>
+        </ul>
+
+        <!-- Passo 1 -->
+        <div class="step-svg-card">
+            <div class="step-num">1</div>
+            <svg width="64" height="56" viewBox="0 0 64 56" xmlns="http://www.w3.org/2000/svg">
+                <style>@keyframes login-blink{0%,100%{opacity:1}50%{opacity:0.3}}.lb3{animation:login-blink 1s infinite;}</style>
+                <rect x="8" y="8" width="48" height="36" rx="6" fill="#f3e5f5" stroke="#ce93d8" stroke-width="1.2"/>
+                <text x="32" y="30" text-anchor="middle" font-size="20">🤖</text>
+                <rect x="16" y="34" width="32" height="6" rx="3" fill="#7c3aed" class="lb3"/>
+                <text x="32" y="54" text-anchor="middle" fill="#64748b" font-size="9">Login</text>
+            </svg>
+            <div class="step-text">
+                <strong>Acesse o Gemini ou ChatGPT</strong>
+                <span>Abra <strong>gemini.google.com</strong> ou <strong>chat.openai.com</strong>. Crie conta gratuita se necess&aacute;rio. Explore a interface: onde digitar, hist&oacute;rico, nova conversa.</span>
+            </div>
+        </div>
+
+        <!-- Passo 2 -->
+        <div class="step-svg-card">
+            <div class="step-num">2</div>
+            <svg width="64" height="56" viewBox="0 0 64 56" xmlns="http://www.w3.org/2000/svg">
+                <style>
+                    @keyframes vs-flip{0%,100%{transform:scaleX(1)}50%{transform:scaleX(0.95)}}
+                    .vsf{animation:vs-flip 2s infinite ease-in-out;}
+                </style>
+                <g class="vsf">
+                    <rect x="4" y="8" width="24" height="36" rx="4" fill="#fee2e2" stroke="#fca5a5" stroke-width="1"/>
+                    <text x="16" y="24" text-anchor="middle" fill="#991b1b" font-size="8">❌</text>
+                    <text x="16" y="36" text-anchor="middle" fill="#991b1b" font-size="7">vago</text>
+                    <rect x="36" y="8" width="24" height="36" rx="4" fill="#dcfce7" stroke="#86efac" stroke-width="1"/>
+                    <text x="48" y="24" text-anchor="middle" fill="#166534" font-size="8">✅</text>
+                    <text x="48" y="36" text-anchor="middle" fill="#166534" font-size="7">eficaz</text>
+                </g>
+                <text x="32" y="54" text-anchor="middle" fill="#64748b" font-size="9">Prompts</text>
+            </svg>
+            <div class="step-text">
+                <strong>Prompt vago vs. prompt eficaz</strong>
+                <span>Envie um prompt vago (ex.: "Fale sobre S.O.") e depois um completo com contexto + tarefa + formato. Compare as respostas: qual foi mais &uacute;til?</span>
+            </div>
+        </div>
+
+        <!-- Passo 3 -->
+        <div class="step-svg-card">
+            <div class="step-num">3</div>
+            <svg width="64" height="56" viewBox="0 0 64 56" xmlns="http://www.w3.org/2000/svg">
+                <style>@keyframes cal-fill{from{height:0;y:44}to{height:30;y:14}}.calf{animation:cal-fill 1.5s 0.5s ease-out forwards;}</style>
+                <rect x="8" y="6" width="48" height="42" rx="5" fill="#f3e5f5" stroke="#ce93d8" stroke-width="1.2"/>
+                <text x="32" y="22" text-anchor="middle" fill="#6a1b9a" font-size="9" font-weight="700">Plano 1 semana</text>
+                <rect x="14" y="24" width="36" height="6" rx="2" fill="#ce93d8" opacity="0.5"/>
+                <rect x="14" y="32" width="36" height="6" rx="2" fill="#ce93d8" opacity="0.7"/>
+                <rect x="14" y="40" width="36" height="6" rx="2" fill="#9c27b0"/>
+                <text x="32" y="54" text-anchor="middle" fill="#64748b" font-size="9">Roteiro</text>
+            </svg>
+            <div class="step-text">
+                <strong>Crie um roteiro de estudos personalizado</strong>
+                <span>Pe&ccedil;a para a IA criar um <strong>plano de estudos de 1 semana</strong> para revisar esta unidade. Informe seu n&iacute;vel e tempo dispon&iacute;vel por dia.</span>
+            </div>
+        </div>
+
+        <!-- Passo 4 -->
+        <div class="step-svg-card">
+            <div class="step-num">4</div>
+            <svg width="64" height="56" viewBox="0 0 64 56" xmlns="http://www.w3.org/2000/svg">
+                <style>@keyframes pdf-upload{0%{transform:translateY(0)}50%{transform:translateY(-5px)}100%{transform:translateY(0)}}.pdu{animation:pdf-upload 1.5s infinite ease-in-out;}</style>
+                <g class="pdu">
+                    <rect x="14" y="10" width="36" height="44" rx="4" fill="#fce7f3"/>
+                    <polyline points="38,10 50,22 50,54" fill="none" stroke="#f48fb1" stroke-width="1.2"/>
+                    <polygon points="38,10 50,22 38,22" fill="#f48fb1"/>
+                    <text x="32" y="40" text-anchor="middle" font-size="8" fill="#9d174d" font-weight="700">PDF</text>
+                </g>
+                <text x="32" y="58" text-anchor="middle" fill="#64748b" font-size="8">NotebookLM</text>
+            </svg>
+            <div class="step-text">
+                <strong>Teste o NotebookLM</strong>
+                <span>Acesse <strong>notebooklm.google.com</strong> e envie um PDF de apostila. Fa&ccedil;a perguntas sobre o conte&uacute;do. Compare com o ChatGPT: o NotebookLM cita a p&aacute;gina de onde tirou a informa&ccedil;&atilde;o?</span>
+            </div>
+        </div>
+
+        <!-- Passo 5 -->
+        <div class="step-svg-card">
+            <div class="step-num">5</div>
+            <svg width="64" height="56" viewBox="0 0 64 56" xmlns="http://www.w3.org/2000/svg">
+                <style>@keyframes search-pulse{0%,100%{r:10}50%{r:13}}.spu{animation:search-pulse 1.2s infinite;}</style>
+                <circle cx="28" cy="24" r="14" fill="none" stroke="#6a1b9a" stroke-width="2.5"/>
+                <circle class="spu" cx="28" cy="24" fill="#f3e5f5" stroke="none"/>
+                <line x1="38" y1="34" x2="52" y2="48" stroke="#6a1b9a" stroke-width="2.5" stroke-linecap="round"/>
+                <text x="32" y="54" text-anchor="middle" fill="#64748b" font-size="9">Verificar</text>
+            </svg>
+            <div class="step-text">
+                <strong>Verifique uma informa&ccedil;&atilde;o gerada</strong>
+                <span>Pe&ccedil;a &agrave; IA um fato hist&oacute;rico ou uma data importante. Depois pesquise a mesma informa&ccedil;&atilde;o no Google. A IA acertou? Houve alucina&ccedil;&atilde;o?</span>
+            </div>
+        </div>
+
+        <!-- Passo 6 -->
+        <div class="step-svg-card">
+            <div class="step-num">6</div>
+            <svg width="64" height="56" viewBox="0 0 64 56" xmlns="http://www.w3.org/2000/svg">
+                <style>@keyframes write-line{from{width:0}to{width:36px}}.wl{animation:write-line 1s 0.5s ease-out forwards;width:0;}</style>
+                <rect x="8" y="6" width="48" height="42" rx="5" fill="#f3e5f5" stroke="#ce93d8" stroke-width="1.2"/>
+                <text x="32" y="20" text-anchor="middle" fill="#6a1b9a" font-size="8" font-weight="700">Anotações</text>
+                <rect x="14" y="24" height="4" rx="2" fill="#9c27b0" class="wl"/>
+                <rect x="14" y="31" height="4" rx="2" fill="#9c27b0" class="wl" style="animation-delay:0.8s"/>
+                <rect x="14" y="38" height="4" rx="2" fill="#9c27b0" class="wl" style="animation-delay:1.1s"/>
+                <text x="32" y="56" text-anchor="middle" fill="#64748b" font-size="8">Avaliação</text>
+            </svg>
+            <div class="step-text">
+                <strong>Documente e avalie</strong>
+                <span>Anote: qual ferramenta foi mais &uacute;til? O que surpreendeu? Houve resposta suspeita? Como verificou? Registre seu processo para o portf&oacute;lio.</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-footer">
+        <a href="uni3-01-fundamentos-ia.html" class="nav-link">&#x2B05; Anterior: Fundamentos de IA</a>
+        <a href="uni3-03-etica-ia.html" class="nav-link">Pr&oacute;xima: &Eacute;tica e Limita&ccedil;&otilde;es &#x27A1;</a>
+    </div>
+
+</div>
+
+<script src="slide-mode.js"></script>
+<script src="exercise-drag.js"></script>
+<script src="exercise-mc.js"></script>
+<script src="exercise-print.js"></script>
 </body>
 </html>
