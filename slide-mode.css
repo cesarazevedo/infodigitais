@@ -51,11 +51,11 @@ body.slide-active .content-card {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 85vw;
-    max-width: 1100px;
-    max-height: 85vh;
+    width: 94vw;
+    max-width: 1600px;
+    max-height: 90vh;
     overflow-y: auto;
-    padding: 50px 60px;
+    padding: 52px 72px;
     border-radius: 20px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.1);
     animation: slideIn 0.35s ease;
@@ -66,19 +66,19 @@ body.slide-active .content-card.slide-visible {
 }
 
 body.slide-active .content-card h2 {
-    font-size: 2.2em;
-    margin-bottom: 25px;
+    font-size: 2.6em;
+    margin-bottom: 28px;
 }
 
 body.slide-active .content-card p {
-    font-size: 1.35em;
+    font-size: 1.55em;
     line-height: 1.8;
-    margin-bottom: 20px;
+    margin-bottom: 22px;
 }
 
 body.slide-active .content-card ul,
 body.slide-active .content-card ol {
-    font-size: 1.3em;
+    font-size: 1.5em;
     line-height: 1.9;
     margin-left: 35px;
 }
@@ -93,11 +93,11 @@ body.slide-active .content-card .highlight-box {
 }
 
 body.slide-active .content-card .highlight-box p {
-    font-size: 1.4em;
+    font-size: 1.6em;
 }
 
 body.slide-active .content-card .code-block {
-    font-size: 1.3em;
+    font-size: 1.45em;
     padding: 30px;
 }
 
@@ -124,19 +124,19 @@ body.slide-active .content-card .tip-item {
 body.slide-active .content-card .example-item strong,
 body.slide-active .content-card .feature-item strong,
 body.slide-active .content-card .tip-item strong {
-    font-size: 1.15em;
+    font-size: 1.3em;
 }
 
 body.slide-active .content-card .example-item span,
 body.slide-active .content-card .feature-item span,
 body.slide-active .content-card .tip-item span {
-    font-size: 1.05em;
+    font-size: 1.2em;
 }
 
 body.slide-active .content-card .example-item .ex-icon,
 body.slide-active .content-card .feature-item .feat-icon,
 body.slide-active .content-card .tip-item .tip-icon {
-    font-size: 2.5em;
+    font-size: 3em;
 }
 
 @keyframes slideIn {
