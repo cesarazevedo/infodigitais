@@ -361,6 +361,38 @@
 
         a.lesson-card.done .lesson-status { color: #38b000; }
 
+        /* --- BOTÃO DOWNLOAD FLASHCARDS --- */
+        .flashcard-download {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: rgba(21, 101, 192, 0.08);
+            border: 1.5px solid rgba(21, 101, 192, 0.3);
+            border-radius: 10px;
+            color: #1565c0;
+            font-size: 0.88em;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.25s;
+        }
+        .flashcard-download:hover {
+            background: rgba(21, 101, 192, 0.15);
+            border-color: #1565c0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(21, 101, 192, 0.15);
+        }
+        body.dark-mode .flashcard-download {
+            background: rgba(96, 165, 250, 0.08);
+            border-color: rgba(96, 165, 250, 0.3);
+            color: #93c5fd;
+        }
+        body.dark-mode .flashcard-download:hover {
+            background: rgba(96, 165, 250, 0.15);
+            border-color: #93c5fd;
+        }
+
         /* --- DARK MODE TOGGLE --- */
         .dark-toggle-index {
             padding: 7px 11px;
@@ -536,6 +568,10 @@
                 <span class="unidade-badge badge-uni1">Unidade 1</span>
             </div>
             <p class="unidade-subtitle">Fundamentos do sistema operacional, principais plataformas e ferramentas de produtividade.</p>
+
+            <a href="flashcards-uni1.txt" download="flashcards-uni1.txt" class="flashcard-download">
+                &#x1F4E5; Baixar Flashcards da Unidade 1 (.txt)
+            </a>
 
             <div class="lessons-grid">
 

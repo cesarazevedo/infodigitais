@@ -1,0 +1,94 @@
+# Flashcards — Unidade 1: Noções de S.O. e Utilitários
+# Formato: Pergunta | Resposta
+
+# ── AULA 1: Conhecendo o Teclado ──────────────────────────────────────────────
+
+O que a tecla Shift faz? | Produz letras maiúsculas enquanto é segurada; também acessa os símbolos superiores das teclas com dois caracteres (ex.: Shift + 3 = #)
+O que a tecla Caps Lock faz? | Mantém todas as letras maiúsculas ativas permanentemente; pressione novamente para desativar. Quando ativo, o Shift faz o contrário (minúsculas)
+O que a tecla Ctrl faz? | Modificadora usada em combinação com outras teclas para executar atalhos de sistema. Sozinha, não faz nada
+O que a tecla Alt faz? | Acessa funções alternativas das teclas e abre menus de programas. Combinada com outras, executa ações específicas
+O que a tecla Win (Windows) faz? | Abre o Menu Iniciar quando pressionada sozinha; combinada com outras teclas, acessa funções do sistema
+O que a tecla Backspace faz? | Apaga o caractere imediatamente à esquerda do cursor (o que acabou de ser digitado)
+O que a tecla Delete (Del) faz? | Apaga o caractere imediatamente à direita do cursor; também exclui arquivos selecionados enviando-os para a Lixeira
+O que a tecla Enter faz? | Em textos, cria uma nova linha. Em caixas de diálogo, confirma a ação selecionada (equivale a "OK")
+O que a tecla Tab faz? | Em textos, insere um recuo. Em formulários e programas, move o foco para o próximo campo. Shift+Tab volta ao campo anterior
+O que a tecla Esc faz? | Cancela a ação em andamento, fecha menus abertos ou sai de modos especiais (como tela cheia)
+Qual é o layout de teclado padrão no Brasil? | ABNT2 — possui 105 teclas, tem ç dedicado e uma tecla extra entre o Shift esquerdo e o Z
+Qual é a diferença entre ABNT2 e US QWERTY? | ABNT2 tem 105 teclas com ç dedicado (padrão brasileiro); US QWERTY tem 104 teclas sem ç (comum em teclados importados/gamer)
+Para que serve o bloco numérico (numpad)? | Bloco de números à direita do teclado, útil para digitar muitos números com rapidez. Ativado/desativado pela tecla Num Lock
+Para que servem as teclas F1 a F12? | Teclas de função com comandos rápidos que variam por programa. F1 = Ajuda, F2 = Renomear, F5 = Atualizar, F11 = Tela cheia, F12 = DevTools
+Em notebooks, como usar as teclas F1–F12 como funções? | Segurando a tecla Fn ao mesmo tempo, pois por padrão elas controlam funções do hardware (brilho, volume etc.)
+Qual atalho copia o conteúdo selecionado? | Ctrl + C
+Qual atalho recorta (move) o conteúdo selecionado? | Ctrl + X
+Qual atalho cola o conteúdo copiado ou recortado? | Ctrl + V
+Qual atalho desfaz a última ação? | Ctrl + Z
+Qual atalho seleciona todo o conteúdo? | Ctrl + A
+Qual atalho salva o arquivo ou documento? | Ctrl + S
+Qual atalho imprime? | Ctrl + P
+Qual atalho localiza (busca) texto no documento ou página? | Ctrl + F
+Qual atalho fecha a janela ativa? | Alt + F4
+Qual atalho alterna entre as janelas abertas? | Alt + Tab
+Qual atalho mostra a área de trabalho (minimiza tudo)? | Win + D
+Qual é a posição base de digitação profissional? | Dedos nas teclas A S D F (mão esquerda) e J K L ; (mão direita), com os polegares sobre a Barra de Espaço
+
+# ── AULA 2: Fundamentos e Funções do S.O. ────────────────────────────────────
+
+O que é um Sistema Operacional (S.O.)? | Software fundamental que gerencia o hardware (memória, processador, dispositivos) e serve de base para todos os outros programas
+O que é o kernel? | Núcleo do S.O. — a camada que se comunica diretamente com o hardware; é carregada primeiro na inicialização do computador
+O que é uma interface CLI? | Command Line Interface — interface de texto onde o usuário digita comandos (ex.: Prompt de Comando, PowerShell, Terminal Linux)
+O que é uma interface GUI? | Graphical User Interface — interface gráfica com elementos visuais como ícones, janelas e menus; facilita o uso do computador
+Qual função do S.O. decide qual programa usa o processador? | Gerenciamento de processos — controla quais programas estão em execução, o tempo de CPU de cada um e a prioridade entre eles
+Qual função do S.O. controla o uso da memória RAM? | Gerenciamento de memória — aloca e libera memória para os programas conforme necessário
+Qual S.O. é usado no iPhone? | iOS — sistema exclusivo da Apple para iPhone e iPad
+Qual S.O. é mais usado em smartphones Android? | Android — sistema móvel do Google, presente em smartphones Samsung, Motorola, Xiaomi, entre outros
+Qual S.O. domina mais de 90% dos servidores web? | Linux — gratuito, open source, estável e altamente configurável
+
+# ── AULA 3: Principais Sistemas Operacionais ──────────────────────────────────
+
+Qual S.O. é mais indicado para jogar games? | Windows — domina o mercado de games com suporte nativo de fabricantes de hardware e estúdios de jogos
+Qual S.O. é mais usado em servidores web? | Linux — gratuito, estável, seguro e amplamente utilizado (mais de 70% dos servidores)
+O que significa "open source"? | Código aberto — o código-fonte é público e qualquer pessoa pode ver, usar, modificar e distribuir livremente
+Qual é o S.O. padrão dos computadores Mac? | macOS — exclusivo para hardware Apple; popular entre designers, músicos e profissionais criativos
+Quais são exemplos de distribuições Linux? | Ubuntu, Debian, Fedora, Linux Mint, Arch Linux — cada uma tem características e públicos diferentes
+Qual recurso da Apple sincroniza automaticamente iPhone, iPad e MacBook? | iCloud — serviço de nuvem da Apple que integra todos os dispositivos da marca
+Qual é a participação de mercado do Windows em PCs pessoais? | Mais de 72% dos computadores pessoais no mundo
+Qual é o S.O. móvel mais usado no mundo? | Android — com cerca de 72% dos smartphones globais
+
+# ── AULA 4: Gerenciamento de Pastas e Arquivos ───────────────────────────────
+
+O que é a extensão de um arquivo? | A parte do nome após o ponto (ex.: .pdf, .jpg) que indica o tipo do arquivo e qual programa deve abri-lo
+Qual é a pasta raiz do sistema de arquivos no Windows? | C:\ — a raiz do disco principal. No Linux e macOS, a raiz é representada por /
+Qual é a extensão de documentos do Microsoft Word? | .docx
+Qual é a extensão de planilhas do Microsoft Excel? | .xlsx
+Qual é a extensão de apresentações do PowerPoint? | .pptx
+Qual é a extensão mais comum em fotos de celular? | .jpg (JPEG) — formato de imagem muito comum em câmeras e smartphones
+O que é um caminho (path) de arquivo? | O endereço completo de um arquivo no sistema, ex.: C:\Usuários\Ana\Documentos\relatorio.pdf
+Qual atalho recorta (move) um arquivo? | Ctrl + X
+Qual atalho renomeia um arquivo? | F2
+O que faz o atalho Shift + Delete? | Remove o arquivo permanentemente, sem enviá-lo à Lixeira. Use com cuidado, pois não tem recuperação fácil
+Qual é a diferença entre copiar e recortar? | Copiar (Ctrl+C) mantém o original no lugar; Recortar (Ctrl+X) remove o original e move o arquivo para o destino ao colar
+Qual boa prática deve-se seguir ao nomear arquivos? | Usar nomes descritivos sem espaços, preferencialmente com data no formato AAAA-MM-DD (ex.: relatorio_2025-05-18.pdf)
+
+# ── AULA 5: Softwares Utilitários ────────────────────────────────────────────
+
+Para que serve um antivírus? | Detecta, bloqueia e remove programas maliciosos (vírus, trojans, spyware, ransomware etc.)
+Para que serve um compactador de arquivos? | Reduz o tamanho de arquivos e os agrupa em um único pacote nos formatos .zip, .rar ou .7z
+Quais programas são usados para abrir arquivos .rar? | WinRAR ou 7-Zip
+Para que serve um gerenciador de downloads? | Permite pausar, retomar e acelerar downloads grandes (ex.: IDM, Free Download Manager)
+Para que serve um software de manutenção como CCleaner? | Limpa arquivos temporários, remove lixo digital e gerencia programas que abrem na inicialização do sistema
+O que é o formato PDF e por que é usado para compartilhamento? | Portable Document Format — preserva a formatação original e pode ser aberto em qualquer dispositivo sem alterações
+Qual é a característica do 7-Zip (.7z)? | Gratuito, open source e oferece uma das maiores taxas de compressão disponíveis
+Qual atalho abre o Explorador de Arquivos? | Win + E
+
+# ── REVISÃO GERAL — Unidade 1 ────────────────────────────────────────────────
+
+Qual é a diferença entre Backspace e Delete? | Backspace apaga o caractere à esquerda do cursor; Delete apaga o caractere à direita do cursor
+Quais são os 5 grupos de teclas do teclado? | Alfanuméricas, Teclas Especiais (modificadoras), Função (F1–F12), Navegação (setas/Home/End) e Teclado Numérico
+O que é o kernel do S.O.? | Núcleo do sistema operacional que se comunica diretamente com o hardware
+Qual é a diferença entre CLI e GUI? | CLI usa comandos de texto (Prompt, Terminal); GUI usa elementos gráficos como ícones, janelas e menus
+Quais são os três principais sistemas operacionais para computadores? | Windows (Microsoft), Linux (open source) e macOS (Apple)
+Quais são os dois principais sistemas operacionais para smartphones? | Android (Google) e iOS (Apple)
+O que é uma distribuição Linux? | Uma versão do Linux com configurações próprias, ex.: Ubuntu, Fedora, Debian, Linux Mint
+Para que serve compactar arquivos em .zip antes de enviar por e-mail? | Reduz o tamanho total e agrupa múltiplos arquivos em um único pacote, facilitando o envio
+Qual extensão indica um arquivo de planilha do Excel? | .xlsx
+Qual é o layout de teclado padrão brasileiro? | ABNT2 — com 105 teclas, ç dedicado e tecla extra entre Shift esquerdo e Z
